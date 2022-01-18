@@ -20,3 +20,11 @@ app.get("/", (req, res) => {
 app.listen(port, () =>
   console.log(`JS Bootcamp project listening on port ${port}!`)
 );
+
+
+// /admin/products
+//   / admin/products/new
+// POST / admin / products
+//   / admin / categories
+// /admin/categories/new
+//   / admin / orders
