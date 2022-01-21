@@ -8,7 +8,7 @@ const AddCategory = ({
   input,
   setInput,
   singleSelections,
-  setSingleSelections,
+  setParentCategory,
 }) => {
   const [options, setOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ const AddCategory = ({
   useEffect(() => {
     if (category !== undefined) {
       setInput(category.category);
-      setSingleSelections([{label: category.parent_category}]);
+      setParentCategory([{label: category.parent_category}]);
     }
   }, [category]);
 
@@ -55,7 +55,7 @@ const AddCategory = ({
             minLength={3}
             onSearch={handleSearch}
             options={options}
-            onChange={setSingleSelections}
+            onChange={setParentCategory}
             placeholder="Choose a Parent Category..."
             selected={singleSelections}
           />

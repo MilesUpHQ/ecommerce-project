@@ -6,20 +6,20 @@ const CategoryList = ({ categories }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editId, setEditId] = useState(null);
   const [input, setInput] = useState("");
-  const [singleSelections, setSingleSelections] = useState([]);
+  const [parentCategory, setParentCategory] = useState([]);
 
   const handleOpen = (id) => {
     setEditId(id);
     setIsOpen(true);
   };
 
-  const handleFunction = (category) => {
+  const handleUpdateCategory = (category) => {
     if (input == "") {
       return;
     }
     let id =
-      singleSelections.length !== 0
-        ? singleSelections[0].value
+      parentCategory.length !== 0
+        ? parentCategory[0].value
         : category.parent_id;
 
     axios
@@ -86,10 +86,10 @@ const CategoryList = ({ categories }) => {
                         ) : (
                           <AddCategory
                             category={category}
-                            handleFunction={() => handleFunction(category)}
+                            handleFunction={() => handleUpdateCategory(category)}
                             input={input}
-                            singleSelections={singleSelections}
-                            setSingleSelections={setSingleSelections}
+                            parentCategory={parentCategory}
+                            setParentCategory={setParentCategory}
                             setInput={setInput}
                           />
                         )}

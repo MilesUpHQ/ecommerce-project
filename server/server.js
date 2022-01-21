@@ -2,10 +2,8 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
-var adminRouter = require('./routes/admin/index');
-const environment = process.env.NODE_ENV || "development";
-const config = require("./knexfile")[environment];
-const knex = require("knex")(config);
+var adminRouter = require('./routes/admin/category');
+const db = require("./config/dbConfig");
 const port = 4000;
 dotenv.config();
 
@@ -21,4 +19,4 @@ app.listen(port, () =>
   console.log(`JS Bootcamp project listening on port ${port}!`)
 );
 
-app.use('/api', adminRouter)
+app.use('/', adminRouter)

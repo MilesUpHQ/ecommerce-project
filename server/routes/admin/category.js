@@ -48,6 +48,7 @@ router.post("/category", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+    res.json(err);
   }
 });
 
@@ -61,10 +62,12 @@ router.get("/categories", async (req, res) => {
         "e.name as parent_category",
         "m.parent_id"
       )
-      .orderBy("e.created_at");
+      .orderBy("e.created_at")
+      .limit(30)
     res.json(categories);
   } catch (err) {
     console.error(err);
+    res.json(err);
   }
 });
 
@@ -77,6 +80,7 @@ router.get("/search-categories", async (req, res) => {
     res.json(parent_categories)
   } catch (err) {
     console.log(err);
+    res.json(err);
   }
 });
 
@@ -90,6 +94,7 @@ router.post("/update-category", async (req, res) => {
     res.json(newCategory);
   } catch (err) {
     console.log(err);
+    res.json(err);
   }
 });
 

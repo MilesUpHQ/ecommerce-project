@@ -1,8 +1,12 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 
 const Sidebar = () => {
   return (
     <React.Fragment>
+      <Helmet>
+        <link rel="stylesheet" href="/css/style.css" />
+      </Helmet>
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
           <li className="nav-item">
