@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AddCategory from "./AddCategory";
-import axios from "../../utils/ajax-helper";
+import axios from "../../../utils/ajax-helper";
 
 const CategoryList = ({ categories }) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CategoryList from "./CategoryList";
 import AddCategory from "./AddCategory";
-import axios from "../../utils/ajax-helper";
+import axios from "../../../utils/ajax-helper";
 
 const Category = () => {
   const [input, setInput] = useState("");
