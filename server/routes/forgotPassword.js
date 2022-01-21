@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../utils/knex");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+const transporter = require("../utils/nodemailer");
 
 router.post("", (req, res) => {
   if (req.body.email == "") {
@@ -17,13 +17,7 @@ router.post("", (req, res) => {
         const token = jwt.sign({ email: req.body.email }, "jwtSecret", {
           expiresIn: "1hr",
         });
-        const transporter = nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-            user: process.env.GMAIL_AUTH_USER,
-            pass: process.env.GMAIL_AUTH_PASSWORD,
-          },
-        });
+
         const mailOptions = {
           from: process.env.GMAIL_AUTH_USER,
           to: req.body.email,

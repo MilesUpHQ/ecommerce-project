@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const knex = require("../utils/knex");
-const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
+const transporter = require("../utils/nodemailer");
 
 router.put("/", async (req, res, next) => {
   knex("users")
@@ -17,13 +17,6 @@ router.put("/", async (req, res, next) => {
           .where("email", req.body.email)
           .update({ password_digest: hashedPassword })
           .then((row) => {
-            const transporter = nodemailer.createTransport({
-              service: "gmail",
-              auth: {
-                user: process.env.GMAIL_AUTH_USER,
-                pass: process.env.GMAIL_AUTH_PASSWORD,
-              },
-            });
             const mailOptions = {
               from: process.env.GMAIL_AUTH_USER,
               to: req.body.email,
