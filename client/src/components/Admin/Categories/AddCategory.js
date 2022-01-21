@@ -7,7 +7,7 @@ const AddCategory = ({
   handleFunction,
   input,
   setInput,
-  singleSelections,
+  parentCategory,
   setParentCategory,
 }) => {
   const [options, setOptions] = useState([]);
@@ -57,7 +57,7 @@ const AddCategory = ({
             options={options}
             onChange={setParentCategory}
             placeholder="Choose a Parent Category..."
-            selected={singleSelections}
+            selected={parentCategory}
           />
         </td>
         <td style={{ border: 0 }}>

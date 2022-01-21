@@ -2,20 +2,24 @@ import React, { useEffect, useState } from "react";
 import CategoryList from "./CategoryList";
 import AddCategory from "./AddCategory";
 import axios from "../../../utils/ajax-helper";
+import ErrorAlert from "./ErrorAlert";
 
 const Category = () => {
   const [input, setInput] = useState("");
   const [categories, setCategories] = useState(null);
   const [parentCategory, setParentCategory] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [currPage, setCurrPage] = useState(null);
+  const [lastPage, setLastPage] = useState(null);
+  const [totalPages, setTotalPages] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const handleAddCategory = () => {
     if (input.length < 3) {
       return;
     }
-
     let id = parentCategory.length !== 0 ? parentCategory[0].value : 0;
-
+    let page = currPage || 1;
     axios
       .post("/category", {
         categoryName: input,
@@ -23,18 +27,45 @@ const Category = () => {
       })
       .then((res) => {
         setIsOpen(false);
-        window.location.reload();
+        axios
+          .get(`/categories?page=${page}`)
+          .then((res) => {
+            setCurrPage(res.data.currPage);
+            setCategories(res.data.categories);
+          })
+          .catch((err) => {
+            setErrorMsg("Sorry! Something went wrong. Please Try again");
+          });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setErrorMsg("Sorry! You can't add Category currently. Please Try again");
+      });
+  };
+
+  const handlePagination = (page) => {
+    axios
+      .get(`/categories?page=${page}`)
+      .then((res) => {
+        setCategories(res.data.categories);
+        setCurrPage(res.data.currPage);
+      })
+      .catch((err) => {
+        setErrorMsg("Sorry! Something went wrong. Please Try again");
+      });
   };
 
   useEffect(() => {
     axios
       .get("/categories")
       .then((res) => {
-        setCategories(res.data);
+        setCurrPage(res.data.currPage);
+        setLastPage(res.data.lastPage);
+        setTotalPages(res.data.totalPages);
+        setCategories(res.data.categories);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setErrorMsg("Sorry! Something went wrong. Please Try again");
+      });
   }, []);
 
   return (
@@ -77,7 +108,16 @@ const Category = () => {
                 </div>
               </form>
             )}
-            <CategoryList categories={categories} />
+            {errorMsg && <ErrorAlert msg={errorMsg} />}
+            <CategoryList
+              categories={categories}
+              currPage={currPage}
+              lastPage={lastPage}
+              totalPages={totalPages}
+              handlePagination={handlePagination}
+              setCategories={setCategories}
+              setCurrPage={setCurrPage}
+            />
           </div>
         </div>
       </div>

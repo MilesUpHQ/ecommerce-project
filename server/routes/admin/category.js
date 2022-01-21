@@ -47,13 +47,14 @@ router.post("/category", async (req, res) => {
       res.send(newCategory);
     }
   } catch (err) {
-    console.log(err);
-    res.json(err);
+    res.status(401).json({error: err});
   }
 });
 
 router.get("/categories", async (req, res) => {
   try {
+    let page = parseInt(req.query.page) || 1;
+
     const categories = await db("product_categories as e")
       .rightJoin("product_categories as m", "e.id", "m.parent_id")
       .select(
@@ -62,25 +63,41 @@ router.get("/categories", async (req, res) => {
         "e.name as parent_category",
         "m.parent_id"
       )
-      .orderBy("e.created_at")
-      .limit(30)
-    res.json(categories);
+      .orderBy("m.updated_at", 'desc')
+      .paginate({
+        perPage: 2,
+        currentPage: page,
+        isLengthAware: true,
+      })
+      .then(async (response) => {
+        let categories = response.data;
+        let currPage = response.pagination.currentPage;
+        let lastPage = response.pagination.lastPage;
+        let totalPages = [];
+        for (let i = 1; i <= lastPage; i++) {
+          if (lastPage - 1 >= 0) {
+            totalPages.push(i);
+          }
+        }
+
+        res.json({categories, currPage, lastPage, totalPages});
+      })
+      .catch(err => console.log(err))
+      console.log(categories)
   } catch (err) {
-    console.error(err);
-    res.json(err);
+    res.status(401).json({error: err});
   }
 });
 
 router.get("/search-categories", async (req, res) => {
   try {
-    const parent_categories = await db('product_categories')
-    .select('id', 'name')
-    .where('name', "ILIKE", `%${req.query.search.toLocaleLowerCase()}%`)
-    .limit(5)
-    res.json(parent_categories)
+    const parent_categories = await db("product_categories")
+      .select("id", "name")
+      .where("name", "ILIKE", `%${req.query.search.toLocaleLowerCase()}%`)
+      .limit(5);
+    res.json(parent_categories);
   } catch (err) {
-    console.log(err);
-    res.json(err);
+    res.status(401).json({error: err});
   }
 });
 
@@ -93,17 +110,17 @@ router.post("/update-category", async (req, res) => {
     });
     res.json(newCategory);
   } catch (err) {
-    console.log(err);
-    res.json(err);
+    res.status(401).json({error: err});
   }
 });
 
 router.post("/delete-category", async (req, res) => {
   try {
     await deleteCategory(db, { id: req.body.id });
+    res.json({message: 'deleted succesfully'})
   } catch (err) {
     console.log(err);
-    res.json(err);
+    res.status(401).json({error: err});
   }
 });
 

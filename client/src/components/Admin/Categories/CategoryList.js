@@ -1,12 +1,24 @@
 import React, { useState } from "react";
 import AddCategory from "./AddCategory";
 import axios from "../../../utils/ajax-helper";
+import "../css/pagination.css";
+import Pagination from "./Pagination";
+import ErrorAlert from "./ErrorAlert";
 
-const CategoryList = ({ categories }) => {
+const CategoryList = ({
+  categories,
+  currPage,
+  lastPage,
+  totalPages,
+  handlePagination,
+  setCategories,
+  setCurrPage,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editId, setEditId] = useState(null);
   const [input, setInput] = useState("");
   const [parentCategory, setParentCategory] = useState([]);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const handleOpen = (id) => {
     setEditId(id);
@@ -22,6 +34,8 @@ const CategoryList = ({ categories }) => {
         ? parentCategory[0].value
         : category.parent_id;
 
+    let page = currPage || 1;
+
     axios
       .post("/update-category", {
         categoryName: input,
@@ -30,24 +44,48 @@ const CategoryList = ({ categories }) => {
       })
       .then((res) => {
         setEditId(null);
-        window.location.reload();
+        axios
+          .get(`/categories?page=${page}`)
+          .then((res) => {
+            setCurrPage(res.data.currPage);
+            setCategories(res.data.categories);
+          })
+          .catch((err) => {
+            setErrorMsg("Sorry! Something went wrong. Please Try again");
+          });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setErrorMsg(
+          "Sorry! You can't update category currently. Please Try again"
+        );
+      });
   };
 
   const handleDelete = (id) => {
+    let page = currPage || 1;
     axios
       .post("/delete-category", {
         id,
       })
       .then((res) => {
-        window.location.reload();
+        axios
+          .get(`/categories?page=${page}`)
+          .then((res) => {
+            setCurrPage(res.data.currPage);
+            setCategories(res.data.categories);
+          })
+          .catch((err) => {
+            setErrorMsg("Sorry! Something went wrong. Please Try again");
+          });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setErrorMsg("Sorry! You can't delete some other's Parent Category");
+      });
   };
 
   return (
     <>
+      {errorMsg && <ErrorAlert msg={errorMsg} />}
       <div className="col-lg-12 grid-margin stretch-card">
         <div className="card">
           <div className="card-body">
@@ -86,7 +124,9 @@ const CategoryList = ({ categories }) => {
                         ) : (
                           <AddCategory
                             category={category}
-                            handleFunction={() => handleUpdateCategory(category)}
+                            handleFunction={() =>
+                              handleUpdateCategory(category)
+                            }
                             input={input}
                             parentCategory={parentCategory}
                             setParentCategory={setParentCategory}
@@ -101,6 +141,12 @@ const CategoryList = ({ categories }) => {
           </div>
         </div>
       </div>
+      <Pagination
+        currPage={currPage}
+        lastPage={lastPage}
+        totalPages={totalPages}
+        handlePagination={handlePagination}
+      />
     </>
   );
 };
