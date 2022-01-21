@@ -66,7 +66,7 @@ const ResetPassword = () => {
 
 <div style={{background:'#fcf0e2',height:"1000px"}}> 
             <nav className="navbar navbar-expand-lg ">
-  <a className="navbar-brand" href="#"><img src='https://images.indianexpress.com/2021/01/myntra.png' height='50px' width='150px' />
+  <a className="navbar-brand" href="#"><h3>E-commerence</h3>
 </a>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
@@ -87,13 +87,13 @@ const ResetPassword = () => {
   </div>
 </nav>
             <div className="card">
-            <div className="card-header">
-                <img src='https://images.indianexpress.com/2021/01/myntra.png' height='100px' width='100px'/>
-                <br/>
-            <h4 className='message'>
-   {message}
-   </h4>
-  </div>
+                <div className="card-header">
+                   <h5>ForgotPassword</h5>
+                    <br />
+                    <h4 className='message'>
+                        {message}
+                    </h4>
+                </div>
                 <div className="card-body">
                     <form className='form' onSubmit={submitHandler}>
                         <div className='form-group'>

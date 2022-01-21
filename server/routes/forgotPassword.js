@@ -1,17 +1,11 @@
+const express = require('express');
+const router = express.Router()
+const knex = require('../utils/knex');
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
-const express = require("express");
-const router = express.Router()
-const app = express();
-const dotenv = require("dotenv");
-dotenv.config();
-const environment = process.env.NODE_ENV || "development";
-const config = require("../knexfile")[environment];
-const knex = require("knex")(config);
-const cors = require("cors");
-const bcrypt = require('bcryptjs');
-
 console.log("in forgot router");
+
+
 
 router.post('', (req, res) => {
     console.log("jfghbvfdhvfhx",req.body.email ,"dbjfvsd ",req.body.link)
