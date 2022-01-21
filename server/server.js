@@ -9,14 +9,13 @@ const forgotPassword = require('./routes/forgotPassword');
 const port = 5000;
 dotenv.config();
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 //routes
-app.use('/api/reset_password',resetPassword)
-app.use('/api/forgot_password',forgotPassword)
+app.use('/api/reset_password', resetPassword)
+app.use('/api/forgot_password', forgotPassword)
 
 app.get("/", (req, res) => {
   res.json({ name: "Magesh", company: "Sedin pvt" });
