@@ -1,12 +1,12 @@
 import React from "react";
-import { Helmet } from "react-helmet";
+import './css/admin-style.css'
 
 const Sidebar = () => {
   return (
     <React.Fragment>
-      <Helmet>
+      {/* <Helmet>
         <link rel="stylesheet" href="/css/style.css" />
-      </Helmet>
+      </Helmet> */}
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
           <li className="nav-item">

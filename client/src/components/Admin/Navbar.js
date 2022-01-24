@@ -1,12 +1,12 @@
 import React from "react";
-import { Helmet } from "react-helmet";
+import './css/admin-style.css'
 
 const Navbar = () => {
   return (
     <>
-      <Helmet>
+      {/* <Helmet>
         <link rel="stylesheet" href="/css/style.css" />
-      </Helmet>
+      </Helmet> */}
       <nav className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div
           className="navbar-menu-wrapper d-flex align-items-center justify-content-end"
