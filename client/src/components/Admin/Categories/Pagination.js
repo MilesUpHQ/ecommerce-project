@@ -5,14 +5,17 @@ const Pagination = ({ currPage, lastPage, totalPages, handlePagination }) => {
     <div>
       <nav aria-label="Page navigation example">
         <ul className="pagination justify-content-center">
-          <li className={currPage == 1 ? "page-item disabled" : "page-item"}>
+          <li
+            className={currPage == 1 ? "page-item disabled" : "page-item"}
+            onClick={() => handlePagination(currPage - 1)}
+          >
             <div className="page-link" href="#" tabindex="-1">
               Previous
             </div>
           </li>
           {totalPages &&
             totalPages.map((page) => (
-              <>
+              <React.Fragment key={page}>
                 <li className="page-item">
                   <div
                     className={
@@ -25,12 +28,13 @@ const Pagination = ({ currPage, lastPage, totalPages, handlePagination }) => {
                     {page}
                   </div>
                 </li>
-              </>
+              </React.Fragment>
             ))}
           <li
             className={
               currPage == lastPage ? "page-item disabled" : "page-item"
             }
+            onClick={() => currPage !== lastPage ? handlePagination(currPage + 1): ''}
           >
             <div className="page-link">Next</div>
           </li>

@@ -61,7 +61,8 @@ const CategoryList = ({
       });
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, name) => {
+    if (window.confirm(`Are you sure! Delete ${name} Category?`)) {
     let page = currPage || 1;
     axios
       .post("/delete-category", {
@@ -81,6 +82,7 @@ const CategoryList = ({
       .catch((err) => {
         setErrorMsg("Sorry! You can't delete some other's Parent Category");
       });
+    }
   };
 
   return (
@@ -115,7 +117,7 @@ const CategoryList = ({
                               </button>
                               <button
                                 className="btn btn-danger"
-                                onClick={() => handleDelete(category.id)}
+                                onClick={() => handleDelete(category.id, category.category)}
                               >
                                 Delete
                               </button>

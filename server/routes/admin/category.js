@@ -65,7 +65,7 @@ router.get("/categories", async (req, res) => {
       )
       .orderBy("m.updated_at", 'desc')
       .paginate({
-        perPage: 2,
+        perPage: 4,
         currentPage: page,
         isLengthAware: true,
       })

@@ -16,7 +16,7 @@ const AddCategory = ({
   useEffect(() => {
     if (category !== undefined) {
       setInput(category.category);
-      setParentCategory([{label: category.parent_category}]);
+      setParentCategory([{ label: category.parent_category }]);
     }
   }, [category]);
 
@@ -63,9 +63,10 @@ const AddCategory = ({
         <td style={{ border: 0 }}>
           <button
             type="button"
-            className={"btn btn-primary btn-icon-text mt-1 " + `${
-              input.length < 3 ? "disabled" : ""
-            }`}
+            className={
+              "btn btn-primary btn-icon-text mt-1 " +
+              `${input.length < 3 ? "disabled" : ""}`
+            }
             onClick={handleFunction}
           >
             Submit
