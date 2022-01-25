@@ -4,9 +4,11 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
+var adminRouter = require('./routes/admin/category');
+const db = require("./config/dbConfig");
+const port = process.env.PORT;
 const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
-const port = 5000;
 dotenv.config();
 
 app.use(express.json());
@@ -25,9 +27,4 @@ app.listen(port, () =>
   console.log(`JS Bootcamp project listening on port ${port}!`)
 );
 
-// /admin/products
-//   / admin/products/new
-// POST / admin / products
-//   / admin / categories
-// /admin/categories/new
-//   / admin / orders
+app.use('/', adminRouter)
