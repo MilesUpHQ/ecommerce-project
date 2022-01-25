@@ -17,7 +17,7 @@ function addCategory(db, newCategory) {
 
 function updateCategory(db, updateCategory) {
   return db
-    .update("name", updateCategory.name)
+    .update("name", updateCategory.name, "*")
     .update("parent_id", updateCategory.parent_id)
     .where("id", updateCategory.id)
     .into("product_categories")
@@ -68,7 +68,6 @@ router.get("/categories", async (req, res) => {
         res.json({ categories, currPage, lastPage, totalPages });
       })
       .catch((err) => console.log(err));
-    console.log(categories);
   } catch (err) {
     res.status(401).json({ error: err });
   }
@@ -92,14 +91,13 @@ router.post("/category", async (req, res) => {
       parent_id: req.body.parentCategoryId || null,
       name: req.body.categoryName,
     });
+    if (newCategory.parent_id) {
+      let parent = await db("product_categories")
+        .select("name")
+        .where("id", newCategory.parent_id);
+      newCategory.parent_category = parent[0].name;
+    }
     res.send(newCategory);
-    // let newCategory = {
-    //   parent_id: req.body.parentCategoryId || null,
-    //   name: req.body.categoryName,
-    // };
-    // knex("product_categories").insert(newCategory, "*")
-    // .then(res => console.log('res', res))
-    // .catch(err => console.log('err', err))
   } catch (err) {
     res.status(401).json({ error: err });
   }
@@ -112,6 +110,12 @@ router.put("/update-category", async (req, res) => {
       id: req.body.categoryId,
       parent_id: req.body.parentCategoryId,
     });
+    if (newCategory.parent_id) {
+      let parentCategory = await db("product_categories")
+        .select("name")
+        .where("id", newCategory.parent_id);
+      newCategory.parent_category = parentCategory[0].name;
+    }
     res.json(newCategory);
   } catch (err) {
     res.status(401).json({ error: err });
@@ -123,7 +127,6 @@ router.delete("/delete-category", async (req, res) => {
     await deleteCategory(db, { id: req.query.id });
     res.json({ message: "deleted succesfully" });
   } catch (err) {
-    console.log(err);
     res.status(401).json({ error: err });
   }
 });

@@ -19,7 +19,7 @@ const Category = () => {
       return;
     }
     let id = parentCategory.length !== 0 ? parentCategory[0].value : 0;
-    let page = currPage || 1;
+
     axios
       .post("/category", {
         categoryName: input,
@@ -27,25 +27,24 @@ const Category = () => {
       })
       .then((res) => {
         setIsOpen(false);
-        setParentCategory([])
-        setInput("")
-        // let newCategory = [...categories]
-        // newCategory.splice(0, 0, res.data)
-        // categories.splice(0, 0, res.data)
-        // console.log(newCategory)
-        // setCategories(newCategory)
-        axios
-          .get(`/categories?page=${page}`)
-          .then((res) => {
-            setCurrPage(res.data.currPage);
-            setCategories(res.data.categories);
-          })
-          .catch((err) => {
-            setErrorMsg("Sorry! Something went wrong. Please Try again");
-          });
+        setParentCategory([]);
+        setInput("");
+        let newCategory = {
+          id: res.data.id,
+          category: res.data.name,
+          parent_id: res.data.parent_id,
+          parent_category: res.data.parent_category || null,
+          updated_at: res.data.updated_at,
+        };
+        let newCategories = [...categories];
+        newCategories.splice(0, 0, newCategory);
+        console.log(newCategories);
+        setCategories(newCategories);
       })
       .catch((err) => {
-        setErrorMsg("Sorry! You can't add Category currently. Please Try again");
+        setErrorMsg(
+          "Sorry! You can't add Category currently. Please Try again"
+        );
       });
   };
 
