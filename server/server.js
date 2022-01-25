@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 var adminRouter = require('./routes/admin/category');
 const db = require("./config/dbConfig");
-const port = 4000;
+const port = process.env.PORT;
 const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
 dotenv.config();
