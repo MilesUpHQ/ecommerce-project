@@ -1,21 +1,23 @@
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-const port = 4000;
+const cors = require("cors");
+var adminRouter = require('./routes/admin/category');
+const db = require("./config/dbConfig");
+const port = process.env.PORT;
+const resetPassword = require("./routes/resetPassword");
+const forgotPassword = require("./routes/forgotPassword");
 dotenv.config();
 
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
-const environment = process.env.NODE_ENV || "development";
-const config = require("./knexfile")[environment];
-const knex = require("knex")(config);
-const bookshelf = require('bookshelf')(knex);
+const bookshelf = require('bookshelf')(db);
 const securePassword = require('bookshelf-secure-password');
 bookshelf.plugin(securePassword);
-const jwt = require('jsonwebtoken');
-const cors = require("cors");
 const bodyParser = require('body-parser');
 
 
@@ -23,6 +25,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+//routes
+app.use("/api/reset_password", resetPassword);
+app.use("/api/forgot_password", forgotPassword);
 const User = bookshelf.Model.extend({
   tableName: 'users',
   hasSecurePassword: true
@@ -52,6 +57,7 @@ app.listen(port, () =>
   console.log(`JS Bootcamp project listening on port ${port}!`)
 );
 
+app.use('/', adminRouter)
 
 app.post('/signup',(req,res)=>{
   console.log(req);

@@ -1,15 +1,22 @@
-import './App.css';
-import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Home from './components/Home/Home';
 import Logout from './components/Logout/Logout';
 import {getJWT} from './utils/jwt';
+import AdminHome from "./components/Admin/AdminHome";
+import CategoryLayout from "./components/Admin/Categories/CategoryLayout";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 
-function App() {
+const App = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
+        <Route path="/" element={<AdminHome />} />
+        <Route path="/admin/categories" element={<CategoryLayout />} />
+        <Route path="/forgot_password" element={<ForgotPassword />} />
+        <Route path="/reset_password/:token" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="/logout" element={<Logout />} />
@@ -20,7 +27,7 @@ function App() {
         </Route>   
 
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
