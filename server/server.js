@@ -16,6 +16,8 @@ const securePassword = require('bookshelf-secure-password');
 bookshelf.plugin(securePassword);
 const jwt = require('jsonwebtoken');
 const cors = require("cors");
+const bodyParser = require('body-parser');
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -38,10 +40,9 @@ const strategy = new JWTStrategy(opts, (jwt_payload, next) => {
   })
 });
 
-use(bodyParser.json());
+app.use(bodyParser.json());
 passport.use(strategy);
 app.use(passport.initialize());
-app.
 
 app.get("/", (req, res) => {
   res.json({ name: "Magesh", company: "Sedin pvt" });
@@ -61,7 +62,7 @@ app.post('/signup',(req,res)=>{
   }
   const user = new User({
       email: req.body.email,
-      user_name: req.body.username,
+      username: req.body.username,
       password: req.body.password,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
@@ -90,6 +91,10 @@ app.post('/getToken', (req, res) => {
       });
   });
 
+});
+
+app.get('/getUser', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json(req.user);
 });
 
 // /admin/products
