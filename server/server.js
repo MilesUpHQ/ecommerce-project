@@ -6,6 +6,8 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
+const featuredProducts = require("./routes/featuredProducts");
+const ViewProduct = require("./routes/viewProductById");
 const port = 5000;
 dotenv.config();
 
@@ -16,6 +18,8 @@ app.use(cors());
 //routes
 app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
+app.use("/api/featured_products", featuredProducts);
+app.use("/api/view_Product", ViewProduct);
 
 app.get("/", (req, res) => {
   res.json({ name: "Magesh", company: "Sedin pvt" });
