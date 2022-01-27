@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Home from './components/Home/Home';
@@ -13,18 +13,25 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AdminHome />} />
-        <Route path="/admin/categories" element={<CategoryLayout />} />
         <Route path="/forgot_password" element={<ForgotPassword />} />
-        <Route path="/reset_password/:token" element={<ResetPassword />} />
+        <Route path="/reset_password/:token" elsement={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="/logout" element={<Logout />} />
 
-        <Route exact path="/" element={<PrivateRoute>
+        <Route path="/" element={<PrivateRoute>
           <Home />
         </PrivateRoute>}>
-        </Route>   
+        </Route>
+
+        <Route exact path="/admin" element={<PrivateRoute>
+          <AdminHome />
+        </PrivateRoute>}>
+        </Route>
+
+        <Route path="/admin/categories" element={<PrivateRoute>
+          <CategoryLayout />
+        </PrivateRoute>}></Route>
 
       </Routes>
     </Router>
