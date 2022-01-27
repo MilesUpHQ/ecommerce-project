@@ -26,6 +26,9 @@ export default function Signup() {
 			})
 			.catch((err) => {
 				setError(err.response.data.message);
+				if (err.response.data[0].msg) {
+					setError(err.response.data[0].msg);
+				}
 			});
 	};
 	return (
@@ -34,6 +37,13 @@ export default function Signup() {
 				<div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
 					<div className="card border-0 shadow rounded-3 my-5">
 						<div className="card-body p-4 p-sm-5">
+							{error ? (
+								<div className="alert alert-danger" role="alert">
+									{error}
+								</div>
+							) : (
+								<></>
+							)}
 							<h1 className="card-title text-center mb-5 fw-light fs-5">
 								<span>Signup</span>
 							</h1>
@@ -108,13 +118,6 @@ export default function Signup() {
 								</p>
 							</div>
 						</div>
-						{error ? (
-							<div className="alert alert-danger" role="alert">
-								{error}
-							</div>
-						) : (
-							<></>
-						)}
 					</div>
 				</div>
 			</div>
