@@ -7,68 +7,107 @@ import { Card, Button } from "react-bootstrap";
 import { FaShoppingCart, FaHeart, FaPlus, FaMinus } from "react-icons/fa";
 import SimpleImageSlider from "react-simple-image-slider";
 import Navbar from "./Navbar";
+import FeaturedProductsList from "./FeaturedProductsList";
+import ErrorAlert from "./ErrorAlert";
 
 const FeaturedProducts = () => {
   let [featuredProducts, setfeaturedProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currPage, setCurrPage] = useState(null);
+  const [lastPage, setLastPage] = useState(null);
+  const [totalPages, setTotalPages] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
   const images = [
     {
-      url: "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/2378362/2018/6/9/270e0a7e-365b-4640-9433-b269c60bf3061528527188563-Moda-Rapido-Men-Maroon-Printed-Round-Neck-T-shirt-3811528527-1.jpg",
+      url: "https://image.shutterstock.com/image-vector/welcome-poster-spectrum-brush-strokes-260nw-1146069941.jpg",
     },
     {
-      url: "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/2378362/2018/6/9/405568f1-c3c1-4713-9c38-6dd95ac962d31528527188543-Moda-Rapido-Men-Maroon-Printed-Round-Neck-T-shirt-3811528527-2.jpg",
+      url: "https://in.apparelresources.com/wp-content/uploads/sites/3/2020/07/Myntra-Fashion-brands.jpg",
     },
     {
-      url: "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/2378362/2018/6/9/33523035-65f5-4fcb-b7a5-4062e656d10b1528527188511-Moda-Rapido-Men-Maroon-Printed-Round-Neck-T-shirt-3811528527-3.jpg",
+      url: "https://static.toiimg.com/photo/msid-73928266/73928266.jpg",
+    },
+    {
+      url: "https://media-exp1.licdn.com/dms/image/C511BAQG98tWEb3usAw/company-background_10000/0/1540729740206?e=2159024400&v=beta&t=m4VWC0NtZ0kMKloXcm4pNJTL6KLAGP2ZrKIIwZOcBMg",
+    },
+    {
+      url: "https://static.magicpin.com/storage/blog/images/myntra-online-shopping-for-mens_Cover12.png",
+    },
+    {
+      url: "https://www.indiantelevision.com/sites/default/files/styles/smartcrop_800x800/public/images/tv-images/2019/08/19/rao.jpg?itok=kMYIvYbR",
     },
   ];
 
+  const handlePagination = (page) => {
+    axios
+      .get(`/featured_products?page=${page}`)
+      .then((res) => {
+        console.log("resss in handle pagination :", res);
+        setfeaturedProducts(res.data.featuredProducts);
+        setCurrPage(res.data.currPage);
+      })
+      .catch((err) => {
+        setErrorMsg("Sorry! Something went wrong. Please Try again", err);
+      });
+  };
   useEffect(async () => {
     axios
       .get("/featured_products")
-      .then((response) => {
-        console.log("getting featuredProducts", response.data);
-        setfeaturedProducts(response.data);
-        console.log("featuredProducts :::::::::::::::", featuredProducts);
+      .then((res) => {
+        setCurrPage(res.data.currPage);
+        setLastPage(res.data.lastPage);
+        setTotalPages(res.data.totalPages);
+        setfeaturedProducts(res.data.featuredProducts);
+        console.log("res ::", res);
+        console.log("featured product ::", featuredProducts, "and data");
       })
       .catch((err) => {
-        console.log("erro in getting featuredProducts", err);
+        setErrorMsg("Sorry! Something went wrong. Please Try again", err);
       });
   }, []);
 
   return (
     <div>
-      <Navbar />
-      <br />
-      <hr />
-      {featuredProducts.map((featuredProduct) => {
-        return (
-          <Card style={{ width: "18rem" }}>
+      {featuredProducts && (
+        <div>
+          <Navbar />
+          <div style={{ width: "fit-content", height: "200px" }}>
             <SimpleImageSlider
               width="100%"
-              height="300px"
+              height="90%"
               images={images}
               showBullets={true}
-              style={{ border: "solid 1px pink" }}
+              autoPlay={true}
+              style={{
+                border: "solid 1px pink",
+                marginTop: "60px",
+              }}
             />
-
-            <Card.Body>
-              <Card.Title style={{ float: "left", marginLeft: "60px" }}>
-                {featuredProduct.name}{" "}
-              </Card.Title>
-              <Card.Text style={{ marginLeft: "100px" }}>
-                <FaHeart style={{ fontSize: "20px", color: "red" }} />
-              </Card.Text>
-              <br />
-
-              <Card.Text>{featuredProduct.description}</Card.Text>
-              <Card.Text>Price : Rs.{featuredProduct.price}</Card.Text>
-              <Button variant="primary">Add to cart</Button>
-              <br />
-              <a href={`/view_product/${featuredProduct.id}`}>View Product</a>
-            </Card.Body>
-          </Card>
-        );
-      })}
+          </div>
+          <br />
+          <br />
+          <br />
+          <br /> <br />
+          <br /> <br /> <br /> <br /> <br /> <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          {errorMsg && <ErrorAlert msg={errorMsg} />}
+          <div style={{ backgroundColor: "#fcf0e2" }}>
+            <FeaturedProductsList
+              featuredProducts={featuredProducts}
+              currPage={currPage}
+              lastPage={lastPage}
+              totalPages={totalPages}
+              handlePagination={handlePagination}
+              setfeaturedProducts={setfeaturedProducts}
+              setCurrPage={setCurrPage}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,12 +1,10 @@
 import React from "react";
-import "./css/admin-style.css";
+import "./pagination-style.css";
+import { FaShoppingCart, FaHeart, FaPlus, FaMinus } from "react-icons/fa";
 
 const Navbar = () => {
   return (
     <>
-      {/* <Helmet>
-        <link rel="stylesheet" href="/css/style.css" />
-      </Helmet> */}
       <nav className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div
           className="navbar-menu-wrapper d-flex align-items-center justify-content-end"
@@ -23,28 +21,30 @@ const Navbar = () => {
                     <i className="icon-search"></i>
                   </span>
                 </div>
-                <input
+                {/* <input
                   type="text"
                   className="form-control"
                   id="navbar-search-input"
                   placeholder="Search now"
                   aria-label="search"
                   aria-describedby="search"
-                />
+                /> */}
               </div>
             </li>
             <li className="nav-item nav-search d-none d-lg-block">
-              <h4>FeaturedProducts</h4>
+              <h4 style={{ color: "black", fontSize: "30px" }}>Products</h4>
             </li>
           </ul>
           <ul className="navbar-nav navbar-nav-right">
             <li className="nav-item nav-profile dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                data-toggle="dropdown"
-                id="profileDropdown"
-              ></a>
+              <a href="#">
+                <FaHeart style={{ color: "black", fontSize: "30px" }} />
+              </a>
+            </li>
+            <li className="nav-item nav-profile dropdown">
+              <a href="#">
+                <FaShoppingCart style={{ color: "black", fontSize: "30px" }} />
+              </a>
             </li>
           </ul>
           <button
@@ -52,7 +52,7 @@ const Navbar = () => {
             type="button"
             data-toggle="offcanvas"
           >
-            FeaturedProducts
+            Products
           </button>
         </div>
       </nav>

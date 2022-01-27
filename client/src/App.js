@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/forgot_password" element={<ForgotPassword />} />
         <Route path="/reset_password/:token" element={<ResetPassword />} />
-        <Route path="/featured_Products" element={<FeaturedProducts />} />
+        <Route path="/" element={<FeaturedProducts />} />
         <Route path="/view_product/:id" element={<ViewProduct />} />
       </Routes>
     </div>

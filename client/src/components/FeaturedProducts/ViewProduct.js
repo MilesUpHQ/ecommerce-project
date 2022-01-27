@@ -46,11 +46,11 @@ const ViewProduct = () => {
       });
   }, []);
   return (
-    <div>
+    <div style={{ backgroundColor: "#fcf0e2" }}>
       <Navbar />
       <br />
       <hr />
-      <Card style={{ width: "18rem" }}>
+      <Card style={{ width: "38rem" }}>
         <SimpleImageSlider
           width="100%"
           height="300px"
