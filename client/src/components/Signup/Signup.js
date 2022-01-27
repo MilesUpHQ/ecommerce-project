@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "../../utils/ajax-helper";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Signup() {
 	const [firstName, setFirstName] = useState("");
@@ -22,7 +23,10 @@ export default function Signup() {
 				password: password,
 			})
 			.then((res) => {
-				navigate("/login");
+				toast.success("User Created Sucessfully! Please Login.");
+				setTimeout(() => {
+					navigate("/login");
+				}, 2000);
 			})
 			.catch((err) => {
 				setError(err.response.data.message);
@@ -33,6 +37,7 @@ export default function Signup() {
 	};
 	return (
 		<div className="container">
+			<Toaster />
 			<div className="row">
 				<div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
 					<div className="card border-0 shadow rounded-3 my-5">
