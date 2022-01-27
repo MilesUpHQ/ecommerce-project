@@ -28,8 +28,8 @@ app.use(cors());
 app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
 const User = bookshelf.Model.extend({
-	tableName: "users",
-	hasSecurePassword: true,
+  tableName: "users",
+  hasSecurePassword: true,
 });
 
 const opts = {
