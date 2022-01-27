@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 var adminRouter = require('./routes/admin/category');
 const db = require("./config/dbConfig");
-const port = process.env.PORT;
+const port = process.env.NODE_PORT;
 const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
 dotenv.config();
@@ -19,12 +19,11 @@ const bookshelf = require('bookshelf')(db);
 const securePassword = require('bookshelf-secure-password');
 bookshelf.plugin(securePassword);
 const bodyParser = require('body-parser');
-
+const { body, validationResult } = require('express-validator');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-
 //routes
 app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
@@ -59,12 +58,17 @@ app.listen(port, () =>
 
 app.use('/', adminRouter)
 
-app.post('/signup',(req,res)=>{
-  console.log(req);
-  console.log(req.body);
-
-  if (!req.body.username || !req.body.password || !req.body.email || !req.body.first_name || !req.body.last_name) {
-      res.status(400).send('Please provide the details');
+app.post('/signup',
+  body('email', 'Email is not valid').isEmail(),
+  body('password', 'Password must be at least 4 characters long').isLength({ min: 4 }),
+  body('username', 'Username cannot be blank').notEmpty(),
+  body('first_name', 'First name cannot be blank').notEmpty(),
+  body('last_name', 'Last name cannot be blank').notEmpty(),
+  (req,res)=>{
+  const errors = validationResult(req);
+  if (errors) {
+    res.status(400).json(errors);
+    return;
   }
   const user = new User({
       email: req.body.email,
@@ -73,19 +77,22 @@ app.post('/signup',(req,res)=>{
       first_name: req.body.first_name,
       last_name: req.body.last_name,
   });
-  console.log(user);
   user.save().then(() => {
       res.send('User created successfully');
+  }).catch(err => {
+      res.status(400).send('Unable to create user');
   });
 })
 
 
-app.post('/getToken', (req, res) => {
-  console.log(req.body);
-  console.log(req.body.email);
-  console.log(req.body.password);
-  if(!req.body.email || !req.body.password){
-      res.status(401).send('Please provide email and password');
+app.post('/getToken',
+  body('email', 'Email is not valid').isEmail(),
+  body('password', 'Password must be at least 4 characters long').isLength({ min: 4 }),
+  (req, res) => {
+  const errors = validationResult(req);
+  if (errors) {
+    res.status(400).json(errors);
+    return;
   }
   User.forge({ email: req.body.email }).fetch().then(user => {
       user.authenticate(req.body.password).then(() => {
