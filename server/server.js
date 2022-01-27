@@ -71,9 +71,31 @@ app.post(
 	(req, res) => {
 		const errors = validationResult(req);
 		if (errors.errors.length > 0) {
+			console.log(errors.errors);
 			res.status(400).json(errors.errors);
 			return;
 		}
+		db("users")
+			.where({ email: req.body.email })
+			.then((user) => {
+				if (user.length > 0) {
+					res.status(400).json({
+						message: "Email already exists",
+					});
+					return;
+				}
+			});
+		db("users")
+			.where({ username: req.body.username })
+			.then((user) => {
+				if (user.length > 0) {
+					res.status(400).json({
+						message: "Username already exists",
+					});
+					return;
+				}
+			});
+
 		const user = new User({
 			email: req.body.email,
 			username: req.body.username,
