@@ -69,7 +69,6 @@ app.post(
 	body("first_name", "First name cannot be blank").notEmpty(),
 	body("last_name", "Last name cannot be blank").notEmpty(),
 	(req, res) => {
-		console.log(req.body);
 		const errors = validationResult(req);
 		if (errors.errors.length > 0) {
 			res.status(400).json(errors.errors);
@@ -100,7 +99,6 @@ app.post(
 		min: 4,
 	}),
 	(req, res) => {
-		console.log(req.body);
 		const errors = validationResult(req);
 		if (errors.errors.length > 0) {
 			res.status(400).json(errors.errors);
