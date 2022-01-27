@@ -43,6 +43,9 @@ class Login extends Component {
 					<div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
 						<div className="card border-0 shadow rounded-3 my-5">
 							<div className="card-body p-4 p-sm-5">
+								{this.state.error ? (
+									<div className="alert alert-danger">{this.state.error}</div>
+								) : null}
 								<h1 className="card-title text-center mb-5 fw-light fs-5">
 									<span>Login</span>
 								</h1>
@@ -91,9 +94,6 @@ class Login extends Component {
 									</p>
 								</div>
 							</div>
-							{this.state.error ? (
-								<div className="alert alert-danger">{this.state.error}</div>
-							) : null}
 						</div>
 					</div>
 				</div>
