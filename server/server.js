@@ -5,7 +5,7 @@ const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
 var adminRouter = require("./routes/admin/category");
-const db = require("./config/dbConfig");
+const db = require("./utils/dbConfig");
 const port = process.env.NODE_PORT;
 const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
@@ -69,6 +69,7 @@ app.post(
 	body("first_name", "First name cannot be blank").notEmpty(),
 	body("last_name", "Last name cannot be blank").notEmpty(),
 	(req, res) => {
+		console.log(req.body);
 		const errors = validationResult(req);
 		if (errors.errors.length > 0) {
 			res.status(400).json(errors.errors);
@@ -99,6 +100,7 @@ app.post(
 		min: 4,
 	}),
 	(req, res) => {
+		console.log(req.body);
 		const errors = validationResult(req);
 		if (errors.errors.length > 0) {
 			res.status(400).json(errors.errors);
