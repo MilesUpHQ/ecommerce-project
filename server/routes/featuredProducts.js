@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../utils/knex");
+const knex = require("../utils/dbConfig");
 console.log("featured products");
 const { attachPaginate } = require("knex-paginate");
-
-attachPaginate();
 
 router.get("", (req, res, next) => {
   console.log("getting featured products");

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../utils/knex");
+const knex = require("../utils/dbConfig");
 console.log("get by iddddddddddddddddddddddddddddddddddddddddddddddd");
 router.get("/:id", (req, res, next) => {
   console.log("getting featured products by id :::::::::::::", req.params.id);

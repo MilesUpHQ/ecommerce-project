@@ -1,8 +1,8 @@
 import {
-	BrowserRouter as Router,
-	Routes,
-	Route,
-	Navigate,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
 } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
@@ -17,54 +17,55 @@ import FeaturedProducts from "./components/FeaturedProducts/FeaturedProducts";
 import ViewProduct from "./components/FeaturedProducts/ViewProduct";
 
 const App = () => {
-	return (
-		<Router>
-			<Routes>
-				<Route path="/forgot_password" element={<ForgotPassword />} />
-				<Route path="/reset_password/:token" elsement={<ResetPassword />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="signup" element={<Signup />} />
-				<Route path="/logout" element={<Logout />} />
+  return (
+    <Router>
+      <Routes>
+        <Route path="/forgot_password" element={<ForgotPassword />} />
+        <Route path="/reset_password/:token" elsement={<ResetPassword />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/view_product/:id" element={<ViewProduct />} />
 
-				<Route
-					path="/"
-					element={
-						<PrivateRoute>
-							<Home />
-						</PrivateRoute>
-					}
-				></Route>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <FeaturedProducts />
+            </PrivateRoute>
+          }
+        ></Route>
 
-				<Route
-					exact
-					path="/admin"
-					element={
-						<PrivateRoute>
-							<AdminHome />
-						</PrivateRoute>
-					}
-				></Route>
+        <Route
+          exact
+          path="/admin"
+          element={
+            <PrivateRoute>
+              <AdminHome />
+            </PrivateRoute>
+          }
+        ></Route>
 
-				<Route
-					path="/admin/categories"
-					element={
-						<PrivateRoute>
-							<CategoryLayout />
-						</PrivateRoute>
-					}
-				></Route>
-			</Routes>
-		</Router>
-	);
+        <Route
+          path="/admin/categories"
+          element={
+            <PrivateRoute>
+              <CategoryLayout />
+            </PrivateRoute>
+          }
+        ></Route>
+      </Routes>
+    </Router>
+  );
 };
 
 function PrivateRoute({ children }) {
-	const auth = useAuth();
-	return auth ? children : <Navigate to="/login" />;
+  const auth = useAuth();
+  return auth ? children : <Navigate to="/login" />;
 }
 function useAuth() {
-	const jwt = getJWT();
-	return jwt && jwt !== "undefined" && jwt !== "null";
+  const jwt = getJWT();
+  return jwt && jwt !== "undefined" && jwt !== "null";
 }
 
 export default App;
