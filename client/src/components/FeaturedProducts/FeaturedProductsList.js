@@ -1,12 +1,8 @@
 import React from "react";
-import "../ResetPassword/resetPassword.css";
-import { useEffect, useState } from "react";
-import axios from "../../utils/ajax-helper";
 import "bootstrap/dist/css/bootstrap.css";
 import { Card, Button } from "react-bootstrap";
-import { FaShoppingCart, FaHeart, FaPlus, FaMinus } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import SimpleImageSlider from "react-simple-image-slider";
-import Navbar from "./Navbar";
 import Pagination from "./Pagination";
 
 const FeaturedProductsList = ({
@@ -15,8 +11,6 @@ const FeaturedProductsList = ({
   lastPage,
   totalPages,
   handlePagination,
-  setCategories,
-  setCurrPage,
   loading,
 }) => {
   if (loading) {
@@ -34,36 +28,50 @@ const FeaturedProductsList = ({
     },
   ];
   return (
-    <div>
+    <div style={{ marginTop: "450px", marginLeft: "25%" }}>
       {featuredProducts.map((featuredProduct) => {
         return (
-          <Card style={{ width: "38rem" }}>
-            <SimpleImageSlider
-              width="100%"
-              height="300px"
-              images={images}
-              showBullets={true}
-              style={{ border: "solid 1px pink" }}
-            />
+          <div>
+            <Card style={{ width: "38rem" }}>
+              <SimpleImageSlider
+                width="100%"
+                height="300px"
+                images={images}
+                showBullets={true}
+                style={{ border: "solid 1px pink" }}
+              />
 
-            <Card.Body>
-              <Card.Title style={{ float: "left", marginLeft: "60px" }}>
-                {featuredProduct.name}{" "}
-              </Card.Title>
-              <Card.Text style={{ marginLeft: "100px" }}>
-                <FaHeart style={{ fontSize: "20px", color: "red" }} />
-              </Card.Text>
-              <br />
-
-              <Card.Text>{featuredProduct.description}</Card.Text>
-              <Card.Text>Price : Rs.{featuredProduct.price}</Card.Text>
-              <Button variant="primary">Add to cart</Button>
-              <br />
-              <a href={`/view_product/${featuredProduct.product_id}`}>
-                View Product
-              </a>
-            </Card.Body>
-          </Card>
+              <Card.Body>
+                <Card.Title style={{ float: "left", marginLeft: "60px" }}>
+                  {featuredProduct.name}{" "}
+                </Card.Title>
+                <Card.Text style={{ marginLeft: "500px" }}>
+                  <FaHeart style={{ fontSize: "20px", color: "red" }} />
+                </Card.Text>
+                <br />
+                <Card.Text style={{ marginLeft: "40%" }}>
+                  {featuredProduct.description}
+                </Card.Text>
+                <Card.Text style={{ marginLeft: "40%" }}>
+                  Price : Rs.{featuredProduct.price}
+                </Card.Text>
+                <Button
+                  style={{ float: "left", marginLeft: "30%" }}
+                  variant="primary"
+                >
+                  Add to cart
+                </Button>
+                <br />
+                <a
+                  style={{ marginLeft: "20px", color: "black" }}
+                  href={`/view_product/${featuredProduct.product_id}`}
+                >
+                  View Product
+                </a>
+              </Card.Body>
+            </Card>
+            <br />
+          </div>
         );
       })}
       <br />

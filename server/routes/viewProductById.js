@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const knex = require("../utils/dbConfig");
-console.log("get by iddddddddddddddddddddddddddddddddddddddddddddddd");
+
 router.get("/:id", (req, res, next) => {
-  console.log("getting featured products by id :::::::::::::", req.params.id);
   knex("fetured_products")
     .leftJoin("products", "fetured_products.product_id", "products.id")
     .leftJoin(
@@ -21,8 +20,6 @@ router.get("/:id", (req, res, next) => {
       "products.name",
       "products.id as products_id",
       "fetured_products.id as featured_id",
-      "fetured_products.product_id as product_id_in_featured product",
-      "product_images.product_id as product_id_in_product_images",
       "products.description",
       "products.price",
       "product_images.image_url",
@@ -30,10 +27,9 @@ router.get("/:id", (req, res, next) => {
     )
     .where({ "products.id": req.params.id })
     .then((response) => {
-      console.log("respose by id::", response);
       res.json(response);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {});
 });
 
 module.exports = router;

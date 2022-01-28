@@ -2,9 +2,6 @@ import React from "react";
 import "../ResetPassword/resetPassword.css";
 import { useEffect, useState } from "react";
 import axios from "../../utils/ajax-helper";
-import "bootstrap/dist/css/bootstrap.css";
-import { Card, Button } from "react-bootstrap";
-import { FaShoppingCart, FaHeart, FaPlus, FaMinus } from "react-icons/fa";
 import SimpleImageSlider from "react-simple-image-slider";
 import Navbar from "./Navbar";
 import FeaturedProductsList from "./FeaturedProductsList";
@@ -12,7 +9,6 @@ import ErrorAlert from "./ErrorAlert";
 
 const FeaturedProducts = () => {
   let [featuredProducts, setfeaturedProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [currPage, setCurrPage] = useState(null);
   const [lastPage, setLastPage] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
@@ -43,7 +39,6 @@ const FeaturedProducts = () => {
     axios
       .get(`/featured_products?page=${page}`)
       .then((res) => {
-        console.log("resss in handle pagination :", res);
         setfeaturedProducts(res.data.featuredProducts);
         setCurrPage(res.data.currPage);
       })
@@ -59,8 +54,6 @@ const FeaturedProducts = () => {
         setLastPage(res.data.lastPage);
         setTotalPages(res.data.totalPages);
         setfeaturedProducts(res.data.featuredProducts);
-        console.log("res ::", res);
-        console.log("featured product ::", featuredProducts, "and data");
       })
       .catch((err) => {
         setErrorMsg("Sorry! Something went wrong. Please Try again", err);
@@ -85,15 +78,6 @@ const FeaturedProducts = () => {
               }}
             />
           </div>
-          <br />
-          <br />
-          <br />
-          <br /> <br />
-          <br /> <br /> <br /> <br /> <br /> <br />
-          <br />
-          <br />
-          <br />
-          <br />
           {errorMsg && <ErrorAlert msg={errorMsg} />}
           <div style={{ backgroundColor: "#fcf0e2" }}>
             <FeaturedProductsList

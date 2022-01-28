@@ -1,6 +1,6 @@
 import React from "react";
 import "./pagination-style.css";
-import { FaShoppingCart, FaHeart, FaPlus, FaMinus } from "react-icons/fa";
+import { FaShoppingCart, FaHeart } from "react-icons/fa";
 
 const Navbar = () => {
   return (
@@ -21,14 +21,6 @@ const Navbar = () => {
                     <i className="icon-search"></i>
                   </span>
                 </div>
-                {/* <input
-                  type="text"
-                  className="form-control"
-                  id="navbar-search-input"
-                  placeholder="Search now"
-                  aria-label="search"
-                  aria-describedby="search"
-                /> */}
               </div>
             </li>
             <li className="nav-item nav-search d-none d-lg-block">

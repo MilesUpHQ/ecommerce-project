@@ -21,7 +21,6 @@ const ViewProduct = () => {
     },
   ];
   let imgArray = [];
-  console.log("id :::::::::::::::::::::::::::::::::::::", id);
   useEffect(async () => {
     axios
       .get(`/view_Product/${id}`)
@@ -30,27 +29,22 @@ const ViewProduct = () => {
         for (let i = 0; i < response.data.length; i++) {
           image_url.push(response.data[i].image_url);
         }
-        console.log("getting image_url", image_url);
         for (let i = 0; i < image_url.length; i++) {
           let url = {
             url: image_url[i],
           };
           imgArray.push(url);
         }
-        console.log("getting imgArray", imgArray);
         setfeaturedProduct(response.data[0]);
-        console.log("featured product", featuredProduct);
       })
-      .catch((err) => {
-        console.log("erro in getting featuredProducts", err);
-      });
+      .catch((err) => {});
   }, []);
   return (
     <div style={{ backgroundColor: "#fcf0e2" }}>
       <Navbar />
       <br />
       <hr />
-      <Card style={{ width: "38rem" }}>
+      <Card style={{ width: "38rem", left: "10px" }}>
         <SimpleImageSlider
           width="100%"
           height="300px"
