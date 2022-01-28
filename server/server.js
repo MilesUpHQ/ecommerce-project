@@ -1,12 +1,11 @@
+const port = process.env.NODE_PORT;
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
-var adminRouter = require("./routes/admin/category");
 const db = require("./utils/dbConfig");
-const port = process.env.NODE_PORT;
+var adminRouter = require("./routes/admin/category");
 const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
 const featuredProducts = require("./routes/featuredProducts");
@@ -32,6 +31,7 @@ app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
 app.use("/featured_products", featuredProducts);
 app.use("/view_Product", ViewProduct);
+
 const User = bookshelf.Model.extend({
   tableName: "users",
   hasSecurePassword: true,
