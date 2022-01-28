@@ -38,7 +38,7 @@ const Category = () => {
           });
       })
       .catch((err) => {
-        setErrorMsg("Sorry! You can't add Category currently. Please Try again");
+        console.log(err) //setErrorMsg("Sorry! You can't add Category currently. Please Try again");
       });
   };
 

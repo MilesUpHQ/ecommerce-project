@@ -6,9 +6,12 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 var adminRouter = require('./routes/admin/category');
 const db = require("./config/dbConfig");
-const port = 4000;
 const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
+const addProducts = require("./routes/addProducts");
+const displayProducts = require("./routes/displayProducts");
+//const { default: DisplayProducts } = require("../client/src/components/Product-List/DisplayProducts");
+const port = 5000;
 dotenv.config();
 
 app.use(express.json());
@@ -18,6 +21,9 @@ app.use(cors());
 //routes
 app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
+app.use("/api/admin/addproducts", addProducts);
+app.use('/api', adminRouter)
+app.use('/api/display', displayProducts)
 
 app.get("/", (req, res) => {
   res.json({ name: "Magesh", company: "Sedin pvt" });
@@ -27,4 +33,3 @@ app.listen(port, () =>
   console.log(`JS Bootcamp project listening on port ${port}!`)
 );
 
-app.use('/', adminRouter)
