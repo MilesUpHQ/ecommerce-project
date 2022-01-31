@@ -43,7 +43,9 @@ console.log(fileData)
     // console.log("Filedata",fileData)
     
     axios
-    .post("/admin/addproducts", {
+    .post("/admin/addproducts", {headers :{
+      'Content-Type' : "multipart/form-data"} 
+    },{
       name: name,
       price : price,
       description:description,

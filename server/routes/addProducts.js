@@ -32,17 +32,7 @@ router.post("",(req,res)=>{
     knex("products").insert({ name:req.body.name, price: req.body.price,description:req.body.description , category_id:null })
     //.returning('id')
     .then(row => {
-      router.post("/single", upload.single("image"),  (req, res)=> {
-       console.log("Request.file",req.file);//display info on image file 
-       res.send("Single File Upload Sucesss");
-      });
-
-
-      router.post("/multiple",upload.array("images",3),
-      (req,res)=>{
-        console.log(req.files);
-        res.send("Multiple image upload sucess");
-      });   
+      
       //console.log("::::::::::::",req.body.row[0].id)
       //return knex.insert({image_url:req.body.img,product_id:req.body.row[0].id}).into('product_images');
        // const {name,data} = req.files.img;
@@ -61,6 +51,26 @@ router.post("",(req,res)=>{
       console.log("err :::::::::::::::", err);
     })
 })
+
+router.post("/single", upload.single("image"),  (req, res)=> {
+  console.log("Request.file",req.file);//display info on image file 
+  res.send("Single File Upload Sucesss");
+ });
+
+
+ router.post("/multiple",upload.array("images",3),
+ (req,res)=>{
+   console.log(req.files);
+   res.send("Multiple image upload sucess");
+ });   
+
+
+
+
+
+
+
+
 router.get("",(req,res)=>{
     knex("products") 
     .select("id","name").then(row=>{
