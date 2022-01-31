@@ -37,7 +37,7 @@ const CategoryList = ({
     let page = currPage || 1;
 
     axios
-      .post("/update-category", {
+      .put("/update-category", {
         categoryName: input,
         categoryId: category.id,
         parentCategoryId: id,
@@ -63,25 +63,23 @@ const CategoryList = ({
 
   const handleDelete = (id, name) => {
     if (window.confirm(`Are you sure! Delete ${name} Category?`)) {
-    let page = currPage || 1;
-    axios
-      .post("/delete-category", {
-        id,
-      })
-      .then((res) => {
-        axios
-          .get(`/categories?page=${page}`)
-          .then((res) => {
-            setCurrPage(res.data.currPage);
-            setCategories(res.data.categories);
-          })
-          .catch((err) => {
-            setErrorMsg("Sorry! Something went wrong. Please Try again");
-          });
-      })
-      .catch((err) => {
-        setErrorMsg("Sorry! You can't delete some other's Parent Category");
-      });
+      let page = currPage || 1;
+      axios
+        .delete("/delete-category", { params: { id } })
+        .then((res) => {
+          axios
+            .get(`/categories?page=${page}`)
+            .then((res) => {
+              setCurrPage(res.data.currPage);
+              setCategories(res.data.categories);
+            })
+            .catch((err) => {
+              setErrorMsg("Sorry! Something went wrong. Please Try again");
+            });
+        })
+        .catch((err) => {
+          setErrorMsg("Sorry! You can't delete some other's Parent Category");
+        });
     }
   };
 
@@ -117,7 +115,9 @@ const CategoryList = ({
                               </button>
                               <button
                                 className="btn btn-danger"
-                                onClick={() => handleDelete(category.id, category.category)}
+                                onClick={() =>
+                                  handleDelete(category.id, category.category)
+                                }
                               >
                                 Delete
                               </button>

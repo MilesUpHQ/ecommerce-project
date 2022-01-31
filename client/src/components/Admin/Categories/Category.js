@@ -27,6 +27,13 @@ const Category = () => {
       })
       .then((res) => {
         setIsOpen(false);
+        setParentCategory([])
+        setInput("")
+        // let newCategory = [...categories]
+        // newCategory.splice(0, 0, res.data)
+        // categories.splice(0, 0, res.data)
+        // console.log(newCategory)
+        // setCategories(newCategory)
         axios
           .get(`/categories?page=${page}`)
           .then((res) => {
