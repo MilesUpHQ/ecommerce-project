@@ -19,7 +19,6 @@ const Category = () => {
       return;
     }
     let id = parentCategory.length !== 0 ? parentCategory[0].value : 0;
-
     axios
       .post("/category", {
         categoryName: input,
