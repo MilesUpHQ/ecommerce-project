@@ -43,9 +43,7 @@ console.log(fileData)
     // console.log("Filedata",fileData)
     
     axios
-    .post("/admin/addproducts", {headers :{
-      'Content-Type' : "multipart/form-data"} 
-    },{
+    .post("/admin/addproducts",{
       name: name,
       price : price,
       description:description,
@@ -99,8 +97,6 @@ const fileChangeHandler = (e) => {
                                 <input type="file" name="image"  onChange={fileChangeHandler} />
                 </div>
 
-              
-                                                    
 
 
                 <div className="form-group">

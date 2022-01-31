@@ -1,20 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../utils/knex");
+const knex = require("../utils/dbConfig");
 const multer  = require('multer');
-//const cors = require("cors");
-//const upload = multer({ dest: 'uploads/' })
-//const fileUpload = require('express-fileupload');
-/*return knex("users")
-  .insert({ first_name: "John", last_name: "Doe" })
-  .returning('id')
-  .then(function (response) {
-    return knex('groups')
-      .insert({name: 'Cool Group', user_id: response[0]})
-  });*/
- // router.use(cors());
-
-
 
   const fileStorageEngine = multer.diskStorage({
     destination:(req,file,cb)=>{
@@ -30,23 +17,10 @@ router.post("",(req,res)=>{
     console.log("Request.body",req);
       //  table.integer('category_id').unsigned().notNullable();
     knex("products").insert({ name:req.body.name, price: req.body.price,description:req.body.description , category_id:null })
-    //.returning('id')
+   
     .then(row => {
-      
-      //console.log("::::::::::::",req.body.row[0].id)
-      //return knex.insert({image_url:req.body.img,product_id:req.body.row[0].id}).into('product_images');
-       // const {name,data} = req.files.img;
-        //const tagsInsert = tags.map(tagId => ({ note_id: noteId, tag_id: tagId }));
-        //console.log(row[0])
-       // knex("product_images")
-       /*if(name&&data){
-         knex("product_images").insert({product_id:row[0].id,image_url:data})
-        .then
-        res.sendStatus(200);
-       }
-       else
-       res.sendStatus(400);*/
-     // res.json(row);
+      console.log("Insided");    
+  
     }).catch((err) => {
       console.log("err :::::::::::::::", err);
     })
@@ -63,9 +37,6 @@ router.post("/single", upload.single("image"),  (req, res)=> {
    console.log(req.files);
    res.send("Multiple image upload sucess");
  });   
-
-
-
 
 
 
