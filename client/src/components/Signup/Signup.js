@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "../../utils/ajax-helper";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Signup() {
 	const [firstName, setFirstName] = useState("");
@@ -22,18 +23,32 @@ export default function Signup() {
 				password: password,
 			})
 			.then((res) => {
-				navigate("/login");
+				toast.success("User Created Sucessfully! Please Login.");
+				setTimeout(() => {
+					navigate("/login");
+				}, 2000);
 			})
 			.catch((err) => {
 				setError(err.response.data.message);
+				if (err.response.data[0].msg) {
+					setError(err.response.data[0].msg);
+				}
 			});
 	};
 	return (
 		<div className="container">
+			<Toaster />
 			<div className="row">
 				<div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
 					<div className="card border-0 shadow rounded-3 my-5">
 						<div className="card-body p-4 p-sm-5">
+							{error ? (
+								<div className="alert alert-danger" role="alert">
+									{error}
+								</div>
+							) : (
+								<></>
+							)}
 							<h1 className="card-title text-center mb-5 fw-light fs-5">
 								<span>Signup</span>
 							</h1>
@@ -108,13 +123,6 @@ export default function Signup() {
 								</p>
 							</div>
 						</div>
-						{error ? (
-							<div className="alert alert-danger" role="alert">
-								{error}
-							</div>
-						) : (
-							<></>
-						)}
 					</div>
 				</div>
 			</div>
