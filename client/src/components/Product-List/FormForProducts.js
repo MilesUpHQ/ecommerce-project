@@ -9,33 +9,26 @@ const FormForProducts = () => {
   const [Name, setName] = useState("");
   const [Price, setPrice] = useState("");
   const [Description, setDescription] = useState("");
-  const [Image, setImage] = useState("");
-  const [namee, setnamee] = useState();
   const [fileData, setFileData] = useState([]);
   const [Errormsg, setErrormsg] = useState(null);
-
-
 
   //sending data after usestate dec part
   const submitHandler = async (e) => {
     e.preventDefault();
     const imageData = new FormData();
-    // data.append('file',fileData)
-    imageData.append("name", namee);
     imageData.append("file", fileData);
-
+    imageData.append("name", Name);
+    imageData.append("price", Price);
+    imageData.append("description", Description);
     // console.log("Filedata",fileData)
     if (Name == "") {
       setErrormsg("Name cannot be empty");
       return;
     }
     axios
-      .post("/admin/add_products", {
-        name: Name,
-        price: Price,
-        description: Description,
-        imageData,
-      })
+      .post("/admin/add_products", 
+        imageData
+      )
       .then((res) => {
         console.log("ggggg", res);
         navigate("/display-products");
