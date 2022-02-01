@@ -9,7 +9,7 @@ const Pagination = ({ currPage, lastPage, totalPages, handlePagination }) => {
             className={currPage == 1 ? "page-item disabled" : "page-item"}
             onClick={() => handlePagination(currPage - 1)}
           >
-            <div className="page-link" href="#" tabindex="-1">
+            <div className="page-link" href="#" tabIndex="-1">
               Previous
             </div>
           </li>
