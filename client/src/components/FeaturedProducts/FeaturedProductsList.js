@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Col, Container, Row } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
 import SimpleImageSlider from "react-simple-image-slider";
 import Pagination from "./Pagination";
@@ -28,52 +28,55 @@ const FeaturedProductsList = ({
     },
   ];
   return (
-    <div style={{ marginTop: "450px", marginLeft: "25%" }}>
-      {featuredProducts.map((featuredProduct) => {
-        return (
-          <div>
-            <Card style={{ width: "38rem" }}>
-              <SimpleImageSlider
-                width="100%"
-                height="300px"
-                images={images}
-                showBullets={true}
-                style={{ border: "solid 1px pink" }}
-              />
-
-              <Card.Body>
-                <Card.Title style={{ float: "left", marginLeft: "60px" }}>
-                  {featuredProduct.name}{" "}
-                </Card.Title>
-                <Card.Text style={{ marginLeft: "500px" }}>
-                  <FaHeart style={{ fontSize: "20px", color: "red" }} />
-                </Card.Text>
+    <div style={{ marginTop: "450px", marginLeft: "5%" }}>
+      <Container>
+        <Row>
+          {featuredProducts.map((featuredProduct) => {
+            return (
+              <Col>
+                <Card style={{ width: "18rem" }}>
+                  <SimpleImageSlider
+                    width="100%"
+                    height="300px"
+                    images={images}
+                    showBullets={true}
+                    style={{ border: "solid 1px pink" }}
+                  />
+                  <Card.Body>
+                    <Card.Title style={{ float: "left", marginLeft: "60px" }}>
+                      {featuredProduct.name}{" "}
+                    </Card.Title>
+                    <Card.Text style={{ marginLeft: "200px" }}>
+                      <FaHeart style={{ fontSize: "20px", color: "red" }} />
+                    </Card.Text>
+                    <br />
+                    <Card.Text style={{ marginLeft: "20%" }}>
+                      {featuredProduct.description}
+                    </Card.Text>
+                    <Card.Text style={{ marginLeft: "20%" }}>
+                      Price : Rs.{featuredProduct.price}
+                    </Card.Text>
+                    <Button
+                      style={{ float: "left", marginLeft: "5%" }}
+                      variant="primary"
+                    >
+                      Add to cart
+                    </Button>
+                    <br />
+                    <a
+                      style={{ marginLeft: "20px", color: "black" }}
+                      href={`/view_product/${featuredProduct.product_id}`}
+                    >
+                      View Product
+                    </a>
+                  </Card.Body>
+                </Card>
                 <br />
-                <Card.Text style={{ marginLeft: "40%" }}>
-                  {featuredProduct.description}
-                </Card.Text>
-                <Card.Text style={{ marginLeft: "40%" }}>
-                  Price : Rs.{featuredProduct.price}
-                </Card.Text>
-                <Button
-                  style={{ float: "left", marginLeft: "30%" }}
-                  variant="primary"
-                >
-                  Add to cart
-                </Button>
-                <br />
-                <a
-                  style={{ marginLeft: "20px", color: "black" }}
-                  href={`/view_product/${featuredProduct.product_id}`}
-                >
-                  View Product
-                </a>
-              </Card.Body>
-            </Card>
-            <br />
-          </div>
-        );
-      })}
+              </Col>
+            );
+          })}
+        </Row>
+      </Container>
       <br />
       <Pagination
         currPage={currPage}

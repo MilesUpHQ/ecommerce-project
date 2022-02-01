@@ -38,6 +38,9 @@ const Navbar = () => {
                 <FaShoppingCart style={{ color: "black", fontSize: "30px" }} />
               </a>
             </li>
+            <li className="nav-item ">
+              <a href="/login">LogIn</a>
+            </li>
           </ul>
           <button
             className="navbar-toggler navbar-toggler-right d-lg-none align-self-center"

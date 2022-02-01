@@ -3,12 +3,8 @@ import {
   Routes,
   Route,
   Navigate,
-	BrowserRouter as Router,
-	Routes,
-	Route,
-	Navigate,
-	Switch,
-	Link
+  Switch,
+  Link,
 } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
@@ -22,7 +18,7 @@ import ResetPassword from "./components/ResetPassword/ResetPassword";
 import FeaturedProducts from "./components/FeaturedProducts/FeaturedProducts";
 import ViewProduct from "./components/FeaturedProducts/ViewProduct";
 import AddProducts from "./components/Product-List/AddProducts";
-import  DisplayProducts  from "./components/Product-List/DisplayProducts";
+import DisplayProducts from "./components/Product-List/DisplayProducts";
 import { ProductLayout } from "./components/Product-List/ProductLayout";
 
 const App = () => {
@@ -35,17 +31,9 @@ const App = () => {
         <Route path="signup" element={<Signup />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/view_product/:id" element={<ViewProduct />} />
-        <Route path="/add-products" element={<AddProducts />}/>
-       			<Route path="/display-products" element={<ProductLayout/>} />
-
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <FeaturedProducts />
-            </PrivateRoute>
-          }
-        ></Route>
+        <Route path="/add-products" element={<AddProducts />} />
+        <Route path="/display-products" element={<ProductLayout />} />
+        <Route path="/" element={<FeaturedProducts />}></Route>
         <Route
           exact
           path="/admin"
@@ -56,18 +44,17 @@ const App = () => {
           }
         ></Route>
 
-				<Route
-					path="/admin/categories"
-					element={
-						<PrivateRoute>
-							<CategoryLayout />
-						</PrivateRoute>
-					}
-				></Route>
-
-			</Routes>
-		</Router>
-	);
+        <Route
+          path="/admin/categories"
+          element={
+            <PrivateRoute>
+              <CategoryLayout />
+            </PrivateRoute>
+          }
+        ></Route>
+      </Routes>
+    </Router>
+  );
 };
 
 function PrivateRoute({ children }) {
