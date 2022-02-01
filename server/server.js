@@ -30,11 +30,11 @@ passport.use(strategy);
 app.use(passport.initialize());
 
 app.get("/", (req, res) => {
-	res.json({ name: "Magesh", company: "Sedin pvt" });
+  res.json({ name: "Magesh", company: "Sedin pvt" });
 });
 
 app.listen(port, () =>
-	console.log(`JS Bootcamp project listening on port ${port}!`)
+  console.log(`JS Bootcamp project listening on port ${port}!`)
 );
 
 app.use("/", adminRouter);
@@ -42,11 +42,11 @@ app.use("/signup", signup);
 app.use("/getToken", getToken);
 
 app.get(
-	"/getUser",
-	passport.authenticate("jwt", { session: false }),
-	(req, res) => {
-		res.json(req.user);
-	}
+  "/getUser",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
 );
 
 // /admin/products
