@@ -29,12 +29,11 @@ const CategoryList = ({
     if (input == "") {
       return;
     }
+
     let id =
       parentCategory.length !== 0
         ? parentCategory[0].value
-        : category.parent_id;
-
-    let page = currPage || 1;
+        : null;
 
     axios
       .put("/update-category", {
@@ -44,17 +43,22 @@ const CategoryList = ({
       })
       .then((res) => {
         setEditId(null);
-        axios
-          .get(`/categories?page=${page}`)
-          .then((res) => {
-            setCurrPage(res.data.currPage);
-            setCategories(res.data.categories);
-          })
-          .catch((err) => {
-            setErrorMsg("Sorry! Something went wrong. Please Try again");
-          });
+        console.log(res)
+        let newCategories = [...categories];
+        newCategories = newCategories.map((item) =>
+          item.id == category.id
+            ? (item = {
+                ...item,
+                category: res.data.name,
+                parent_category: res.data.parent_category,
+              })
+            : item
+        );
+
+        setCategories(newCategories);
       })
       .catch((err) => {
+        console.log(err);
         setErrorMsg(
           "Sorry! You can't update category currently. Please Try again"
         );
@@ -63,19 +67,14 @@ const CategoryList = ({
 
   const handleDelete = (id, name) => {
     if (window.confirm(`Are you sure! Delete ${name} Category?`)) {
-      let page = currPage || 1;
       axios
         .delete("/delete-category", { params: { id } })
         .then((res) => {
-          axios
-            .get(`/categories?page=${page}`)
-            .then((res) => {
-              setCurrPage(res.data.currPage);
-              setCategories(res.data.categories);
-            })
-            .catch((err) => {
-              setErrorMsg("Sorry! Something went wrong. Please Try again");
-            });
+          let newCategories = [...categories];
+          newCategories = newCategories.filter(
+            (category) => category.id !== id
+          );
+          setCategories(newCategories);
         })
         .catch((err) => {
           setErrorMsg("Sorry! You can't delete some other's Parent Category");

@@ -1,11 +1,19 @@
-const nodemailer = require("nodemailer");
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
-var adminRouter = require("./routes/admin/category");
 const db = require("./utils/dbConfig");
 const port = process.env.NODE_PORT;
+const passport = require("passport");
+const bookshelf = require("bookshelf")(db);
+const securePassword = require("bookshelf-secure-password");
+bookshelf.plugin(securePassword);
+const bodyParser = require("body-parser");
+const strategy = require("./utils/passportStrategy");
+dotenv.config();
+
+// routes imports
+var adminRouter = require("./routes/admin/category");
 const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
 const addProducts = require("./routes/addProducts");
@@ -14,13 +22,8 @@ const products = require("./routes/products");
 //const { default: DisplayProducts } = require("../client/src/components/Product-List/DisplayProducts");
 const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
-dotenv.config();
 
-const passport = require("passport");
-const bookshelf = require("bookshelf")(db);
-const securePassword = require("bookshelf-secure-password");
-bookshelf.plugin(securePassword);
-const bodyParser = require("body-parser");
+// middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -44,6 +47,12 @@ app.get("/", (req, res) => {
 app.listen(port, () =>
   console.log(`JS Bootcamp project listening on port ${port}!`)
 );
+//routes
+app.use("/api/reset_password", resetPassword);
+app.use("/api/forgot_password", forgotPassword);
+app.use("/api/admin/add_products", addProducts);
+app.use("/api", adminRouter);
+app.use("/api/admin/products", displayProducts);
 
 app.use("/", adminRouter);
 app.use("/signup", signup);
@@ -57,9 +66,6 @@ app.get(
   }
 );
 
-// /admin/products
-//   / admin/products/new
-// POST / admin / products
-//   / admin / categories
-// /admin/categories/new
-//   / admin / orders
+app.listen(port, () =>
+  console.log(`JS Bootcamp project listening on port ${port}!`)
+);

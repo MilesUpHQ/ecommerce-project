@@ -116,7 +116,7 @@ exports.up = function (knex) {
       table.foreign("order_id").references("orders.id");
       table.timestamps(true, true);
     })
-    .createTable("fetured_products", (table) => {
+    .createTable("featured_products", (table) => {
       table.increments("id").primary();
       table.integer("product_id").unsigned().notNullable();
       table.foreign("product_id").references("products.id");
@@ -145,7 +145,7 @@ exports.down = function (knex) {
   return knex.schema
     .dropTable("variant_images")
     .dropTable("variants")
-    .dropTable("fetured_products")
+    .dropTable("featured_products")
     .dropTable("shipping")
     .dropTable("payment")
     .dropTable("reviews")
