@@ -56,6 +56,7 @@ router.post(
 				res.status(200).send("User created successfully");
 			})
 			.catch((err) => {
+				console.log("HERE",err);
 				res.status(400).send("Unable to create user");
 			});
 	}

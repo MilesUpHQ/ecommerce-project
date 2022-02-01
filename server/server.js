@@ -8,6 +8,9 @@ const db = require("./utils/dbConfig");
 const port = process.env.NODE_PORT;
 const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
+const addProducts = require("./routes/addProducts");
+const displayProducts = require("./routes/displayProducts");
+//const { default: DisplayProducts } = require("../client/src/components/Product-List/DisplayProducts");
 const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
 dotenv.config();
@@ -23,6 +26,9 @@ app.use(cors());
 //routes
 app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
+app.use("/api/admin/add_products", addProducts);
+app.use('/api', adminRouter)
+app.use('/api/admin/products', displayProducts)
 
 const strategy = require("./utils/passportStrategy");
 app.use(bodyParser.json());
