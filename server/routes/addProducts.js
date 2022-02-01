@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../utils/dbConfig");
 const multer  = require('multer');
-
   const fileStorageEngine = multer.diskStorage({
     destination:(req,file,cb)=>{
       

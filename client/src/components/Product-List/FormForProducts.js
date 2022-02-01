@@ -9,8 +9,6 @@ const FormForProducts = () => {
   const [Name, setName] = useState("");
   const [Price, setPrice] = useState("");
   const [Description, setDescription] = useState("");
-  //const [Image, setImage] = useState("");
-  //const [Imagename, setImagename] = useState();
   const [fileData, setFileData] = useState([]);
   const [Errormsg, setErrormsg] = useState(null);
 
@@ -18,8 +16,6 @@ const FormForProducts = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const imageData = new FormData();
-    // data.append('file',fileData)
-    //imageData.append("name", Imagename);
     imageData.append("file", fileData);
     imageData.append("name", Name);
     imageData.append("price", Price);
