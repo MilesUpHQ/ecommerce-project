@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import axios from "../../utils/ajax-helper";
+import ErrorMessages from "./ErrorMessages";
 const DisplayProducts = () => {
   const [display, setdisplay] = useState([]);
+  const[Errormsg, setErrormsg]= useState(null);
 
   useEffect(() => {
     axios
-      .get("/display")
+      .get("/admin/products")
       .then((res) => {
         console.log(res);
         setdisplay(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        setErrormsg("Sorry! Something went wrong. Please Try again");
       });
   }, []);
 
@@ -32,23 +34,19 @@ const DisplayProducts = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="py-1">
-                    {display.map((display) => {
-                      return <p>{display.name} </p>;
-                    })}
-                  </td>
-                  <td>
-                    {display.map((display) => {
-                      return <p>{display.description} </p>;
-                    })}
-                  </td>
-                  <td>
-                    {display.map((display) => {
-                      return <p>{display.price} </p>;
-                    })}
-                  </td>
-                </tr>
+                {display.map(display=>(
+                 <tr>
+                   <td className="py1">
+                     {display.name}
+                   </td>
+                   <td>
+                     {display.description}
+                   </td>
+                   <td>
+                     {display.price}
+                   </td>
+                 </tr> 
+                ))}
               </tbody>
             </table>
           </div>

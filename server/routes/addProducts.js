@@ -13,16 +13,17 @@ const multer  = require('multer');
   });
   const upload = multer({storage:fileStorageEngine});
 
-router.post("",(req,res)=>{
+router.post("/",(req,res)=>{
     console.log("Request.body",req);
       //  table.integer('category_id').unsigned().notNullable();
     knex("products").insert({ name:req.body.name, price: req.body.price,description:req.body.description , category_id:null })
    
     .then(row => {
-      console.log("Insided");    
+      console.log("Insided");
+      res.json(row);    
   
     }).catch((err) => {
-      console.log("err :::::::::::::::", err);
+      res.status(400).send("Unable to Post data ");
     })
 })
 
@@ -42,14 +43,13 @@ router.post("/single", upload.single("image"),  (req, res)=> {
 
 
 
-router.get("",(req,res)=>{
+router.get("/",(req,res)=>{
     knex("products") 
     .select("id","name").then(row=>{
-        console.log(row)
         res.json(row);
     })
     .catch((err) => {
-        console.log("err :::::::::::::::", err);
+      res.status(400).send("Unable to get datas");
       })
 })
 module.exports = router;

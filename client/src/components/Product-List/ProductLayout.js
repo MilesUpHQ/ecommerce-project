@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import "bootstrap/dist/css/bootstrap.css";
+import "../Admin/css/admin-style.css";
 import DisplayProducts from "./DisplayProducts";
 import "../style.css";
 import AdminHome from "../Admin/AdminHome";
