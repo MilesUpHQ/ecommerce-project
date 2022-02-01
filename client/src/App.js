@@ -3,6 +3,8 @@ import {
 	Routes,
 	Route,
 	Navigate,
+	Switch,
+	Link
 } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
@@ -13,7 +15,9 @@ import AdminHome from "./components/Admin/AdminHome";
 import CategoryLayout from "./components/Admin/Categories/CategoryLayout";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
-
+import AddProducts from "./components/Product-List/AddProducts";
+import  DisplayProducts  from "./components/Product-List/DisplayProducts";
+import { ProductLayout } from "./components/Product-List/ProductLayout";
 const App = () => {
 	return (
 		<Router>
@@ -23,7 +27,8 @@ const App = () => {
 				<Route path="/login" element={<Login />} />
 				<Route path="signup" element={<Signup />} />
 				<Route path="/logout" element={<Logout />} />
-
+				 <Route path="/add-products" element={<AddProducts />}/>
+       			<Route path="/display-products" element={<ProductLayout/>} />
 				<Route
 					path="/"
 					element={
@@ -51,6 +56,7 @@ const App = () => {
 						</PrivateRoute>
 					}
 				></Route>
+
 			</Routes>
 		</Router>
 	);
