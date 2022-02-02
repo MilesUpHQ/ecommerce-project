@@ -16,13 +16,19 @@ const removeDuplicate = (array) => {
 
 router.get("", async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;
-  let images = await knex("variant_images").select("variant_images.image_url");
   let imgArray = [];
-  for (let i = 0; i < images.length; i++) {
-    let url = images[i].image_url.toString();
-    imgArray.push(url);
-  }
-  imgArray = removeDuplicate(imgArray);
+  knex("variant_images")
+    .select("variant_images.image_url")
+    .then((res) => {
+      for (let i = 0; i < res.length; i++) {
+        let url = res[i].image_url.toString();
+        imgArray.push(url);
+      }
+      imgArray = removeDuplicate(imgArray);
+    })
+    .catch((err) => {
+      imgArray = null;
+    });
 
   knex("fetured_products")
     .leftJoin("products", "fetured_products.product_id", "products.id")
@@ -54,45 +60,75 @@ router.get("", async (req, res, next) => {
 });
 
 router.get("/:id", async (req, res, next) => {
-  let categories = await knex("products")
+  let categories;
+  knex("products")
     .leftJoin(
       "product_categories",
       "products.category_id",
       "product_categories.id"
     )
     .select("product_categories.name")
-    .where({ "products.id": req.params.id });
+    .where({ "products.id": req.params.id })
+    .then((res) => {
+      categories = res;
+    })
+    .catch((err) => {
+      categories = null;
+    });
 
-  let colors = await knex("variants")
+  let colors;
+  knex("variants")
     .leftJoin("products", "products.id", "variants.product_id")
     .select("variants.color")
-    .where({ "products.id": req.params.id });
+    .where({ "products.id": req.params.id })
+    .then((res) => {
+      colors = res;
+    })
+    .catch((err) => {
+      colors = null;
+    });
 
-  let sizes = await knex("variants")
+  let sizes;
+  knex("variants")
     .leftJoin("products", "products.id", "variants.product_id")
     .select("variants.size")
-    .where({ "products.id": req.params.id });
+    .where({ "products.id": req.params.id })
+    .then((res) => {
+      sizes = res;
+    })
+    .catch((err) => {
+      sizes = null;
+    });
 
-  let reviews = await knex("reviews")
+  let reviews;
+  knex("reviews")
     .leftJoin("products", "products.id", "reviews.product_id")
     .leftJoin("users", "users.id", "reviews.user_id")
     .select("reviews.rating", "reviews.comment", "users.username")
-    .where({ "products.id": req.params.id });
+    .where({ "products.id": req.params.id })
+    .then((res) => {
+      reviews = res;
+    })
+    .catch((err) => {
+      reviews = null;
+    });
 
-  let images = await knex("variant_images")
+  let imgArray = [];
+  knex("variant_images")
     .leftJoin("variants", "variant_images.variant_id", "variants.id")
     .leftJoin("products", "products.id", "variants.product_id")
     .select("variant_images.image_url")
-    .where({ "products.id": req.params.id });
-
-  console.log("images :", images);
-  let imgArray = [];
-  for (let i = 0; i < images.length; i++) {
-    let url = images[i].image_url.toString();
-    console.log("url :", url);
-    imgArray.push(url);
-  }
-  console.log("img array ::", imgArray);
+    .where({ "products.id": req.params.id })
+    .then((res) => {
+      for (let i = 0; i < res.length; i++) {
+        let url = res[i].image_url.toString();
+        imgArray.push(url);
+      }
+      imgArray = removeDuplicate(imgArray);
+    })
+    .catch((err) => {
+      imgArray = null;
+    });
 
   knex("fetured_products")
     .leftJoin("products", "fetured_products.product_id", "products.id")

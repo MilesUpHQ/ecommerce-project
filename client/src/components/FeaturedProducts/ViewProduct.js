@@ -38,7 +38,6 @@ const ViewProduct = () => {
         let size = removeDuplicate(response.data.sizes);
         setSizes(size);
         setImage_url(response.data.imgArray);
-        console.log("images :", image_urls);
         setReviews(response.data.reviews);
       })
       .catch((err) => {
