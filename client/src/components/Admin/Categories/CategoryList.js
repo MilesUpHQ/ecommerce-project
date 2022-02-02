@@ -43,7 +43,6 @@ const CategoryList = ({
       })
       .then((res) => {
         setEditId(null);
-        console.log(res)
         let newCategories = [...categories];
         newCategories = newCategories.map((item) =>
           item.id == category.id
@@ -58,7 +57,6 @@ const CategoryList = ({
         setCategories(newCategories);
       })
       .catch((err) => {
-        console.log(err);
         setErrorMsg(
           "Sorry! You can't update category currently. Please Try again"
         );

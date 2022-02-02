@@ -37,7 +37,6 @@ const Category = () => {
         };
         let newCategories = [...categories];
         newCategories.splice(0, 0, newCategory);
-        console.log(newCategories);
         setCategories(newCategories);
       })
       .catch((err) => {

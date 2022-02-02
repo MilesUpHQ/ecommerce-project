@@ -15,7 +15,6 @@ const AddCategory = ({
 
   useEffect(() => {
     if (category !== undefined) {
-      console.log(category)
       setInput(category.category);
       if (category.parent_category !== null) {
         setParentCategory([{ label: category.parent_category }]);
