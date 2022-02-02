@@ -2,9 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "../../utils/ajax-helper";
 import Navbar from "./Navbar";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Card, Button, Container, Row, Col, Carousel } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
-import SimpleImageSlider from "react-simple-image-slider";
 
 const ViewProduct = () => {
   let [product, setProduct] = useState([]);
@@ -12,20 +11,9 @@ const ViewProduct = () => {
   let [colors, setColors] = useState([]);
   let [sizes, setSizes] = useState([]);
   let [reviews, setReviews] = useState([]);
-  let [image_urls, setImage_url] = useState([]);
+  let [image_urls, setImage_url] = useState("");
 
   let id = window.location.pathname.substring(14);
-  const images = [
-    {
-      url: "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/2378362/2018/6/9/270e0a7e-365b-4640-9433-b269c60bf3061528527188563-Moda-Rapido-Men-Maroon-Printed-Round-Neck-T-shirt-3811528527-1.jpg",
-    },
-    {
-      url: "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/2378362/2018/6/9/405568f1-c3c1-4713-9c38-6dd95ac962d31528527188543-Moda-Rapido-Men-Maroon-Printed-Round-Neck-T-shirt-3811528527-2.jpg",
-    },
-    {
-      url: "https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/2378362/2018/6/9/33523035-65f5-4fcb-b7a5-4062e656d10b1528527188511-Moda-Rapido-Men-Maroon-Printed-Round-Neck-T-shirt-3811528527-3.jpg",
-    },
-  ];
   const removeDuplicate = (array) => {
     var dups = [];
     var arr = array.filter(function (el) {
@@ -37,12 +25,6 @@ const ViewProduct = () => {
     });
     return arr;
   };
-  function toBase64(arr) {
-    //arr = new Uint8Array(arr) if it's an ArrayBuffer
-    return btoa(
-      arr.reduce((data, byte) => data + String.fromCharCode(byte), "")
-    );
-  }
 
   useEffect(async () => {
     axios
@@ -51,15 +33,12 @@ const ViewProduct = () => {
         console.log("response :", response.data);
         setCategory(response.data.categories[0].name);
         setProduct(response.data.product[0]);
-        // console.log("response.data.colors :", response.data.colors);
         let color = removeDuplicate(response.data.colors);
         setColors(color);
-        // console.log("colors :", colors);
         let size = removeDuplicate(response.data.sizes);
-        // console.log("size :", size);
         setSizes(size);
-        setImage_url(response.data.images);
-        console.log("image_urls :", image_urls);
+        setImage_url(response.data.imgArray);
+        console.log("images :", image_urls);
         setReviews(response.data.reviews);
       })
       .catch((err) => {
@@ -69,7 +48,7 @@ const ViewProduct = () => {
 
   return (
     <div style={{ backgroundColor: "#fcf0e2" }}>
-      {product && category && sizes && colors && image_urls && reviews && (
+      {product && category && sizes && colors && reviews && image_urls && (
         <div>
           <Navbar />
           <br />
@@ -101,13 +80,20 @@ const ViewProduct = () => {
             <Container>
               <Row>
                 <Col>
-                  <SimpleImageSlider
-                    width="100%"
-                    height="300px"
-                    images={images}
-                    showBullets={true}
-                    style={{ border: "solid 1px pink", float: "left" }}
-                  />
+                  <Carousel>
+                    {image_urls.map((image_url) => {
+                      return (
+                        <Carousel.Item interval={1000}>
+                          <img
+                            className="d-block w-100"
+                            src={image_url}
+                            alt={product.name}
+                            style={{ height: "300px" }}
+                          />
+                        </Carousel.Item>
+                      );
+                    })}
+                  </Carousel>
                 </Col>
                 <Col>
                   <Card.Body>
@@ -182,19 +168,6 @@ const ViewProduct = () => {
                         Add to cart
                       </Button>
                     </form>
-                    {/* <div>
-                      {image_urls.map((image_url) => {
-                        return (
-                          <img
-                            src={`data:image/png;base64,${toBase64(
-                              image_url.image_url["data"]
-                            )}`}
-                            height="30px"
-                            width="30px"
-                          />
-                        );
-                      })}
-                    </div> */}
                   </Card.Body>
                 </Col>
               </Row>
