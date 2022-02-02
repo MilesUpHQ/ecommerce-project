@@ -9,8 +9,13 @@ const FormForProducts = () => {
   const [Name, setName] = useState("");
   const [Price, setPrice] = useState("");
   const [Description, setDescription] = useState("");
+  const [Size , setSize] = useState("");
+  const [Color , setColor] = useState("");
+  const [Type , setType] = useState("");
+  const [Categories , setCategories] = useState([]);
   const [fileData, setFileData] = useState([]);
   const [Errormsg, setErrormsg] = useState(null);
+  const [Category_id, setCategory] = useState('');
 
   //sending data after usestate dec part
   const submitHandler = async (e) => {
@@ -20,7 +25,11 @@ const FormForProducts = () => {
     imageData.append("name", Name);
     imageData.append("price", Price);
     imageData.append("description", Description);
-    // console.log("Filedata",fileData)
+    imageData.append("size", Size);
+    imageData.append("color", Color);
+    imageData.append("type", Type);
+    imageData.append("category", Category_id);
+     console.log("Filedata:::",imageData);
     if (Name == "") {
       setErrormsg("Name cannot be empty");
       return;
@@ -34,9 +43,23 @@ const FormForProducts = () => {
         navigate("/display-products");
       })
       .catch((err) => {
-        setErrormsg("Sorry! Something went wrong. Please Try again");
+        setErrormsg("Oppsie! Something went wrong. Please try entering valid datas");
       });
   };
+
+  useEffect(() => {
+  axios
+  .get("/admin/add_products")
+  .then((res) => {
+    console.log("res :", res);
+    setCategories(res.data);
+  })
+  .catch((err) => {
+    setErrormsg("Opps! Something went wrong. Please Try again", err);
+  });
+}, []);
+
+
 
   const fileChangeHandler = (e) => {
     console.log("target.files", e.target.files[0]);
@@ -75,6 +98,48 @@ const FormForProducts = () => {
                       onChange={fileChangeHandler}
                     />
                   </div>
+
+                  <div class="form-group ">
+                    <label for="exampleFormControlSelect3">Select Size</label>
+                    <select className="form-control form-control-sm" id="exampleFormControlSelect3"
+                        onChange={(e) => setSize(e.target.value)}>
+                      <option value="XS">XS</option>
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                    </select>
+                  </div>
+                 
+                  <div class="form-group">
+                      <label for="Color">Color</label>
+                      <input type="text" class="form-control" id="color" placeholder="make it vibrant"
+                      value={Color}
+                      onChange={(e) => setColor(e.target.value)}
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="Category">Category</label>
+                        <select value={Category_id} className='form-control form-control-sm' name='Category' 
+                        onChange={(e) => setCategory(e.target.value)}>
+                            <option value="0">Select From The Following</option>
+                            {Categories.map((Category) => {
+                                return (
+                                    <option  
+                                    value={Category.id}>{Category.name}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="Type">Type</label>
+                      <input type="text" class="form-control" id="type" placeholder="List the type of your product"
+                      value={Type}
+                      onChange={(e) => setType(e.target.value)}
+                      />
+                    </div>
 
                   <div className="form-group">
                     <label for="exampleInputPrice1">Price</label>

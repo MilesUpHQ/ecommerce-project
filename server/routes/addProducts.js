@@ -2,6 +2,22 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../utils/dbConfig");
 const multer  = require('multer');
+
+router.get("",(req,res)=>{
+  let categories;
+  knex("product_categories")
+    .select("product_categories.name","product_categories.id")
+    .then((row) => {
+      console.log("Result::::",row);
+      res.json(row);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send("coulnt get ");
+    });
+})
+
+
   const fileStorageEngine = multer.diskStorage({
     destination:(req,file,cb)=>{
       
@@ -15,15 +31,23 @@ const multer  = require('multer');
 
 router.post("/",upload.single("file"),(req,res)=>{
     console.log("Request.body",req);
-      //  table.integer('category_id').unsigned().notNullable();
-    knex("products").insert({ name:req.body.name, price: req.body.price,description:req.body.description , category_id:null })
-   
+    knex("products").insert({ name:req.body.name, price: req.body.price,description:req.body.description , category_id:req.body.category_id })
+   .returning("products.id")
     .then(row => {
-      console.log("Insided");
-      res.json(row);    
-  
+      console.log("Insided",row);
+        knex("variants").insert({size:req.body.size,color:req.body.color,type:req.body.type,product_id:row[0].id})  
+       .returning("variants.id")
+        .then(row =>{
+          res.json(row);
+          console.log("congratulations u made it")
+        })
+        .catch((err)=>{
+          console.log(err)
+         // res.send("Failed stupid ");
+        })
     }).catch((err) => {
-      res.status(400).send("Unable to Post data ");
+      console.log(err)
+     // res.status(400).send("Unable to Post data ");
     })
 })
 
