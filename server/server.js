@@ -58,13 +58,17 @@ app.use("/api", adminRouter);
 app.use("/api/admin/products", displayProducts);
 
 app.use("/", adminRouter);
-app.use("/signup", signup);
-app.use("/getToken", getToken);
+app.use("/api/signup", signup);
+app.use("/api/getToken", getToken);
 
 app.get(
-  "/getUser",
+  "/api/getUser",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     res.json(req.user);
   }
+);
+
+app.listen(port, () =>
+  console.log(`JS Bootcamp project listening on port ${port}!`)
 );

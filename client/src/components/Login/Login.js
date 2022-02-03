@@ -93,6 +93,11 @@ class Login extends Component {
 										Don't have an account? <a href="/signup">Sign up</a>
 									</p>
 								</div>
+								<div className="text-center">
+									<p>
+										<a href="/forgot_password"> Forgot Password</a>
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
