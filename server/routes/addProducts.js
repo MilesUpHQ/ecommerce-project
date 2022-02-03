@@ -3,7 +3,7 @@ const router = express.Router();
 const knex = require("../utils/dbConfig");
 const multer  = require('multer');
 
-router.get("",(req,res)=>{
+router.get("/",(req,res)=>{
   let categories;
   knex("product_categories")
     .select("product_categories.name","product_categories.id")
@@ -12,8 +12,7 @@ router.get("",(req,res)=>{
       res.json(row);
     })
     .catch((err) => {
-      console.log(err);
-      res.send("coulnt get ");
+      res.send("Sorry couldn't load categories. Please refresh and try again ");
     });
 })
 
@@ -30,7 +29,6 @@ router.get("",(req,res)=>{
   const upload = multer({storage:fileStorageEngine});
 
 router.post("/",upload.single("file"),(req,res)=>{
-    console.log("Request.body",req);
     knex("products").insert({ name:req.body.name, description:req.body.description , category_id:req.body.category_id })
    .returning("products.id")
     .then(row => {
@@ -42,8 +40,7 @@ router.post("/",upload.single("file"),(req,res)=>{
           console.log("congratulations u made it")
         })
         .catch((err)=>{
-          console.log(err)
-         // res.send("Failed stupid ");
+          res.status(400).send("Unable to Post data ");
         })
     }).catch((err) => {
       console.log(err)

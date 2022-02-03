@@ -2,14 +2,15 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../utils/dbConfig");
 
-router.get("/",(req,res)=>{
-    knex("products") 
-    .select("name","description").then(row=>{
-        console.log("Display here",row)
-        res.json(row);
+router.get("/", (req, res) => {
+  knex("products")
+    .leftJoin("variants", "variants.id", "products.id")
+    .select("products.name", "products.description", "variants.price")
+    .then((row) => {
+      res.json(row);
     })
     .catch((err) => {
-        res.status(400).send("Unable to display products");
-      })
-})
+      res.status(400).send("Unable to display products");
+    });
+});
 module.exports = router;
