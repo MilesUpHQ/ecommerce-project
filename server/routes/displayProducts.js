@@ -4,7 +4,7 @@ const knex = require("../utils/dbConfig");
 
 router.get("/",(req,res)=>{
     knex("products") 
-    .select("name","description","price").then(row=>{
+    .select("name","description").then(row=>{
         console.log("Display here",row)
         res.json(row);
     })

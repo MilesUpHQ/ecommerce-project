@@ -6,31 +6,31 @@ import ErrorMessages from "./ErrorMessages";
 
 const FormForProducts = () => {
   const navigate = useNavigate();
-  const [Name, setName] = useState("");
-  const [Price, setPrice] = useState("");
-  const [Description, setDescription] = useState("");
-  const [Size , setSize] = useState("");
-  const [Color , setColor] = useState("");
-  const [Type , setType] = useState("");
-  const [Categories , setCategories] = useState([]);
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [size , setSize] = useState("");
+  const [color , setColor] = useState("");
+  const [type , setType] = useState("");
+  const [categories , setCategories] = useState([]);
   const [fileData, setFileData] = useState([]);
-  const [Errormsg, setErrormsg] = useState(null);
-  const [Category_id, setCategory] = useState('');
+  const [errormsg, setErrormsg] = useState(null);
+  const [categoryid, setCategory] = useState('');
 
   //sending data after usestate dec part
   const submitHandler = async (e) => {
     e.preventDefault();
     const imageData = new FormData();
     imageData.append("file", fileData);
-    imageData.append("name", Name);
-    imageData.append("price", Price);
-    imageData.append("description", Description);
-    imageData.append("size", Size);
-    imageData.append("color", Color);
-    imageData.append("type", Type);
-    imageData.append("category", Category_id);
+    imageData.append("name", name);
+    imageData.append("price", price);
+    imageData.append("description", description);
+    imageData.append("size", size);
+    imageData.append("color", color);
+    imageData.append("type", type);
+    imageData.append("category", categoryid);
      console.log("Filedata:::",imageData);
-    if (Name == "") {
+    if (name == "") {
       setErrormsg("Name cannot be empty");
       return;
     }
@@ -51,11 +51,10 @@ const FormForProducts = () => {
   axios
   .get("/admin/add_products")
   .then((res) => {
-    console.log("res :", res);
     setCategories(res.data);
   })
   .catch((err) => {
-    setErrormsg("Opps! Something went wrong. Please Try again", err);
+    setErrormsg("Oopps! Something went wrong. Please Try again", err);
   });
 }, []);
 
@@ -70,7 +69,7 @@ const FormForProducts = () => {
     <div className="main-panel">
       <div className="content-wrapper">
         <div className="row">
-          {Errormsg && <ErrorMessages msg={Errormsg} />}
+          {errormsg && <ErrorMessages msg={errormsg} />}
 
           <div className="col-12 grid-margin stretch-card">
             <div className="card">
@@ -86,7 +85,7 @@ const FormForProducts = () => {
                       className="form-control"
                       id="exampleInputName1"
                       placeholder="Name"
-                      value={Name}
+                      value={name}
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
@@ -114,17 +113,17 @@ const FormForProducts = () => {
                   <div class="form-group">
                       <label for="Color">Color</label>
                       <input type="text" class="form-control" id="color" placeholder="make it vibrant"
-                      value={Color}
+                      value={color}
                       onChange={(e) => setColor(e.target.value)}
                       />
                     </div>
 
                     <div class="form-group">
                       <label for="Category">Category</label>
-                        <select value={Category_id} className='form-control form-control-sm' name='Category' 
+                        <select value={categoryid} className='form-control form-control-sm' name='Category' 
                         onChange={(e) => setCategory(e.target.value)}>
                             <option value="0">Select From The Following</option>
-                            {Categories.map((Category) => {
+                            {categories.map((Category) => {
                                 return (
                                     <option  
                                     value={Category.id}>{Category.name}</option>
@@ -136,7 +135,7 @@ const FormForProducts = () => {
                     <div class="form-group">
                       <label for="Type">Type</label>
                       <input type="text" class="form-control" id="type" placeholder="List the type of your product"
-                      value={Type}
+                      value={type}
                       onChange={(e) => setType(e.target.value)}
                       />
                     </div>
@@ -148,7 +147,7 @@ const FormForProducts = () => {
                       className="form-control"
                       id="exampleInputPrice1"
                       placeholder="0"
-                      value={Price}
+                      value={price}
                       onChange={(e) => setPrice(e.target.value)}
                     />
                   </div>
@@ -158,7 +157,7 @@ const FormForProducts = () => {
                       className="form-control"
                       id="exampleTextarea1"
                       rows="4"
-                      value={Description}
+                      value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </div>

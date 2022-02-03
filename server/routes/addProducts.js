@@ -31,11 +31,11 @@ router.get("",(req,res)=>{
 
 router.post("/",upload.single("file"),(req,res)=>{
     console.log("Request.body",req);
-    knex("products").insert({ name:req.body.name, price: req.body.price,description:req.body.description , category_id:req.body.category_id })
+    knex("products").insert({ name:req.body.name, description:req.body.description , category_id:req.body.category_id })
    .returning("products.id")
     .then(row => {
       console.log("Insided",row);
-        knex("variants").insert({size:req.body.size,color:req.body.color,type:req.body.type,product_id:row[0].id})  
+        knex("variants").insert({size:req.body.size,color:req.body.color,type:req.body.type,price: req.body.price,product_id:row[0].id})  
        .returning("variants.id")
         .then(row =>{
           res.json(row);
