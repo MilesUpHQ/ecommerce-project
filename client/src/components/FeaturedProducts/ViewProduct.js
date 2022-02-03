@@ -4,6 +4,7 @@ import axios from "../../utils/ajax-helper";
 import Navbar from "./Navbar";
 import { Card, Button, Container, Row, Col, Carousel } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
+import ErrorAlert from "./ErrorAlert";
 
 const ViewProduct = () => {
   let [product, setProduct] = useState([]);
@@ -12,6 +13,7 @@ const ViewProduct = () => {
   let [sizes, setSizes] = useState([]);
   let [reviews, setReviews] = useState([]);
   let [image_urls, setImage_url] = useState("");
+  const [errorMsg, setErrorMsg] = useState(null);
 
   let id = window.location.pathname.substring(14);
   const removeDuplicate = (array) => {
@@ -41,18 +43,19 @@ const ViewProduct = () => {
         setReviews(response.data.reviews);
       })
       .catch((err) => {
-        console.log("err ", err);
+        setErrorMsg("Sorry we couldnot get procuct with error " + err);
       });
   }, []);
 
   return (
     <div style={{ backgroundColor: "#fcf0e2" }}>
-      {product && category && sizes && colors && reviews && image_urls && (
+      {product && image_urls && (
         <div>
           <Navbar />
           <br />
           <br />
           <hr />
+          {errorMsg && <ErrorAlert msg={errorMsg} />}
           <Card style={{ width: "100%", height: "60px" }}>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
               <div
@@ -66,9 +69,11 @@ const ViewProduct = () => {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
-                      {category} /
-                    </a>
+                    {category && (
+                      <a className="nav-link" href="#">
+                        {category} /
+                      </a>
+                    )}
                   </li>
                 </ul>
               </div>
@@ -80,18 +85,19 @@ const ViewProduct = () => {
               <Row>
                 <Col>
                   <Carousel>
-                    {image_urls.map((image_url) => {
-                      return (
-                        <Carousel.Item interval={1000}>
-                          <img
-                            className="d-block w-100"
-                            src={image_url}
-                            alt={product.name}
-                            style={{ height: "300px" }}
-                          />
-                        </Carousel.Item>
-                      );
-                    })}
+                    {image_urls &&
+                      image_urls.map((image_url) => {
+                        return (
+                          <Carousel.Item interval={1000}>
+                            <img
+                              className="d-block w-100"
+                              src={image_url}
+                              alt={product.name}
+                              style={{ height: "300px" }}
+                            />
+                          </Carousel.Item>
+                        );
+                      })}
                   </Carousel>
                 </Col>
                 <Col>
@@ -113,36 +119,38 @@ const ViewProduct = () => {
                           <hr />
                           <div>
                             {" "}
-                            {sizes.map((size) => {
-                              return (
-                                <div>
-                                  <input
-                                    type="radio"
-                                    value="Male"
-                                    name={size.size}
-                                  />{" "}
-                                  {size.size}
-                                </div>
-                              );
-                            })}
+                            {sizes &&
+                              sizes.map((size) => {
+                                return (
+                                  <div>
+                                    <input
+                                      type="radio"
+                                      value="Male"
+                                      name={size.size}
+                                    />{" "}
+                                    {size.size}
+                                  </div>
+                                );
+                              })}
                           </div>
                         </Col>
                         <Col>
                           <Card.Text>Colors</Card.Text>
                           <hr />
                           <div>
-                            {colors.map((colors) => {
-                              return (
-                                <div>
-                                  <input
-                                    type="radio"
-                                    value="Male"
-                                    name={colors.color}
-                                  />{" "}
-                                  {colors.color}
-                                </div>
-                              );
-                            })}
+                            {colors &&
+                              colors.map((colors) => {
+                                return (
+                                  <div>
+                                    <input
+                                      type="radio"
+                                      value="Male"
+                                      name={colors.color}
+                                    />{" "}
+                                    {colors.color}
+                                  </div>
+                                );
+                              })}
                           </div>
                         </Col>
                       </Row>
@@ -174,50 +182,51 @@ const ViewProduct = () => {
               <Row style={{ width: "fit-content" }}>
                 <Card.Text>Reviews</Card.Text>
                 <Container>
-                  {reviews.map((review) => {
-                    return (
-                      <div style={{ width: "100%" }}>
-                        <Card.Text
-                          style={{ float: "left", fontWeight: "bold" }}
-                        >
-                          {review.comment}
-                        </Card.Text>
-                        <Card.Text
-                          style={{
-                            float: "left",
-                            marginLeft: "5px",
-                            marginRight: "10px",
-                          }}
-                        >
-                          with the rating of
-                        </Card.Text>
-                        <Card.Text
-                          style={{
-                            float: "left",
-                            marginLeft: "5px",
-                            marginRight: "10px",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {review.rating}
-                        </Card.Text>
-                        <Card.Text
-                          style={{
-                            float: "left",
-                            marginLeft: "5px",
-                            marginRight: "10px",
-                          }}
-                        >
-                          by
-                        </Card.Text>
-                        <Card.Text
-                          style={{ marginLeft: "5px", fontWeight: "bold" }}
-                        >
-                          {review.username}
-                        </Card.Text>
-                      </div>
-                    );
-                  })}
+                  {reviews &&
+                    reviews.map((review) => {
+                      return (
+                        <div style={{ width: "100%" }}>
+                          <Card.Text
+                            style={{ float: "left", fontWeight: "bold" }}
+                          >
+                            {review.comment}
+                          </Card.Text>
+                          <Card.Text
+                            style={{
+                              float: "left",
+                              marginLeft: "5px",
+                              marginRight: "10px",
+                            }}
+                          >
+                            with the rating of
+                          </Card.Text>
+                          <Card.Text
+                            style={{
+                              float: "left",
+                              marginLeft: "5px",
+                              marginRight: "10px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {review.rating}
+                          </Card.Text>
+                          <Card.Text
+                            style={{
+                              float: "left",
+                              marginLeft: "5px",
+                              marginRight: "10px",
+                            }}
+                          >
+                            by
+                          </Card.Text>
+                          <Card.Text
+                            style={{ marginLeft: "5px", fontWeight: "bold" }}
+                          >
+                            {review.username}
+                          </Card.Text>
+                        </div>
+                      );
+                    })}
                 </Container>
               </Row>
             </Container>

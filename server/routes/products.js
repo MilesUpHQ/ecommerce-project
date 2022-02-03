@@ -27,6 +27,7 @@ router.get("", async (req, res, next) => {
       imgArray = removeDuplicate(imgArray);
     })
     .catch((err) => {
+      res.send("error in getting images");
       imgArray = null;
     });
 
@@ -56,7 +57,9 @@ router.get("", async (req, res, next) => {
       }
       res.json({ featuredProducts, currPage, lastPage, totalPages, imgArray });
     })
-    .catch((err) => {});
+    .catch((err) => {
+      res.send("error in getting products");
+    });
 });
 
 router.get("/:id", async (req, res, next) => {
@@ -73,6 +76,7 @@ router.get("/:id", async (req, res, next) => {
       categories = res;
     })
     .catch((err) => {
+      res.send("error in getting category");
       categories = null;
     });
 
@@ -85,6 +89,7 @@ router.get("/:id", async (req, res, next) => {
       colors = res;
     })
     .catch((err) => {
+      res.send("error in getting colors");
       colors = null;
     });
 
@@ -97,6 +102,7 @@ router.get("/:id", async (req, res, next) => {
       sizes = res;
     })
     .catch((err) => {
+      res.send("error in getting sizes");
       sizes = null;
     });
 
@@ -110,6 +116,7 @@ router.get("/:id", async (req, res, next) => {
       reviews = res;
     })
     .catch((err) => {
+      res.send("error in getting reviews");
       reviews = null;
     });
 
@@ -127,6 +134,7 @@ router.get("/:id", async (req, res, next) => {
       imgArray = removeDuplicate(imgArray);
     })
     .catch((err) => {
+      res.send("error in getting variant images");
       imgArray = null;
     });
 
@@ -143,7 +151,9 @@ router.get("/:id", async (req, res, next) => {
       let product = response;
       res.json({ product, categories, colors, sizes, imgArray, reviews });
     })
-    .catch((err) => {});
+    .catch((err) => {
+      res.send("error in getting product");
+    });
 });
 
 module.exports = router;

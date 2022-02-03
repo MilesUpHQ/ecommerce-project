@@ -2,7 +2,6 @@ import React from "react";
 import "../ResetPassword/resetPassword.css";
 import { useEffect, useState } from "react";
 import axios from "../../utils/ajax-helper";
-import SimpleImageSlider from "react-simple-image-slider";
 import Navbar from "./Navbar";
 import FeaturedProductsList from "./FeaturedProductsList";
 import ErrorAlert from "./ErrorAlert";
@@ -50,20 +49,22 @@ const FeaturedProducts = () => {
       {featuredProducts && (
         <div>
           <Navbar />
-          <Carousel>
-            {imgArray.map((image_url) => {
-              return (
-                <Carousel.Item interval={1000}>
-                  <img
-                    className="d-block w-100"
-                    src={image_url}
-                    style={{ height: "700px" }}
-                  />
-                </Carousel.Item>
-              );
-            })}
-          </Carousel>
           {errorMsg && <ErrorAlert msg={errorMsg} />}
+          <Carousel>
+            {imgArray &&
+              imgArray.map((image_url) => {
+                return (
+                  <Carousel.Item interval={1000}>
+                    <img
+                      className="d-block w-100"
+                      src={image_url}
+                      style={{ height: "700px" }}
+                    />
+                  </Carousel.Item>
+                );
+              })}
+          </Carousel>
+
           <div style={{ backgroundColor: "#fcf0e2" }}>
             <FeaturedProductsList
               featuredProducts={featuredProducts}
