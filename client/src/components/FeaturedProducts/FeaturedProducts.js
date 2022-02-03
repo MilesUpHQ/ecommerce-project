@@ -19,7 +19,6 @@ const FeaturedProducts = () => {
     axios
       .get(`/products?page=${page}`)
       .then((res) => {
-        console.log("res :", res);
         setfeaturedProducts(res.data.featuredProducts);
         setimgArray(res.data.imgArray);
         setCurrPage(res.data.currPage);
@@ -32,7 +31,6 @@ const FeaturedProducts = () => {
     axios
       .get("/products")
       .then((res) => {
-        console.log("res :", res);
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
         setTotalPages(res.data.totalPages);
@@ -52,20 +50,20 @@ const FeaturedProducts = () => {
           {errorMsg && <ErrorAlert msg={errorMsg} />}
           <Carousel>
             {imgArray &&
-              imgArray.map((image_url) => {
+              imgArray.map((imageUrl) => {
                 return (
                   <Carousel.Item interval={1000}>
                     <img
                       className="d-block w-100"
-                      src={image_url}
-                      style={{ height: "700px" }}
+                      src={imageUrl}
+                      className="imageSlide"
                     />
                   </Carousel.Item>
                 );
               })}
           </Carousel>
 
-          <div style={{ backgroundColor: "#fcf0e2" }}>
+          <div className="mainContainer">
             <FeaturedProductsList
               featuredProducts={featuredProducts}
               currPage={currPage}

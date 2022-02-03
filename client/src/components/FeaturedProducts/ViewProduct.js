@@ -5,14 +5,14 @@ import Navbar from "./Navbar";
 import { Card, Button, Container, Row, Col, Carousel } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
 import ErrorAlert from "./ErrorAlert";
-
+import "./featuredProducts.css";
 const ViewProduct = () => {
   let [product, setProduct] = useState([]);
   let [category, setCategory] = useState("");
   let [colors, setColors] = useState([]);
   let [sizes, setSizes] = useState([]);
   let [reviews, setReviews] = useState([]);
-  let [image_urls, setImage_url] = useState("");
+  let [imageUrls, setImage_url] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
 
   let id = window.location.pathname.substring(14);
@@ -32,7 +32,6 @@ const ViewProduct = () => {
     axios
       .get(`/products/${id}`)
       .then((response) => {
-        console.log("response :", response.data);
         setCategory(response.data.categories[0].name);
         setProduct(response.data.product[0]);
         let color = removeDuplicate(response.data.colors);
@@ -48,15 +47,15 @@ const ViewProduct = () => {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#fcf0e2" }}>
-      {product && image_urls && (
+    <div className="mainContainer">
+      {product && imageUrls && (
         <div>
           <Navbar />
           <br />
           <br />
           <hr />
           {errorMsg && <ErrorAlert msg={errorMsg} />}
-          <Card style={{ width: "100%", height: "60px" }}>
+          <Card className="viewCard">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
               <div
                 className="collapse navbar-collapse"
@@ -80,20 +79,20 @@ const ViewProduct = () => {
             </nav>
           </Card>
           <hr />
-          <Card style={{ width: "58rem", left: "30px" }}>
+          <Card className="containerCard">
             <Container>
               <Row>
                 <Col>
                   <Carousel>
-                    {image_urls &&
-                      image_urls.map((image_url) => {
+                    {imageUrls &&
+                      imageUrls.map((imageUrl) => {
                         return (
                           <Carousel.Item interval={1000}>
                             <img
                               className="d-block w-100"
-                              src={image_url}
+                              src={imageUrl}
                               alt={product.name}
-                              style={{ height: "300px" }}
+                              className="imgSlide"
                             />
                           </Carousel.Item>
                         );
@@ -102,11 +101,11 @@ const ViewProduct = () => {
                 </Col>
                 <Col>
                   <Card.Body>
-                    <Card.Title style={{ float: "left", marginLeft: "60px" }}>
+                    <Card.Title className="productName">
                       {product.name}{" "}
                     </Card.Title>
-                    <Card.Text style={{ marginLeft: "100px" }}>
-                      <FaHeart style={{ fontSize: "20px", color: "red" }} />
+                    <Card.Text className="iconText">
+                      <FaHeart className="icon" />
                     </Card.Text>
                     <br />
 
@@ -165,11 +164,7 @@ const ViewProduct = () => {
                         step="1"
                         onkeydown="return false"
                         name="name"
-                        style={{
-                          border: "solid 1px blue",
-                          borderRadius: "10px",
-                          height: "40px",
-                        }}
+                        className="cartInput"
                       />
                       <Button type="submit" variant="primary">
                         Add to cart
@@ -179,49 +174,24 @@ const ViewProduct = () => {
                 </Col>
               </Row>
               <hr />
-              <Row style={{ width: "fit-content" }}>
+              <Row className="reviewsRow">
                 <Card.Text>Reviews</Card.Text>
                 <Container>
                   {reviews &&
                     reviews.map((review) => {
                       return (
-                        <div style={{ width: "100%" }}>
-                          <Card.Text
-                            style={{ float: "left", fontWeight: "bold" }}
-                          >
+                        <div className="reviewsDiv">
+                          <Card.Text className="reviewComment">
                             {review.comment}
                           </Card.Text>
-                          <Card.Text
-                            style={{
-                              float: "left",
-                              marginLeft: "5px",
-                              marginRight: "10px",
-                            }}
-                          >
+                          <Card.Text className="text1">
                             with the rating of
                           </Card.Text>
-                          <Card.Text
-                            style={{
-                              float: "left",
-                              marginLeft: "5px",
-                              marginRight: "10px",
-                              fontWeight: "bold",
-                            }}
-                          >
+                          <Card.Text className="rating">
                             {review.rating}
                           </Card.Text>
-                          <Card.Text
-                            style={{
-                              float: "left",
-                              marginLeft: "5px",
-                              marginRight: "10px",
-                            }}
-                          >
-                            by
-                          </Card.Text>
-                          <Card.Text
-                            style={{ marginLeft: "5px", fontWeight: "bold" }}
-                          >
+                          <Card.Text className="text2">by</Card.Text>
+                          <Card.Text className="username">
                             {review.username}
                           </Card.Text>
                         </div>

@@ -17,13 +17,13 @@ const FeaturedProductsList = ({
     return <h2>Loading...</h2>;
   }
   return (
-    <div style={{ marginTop: "50px", marginLeft: "5%" }}>
+    <div className="listDiv">
       <Container>
         <Row>
           {featuredProducts.map((featuredProduct) => {
             return (
               <Col>
-                <Card style={{ width: "18rem" }}>
+                <Card className="listCard">
                   <Carousel>
                     {imgArray.map((image_url) => {
                       return (
@@ -32,35 +32,32 @@ const FeaturedProductsList = ({
                             className="d-block w-100"
                             src={image_url}
                             alt={featuredProduct.name}
-                            style={{ height: "300px" }}
+                            className="imgSlide"
                           />
                         </Carousel.Item>
                       );
                     })}
                   </Carousel>
                   <Card.Body>
-                    <Card.Title style={{ float: "left", marginLeft: "60px" }}>
+                    <Card.Title className="featuredProductName">
                       {featuredProduct.name}{" "}
                     </Card.Title>
-                    <Card.Text style={{ marginLeft: "200px" }}>
-                      <FaHeart style={{ fontSize: "20px", color: "red" }} />
+                    <Card.Text className="iconText">
+                      <FaHeart className="icon" />
                     </Card.Text>
                     <br />
-                    <Card.Text style={{ marginLeft: "20%" }}>
+                    <Card.Text className="featuredProductContent">
                       {featuredProduct.description}
                     </Card.Text>
-                    <Card.Text style={{ marginLeft: "20%" }}>
+                    <Card.Text className="featuredProductContent">
                       Price : Rs.{featuredProduct.price}
                     </Card.Text>
-                    <Button
-                      style={{ float: "left", marginLeft: "5%" }}
-                      variant="primary"
-                    >
+                    <Button className="cartButton" variant="primary">
                       Add to cart
                     </Button>
                     <br />
                     <a
-                      style={{ marginLeft: "20px", color: "black" }}
+                      className="viewProduct"
                       href={`/view_product/${featuredProduct.product_id}`}
                     >
                       View Product
