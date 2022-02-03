@@ -68,7 +68,3 @@ app.get(
     res.json(req.user);
   }
 );
-
-app.listen(port, () =>
-  console.log(`JS Bootcamp project listening on port ${port}!`)
-);
