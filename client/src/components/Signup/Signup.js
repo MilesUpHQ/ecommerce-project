@@ -26,7 +26,7 @@ export default function Signup() {
 				toast.success("User Created Sucessfully! Please Login.");
 				setTimeout(() => {
 					navigate("/login");
-				}, 2000);
+				}, 1500);
 			})
 			.catch((err) => {
 				setError(err.response.data.message);
@@ -63,7 +63,7 @@ export default function Signup() {
 											id="first_name"
 											placeholder="First Name"
 										/>
-										<label htmlFor="first_name">First Name</label>
+										<label htmlFor="first_name">First Name *</label>
 									</div>
 									<div className="form-floating mb-3">
 										<input
@@ -74,7 +74,7 @@ export default function Signup() {
 											id="last_name"
 											placeholder="Last Name"
 										/>
-										<label htmlFor="last_name">Last Name</label>
+										<label htmlFor="last_name">Last Name *</label>
 									</div>
 									<div className="form-floating mb-3">
 										<input
@@ -85,7 +85,7 @@ export default function Signup() {
 											id="username"
 											placeholder="Username"
 										/>
-										<label htmlFor="username">Username</label>
+										<label htmlFor="username">Username *</label>
 									</div>
 
 									<div className="form-floating mb-3">
@@ -97,7 +97,7 @@ export default function Signup() {
 											id="email"
 											placeholder="Email"
 										/>
-										<label htmlFor="email">Email address</label>
+										<label htmlFor="email">Email address *</label>
 									</div>
 									<div className="form-floating mb-3">
 										<input
@@ -108,7 +108,7 @@ export default function Signup() {
 											id="password"
 											placeholder="Password"
 										/>
-										<label htmlFor="password">Password</label>
+										<label htmlFor="password">Password *</label>
 									</div>
 									<div className="form-group text-center">
 										<button type="submit" className="btn btn-primary btn-lg">
