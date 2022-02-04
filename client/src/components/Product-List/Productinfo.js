@@ -4,15 +4,12 @@ import axios from "../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 
 const Productinfo = (props) => {
-
   const [product, setProduct] = useState([]);
   const [errormsg, setErrormsg] = useState(null);
   useEffect(() => {
-    console.log("idd",props.id);
     axios
       .get(`/product_info/${props.id}`)
       .then((res) => {
-        console.log("resss",res);
         setProduct(res.data);
       })
       .catch((err) => {

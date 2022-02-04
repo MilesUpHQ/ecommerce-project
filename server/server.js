@@ -11,7 +11,6 @@ const forgotPassword = require("./routes/forgotPassword");
 const addProducts = require("./routes/addProducts");
 const displayProducts = require("./routes/displayProducts");
 const productinfo = require("./routes/productinfo");
-//const { default: DisplayProducts } = require("../client/src/components/Product-List/DisplayProducts");
 const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
 dotenv.config();

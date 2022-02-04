@@ -21,14 +21,10 @@ let page = parseInt(req.query.page) || 1;
             totalPages.push(i);
           }
         }
-        console.log(response);
         let products = response.data;
         res.json({ products, currPage, lastPage, totalPages });
           
       })
-    // .then((row) => {
-    //   res.json(row);
-    // })
     .catch((err) => {
       res.status(400).send("Unable to display products");
     });

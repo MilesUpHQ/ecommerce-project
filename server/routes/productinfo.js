@@ -3,7 +3,6 @@ const router = express.Router();
 const knex = require("../utils/dbConfig");
 
 router.get("/:id", (req, res) => {
-  console.log(" backend id ",req.params.id);
     knex("products")
       .leftJoin("variants", "variants.id", "products.id")
       .select("products.name", "products.description","variants.size","variants.color",
