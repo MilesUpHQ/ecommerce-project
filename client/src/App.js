@@ -18,6 +18,7 @@ import ResetPassword from "./components/ResetPassword/ResetPassword";
 import AddProducts from "./components/Product-List/AddProducts";
 import  DisplayProducts  from "./components/Product-List/DisplayProducts";
 import { ProductLayout } from "./components/Product-List/ProductLayout";
+import { ProductView } from "./components/Product-List/ProductView";
 const App = () => {
 	return (
 		<Router>
@@ -29,6 +30,7 @@ const App = () => {
 				<Route path="/logout" element={<Logout />} />
 				 <Route path="/add-products" element={<AddProducts />}/>
        			<Route path="/display-products" element={<ProductLayout/>} />
+				 <Route path="/product_view/:id" element={<ProductView/>} />
 				<Route
 					path="/"
 					element={

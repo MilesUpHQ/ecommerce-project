@@ -34,7 +34,9 @@ const Pagination = ({ currPage, lastPage, totalPages, handlePagination }) => {
             className={
               currPage == lastPage ? "page-item disabled" : "page-item"
             }
-            onClick={() => currPage !== lastPage ? handlePagination(currPage + 1): ''}
+            onClick={() =>
+              currPage !== lastPage ? handlePagination(currPage + 1) : ""
+            }
           >
             <div className="page-link">Next</div>
           </li>
