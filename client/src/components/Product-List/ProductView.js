@@ -6,7 +6,6 @@ import "../Admin/css/admin-style.css";
 
 export const ProductView = () => {
   let  { id }  = useParams("id");
-  console.log("GHCVG",id);
   return (
     <AdminHome>
       <Productinfo
