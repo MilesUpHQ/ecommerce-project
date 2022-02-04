@@ -31,8 +31,11 @@ router.post(
 						res.json({ token });
 					})
 					.catch((err) => {
-						res.status(401).send("Invalid email or password");
+						res.status(400).send(err);
 					});
+			})
+			.catch((err) => {
+				res.status(400).send(err);
 			});
 	}
 );
