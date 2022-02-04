@@ -20,6 +20,7 @@ const forgotPassword = require("./routes/forgotPassword");
 const addProducts = require("./routes/addProducts");
 const displayProducts = require("./routes/displayProducts");
 const products = require("./routes/products");
+const productsByCategory = require("./routes/productsByCategory");
 //const { default: DisplayProducts } = require("../client/src/components/Product-List/DisplayProducts");
 const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
@@ -35,6 +36,7 @@ app.use("/api/products", products);
 app.use("/api/admin/add_products", addProducts);
 app.use("/api", adminRouter);
 app.use("/api/admin/products", displayProducts);
+app.use("/api/products/category", productsByCategory);
 
 app.use(bodyParser.json());
 passport.use(strategy);
@@ -44,11 +46,11 @@ app.use("/images", express.static("images"));
 app.use("/images", express.static(path.join("backend/images")));
 
 app.get("/", (req, res) => {
-  res.json({ name: "Magesh", company: "Sedin pvt" });
+	res.json({ name: "Magesh", company: "Sedin pvt" });
 });
 
 app.listen(port, () =>
-  console.log(`JS Bootcamp project listening on port ${port}!`)
+	console.log(`JS Bootcamp project listening on port ${port}!`)
 );
 //routes
 app.use("/api/reset_password", resetPassword);
@@ -62,9 +64,9 @@ app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
 
 app.get(
-  "/api/getUser",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json(req.user);
-  }
+	"/api/getUser",
+	passport.authenticate("jwt", { session: false }),
+	(req, res) => {
+		res.json(req.user);
+	}
 );
