@@ -29,9 +29,12 @@ export default function Signup() {
 				}, 1500);
 			})
 			.catch((err) => {
-				setError(err.response.data.message);
-				if (err.response.data[0].msg) {
+				if (err.response) {
+					setError(err.response.data.message);
+				} else if (err.response.data[0].msg) {
 					setError(err.response.data[0].msg);
+				} else {
+					setError(err);
 				}
 			});
 	};
