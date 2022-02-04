@@ -6,10 +6,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-        <div
-          className="navbar-menu-wrapper d-flex align-items-center justify-content-end"
-          style={{ width: "100%" }}
-        >
+        <div className="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul className="navbar-nav mr-lg-2">
             <li className="nav-item nav-search d-none d-lg-block">
               <div className="input-group">
@@ -24,18 +21,18 @@ const Navbar = () => {
               </div>
             </li>
             <li className="nav-item nav-search d-none d-lg-block">
-              <h4 style={{ color: "black", fontSize: "30px" }}>Products</h4>
+              <h4>Products</h4>
             </li>
           </ul>
           <ul className="navbar-nav navbar-nav-right">
             <li className="nav-item nav-profile dropdown">
               <a href="#">
-                <FaHeart style={{ color: "black", fontSize: "30px" }} />
+                <FaHeart className="navBarIcon" />
               </a>
             </li>
             <li className="nav-item nav-profile dropdown">
               <a href="#">
-                <FaShoppingCart style={{ color: "black", fontSize: "30px" }} />
+                <FaShoppingCart className="navBarIcon" />
               </a>
             </li>
             <li className="nav-item ">
