@@ -2,10 +2,10 @@ import React from "react";
 import "../ResetPassword/resetPassword.css";
 import { useEffect, useState } from "react";
 import axios from "../../utils/ajax-helper";
+import { Button } from "react-bootstrap";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [currentEmail, setCurrentEmail] = useState("");
   const [message, setMessage] = useState("");
 
   const submitHandler = async (e) => {
@@ -75,7 +75,7 @@ const ForgotPassword = () => {
             </ul>
           </div>
         </nav>
-        <div className="card">
+        <div className="card" style={{ marginLeft: "30%", marginTop: "10%" }}>
           <div className="card-header">
             <h5>ForgotPassword</h5>
             <br />
@@ -95,9 +95,9 @@ const ForgotPassword = () => {
                 />
               </div>
               <br />
-              <button type="submit" className="continue">
+              <Button variant="primary" type="submit" className="continue">
                 Continue
-              </button>
+              </Button>
             </form>
           </div>
         </div>
