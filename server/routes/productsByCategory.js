@@ -4,7 +4,6 @@ const knex = require("../utils/dbConfig");
 
 router.get("/:id", async (req, res, next) => {
   // get products by product category with variants
-  console.log("req.params.id", req.params.id);
   knex("products")
     .join("variants", "products.id", "variants.product_id")
     .join("variant_images", "variants.id", "variant_images.variant_id")
@@ -20,7 +19,6 @@ router.get("/:id", async (req, res, next) => {
       "variant_images.image_url"
     )
     .then((row) => {
-      console.log("Row", row);
       res.send(row);
     })
     .catch((err) => {
