@@ -57,8 +57,6 @@ router.get("", async (req, res, next) => {
           totalPages.push(i);
         }
       }
-      console.log("data :", response.data);
-      console.log("featured products :", featuredProducts);
       res.json({ featuredProducts, currPage, lastPage, totalPages, imgArray });
     })
     .catch((err) => {
