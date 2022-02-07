@@ -69,6 +69,7 @@ const DisplayProducts = () => {
                    <td>
                     {console.log(display)}
                    <a href={`/product_view/${display.id}`} type="button" class="btn btn-light btn-small"><i class="fas fa-eye"></i> View</a>
+                   <a href={`/deleted/${display.id}`} type="button" class="btn btn-light btn-small"><i class="fas fa-trash"></i> Delete</a>
                    </td>
                  </tr> 
                 ))}

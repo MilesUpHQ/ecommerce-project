@@ -5,8 +5,8 @@ const knex = require("../utils/dbConfig");
 router.get("/:id", (req, res) => {
     knex("products")
       .leftJoin("variants", "variants.id", "products.id")
-      .select("products.name", "products.description","variants.size","variants.color",
-      "variants.type", "variants.price")
+      .select("products.name","variants.size","variants.color",
+      "variants.type", "variants.price","products.description")
       .where("products.id",req.params.id)
       .then((row) => {
         res.json(row);

@@ -18,7 +18,6 @@ import ResetPassword from "./components/ResetPassword/ResetPassword";
 import FeaturedProducts from "./components/FeaturedProducts/FeaturedProducts";
 import ViewProduct from "./components/FeaturedProducts/ViewProduct";
 import AddProducts from "./components/Product-List/AddProducts";
-import DisplayProducts from "./components/Product-List/DisplayProducts";
 import { ProductLayout } from "./components/Product-List/ProductLayout";
 import { ProductView } from "./components/Product-List/ProductView";
 const App = () => {
@@ -34,7 +33,8 @@ const App = () => {
         <Route path="/add-products" element={<AddProducts />} />
         <Route path="/display-products" element={<ProductLayout />} />
         <Route path="/" element={<FeaturedProducts />}></Route>
-	<Route path="/product_view/:id" element={<ProductView/>} />
+	      <Route path="/product_view/:id" element={<ProductView/>} />
+        {/* <Route path="/deleted/:id" element={<ProductLayout/>} /> */}
         <Route
           exact
           path="/admin"
