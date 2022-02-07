@@ -20,6 +20,8 @@ import ViewProduct from "./components/FeaturedProducts/ViewProduct";
 import AddProducts from "./components/Product-List/AddProducts";
 import DisplayProducts from "./components/Product-List/DisplayProducts";
 import { ProductLayout } from "./components/Product-List/ProductLayout";
+import Navbar from "./components/Navbar/Navbar";
+import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
 
 const App = () => {
   return (
@@ -33,7 +35,9 @@ const App = () => {
         <Route path="/view_product/:id" element={<ViewProduct />} />
         <Route path="/add-products" element={<AddProducts />} />
         <Route path="/display-products" element={<ProductLayout />} />
-        <Route path="/" element={<FeaturedProducts />}></Route>
+        {/* <Route path="/" element={<FeaturedProducts />}></Route> */}
+        <Route path="/" element={<Navbar />} />
+        <Route path="/products/:category" element={<ProductsByCategory />} />
         <Route
           exact
           path="/admin"

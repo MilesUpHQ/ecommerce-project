@@ -2,7 +2,7 @@ import React from "react";
 import "../ResetPassword/resetPassword.css";
 import { useEffect, useState } from "react";
 import axios from "../../utils/ajax-helper";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar/Navbar";
 import FeaturedProductsList from "./FeaturedProductsList";
 import ErrorAlert from "./ErrorAlert";
 import { Carousel, Card } from "react-bootstrap";
