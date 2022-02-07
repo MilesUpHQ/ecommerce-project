@@ -50,13 +50,6 @@ app.get("/", (req, res) => {
 app.listen(port, () =>
   console.log(`JS Bootcamp project listening on port ${port}!`)
 );
-// //routes
-// app.use("/api/reset_password", resetPassword);
-// app.use("/api/forgot_password", forgotPassword);
-// app.use("/api/admin/add_products", addProducts);
-// app.use("/api", adminRouter);
-// app.use("/api/admin/products", displayProducts);
-
 app.use("/", adminRouter);
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
