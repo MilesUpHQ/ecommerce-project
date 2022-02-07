@@ -40,6 +40,7 @@ router.get("", async (req, res, next) => {
       "products.description",
       "variants.price"
     )
+    .whereNotNull("variants.price")
     .orderBy("products.updated_at", "desc")
     .paginate({
       perPage: 15,
@@ -56,12 +57,16 @@ router.get("", async (req, res, next) => {
           totalPages.push(i);
         }
       }
+      console.log("data :", response.data);
+      console.log("featured products :", featuredProducts);
       res.json({ featuredProducts, currPage, lastPage, totalPages, imgArray });
     })
     .catch((err) => {
       res.send("error in getting products");
     });
 });
+
+// *********************************************** view Product ****************************************
 
 router.get("/:id", async (req, res, next) => {
   let categories;
@@ -86,6 +91,7 @@ router.get("/:id", async (req, res, next) => {
     .leftJoin("products", "products.id", "variants.product_id")
     .select("variants.color")
     .where({ "products.id": req.params.id })
+    .whereNotNull("variants.color")
     .then((res) => {
       colors = res;
     })
@@ -99,6 +105,7 @@ router.get("/:id", async (req, res, next) => {
     .leftJoin("products", "products.id", "variants.product_id")
     .select("variants.size")
     .where({ "products.id": req.params.id })
+    .whereNotNull("variants.size")
     .then((res) => {
       sizes = res;
     })
@@ -138,15 +145,6 @@ router.get("/:id", async (req, res, next) => {
       res.send("error in getting variant images");
       imgArray = null;
     });
-
-  // knex("featured_products")
-  //   .leftJoin("products", "featured_products.product_id", "products.id")
-  //   .select(
-  //     "products.name",
-  //     "products.id as products_id",
-  //     "products.description",
-  //     "products.price"
-  //   )
   knex("featured_products")
     .leftJoin("products", "featured_products.product_id", "products.id")
     .leftJoin("variants", "variants.product_id", "products.id")
