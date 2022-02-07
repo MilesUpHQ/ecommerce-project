@@ -31,13 +31,14 @@ router.get("", async (req, res, next) => {
       imgArray = null;
     });
 
-  knex("fetured_products")
-    .leftJoin("products", "fetured_products.product_id", "products.id")
+  knex("featured_products")
+    .leftJoin("products", "featured_products.product_id", "products.id")
+    .leftJoin("variants", "variants.product_id", "products.id")
     .select(
       "products.name",
       "products.id as product_id",
       "products.description",
-      "products.price"
+      "variants.price"
     )
     .orderBy("products.updated_at", "desc")
     .paginate({
@@ -138,13 +139,22 @@ router.get("/:id", async (req, res, next) => {
       imgArray = null;
     });
 
-  knex("fetured_products")
-    .leftJoin("products", "fetured_products.product_id", "products.id")
+  // knex("featured_products")
+  //   .leftJoin("products", "featured_products.product_id", "products.id")
+  //   .select(
+  //     "products.name",
+  //     "products.id as products_id",
+  //     "products.description",
+  //     "products.price"
+  //   )
+  knex("featured_products")
+    .leftJoin("products", "featured_products.product_id", "products.id")
+    .leftJoin("variants", "variants.product_id", "products.id")
     .select(
       "products.name",
-      "products.id as products_id",
+      "products.id as product_id",
       "products.description",
-      "products.price"
+      "variants.price"
     )
     .where({ "products.id": req.params.id })
     .then((response) => {
