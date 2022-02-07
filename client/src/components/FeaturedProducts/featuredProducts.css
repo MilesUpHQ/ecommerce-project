@@ -105,3 +105,10 @@
 .navbar-menu-wrapper {
   width: 100% !important;
 }
+
+.messageCard {
+  margin-top: 10%;
+  margin-left: 20%;
+  height: 300px;
+  width: 600px;
+}

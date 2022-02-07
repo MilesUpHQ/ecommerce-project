@@ -27,7 +27,9 @@ const Navbar = () => {
         <div className="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul className="navbar-nav mr-lg-2">
             <li className="nav-item nav-search d-none d-lg-block">
-              <h4>Products</h4>
+              <a className="nav-link" href="/">
+                <h4>Products</h4>
+              </a>
             </li>
             {categories.map((category) => (
               <li className="nav-item">
