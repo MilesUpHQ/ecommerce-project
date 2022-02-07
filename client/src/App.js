@@ -1,10 +1,10 @@
 import {
-	BrowserRouter as Router,
-	Routes,
-	Route,
-	Navigate,
-	Switch,
-	Link,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  Switch,
+  Link,
 } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
@@ -24,50 +24,50 @@ import Navbar from "./components/Navbar/Navbar";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
 
 const App = () => {
-	return (
-		<Router>
-			<Routes>
-				<Route path="/forgot_password" element={<ForgotPassword />} />
-				<Route path="/reset_password/:token" elsement={<ResetPassword />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="signup" element={<Signup />} />
-				<Route path="/logout" element={<Logout />} />
-				<Route path="/view_product/:id" element={<ViewProduct />} />
-				<Route path="/add-products" element={<AddProducts />} />
-				<Route path="/display-products" element={<ProductLayout />} />
-				{/* <Route path="/" element={<FeaturedProducts />}></Route> */}
-				<Route path="/" element={<Navbar />} />
-				<Route path="/products/:category" element={<ProductsByCategory />} />
-				<Route
-					exact
-					path="/admin"
-					element={
-						<PrivateRoute>
-							<AdminHome />
-						</PrivateRoute>
-					}
-				></Route>
+  return (
+    <Router>
+      <Routes>
+        <Route path="/forgot_password" element={<ForgotPassword />} />
+        <Route path="/reset_password/:token" elsement={<ResetPassword />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/view_product/:id" element={<ViewProduct />} />
+        <Route path="/add-products" element={<AddProducts />} />
+        <Route path="/display-products" element={<ProductLayout />} />
+        {/* <Route path="/" element={<FeaturedProducts />}></Route> */}
+        <Route path="/" element={<Navbar />} />
+        <Route path="/products/:category" element={<ProductsByCategory />} />
+        <Route
+          exact
+          path="/admin"
+          element={
+            <PrivateRoute>
+              <AdminHome />
+            </PrivateRoute>
+          }
+        ></Route>
 
-				<Route
-					path="/admin/categories"
-					element={
-						<PrivateRoute>
-							<CategoryLayout />
-						</PrivateRoute>
-					}
-				></Route>
-			</Routes>
-		</Router>
-	);
+        <Route
+          path="/admin/categories"
+          element={
+            <PrivateRoute>
+              <CategoryLayout />
+            </PrivateRoute>
+          }
+        ></Route>
+      </Routes>
+    </Router>
+  );
 };
 
 function PrivateRoute({ children }) {
-	const auth = useAuth();
-	return auth ? children : <Navigate to="/login" />;
+  const auth = useAuth();
+  return auth ? children : <Navigate to="/login" />;
 }
 function useAuth() {
-	const jwt = getJWT();
-	return jwt && jwt !== "undefined" && jwt !== "null";
+  const jwt = getJWT();
+  return jwt && jwt !== "undefined" && jwt !== "null";
 }
 
 export default App;

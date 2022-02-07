@@ -46,11 +46,11 @@ app.use("/images", express.static("images"));
 app.use("/images", express.static(path.join("backend/images")));
 
 app.get("/", (req, res) => {
-	res.json({ name: "Magesh", company: "Sedin pvt" });
+  res.json({ name: "Magesh", company: "Sedin pvt" });
 });
 
 app.listen(port, () =>
-	console.log(`JS Bootcamp project listening on port ${port}!`)
+  console.log(`JS Bootcamp project listening on port ${port}!`)
 );
 //routes
 app.use("/api/reset_password", resetPassword);
@@ -64,9 +64,9 @@ app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
 
 app.get(
-	"/api/getUser",
-	passport.authenticate("jwt", { session: false }),
-	(req, res) => {
-		res.json(req.user);
-	}
+  "/api/getUser",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
 );
