@@ -4,7 +4,7 @@ const knex = require("../utils/dbConfig");
 
 router.get("/:id", (req, res) => {
     knex("products")
-      .leftJoin("variants", "variants.id", "products.id")
+      .leftJoin("variants", "variants.product_id", "products.id")
       .select("products.name","variants.size","variants.color",
       "variants.type", "variants.price","products.description")
       .where("products.id",req.params.id)

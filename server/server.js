@@ -22,7 +22,6 @@ const displayProducts = require("./routes/displayProducts");
 const productinfo = require("./routes/productinfo");
 const products = require("./routes/products");
 const productsByCategory = require("./routes/productsByCategory");
-//const { default: DisplayProducts } = require("../client/src/components/Product-List/DisplayProducts");
 const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
 

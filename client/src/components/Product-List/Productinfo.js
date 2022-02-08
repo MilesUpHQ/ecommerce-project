@@ -52,6 +52,7 @@ const Productinfo = (props) => {
                     <th scope="col">Colour</th>
                     <th scope="col">Type</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Description</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -62,18 +63,11 @@ const Productinfo = (props) => {
                       <td>{product.color}</td>
                       <td>{product.type}</td>
                       <td>{product.price}</td>
+                      <td>{product.description}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
-            <div class="row">
-              <div class="col">
-                <b>Description</b>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">{product.description}</div>
             </div>
           </div>
         </div>

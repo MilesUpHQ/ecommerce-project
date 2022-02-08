@@ -23,6 +23,7 @@ import { ProductLayout } from "./components/Product-List/ProductLayout";
 import { ProductView } from "./components/Product-List/ProductView";
 import Navbar from "./components/Navbar/Navbar";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
+import { EditProducts } from "./components/Product-List/EditProducts";
 
 const App = () => {
   return (
@@ -39,7 +40,7 @@ const App = () => {
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
 	      <Route path="/product_view/:id" element={<ProductView/>} />
-        {/* <Route path="/deleted/:id" element={<ProductLayout/>} /> */}
+        <Route path="/update_product/:id" element={<EditProducts/>} />
         <Route
           exact
           path="/admin"

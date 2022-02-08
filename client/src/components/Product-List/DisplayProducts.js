@@ -85,7 +85,7 @@ const DisplayProducts = ({}) => {
                    </td>
                    <td>
                    <a href={`/product_view/${display.id}`} type="button" class="btn btn-light btn-small"><i class="fas fa-eye"></i> View</a>
-                   <a  type="button" class="btn btn-light btn-small"><i class="fas fa-edit"></i> Edit</a>
+                   <a href={`/update_product/${display.id}`} type="button" class="btn btn-light btn-small"><i class="fas fa-edit"></i> Edit</a>
                    <a  type="button" onClick={()=>deleteUser(display.id , display.name)} class="btn btn-light btn-small"><i class="fas fa-trash"></i> Delete</a>
                    </td>
                  </tr> 
