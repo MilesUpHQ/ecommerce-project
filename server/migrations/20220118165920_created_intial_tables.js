@@ -23,8 +23,7 @@ exports.up = function (knex) {
       table.increments("id").primary();
       table.string("name").notNullable();
       table.string("description");
-      table.integer("price").notNullable();
-      table.integer("category_id").unsigned().notNullable();
+      table.integer("category_id").unsigned();
       table.foreign("category_id").references("product_categories.id");
       table.timestamps(true, true);
     })
@@ -127,6 +126,7 @@ exports.up = function (knex) {
       table.string("size");
       table.string("color");
       table.string("type");
+      table.float("price", 0.0);
       table.boolean("is_default", false);
       table.integer("product_id").unsigned().notNullable();
       table.foreign("product_id").references("products.id");
