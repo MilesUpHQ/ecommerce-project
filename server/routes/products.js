@@ -8,9 +8,10 @@ router.get("", async (req, res, next) => {
   knex("products")
     .leftJoin("variants", "variants.product_id", "products.id")
     .select("products.name", "products.id", "variants.price")
+    .whereNotNull("variants.price")
     .orderBy("products.updated_at", "desc")
     .paginate({
-      perPage: 15,
+      perPage: 5,
       currentPage: page,
       isLengthAware: true,
     })
