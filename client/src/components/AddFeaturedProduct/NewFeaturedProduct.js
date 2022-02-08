@@ -103,15 +103,17 @@ const NewFeaturedProduct = () => {
       </form>
 
       <br />
-      <GetProducts
-        products={products}
-        currPage={currPage}
-        lastPage={lastPage}
-        totalPages={totalPages}
-        handlePagination={handlePagination}
-        setProducts={setProducts}
-        setCurrPage={setCurrPage}
-      />
+      {products.length > 0 && (
+        <GetProducts
+          products={products}
+          currPage={currPage}
+          lastPage={lastPage}
+          totalPages={totalPages}
+          handlePagination={handlePagination}
+          setProducts={setProducts}
+          setCurrPage={setCurrPage}
+        />
+      )}
     </div>
   );
 };
