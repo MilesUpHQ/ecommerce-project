@@ -1,7 +1,5 @@
-var environment = process.env.NODE_ENV || "development";
-var config = require("./knexfile")[environment];
-var knex = require("knex")(config);
+const knex = require("./utils/dbConfig");
 
-knex("todos")
-  .where("title", "like", "test%")
-  .then(result => console.log(result));
+knex("users")
+  .select("*")
+  .then((result) => console.log(result));

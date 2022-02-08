@@ -23,7 +23,6 @@ exports.up = function (knex) {
       table.increments("id").primary();
       table.string("name").notNullable();
       table.string("description");
-      table.integer("price").notNullable();
       table.integer("category_id").unsigned().notNullable();
       table.foreign("category_id").references("product_categories.id");
       table.timestamps(true, true);
@@ -116,7 +115,7 @@ exports.up = function (knex) {
       table.foreign("order_id").references("orders.id");
       table.timestamps(true, true);
     })
-    .createTable("fetured_products", (table) => {
+    .createTable("featured_products", (table) => {
       table.increments("id").primary();
       table.integer("product_id").unsigned().notNullable();
       table.foreign("product_id").references("products.id");
@@ -127,6 +126,7 @@ exports.up = function (knex) {
       table.string("size");
       table.string("color");
       table.string("type");
+      table.float("price", 0.0);
       table.boolean("is_default", false);
       table.integer("product_id").unsigned().notNullable();
       table.foreign("product_id").references("products.id");
@@ -145,7 +145,7 @@ exports.down = function (knex) {
   return knex.schema
     .dropTable("variant_images")
     .dropTable("variants")
-    .dropTable("fetured_products")
+    .dropTable("featured_products")
     .dropTable("shipping")
     .dropTable("payment")
     .dropTable("reviews")

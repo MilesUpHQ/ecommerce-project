@@ -6,44 +6,59 @@ import ErrorMessages from "./ErrorMessages";
 
 const FormForProducts = () => {
   const navigate = useNavigate();
-  const [Name, setName] = useState("");
-  const [Price, setPrice] = useState("");
-  const [Description, setDescription] = useState("");
-  const [Image, setImage] = useState("");
-  const [namee, setnamee] = useState();
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [size , setSize] = useState("");
+  const [color , setColor] = useState("");
+  const [type , setType] = useState("");
+  const [categories , setCategories] = useState([]);
   const [fileData, setFileData] = useState([]);
-  const [Errormsg, setErrormsg] = useState(null);
-
-
+  const [errormsg, setErrormsg] = useState(null);
+  const [categoryid, setCategory] = useState('');
 
   //sending data after usestate dec part
   const submitHandler = async (e) => {
     e.preventDefault();
     const imageData = new FormData();
-    // data.append('file',fileData)
-    imageData.append("name", namee);
     imageData.append("file", fileData);
-
-    // console.log("Filedata",fileData)
-    if (Name == "") {
+    imageData.append("name", name);
+    imageData.append("price", price);
+    imageData.append("description", description);
+    imageData.append("size", size);
+    imageData.append("color", color);
+    imageData.append("type", type);
+    imageData.append("category", categoryid);
+     console.log("Filedata:::",imageData);
+    if (name == "") {
       setErrormsg("Name cannot be empty");
       return;
     }
     axios
-      .post("/admin/add_products", {
-        name: Name,
-        price: Price,
-        description: Description,
-        imageData,
-      })
+      .post("/admin/add_products", 
+        imageData
+      )
       .then((res) => {
         console.log("ggggg", res);
         navigate("/display-products");
       })
       .catch((err) => {
-        setErrormsg("Sorry! Something went wrong. Please Try again");
+        setErrormsg("Oppsie! Something went wrong. Please try entering valid datas");
       });
   };
+
+  useEffect(() => {
+  axios
+  .get("/admin/add_products")
+  .then((res) => {
+    setCategories(res.data);
+  })
+  .catch((err) => {
+    setErrormsg("Oopps! Something went wrong. Please Try again", err);
+  });
+}, []);
+
+
 
   const fileChangeHandler = (e) => {
     console.log("target.files", e.target.files[0]);
@@ -54,7 +69,7 @@ const FormForProducts = () => {
     <div className="main-panel">
       <div className="content-wrapper">
         <div className="row">
-          {Errormsg && <ErrorMessages msg={Errormsg} />}
+          {errormsg && <ErrorMessages msg={errormsg} />}
 
           <div className="col-12 grid-margin stretch-card">
             <div className="card">
@@ -70,7 +85,7 @@ const FormForProducts = () => {
                       className="form-control"
                       id="exampleInputName1"
                       placeholder="Name"
-                      value={Name}
+                      value={name}
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
@@ -83,6 +98,48 @@ const FormForProducts = () => {
                     />
                   </div>
 
+                  <div class="form-group ">
+                    <label for="exampleFormControlSelect3">Select Size</label>
+                    <select className="form-control form-control-sm" id="exampleFormControlSelect3"
+                        onChange={(e) => setSize(e.target.value)}>
+                      <option value="XS">XS</option>
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                    </select>
+                  </div>
+                 
+                  <div class="form-group">
+                      <label for="Color">Color</label>
+                      <input type="text" class="form-control" id="color" placeholder="make it vibrant"
+                      value={color}
+                      onChange={(e) => setColor(e.target.value)}
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="Category">Category</label>
+                        <select value={categoryid} className='form-control form-control-sm' name='Category' 
+                        onChange={(e) => setCategory(e.target.value)}>
+                            <option value="0">Select From The Following</option>
+                            {categories.map((Category) => {
+                                return (
+                                    <option  
+                                    value={Category.id}>{Category.name}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="Type">Type</label>
+                      <input type="text" class="form-control" id="type" placeholder="List the type of your product"
+                      value={type}
+                      onChange={(e) => setType(e.target.value)}
+                      />
+                    </div>
+
                   <div className="form-group">
                     <label for="exampleInputPrice1">Price</label>
                     <input
@@ -90,7 +147,7 @@ const FormForProducts = () => {
                       className="form-control"
                       id="exampleInputPrice1"
                       placeholder="0"
-                      value={Price}
+                      value={price}
                       onChange={(e) => setPrice(e.target.value)}
                     />
                   </div>
@@ -100,7 +157,7 @@ const FormForProducts = () => {
                       className="form-control"
                       id="exampleTextarea1"
                       rows="4"
-                      value={Description}
+                      value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </div>

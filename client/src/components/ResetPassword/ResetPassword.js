@@ -1,22 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./resetPassword.css";
 import axios from "../../utils/ajax-helper";
 import validator from "validator";
+import { Button } from "react-bootstrap";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [currentEmail, setCurrentEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     let token = window.location.pathname.substring(16);
     let decoded = parseJwt(token);
-    // if(currentEmail == decoded.email){
     if (password == confirmPassword) {
       if (
         validator.isStrongPassword(password, {
@@ -37,12 +37,14 @@ const ResetPassword = () => {
             setTimeout(() => {
               setMessage(null);
             }, 2000);
+            navigate("/login");
           })
           .catch((err) => {
             setMessage("reset password failed");
             setTimeout(() => {
               setMessage(null);
             }, 2000);
+            navigate("/forgot_password");
           });
       } else {
         setErrorMessage("Is Not Strong Password");
@@ -56,7 +58,6 @@ const ResetPassword = () => {
         setErrorMessage(null);
       }, 2000);
     }
-    // }
   };
   function parseJwt(token) {
     if (!token) {
@@ -105,9 +106,9 @@ const ResetPassword = () => {
             </ul>
           </div>
         </nav>
-        <div className="card">
+        <div className="card" style={{ marginLeft: "30%", marginTop: "10%" }}>
           <div className="card-header">
-            <h5>ForgotPassword</h5>
+            <h5>Reset Password</h5>
             <br />
             <h4 className="message">{message}</h4>
           </div>
@@ -145,9 +146,9 @@ const ResetPassword = () => {
                 />
               </div>
               <br />
-              <button type="submit" className="continue">
+              <Button type="submit" className="continue">
                 Reset
-              </button>
+              </Button>
             </form>
           </div>
         </div>
