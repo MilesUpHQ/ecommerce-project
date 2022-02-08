@@ -23,7 +23,7 @@ exports.up = function (knex) {
       table.increments("id").primary();
       table.string("name").notNullable();
       table.string("description");
-      table.integer("category_id").unsigned();
+      table.integer("category_id").unsigned().notNullable();
       table.foreign("category_id").references("product_categories.id");
       table.timestamps(true, true);
     })
