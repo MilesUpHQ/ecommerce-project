@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import "../FeaturedProducts/pagination-style.css";
 import Pagination from "../FeaturedProducts/Pagination";
-import ErrorAlert from "../FeaturedProducts/ErrorAlert";
 
 const GetFeaturedProducts = ({
   featuredProducts,
@@ -9,13 +8,9 @@ const GetFeaturedProducts = ({
   lastPage,
   totalPages,
   handlePagination,
-  setCurrPage,
 }) => {
-  const [errorMsg, setErrorMsg] = useState(null);
-
   return (
     <>
-      {errorMsg && <ErrorAlert msg={errorMsg} />}
       <div className="col-lg-12 grid-margin stretch-card">
         <div className="card">
           <div className="card-body">

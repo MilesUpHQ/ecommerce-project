@@ -57,11 +57,9 @@ router.get("", async (req, res, next) => {
           totalPages.push(i);
         }
       }
-      console.log("products :::::::::::::::::::", featuredProducts);
       res.json({ featuredProducts, currPage, lastPage, totalPages, imgArray });
     })
     .catch((err) => {
-      console.log("errr :::::::::::::::::::::::", err);
       res.send("error in getting products");
     });
 });

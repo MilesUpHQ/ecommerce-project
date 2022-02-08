@@ -3,6 +3,8 @@ import "../ResetPassword/resetPassword.css";
 import { useEffect, useState } from "react";
 import axios from "../../utils/ajax-helper";
 import GetFeaturedProducts from "./GetFeaturedProduct";
+import ErrorAlert from "../FeaturedProducts/ErrorAlert";
+import { Card } from "react-bootstrap";
 
 const DisplayFeaturedProduct = () => {
   let [featuredProducts, setfeaturedProducts] = useState([]);
@@ -20,35 +22,51 @@ const DisplayFeaturedProduct = () => {
       })
       .catch((err) => {
         setErrorMsg("Sorry! Something went wrong. Please Try again", err);
+        setTimeout(() => {
+          setErrorMsg(null);
+        }, 6000);
       });
   };
   useEffect(async () => {
     axios
       .get("/featuredProducts")
       .then((res) => {
-        console.log("ressssssssssssssssssssssssssssssssssssss :", res);
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
         setTotalPages(res.data.totalPages);
-        setfeaturedProducts(res.data.featuredProducts);
+        if (res.data.featuredProducts.length == 0) {
+          setErrorMsg("no featured products");
+        } else {
+          setfeaturedProducts(res.data.featuredProducts);
+        }
       })
       .catch((err) => {
-        console.log("ressssssssssssssssssssssssssssssssssssss :", err);
         setErrorMsg("Sorry! Something went wrong. Please Try again", err);
+        setTimeout(() => {
+          setErrorMsg(null);
+        }, 6000);
       });
   }, []);
   return (
     <div>
       {" "}
-      <GetFeaturedProducts
-        featuredProducts={featuredProducts}
-        currPage={currPage}
-        lastPage={lastPage}
-        totalPages={totalPages}
-        handlePagination={handlePagination}
-        setfeaturedProducts={setfeaturedProducts}
-        setCurrPage={setCurrPage}
-      />
+      {errorMsg && (
+        <Card>
+          {" "}
+          <ErrorAlert msg={errorMsg} />{" "}
+        </Card>
+      )}
+      {featuredProducts.length > 0 && (
+        <GetFeaturedProducts
+          featuredProducts={featuredProducts}
+          currPage={currPage}
+          lastPage={lastPage}
+          totalPages={totalPages}
+          handlePagination={handlePagination}
+          setfeaturedProducts={setfeaturedProducts}
+          setCurrPage={setCurrPage}
+        />
+      )}
     </div>
   );
 };

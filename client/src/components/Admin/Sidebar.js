@@ -30,7 +30,7 @@ const Sidebar = () => {
           <li className="nav-item">
             <a className="nav-link" href="/display-featured-product-layout">
               <i className="icon-grid menu-icon"></i>
-              <span className="menu-title">Display Featured Products</span>
+              <span className="menu-title">Featured Products</span>
             </a>
           </li>
           <li className="nav-item">

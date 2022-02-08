@@ -2,21 +2,17 @@ import React from "react";
 import GetProducts from "./GetProducts";
 import { useEffect, useState } from "react";
 import axios from "../../utils/ajax-helper";
-import ErrorAlert from "../FeaturedProducts/ErrorAlert";
-import { AsyncTypeahead } from "react-bootstrap-typeahead";
+import "./addFeaturedProduct.css";
 
 const NewFeaturedProduct = () => {
   let [products, setProducts] = useState([]);
   const [currPage, setCurrPage] = useState(null);
   const [lastPage, setLastPage] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [options, setOptions] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState(null);
   const [input, setInput] = useState("");
 
   const handleFunction = () => {
-    console.log("input ::::::::::::::;", input);
     if (input.length < 3) {
       return;
     }
@@ -25,10 +21,16 @@ const NewFeaturedProduct = () => {
         name: input,
       })
       .then((res) => {
-        console.log("resssssssssssssssssssss :", res);
+        setMessage(res.data.message);
+        setTimeout(() => {
+          setMessage(null);
+        }, 4000);
       })
       .catch((err) => {
-        console.log("err ::::::::::::::::::::::::::::", err);
+        setMessage("oops !! something went wrong");
+        setTimeout(() => {
+          setMessage(null);
+        }, 4000);
       });
   };
 
@@ -40,7 +42,10 @@ const NewFeaturedProduct = () => {
         setCurrPage(res.data.currPage);
       })
       .catch((err) => {
-        setErrorMsg("Sorry! Something went wrong. Please Try again", err);
+        setMessage("Sorry! Something went wrong. Please Try again", err);
+        setTimeout(() => {
+          setMessage(null);
+        }, 4000);
       });
   };
 
@@ -52,10 +57,12 @@ const NewFeaturedProduct = () => {
         setLastPage(res.data.lastPage);
         setTotalPages(res.data.totalPages);
         setProducts(res.data.products);
-        console.log("resssssssssss :", res);
       })
       .catch((err) => {
-        setErrorMsg("Sorry! Something went wrong. Please Try again", err);
+        setMessage("Sorry! Something went wrong. Please Try again", err);
+        setTimeout(() => {
+          setMessage(null);
+        }, 4000);
       });
   }, []);
 
@@ -64,6 +71,7 @@ const NewFeaturedProduct = () => {
       <form className="forms-sample">
         <div className="form-group">
           <table className="table table-hover">
+            {message && <thead className="messageHead">{message}</thead>}
             <tbody>
               <tr>
                 <td style={{ border: 0 }}>

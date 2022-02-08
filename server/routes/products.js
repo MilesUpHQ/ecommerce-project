@@ -11,7 +11,7 @@ router.get("", async (req, res, next) => {
     .whereNotNull("variants.price")
     .orderBy("products.updated_at", "desc")
     .paginate({
-      perPage: 5,
+      perPage: 10,
       currentPage: page,
       isLengthAware: true,
     })
@@ -25,7 +25,6 @@ router.get("", async (req, res, next) => {
           totalPages.push(i);
         }
       }
-      console.log("products :::::::::::::::", products);
       res.json({ products, currPage, lastPage, totalPages });
     })
     .catch((err) => {
@@ -35,7 +34,24 @@ router.get("", async (req, res, next) => {
 
 //*********************************************products********************** */
 router.post("", (req, res) => {
-  console.log("posting to featured products ", req.body);
+  let name = req.body.name;
+  knex("products")
+    .where("name", name)
+    .then((result) => {
+      if (result.length > 0) {
+        let product_id = result[0].id;
+        knex("featured_products")
+          .insert({ product_id: product_id })
+          .then((rows) => {
+            res.json({ message: "sucessfully added !!" });
+          });
+      } else {
+        res.json({ message: "Product does not exists!!!!!!" });
+      }
+    })
+    .catch((err) => {
+      res.json({ message: "Ooops some error in adding product!!!!!!!" });
+    });
 });
 
 module.exports = router;
