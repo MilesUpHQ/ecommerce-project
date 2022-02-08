@@ -31,14 +31,16 @@ router.get("", async (req, res, next) => {
       imgArray = null;
     });
 
-  knex("fetured_products")
-    .leftJoin("products", "fetured_products.product_id", "products.id")
+  knex("featured_products")
+    .leftJoin("products", "featured_products.product_id", "products.id")
+    .leftJoin("variants", "variants.product_id", "products.id")
     .select(
       "products.name",
       "products.id as product_id",
       "products.description",
-      "products.price"
+      "variants.price"
     )
+    .whereNotNull("variants.price")
     .orderBy("products.updated_at", "desc")
     .paginate({
       perPage: 15,
@@ -64,6 +66,8 @@ router.get("", async (req, res, next) => {
     });
 });
 
+// *********************************************** view Product ****************************************
+
 router.get("/:id", async (req, res, next) => {
   let categories;
   knex("products")
@@ -87,6 +91,7 @@ router.get("/:id", async (req, res, next) => {
     .leftJoin("products", "products.id", "variants.product_id")
     .select("variants.color")
     .where({ "products.id": req.params.id })
+    .whereNotNull("variants.color")
     .then((res) => {
       colors = res;
     })
@@ -100,6 +105,7 @@ router.get("/:id", async (req, res, next) => {
     .leftJoin("products", "products.id", "variants.product_id")
     .select("variants.size")
     .where({ "products.id": req.params.id })
+    .whereNotNull("variants.size")
     .then((res) => {
       sizes = res;
     })
@@ -139,14 +145,14 @@ router.get("/:id", async (req, res, next) => {
       res.send("error in getting variant images");
       imgArray = null;
     });
-
-  knex("fetured_products")
-    .leftJoin("products", "fetured_products.product_id", "products.id")
+  knex("featured_products")
+    .leftJoin("products", "featured_products.product_id", "products.id")
+    .leftJoin("variants", "variants.product_id", "products.id")
     .select(
       "products.name",
-      "products.id as products_id",
+      "products.id as product_id",
       "products.description",
-      "products.price"
+      "variants.price"
     )
     .where({ "products.id": req.params.id })
     .then((response) => {
