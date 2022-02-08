@@ -34,6 +34,7 @@ app.use("/api/forgot_password", forgotPassword);
 app.use("/api/admin/add_products", addProducts);
 app.use('/api', adminRouter);
 app.use('/api/admin/products', displayProducts);
+app.use('/api/delete-product',displayProducts);
 app.use('/api/product_info',productinfo);
 
 app.use(bodyParser.json());

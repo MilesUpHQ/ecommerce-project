@@ -4,7 +4,7 @@ import axios from "../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import Pagination from "../Admin/Categories/Pagination";
 import "../Admin/css/pagination.css"
-const DisplayProducts = () => {
+const DisplayProducts = ({}) => {
   const [display, setdisplay] = useState([]);
   const[Errormsg, setErrormsg]= useState(null);
   const [currPage, setCurrPage] = useState(null);
@@ -34,6 +34,23 @@ const DisplayProducts = () => {
       .catch((err) => {
         setErrormsg("Sorry! Something went wrong. Please Try again");
       });
+  };
+
+  const deleteUser = (id,name) => {
+    if (window.confirm(`Are you sure! Delete ${name} Category?`)) {
+      axios
+        .delete("/delete-product", { params: { id } })
+        .then((res) => {
+          let newProducts = [...display];
+          newProducts = newProducts.filter(
+            (product) => product.id !== id
+          );
+          setdisplay(newProducts);
+        })
+        .catch((err) => {
+          setErrormsg("Sorry! Couldn't delete");
+        });
+    }
   };
 
   return (
@@ -67,9 +84,9 @@ const DisplayProducts = () => {
                      {display.price}
                    </td>
                    <td>
-                    {console.log(display)}
                    <a href={`/product_view/${display.id}`} type="button" class="btn btn-light btn-small"><i class="fas fa-eye"></i> View</a>
-                   <a href={`/deleted/${display.id}`} type="button" class="btn btn-light btn-small"><i class="fas fa-trash"></i> Delete</a>
+                   <a  type="button" class="btn btn-light btn-small"><i class="fas fa-edit"></i> Edit</a>
+                   <a  type="button" onClick={()=>deleteUser(display.id , display.name)} class="btn btn-light btn-small"><i class="fas fa-trash"></i> Delete</a>
                    </td>
                  </tr> 
                 ))}
