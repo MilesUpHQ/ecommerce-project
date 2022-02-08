@@ -22,6 +22,9 @@ import DisplayProducts from "./components/Product-List/DisplayProducts";
 import { ProductLayout } from "./components/Product-List/ProductLayout";
 import Navbar from "./components/Navbar/Navbar";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
+import FeaturedProductsList from "./components/FeaturedProducts/FeaturedProductsList";
+import FeaturedProductLayout from "./components/AddFeaturedProduct/FeaturedProductLayout";
+import DisplayFeaturedProductLayout from "./components/AddFeaturedProduct/DisplayFeaturedProductsLayout";
 
 const App = () => {
   return (
@@ -34,6 +37,15 @@ const App = () => {
         <Route path="/logout" element={<Logout />} />
         <Route path="/view_product/:id" element={<ViewProduct />} />
         <Route path="/add-products" element={<AddProducts />} />
+        <Route
+          path="/featured-product-layout"
+          element={<FeaturedProductLayout />}
+        />
+        <Route
+          path="/display-featured-product-layout"
+          element={<DisplayFeaturedProductLayout />}
+        />
+
         <Route path="/display-products" element={<ProductLayout />} />
         {/* <Route path="/" element={<FeaturedProducts />}></Route> */}
         <Route path="/" element={<Navbar />} />

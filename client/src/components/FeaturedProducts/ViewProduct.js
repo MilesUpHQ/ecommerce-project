@@ -30,7 +30,7 @@ const ViewProduct = () => {
 
   useEffect(async () => {
     axios
-      .get(`/products/${id}`)
+      .get(`/featuredProducts/${id}`)
       .then((response) => {
         setCategory(response.data.categories[0].name);
         setProduct(response.data.product[0]);

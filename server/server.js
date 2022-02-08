@@ -19,6 +19,7 @@ const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
 const addProducts = require("./routes/addProducts");
 const displayProducts = require("./routes/displayProducts");
+const featuredProducts = require("./routes/featuredProducts");
 const products = require("./routes/products");
 const productsByCategory = require("./routes/productsByCategory");
 //const { default: DisplayProducts } = require("../client/src/components/Product-List/DisplayProducts");
@@ -32,11 +33,24 @@ app.use(cors());
 //routes
 app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
+app.use("/api/featuredProducts", featuredProducts);
 app.use("/api/products", products);
+app.use("/api", products);
 app.use("/api/admin/add_products", addProducts);
 app.use("/api", adminRouter);
 app.use("/api/admin/products", displayProducts);
 app.use("/api/products/category", productsByCategory);
+
+app.use("/api/signup", signup);
+app.use("/api/getToken", getToken);
+
+app.get(
+  "/api/getUser",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
+);
 
 app.use(bodyParser.json());
 passport.use(strategy);
@@ -52,21 +66,11 @@ app.get("/", (req, res) => {
 app.listen(port, () =>
   console.log(`JS Bootcamp project listening on port ${port}!`)
 );
-//routes
-app.use("/api/reset_password", resetPassword);
-app.use("/api/forgot_password", forgotPassword);
-app.use("/api/admin/add_products", addProducts);
-app.use("/api", adminRouter);
-app.use("/api/admin/products", displayProducts);
+// //routes
+// app.use("/api/reset_password", resetPassword);
+// app.use("/api/forgot_password", forgotPassword);
+// app.use("/api/admin/add_products", addProducts);
+// app.use("/api", adminRouter);
+// app.use("/api/admin/products", displayProducts);
 
-app.use("/", adminRouter);
-app.use("/api/signup", signup);
-app.use("/api/getToken", getToken);
-
-app.get(
-  "/api/getUser",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json(req.user);
-  }
-);
+// app.use("/", adminRouter);
