@@ -16,16 +16,20 @@ import CategoryLayout from "./components/Admin/Categories/CategoryLayout";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import FeaturedProducts from "./components/FeaturedProducts/FeaturedProducts";
-import ViewProduct from "./components/FeaturedProducts/ViewProduct";
+import ViewProduct from "./components/ViewProducts/ViewProduct";
 import AddProducts from "./components/Product-List/AddProducts";
+import DisplayProducts from "./components/Product-List/DisplayProducts";
 import { ProductLayout } from "./components/Product-List/ProductLayout";
 import { ProductView } from "./components/Product-List/ProductView";
+import Navbar from "./components/Navbar/Navbar";
+import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
+
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/forgot_password" element={<ForgotPassword />} />
-        <Route path="/reset_password/:token" elsement={<ResetPassword />} />
+        <Route path="/reset_password/:token" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="/logout" element={<Logout />} />
@@ -33,6 +37,7 @@ const App = () => {
         <Route path="/add-products" element={<AddProducts />} />
         <Route path="/display-products" element={<ProductLayout />} />
         <Route path="/" element={<FeaturedProducts />}></Route>
+        <Route path="/products/:category" element={<ProductsByCategory />} />
 	      <Route path="/product_view/:id" element={<ProductView/>} />
         {/* <Route path="/deleted/:id" element={<ProductLayout/>} /> */}
         <Route
@@ -44,14 +49,6 @@ const App = () => {
             </PrivateRoute>
           }
         ></Route>
-	<Route
-					path="/"
-					element={
-						<PrivateRoute>
-							<Home />
-						</PrivateRoute>
-					}
-				></Route>
 
         <Route
           path="/admin/categories"
