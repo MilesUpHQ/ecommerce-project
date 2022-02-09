@@ -21,9 +21,18 @@ export default function ProductsByCategory() {
     fetchData();
   }, [categoryId]);
 
+  const handleSearch = (value) => {
+    axios
+      .get(`/search/${categoryId}?search_keyword=${value}`)
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar handleSearch={handleSearch} />
       <div>
         <h1>Products By Category</h1>
         <div className="row">

@@ -24,6 +24,7 @@ const productsByCategory = require("./routes/productsByCategory");
 //const { default: DisplayProducts } = require("../client/src/components/Product-List/DisplayProducts");
 const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
+const search = require("./routes/searchProducts")
 
 // middlewares
 app.use(express.json());
@@ -37,6 +38,7 @@ app.use("/api/admin/add_products", addProducts);
 app.use("/api", adminRouter);
 app.use("/api/admin/products", displayProducts);
 app.use("/api/products/category", productsByCategory);
+app.use('/api', search)
 
 app.use(bodyParser.json());
 passport.use(strategy);

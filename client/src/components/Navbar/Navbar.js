@@ -3,7 +3,7 @@ import "./pagination-style.css";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import axios from "../../utils/ajax-helper";
 
-const Navbar = () => {
+const Navbar = ({ handleSearch }) => {
   // get categories from server and store in state and update in navbar
   // /categories
   const [categories, setCategories] = React.useState([]);
@@ -55,6 +55,7 @@ const Navbar = () => {
                   placeholder="Search now"
                   aria-label="search"
                   aria-describedby="search"
+                  onChange={(e) => handleSearch(e.target.value)}
                 />
               </div>
             </li>

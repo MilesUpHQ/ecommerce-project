@@ -29,7 +29,7 @@ router.get("/",(req,res)=>{
   const upload = multer({storage:fileStorageEngine});
 
 router.post("/",upload.single("file"),(req,res)=>{
-    knex("products").insert({ name:req.body.name, description:req.body.description , category_id:req.body.category_id })
+    knex("products").insert({ name:req.body.name, description:req.body.description , category_id:req.body.category })
    .returning("products.id")
     .then(row => {
       console.log("Insided",row);
