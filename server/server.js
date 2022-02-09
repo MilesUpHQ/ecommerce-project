@@ -34,6 +34,7 @@ app.use(cors());
 app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
 app.use("/api/featuredProducts", featuredProducts);
+app.use("/api/", featuredProducts);
 app.use("/api/products", products);
 app.use("/api", products);
 app.use("/api/admin/add_products", addProducts);

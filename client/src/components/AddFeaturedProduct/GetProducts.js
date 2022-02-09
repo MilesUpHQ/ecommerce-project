@@ -18,7 +18,7 @@ const GetProducts = ({
               <table className="table table-hover">
                 <thead>
                   <tr>
-                    <th>Select products to add to featured products </th>
+                    <th>Availble Products </th>
                     <th></th>
                   </tr>
                 </thead>

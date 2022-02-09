@@ -1,10 +1,10 @@
 import React from "react";
-import "../ResetPassword/resetPassword.css";
 import { useEffect, useState } from "react";
 import axios from "../../utils/ajax-helper";
 import GetFeaturedProducts from "./GetFeaturedProduct";
 import ErrorAlert from "../FeaturedProducts/ErrorAlert";
 import { Card } from "react-bootstrap";
+import "../Admin/css/admin-style.css";
 
 const DisplayFeaturedProduct = () => {
   let [featuredProducts, setfeaturedProducts] = useState([]);
@@ -65,6 +65,7 @@ const DisplayFeaturedProduct = () => {
           handlePagination={handlePagination}
           setfeaturedProducts={setfeaturedProducts}
           setCurrPage={setCurrPage}
+          setErrorMsg={setErrorMsg}
         />
       )}
     </div>

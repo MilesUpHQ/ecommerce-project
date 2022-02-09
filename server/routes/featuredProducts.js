@@ -35,6 +35,7 @@ router.get("", async (req, res, next) => {
     .leftJoin("products", "featured_products.product_id", "products.id")
     .leftJoin("variants", "variants.product_id", "products.id")
     .select(
+      "featured_products.id",
       "products.name",
       "products.id as product_id",
       "products.description",
@@ -159,6 +160,20 @@ router.get("/:id", async (req, res, next) => {
     })
     .catch((err) => {
       res.send("error in getting product");
+    });
+});
+
+//**************************************deleting product***************************** */
+
+router.delete("/delete-featured-product/:id", (req, res) => {
+  knex("featured_products")
+    .where("id", req.params.id)
+    .del(["id"])
+    .then((row) => {
+      res.json(row[0]);
+    })
+    .catch((err) => {
+      res.json(err);
     });
 });
 
