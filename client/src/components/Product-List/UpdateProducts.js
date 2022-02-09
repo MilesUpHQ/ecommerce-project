@@ -4,6 +4,7 @@ import ErrorMessages from "./ErrorMessages";
 export const UpdateProducts = (props) => {
     const [product, setProduct] = useState([]);
     const [errormsg, setErrormsg] = useState(null);
+    const [categories , setCategories] = useState([]);
     useEffect(() => {
         axios
           .get(`/product_info/${props.id}`)
@@ -14,7 +15,16 @@ export const UpdateProducts = (props) => {
             setErrormsg("Sorry! Something went wrong. Please Try again");
           });
       }, []);
-      console.log("hbbh",product.name);
+      useEffect(() => {
+        axios
+        .get("/admin/add_products")
+        .then((res) => {
+          setCategories(res.data);
+        })
+        .catch((err) => {
+          setErrormsg("Oopps! Something went wrong. Please Try again", err);
+        });
+      }, []);
   return (
     <div className="main-panel">
     <div className="content-wrapper">
@@ -44,9 +54,7 @@ export const UpdateProducts = (props) => {
                       type="text"
                       className="form-control"
                       id="exampleInputName1"
-                      placeholder='name please'
-                      
-                      
+                      value={product.map(product=>(product.name))}
                     />
                   </div>
                   <div className="form-group">
@@ -61,7 +69,8 @@ export const UpdateProducts = (props) => {
                   <div class="form-group ">
                     <label for="exampleFormControlSelect3">Select Size</label>
                     <select className="form-control form-control-sm" id="exampleFormControlSelect3"
-                        >
+                       value={product.map(product=>(product.size))}
+                       >
                       <option value="XS">XS</option>
                       <option value="S">S</option>
                       <option value="M">M</option>
@@ -72,25 +81,28 @@ export const UpdateProducts = (props) => {
                  
                   <div class="form-group">
                       <label for="Color">Color</label>
-                      <input type="text" class="form-control" id="color" placeholder="make it vibrant"
-                      
-                      
+                      <input type="text" class="form-control" id="color" 
+                       value={product.map(product=>(product.color))}
                       />
                     </div>
 
                     <div class="form-group">
                       <label for="Category">Category</label>
-                        <select className='form-control form-control-sm' name='Category' 
-                        >
-                            <option value="0">Select From The Following</option>
-                           
+                        <select className='form-control form-control-sm' name='Category'  >
+                            <option value="0">Reselect From The Following</option>
+                            {categories.map((Category) => {
+                                return (
+                                    <option  
+                                    value={Category.id}>{Category.name}</option>
+                                )
+                            })}
                         </select>
                     </div>
 
                     <div class="form-group">
                       <label for="Type">Type</label>
-                      <input type="text" class="form-control" id="type" placeholder="List the type of your product"
-                     
+                      <input type="text" class="form-control" id="type"
+                       value={product.map(product=>(product.type))}
                       />
                     </div>
 
@@ -100,8 +112,7 @@ export const UpdateProducts = (props) => {
                       type="integer"
                       className="form-control"
                       id="exampleInputPrice1"
-                      placeholder="0"
-                     
+                      value={product.map(product=>(product.price))}
                     />
                   </div>
                   <div className="form-group">
@@ -110,7 +121,7 @@ export const UpdateProducts = (props) => {
                       className="form-control"
                       id="exampleTextarea1"
                       rows="4"
-                     
+                      value={product.map(product=>(product.description))} 
                     ></textarea>
                   </div>
                   <button type="submit" className="btn btn-primary mr-2">

@@ -39,7 +39,6 @@ const FormForProducts = () => {
         imageData
       )
       .then((res) => {
-        console.log("ggggg", res);
         navigate("/display-products");
       })
       .catch((err) => {
