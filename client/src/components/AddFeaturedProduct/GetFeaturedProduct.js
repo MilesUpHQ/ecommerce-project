@@ -25,9 +25,15 @@ const GetFeaturedProducts = ({
           );
           setfeaturedProducts(newFeaturedProduct);
           setErrorMsg("Delete successfull!!!!!!!");
+          setTimeout(() => {
+            setErrorMsg(null);
+          }, 6000);
         })
         .catch((err) => {
           setErrorMsg("Sorry! You can't delete this featured product");
+          setTimeout(() => {
+            setErrorMsg(null);
+          }, 6000);
         });
     }
   };

@@ -34,9 +34,8 @@ app.use(cors());
 app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
 app.use("/api/featuredProducts", featuredProducts);
-app.use("/api/", featuredProducts);
+app.use("/api/delete-featured-product", featuredProducts);
 app.use("/api/products", products);
-app.use("/api", products);
 app.use("/api/admin/add_products", addProducts);
 app.use("/api", adminRouter);
 app.use("/api/admin/products", displayProducts);
@@ -67,11 +66,3 @@ app.get("/", (req, res) => {
 app.listen(port, () =>
   console.log(`JS Bootcamp project listening on port ${port}!`)
 );
-// //routes
-// app.use("/api/reset_password", resetPassword);
-// app.use("/api/forgot_password", forgotPassword);
-// app.use("/api/admin/add_products", addProducts);
-// app.use("/api", adminRouter);
-// app.use("/api/admin/products", displayProducts);
-
-// app.use("/", adminRouter);

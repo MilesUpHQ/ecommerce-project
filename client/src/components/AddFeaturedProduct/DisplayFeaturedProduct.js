@@ -36,6 +36,9 @@ const DisplayFeaturedProduct = () => {
         setTotalPages(res.data.totalPages);
         if (res.data.featuredProducts.length == 0) {
           setErrorMsg("no featured products");
+          setTimeout(() => {
+            setErrorMsg(null);
+          }, 6000);
         } else {
           setfeaturedProducts(res.data.featuredProducts);
         }
