@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
-export const EditProductForm = (props) => {
+export const EditForm = (props) => {
     const [product, setProduct] = useState({});
     const [errormsg, setErrormsg] = useState(null);
     const [categories , setCategories] = useState([]);
@@ -31,7 +31,7 @@ export const EditProductForm = (props) => {
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="/display_products">Home</a>
+            <a href="/admin/products">Home</a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">
             Updation

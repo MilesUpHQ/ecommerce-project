@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 
-const FormForProducts = () => {
+const AddForm = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -39,7 +39,7 @@ const FormForProducts = () => {
         imageData
       )
       .then((res) => {
-        navigate("/display_products");
+        navigate("/admin/products");
       })
       .catch((err) => {
         setErrormsg("Oppsie! Something went wrong. Please try entering valid datas");
@@ -188,4 +188,4 @@ const FormForProducts = () => {
   );
 };
 
-export default FormForProducts;
+export default AddForm;

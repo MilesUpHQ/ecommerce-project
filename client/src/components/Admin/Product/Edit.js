@@ -1,14 +1,14 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
 import AdminHome from "../AdminHome";
-import { EditProductForm } from './EditProductForm';
+import { EditForm } from './EditForm';
 import "../css/admin-style.css";
 
-export const EditProducts = () => {
+export const Edit = () => {
     let  { id }  = useParams("id");
     return (
       <AdminHome>
-        <EditProductForm
+        <EditForm
         id={id}
         />
       </AdminHome>
