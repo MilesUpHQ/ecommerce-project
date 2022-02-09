@@ -17,13 +17,13 @@ import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import FeaturedProducts from "./components/FeaturedProducts/FeaturedProducts";
 import ViewProduct from "./components/ViewProducts/ViewProduct";
-import AddProducts from "./components/Product-List/AddProducts";
-import DisplayProducts from "./components/Product-List/DisplayProducts";
-import { ProductLayout } from "./components/Product-List/ProductLayout";
-import { ProductView } from "./components/Product-List/ProductView";
+import AddProducts from "./components/Admin/ProductList/AddProducts";
+import DisplayProducts from "./components/Admin/ProductList/DisplayProducts";
+import { ProductLayout } from "./components/Admin/ProductList/ProductLayout";
+import { ProductView } from "./components/Admin/ProductList/ProductView";
 import Navbar from "./components/Navbar/Navbar";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
-import { EditProducts } from "./components/Product-List/EditProducts";
+import { EditProducts } from "./components/Admin/ProductList/EditProducts";
 
 const App = () => {
   return (
@@ -36,11 +36,11 @@ const App = () => {
         <Route path="/logout" element={<Logout />} />
         <Route path="/view_product/:id" element={<ViewProduct />} />
         <Route path="/add-products" element={<AddProducts />} />
-        <Route path="/display-products" element={<ProductLayout />} />
+        <Route path="/display_products" element={<ProductLayout />} />
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
-	      <Route path="/product_view/:id" element={<ProductView/>} />
-        <Route path="/update_product/:id" element={<EditProducts/>} />
+	      <Route path="/admin/product_view/:id" element={<ProductView/>} />
+        <Route path="/admin/product/:id/update" element={<EditProducts/>} />
         <Route
           exact
           path="/admin"

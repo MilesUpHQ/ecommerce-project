@@ -10,7 +10,7 @@ const Sidebar = () => {
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
           <li className="nav-item">
-            <a className="nav-link" href="/display-products">
+            <a className="nav-link" href="/display_products">
               <i className="icon-grid menu-icon"></i>
               <span className="menu-title">Products</span>
             </a>

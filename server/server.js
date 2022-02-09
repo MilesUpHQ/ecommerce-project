@@ -37,7 +37,7 @@ app.use("/api/admin/add_products", addProducts);
 app.use("/api", adminRouter);
 app.use("/api/admin/products", displayProducts);
 app.use("/api/products/category", productsByCategory);
-app.use('/api/delete-product',displayProducts);
+app.use('/api/delete_product',displayProducts);
 app.use('/api/product_info',productinfo);
 
 app.use(bodyParser.json());

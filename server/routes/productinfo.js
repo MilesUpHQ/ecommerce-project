@@ -9,7 +9,7 @@ router.get("/:id", (req, res) => {
       "variants.type", "variants.price","products.description")
       .where("products.id",req.params.id)
       .then((row) => {
-        res.json(row);
+        res.json(row[0]);
       })
       .catch((err) => {
         res.status(400).send("Unable to display products");
