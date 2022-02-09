@@ -11,6 +11,7 @@ const NewFeaturedProduct = () => {
   const [totalPages, setTotalPages] = useState(null);
   const [message, setMessage] = useState(null);
   const [input, setInput] = useState("");
+  const [productId, setproductId] = useState("");
 
   const handleFunction = () => {
     if (input.length < 3) {
@@ -75,14 +76,22 @@ const NewFeaturedProduct = () => {
             <tbody>
               <tr>
                 <td style={{ border: 0 }}>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder={"product Name"}
-                    value={input}
-                    minLength={3}
-                    onChange={(e) => setInput(e.target.value)}
-                  />
+                  <div class="form-group">
+                    <label for="products">Products</label>
+                    <select
+                      value={input}
+                      className="form-control form-control-sm"
+                      name="products"
+                      onChange={(e) => setInput(e.target.value)}
+                    >
+                      <option value="0">Select From The Following</option>
+                      {products.map((product) => {
+                        return (
+                          <option value={product.name}>{product.name}</option>
+                        );
+                      })}
+                    </select>
+                  </div>
                 </td>
                 <td style={{ border: 0 }}>
                   <button
@@ -101,8 +110,6 @@ const NewFeaturedProduct = () => {
           </table>
         </div>
       </form>
-
-      <br />
       {products.length > 0 && (
         <GetProducts
           products={products}
