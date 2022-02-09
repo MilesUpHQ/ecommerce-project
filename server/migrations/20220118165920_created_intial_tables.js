@@ -72,15 +72,6 @@ exports.up = function (knex) {
       table.foreign("user_id").references("users.id");
       table.timestamps(true, true);
     })
-    .createTable("cart_items", (table) => {
-      table.increments("id").primary();
-      table.integer("quantity").notNullable();
-      table.integer("product_id").unsigned().notNullable();
-      table.foreign("product_id").references("products.id");
-      table.integer("cart_id").unsigned().notNullable();
-      table.foreign("cart_id").references("cart.id");
-      table.timestamps(true, true);
-    })
     .createTable("wishlist", (table) => {
       table.increments("id").primary();
       table.integer("user_id").unsigned().notNullable();
@@ -138,11 +129,21 @@ exports.up = function (knex) {
       table.integer("variant_id").unsigned().notNullable();
       table.foreign("variant_id").references("variants.id");
       table.timestamps(true, true);
+    })
+    .createTable("cart_items", (table) => {
+      table.increments("id").primary();
+      table.integer("quantity").notNullable();
+      table.integer("variant_id").unsigned().notNullable();
+      table.foreign("variant_id").references("variants.id");
+      table.integer("cart_id").unsigned().notNullable();
+      table.foreign("cart_id").references("cart.id");
+      table.timestamps(true, true);
     });
 };
 
 exports.down = function (knex) {
   return knex.schema
+    .dropTable("cart_items")
     .dropTable("variant_images")
     .dropTable("variants")
     .dropTable("featured_products")
@@ -150,7 +151,6 @@ exports.down = function (knex) {
     .dropTable("payment")
     .dropTable("reviews")
     .dropTable("wishlist")
-    .dropTable("cart_items")
     .dropTable("cart")
     .dropTable("order_items")
     .dropTable("orders")
