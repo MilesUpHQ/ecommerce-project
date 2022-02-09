@@ -22,6 +22,7 @@ import DisplayProducts from "./components/Product-List/DisplayProducts";
 import { ProductLayout } from "./components/Product-List/ProductLayout";
 import Navbar from "./components/Navbar/Navbar";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
+import Cart from "./components/Cart/Cart";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
         <Route path="/display-products" element={<ProductLayout />} />
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
+        <Route path="/cart" element={<Cart />} />
         <Route
           exact
           path="/admin"
