@@ -28,117 +28,152 @@ export default function Cart() {
   }, []);
   return (
     <>
-      <section className="pt-5 pb-5">
-        <div className="container">
-          <div className="row w-100">
-            <div className="col-lg-12 col-md-12 col-12">
-              <h3 className="display-5 mb-2 text-center">Shopping Cart</h3>
-              <p className="mb-5 text-center">
-                <i className="text-info font-weight-bold">2</i> items in your
-                cart
-              </p>
-              <table
-                id="shoppingCart"
-                className="table table-condensed table-responsive"
-              >
-                <thead>
-                  <tr>
-                    <th style={{ width: "60%" }}>Product</th>
-                    <th style={{ width: "12%" }}>Price</th>
-                    <th style={{ width: "10%" }}>Quantity</th>
-                    <th style={{ width: "16%" }}></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td data-th="Product">
-                      <div className="row">
-                        <div className="col-md-3 text-left">
-                          <img
-                            src="https://via.placeholder.com/250x250/5fa9f8/ffffff"
-                            alt=""
-                            className="img-fluid d-none d-md-block rounded mb-2 shadow "
-                          />
-                        </div>
-                        <div className="col-md-9 text-left mt-sm-2">
-                          <h4>Product Name</h4>
-                          <p className="font-weight-light">Brand &amp; Name</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td data-th="Price">$49.00</td>
-                    <td data-th="Quantity">
-                      <input
-                        type="number"
-                        className="form-control form-control-lg text-center"
-                        defaultValue="1"
-                      />
-                    </td>
-                    <td className="actions" data-th="">
-                      <div className="text-right">
-                        <button className="btn btn-white border-secondary bg-white btn-md mb-2">
-                          <i className="fas fa-trash"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td data-th="Product">
-                      <div className="row">
-                        <div className="col-md-3 text-left">
-                          <img
-                            src="https://via.placeholder.com/250x250/5fa9f8/ffffff"
-                            alt=""
-                            className="img-fluid d-none d-md-block rounded mb-2 shadow "
-                          />
-                        </div>
-                        <div className="col-md-9 text-left mt-sm-2">
-                          <h4>Product Name</h4>
-                          <p className="font-weight-light">Brand &amp; Name</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td data-th="Price">$49.00</td>
-                    <td data-th="Quantity">
-                      <input
-                        type="number"
-                        className="form-control form-control-lg text-center"
-                        defaultValue="1"
-                      />
-                    </td>
-                    <td className="actions" data-th="">
-                      <div className="text-right">
-                        <button className="btn btn-white border-secondary bg-white btn-md mb-2">
-                          <i className="fas fa-trash"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div className="float-right text-right">
-                <h4>Subtotal:</h4>
-                <h1>$99.00</h1>
+      <div className="px-4 px-lg-0">
+        <div className="pb-5">
+          <div className="container">
+            {cartItems ? (
+              cartItems.length > 0 ? (
+                <div className="row">
+                  <div className="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+                    <div className="table-responsive">
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th scope="col" className="border-0 bg-light">
+                              <div className="p-2 px-3 text-uppercase">
+                                Product
+                              </div>
+                            </th>
+                            <th scope="col" className="border-0 bg-light">
+                              <div className="py-2 text-uppercase">Price</div>
+                            </th>
+                            <th scope="col" className="border-0 bg-light">
+                              <div className="py-2 text-uppercase">
+                                Quantity
+                              </div>
+                            </th>
+                            <th scope="col" className="border-0 bg-light">
+                              <div className="py-2 text-uppercase">Remove</div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {cartItems.map((cart) => {
+                            <tr>
+                              <th scope="row" className="border-0">
+                                <div className="p-2">
+                                  <img
+                                    src={cart.image_url}
+                                    alt="product"
+                                    width="70"
+                                    className="img-fluid rounded shadow-sm"
+                                  />
+                                  <div className="ml-3 d-inline-block align-middle">
+                                    <h5 className="mb-0">
+                                      <a
+                                        href={`/products/${cart.product_id}`}
+                                        classNameName="text-dark d-inline-block align-middle"
+                                      >
+                                        {cart.name}
+                                      </a>
+                                    </h5>
+                                  </div>
+                                </div>
+                              </th>
+                              <td className="border-0 align-middle">
+                                <strong>${cart.price}</strong>
+                              </td>
+                              <td className="border-0 align-middle">
+                                <strong>{cart.quantity}</strong>
+                              </td>
+                              <td className="border-0 align-middle">
+                                <button
+                                  type="button"
+                                  className="btn btn-sm btn-outline-danger"
+                                >
+                                  Remove
+                                </button>
+                              </td>
+                            </tr>;
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                // show no products in cart
+                <h1>No products in cart</h1>
+              )
+            ) : (
+              // show loading
+              <h1>No products in cart</h1>
+            )}
+
+            <div className="row py-5 p-4 bg-white rounded shadow-sm">
+              <div className="col-lg-6">
+                <div className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">
+                  Coupon code
+                </div>
+                <div className="p-4">
+                  <p className="font-italic mb-4">
+                    If you have a coupon code, please enter it in the box below
+                  </p>
+                  <div className="input-group mb-4 border rounded-pill p-2">
+                    <input
+                      type="text"
+                      placeholder="Apply coupon"
+                      aria-describedby="button-addon3"
+                      className="form-control border-0"
+                    />
+                    <div className="input-group-append border-0">
+                      <button
+                        id="button-addon3"
+                        type="button"
+                        className="btn btn-dark px-4 rounded-pill"
+                      >
+                        <i className="fa fa-gift mr-2"></i>Apply coupon
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">
+                  Order summary{" "}
+                </div>
+                <div className="p-4">
+                  <p className="font-italic mb-4">
+                    Shipping and additional costs are calculated based on values
+                    you have entered.
+                  </p>
+                  <ul className="list-unstyled mb-4">
+                    <li className="d-flex justify-content-between py-3 border-bottom">
+                      <strong className="text-muted">Order Subtotal </strong>
+                      <strong>$0.00</strong>
+                    </li>
+
+                    <li className="d-flex justify-content-between py-3 border-bottom">
+                      <strong className="text-muted">Tax</strong>
+                      <strong>$0.00</strong>
+                    </li>
+                    <li className="d-flex justify-content-between py-3 border-bottom">
+                      <strong className="text-muted">Total</strong>
+                      <h5 className="font-weight-bold">$0.00</h5>
+                    </li>
+                  </ul>
+                  <a
+                    href="/checkout"
+                    className="btn btn-dark rounded-pill py-2 btn-block"
+                  >
+                    Procceed to checkout
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-          <div className="row mt-4 d-flex align-items-center">
-            <div className="col-sm-6 order-md-2 text-right">
-              <a
-                href="/checkout"
-                className="btn btn-primary mb-4 btn-lg pl-5 pr-5"
-              >
-                Checkout
-              </a>
-            </div>
-            <div className="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-              <a href="catalog.html">
-                <i className="fas fa-arrow-left mr-2"></i> Continue Shopping
-              </a>
-            </div>
-          </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }
