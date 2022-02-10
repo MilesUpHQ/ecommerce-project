@@ -11,20 +11,19 @@ import Signup from "./components/Signup/Signup";
 import Home from "./components/Home/Home";
 import Logout from "./components/Logout/Logout";
 import { getJWT } from "./utils/jwt";
-import AdminHome from "./components/Admin/AdminHome";
+import AdminLayout from "./components/Admin/AdminLayout";
 import CategoryLayout from "./components/Admin/Categories/CategoryLayout";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
-import FeaturedProducts from "./components/FeaturedProducts/FeaturedProducts";
+import FeaturedProducts from "./components/Home/Home";
 import ViewProduct from "./components/ViewProducts/ViewProduct";
 import AddProducts from "./components/Product-List/AddProducts";
 import DisplayProducts from "./components/Product-List/DisplayProducts";
 import { ProductLayout } from "./components/Product-List/ProductLayout";
 import Navbar from "./components/Navbar/Navbar";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
-import FeaturedProductsList from "./components/FeaturedProducts/FeaturedProductsList";
-import FeaturedProductLayout from "./components/AddFeaturedProduct/FeaturedProductLayout";
-import DisplayFeaturedProductLayout from "./components/AddFeaturedProduct/DisplayFeaturedProductsLayout";
+import FeaturedProductsList from "./components/Home/ProductList";
+import FeaturedProductLayout from "./components/Admin/FeatureProducts/FeaturedProductLayout";
 
 const App = () => {
   return (
@@ -35,17 +34,12 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/view_product/:id" element={<ViewProduct />} />
+        <Route path="/product/view/:id" element={<ViewProduct />} />
         <Route path="/add-products" element={<AddProducts />} />
         <Route
-          path="/featured-product-layout"
+          path="/admin/product/featured"
           element={<FeaturedProductLayout />}
         />
-        <Route
-          path="/display-featured-product-layout"
-          element={<DisplayFeaturedProductLayout />}
-        />
-
         <Route path="/display-products" element={<ProductLayout />} />
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
@@ -54,7 +48,7 @@ const App = () => {
           path="/admin"
           element={
             <PrivateRoute>
-              <AdminHome />
+              <AdminLayout />
             </PrivateRoute>
           }
         ></Route>

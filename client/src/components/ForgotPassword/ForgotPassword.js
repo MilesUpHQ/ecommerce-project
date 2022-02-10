@@ -18,7 +18,7 @@ const ForgotPassword = () => {
       }, 2000);
     } else {
       axios
-        .post("/forgot_password", {
+        .post("/forgot-password", {
           email: email,
           link: currentPort.slice(0, 21),
         })

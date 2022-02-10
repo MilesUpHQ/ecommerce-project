@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
 import FormForProducts from "./FormForProducts";
 import "../Admin/css/admin-style.css";
-import AdminHome from "../Admin/AdminHome";
+import AdminLayout from "../Admin/AdminLayout";
 function AddProducts() {
   return (
-    <AdminHome>
+    <AdminLayout>
       <FormForProducts />
-    </AdminHome>
+    </AdminLayout>
   );
 }
 

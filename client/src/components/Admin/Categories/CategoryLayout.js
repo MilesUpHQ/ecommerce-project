@@ -1,8 +1,8 @@
 import React from "react";
 import Category from "./Category";
 import { Helmet } from "react-helmet";
-import AdminHome from "../AdminHome";
-import '../css/admin-style.css'
+import AdminLayout from "../AdminLayout";
+import "../css/admin-style.css";
 
 const CategoryLayout = () => {
   return (
@@ -10,9 +10,9 @@ const CategoryLayout = () => {
       {/* <Helmet>
         <link rel="stylesheet" href="/css/style.css" />
       </Helmet> */}
-      <AdminHome>
+      <AdminLayout>
         <Category />
-      </AdminHome>
+      </AdminLayout>
     </>
   );
 };

@@ -22,15 +22,9 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/featured-product-layout">
+            <a className="nav-link" href="/admin/product/featured">
               <i className="icon-grid menu-icon"></i>
-              <span className="menu-title">Add Featured Products</span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/display-featured-product-layout">
-              <i className="icon-grid menu-icon"></i>
-              <span className="menu-title">Featured Products</span>
+              <span className="menu-title"> Featured Products</span>
             </a>
           </li>
           <li className="nav-item">

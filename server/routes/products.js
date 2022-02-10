@@ -33,7 +33,7 @@ router.get("", async (req, res, next) => {
 });
 
 //*********************************************products********************** */
-router.post("", (req, res) => {
+router.post("/add", (req, res) => {
   let name = req.body.name;
   knex("products")
     .where("name", name)

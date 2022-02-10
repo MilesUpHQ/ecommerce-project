@@ -1,7 +1,7 @@
 import React from "react";
-import "../FeaturedProducts/pagination-style.css";
-import Pagination from "../FeaturedProducts/Pagination";
-import axios from "../../utils/ajax-helper";
+import "../../Home/pagination-style.css";
+import Pagination from "../../Home/Pagination";
+import axios from "../../../utils/ajax-helper";
 
 const GetFeaturedProducts = ({
   featuredProducts,
@@ -17,7 +17,7 @@ const GetFeaturedProducts = ({
       window.confirm(`Are you sure! Delete ${name} from Featured Product list?`)
     ) {
       axios
-        .delete(`/delete-featured-product/${id}`)
+        .delete(`/admin/delete-featured-product/${id}`)
         .then((res) => {
           let newFeaturedProduct = [...featuredProducts];
           newFeaturedProduct = newFeaturedProduct.filter(

@@ -4,7 +4,7 @@ import { Card, Button, Col, Container, Row, Carousel } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
 import Pagination from "./Pagination";
 
-const FeaturedProductsList = ({
+const ProductList = ({
   featuredProducts,
   currPage,
   lastPage,
@@ -58,7 +58,7 @@ const FeaturedProductsList = ({
                     <br />
                     <a
                       className="viewProduct"
-                      href={`/view_product/${featuredProduct.product_id}`}
+                      href={`/product/view/${featuredProduct.product_id}`}
                     >
                       View Product
                     </a>
@@ -81,4 +81,4 @@ const FeaturedProductsList = ({
   );
 };
 
-export default FeaturedProductsList;
+export default ProductList;

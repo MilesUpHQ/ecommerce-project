@@ -28,7 +28,7 @@ const ResetPassword = () => {
         })
       ) {
         axios
-          .put("/reset_password", {
+          .put("/reset-password", {
             email: decoded.email,
             password: password,
           })
