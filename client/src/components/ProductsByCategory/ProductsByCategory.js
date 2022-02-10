@@ -7,6 +7,8 @@ import Navbar from "../Navbar/Navbar";
 export default function ProductsByCategory() {
   const [products, setProducts] = React.useState([]);
   const [errorMsg, setErrorMsg] = React.useState(null);
+  const [searchItem, setSearchItem] = React.useState([]);
+  const [options, setOptions] = React.useState([]);
   const categoryId = useParams().category;
   console.log("categoryId", categoryId);
   useEffect(() => {
@@ -23,16 +25,39 @@ export default function ProductsByCategory() {
 
   const handleSearch = (value) => {
     axios
-      .get(`/search/${categoryId}?search_keyword=${value}`)
+      .get(`/typeahead-items?search_keyword=${value}`)
       .then((res) => {
-        setProducts(res.data);
+        console.log(res)
+        let array = res.data.map(({ id, name }) => ({
+          label: name,
+          value: id,
+        }));
+        setOptions(array);
       })
       .catch((err) => console.log(err));
   };
 
+  useEffect(() => {
+    if (searchItem.length > 0) {
+      axios
+        .get(`/products-by-search?search_keyword=${searchItem[0].label}`)
+        .then((res) => {
+          setProducts(res.data);
+          setSearchItem([])
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [searchItem]);
+
   return (
     <>
-      <Navbar handleSearch={handleSearch} />
+      <Navbar
+        handleSearch={handleSearch}
+        searchItem={searchItem}
+        setSearchItem={setSearchItem}
+        options={options}
+        placeholder={'Search for products'}
+      />
       <div>
         <h1>Products By Category</h1>
         <div className="row">

@@ -2,8 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./pagination-style.css";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import axios from "../../utils/ajax-helper";
+import TypeAhead from "../Admin/Categories/TypeAhead";
 
-const Navbar = ({ handleSearch }) => {
+const Navbar = ({
+  handleSearch,
+  setSearchItem,
+  searchItem,
+  options,
+  placeholder,
+}) => {
   // get categories from server and store in state and update in navbar
   // /categories
   const [categories, setCategories] = React.useState([]);
@@ -48,14 +55,12 @@ const Navbar = ({ handleSearch }) => {
                     <i className="icon-search"></i>
                   </span>
                 </div>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="navbar-search-input"
-                  placeholder="Search now"
-                  aria-label="search"
-                  aria-describedby="search"
-                  onChange={(e) => handleSearch(e.target.value)}
+                <TypeAhead
+                  setSearchItem={setSearchItem}
+                  searchItem={searchItem}
+                  handleSearch={handleSearch}
+                  options={options}
+                  placeholder={placeholder}
                 />
               </div>
             </li>
