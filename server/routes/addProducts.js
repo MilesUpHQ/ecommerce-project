@@ -29,7 +29,8 @@ router.get("/",(req,res)=>{
   const upload = multer({storage:fileStorageEngine});
 
 router.post("/",upload.single("file"),(req,res)=>{
-    knex("products").insert({ name:req.body.name, description:req.body.description , category_id:req.body.category_id })
+    knex("products")
+   .insert({ name:req.body.name, description:req.body.description , category_id:req.body.category })
    .returning("products.id")
     .then(row => {
       console.log("Insided",row);
@@ -46,7 +47,7 @@ router.post("/",upload.single("file"),(req,res)=>{
       console.log(err)
      // res.status(400).send("Unable to Post data ");
     })
-})
+  });
 
 router.post("/single", upload.single("variant_images"),  (req, res)=> {
   console.log("Request.file",req.file);//display info on image file 
