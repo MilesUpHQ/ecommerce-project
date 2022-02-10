@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 
-const Productinfo = (props) => {
+const ProductInfo = (props) => {
   const [product, setProduct] = useState({});
   const [errormsg, setErrormsg] = useState(null);
   useEffect(() => {
@@ -74,4 +74,4 @@ const Productinfo = (props) => {
   );
 };
 
-export default Productinfo;
+export default ProductInfo;

@@ -17,13 +17,13 @@ import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import FeaturedProducts from "./components/FeaturedProducts/FeaturedProducts";
 import ViewProduct from "./components/ViewProducts/ViewProduct";
-import AddProducts from "./components/Admin/Product/AddProducts";
-import DisplayProducts from "./components/Admin/Product/DisplayProducts";
-import { ProductLayout } from "./components/Admin/Product/ProductLayout";
-import { ProductView } from "./components/Admin/Product/ProductView";
+import AddProducts from "./components/Admin/Products/AddProducts";
+import DisplayProducts from "./components/Admin/Products/DisplayProducts";
+import { ProductLayout } from "./components/Admin/Products/ProductLayout";
+import { ProductView } from "./components/Admin/Products/ProductView";
 import Navbar from "./components/Navbar/Navbar";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
-import { Edit } from "./components/Admin/Product/Edit";
+import { Edit } from "./components/Admin/Products/Edit";
 
 const App = () => {
   return (

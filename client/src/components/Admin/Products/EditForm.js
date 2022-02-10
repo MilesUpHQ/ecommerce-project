@@ -5,10 +5,37 @@ export const EditForm = (props) => {
     const [product, setProduct] = useState({});
     const [errormsg, setErrormsg] = useState(null);
     const [categories , setCategories] = useState([]);
+    const [name, setName] = useState("");
+    const [price, setPrice] = useState("");
+    const [description, setDescription] = useState("");
+    const [size , setSize] = useState("");
+    const [color , setColor] = useState("");
+    const [type , setType] = useState("");
+    const [categoryid, setCategory] = useState('');
+
+    function updateProduct (e,id)  {
+      e.preventDefault();
+      console.log("ede",categoryid);
+      axios.put("/admin/edit_product",{name,size,color,type,price,description})
+      .then((res)=>{
+        console.log("jdghf",res)
+      })
+      .catch((err) => {
+        setErrormsg("Sorry! Something went wrong. Please Try again");
+      });
+    }
     useEffect(() => {
         axios
           .get(`/product_info/${props.id}`)
           .then((res) => {
+            setName(res.data.name);
+            setSize(res.data.size);
+            setColor(res.data.color);
+            setCategory(res.data.category);
+            setType(res.data.type);
+            setPrice(res.data.price);
+            setDescription(res.data.description);
+
             setProduct(res.data);
           })
           .catch((err) => {
@@ -29,11 +56,11 @@ export const EditForm = (props) => {
     <div className="main-panel">
     <div className="content-wrapper">
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
             <a href="/admin/products">Home</a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">
+          <li className="breadcrumb-item active" aria-current="page">
             Updation
           </li>
         </ol>
@@ -54,7 +81,8 @@ export const EditForm = (props) => {
                       type="text"
                       className="form-control"
                       id="exampleInputName1"
-                      value={product.name}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
@@ -66,10 +94,11 @@ export const EditForm = (props) => {
                     />
                   </div>
 
-                  <div class="form-group ">
+                  <div className="form-group ">
                     <label for="exampleFormControlSelect3">Select Size</label>
                     <select className="form-control form-control-sm" id="exampleFormControlSelect3"
-                       value={product.size}
+                       value={size}
+                       onChange={(e) => setSize(e.target.value)}
                        >
                       <option value="XS">XS</option>
                       <option value="S">S</option>
@@ -79,30 +108,33 @@ export const EditForm = (props) => {
                     </select>
                   </div>
                  
-                  <div class="form-group">
+                  <div className="form-group">
                       <label for="Color">Color</label>
-                      <input type="text" class="form-control" id="color" 
-                       value={product.color}
+                      <input type="text" className="form-control" id="color" 
+                       value={color}
+                       onChange={(e) => setColor(e.target.value)}
                       />
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="category">Category</label>
-                        <select className='form-control form-control-sm' name='category'  >
+                        <select className='form-control form-control-sm' name='category' 
+                         onChange={(e) => setCategory(e.target.value)} >
                             <option value="0">Reselect From The Following</option>
                             {categories.map((category) => {
                                 return (
                                     <option  
-                                    value={category.id}>{category.name}</option>
+                                    value={category.id}
+                                    >{category.name}</option>
                                 )
                             })}
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="Type">Type</label>
-                      <input type="text" class="form-control" id="type"
-                       value={product.type}
+                      <input type="text" className="form-control" id="type"
+                       value={type}
                       />
                     </div>
 
@@ -112,7 +144,8 @@ export const EditForm = (props) => {
                       type="integer"
                       className="form-control"
                       id="exampleInputPrice1"
-                      value={product.price}
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
@@ -121,10 +154,12 @@ export const EditForm = (props) => {
                       className="form-control"
                       id="exampleTextarea1"
                       rows="4"
-                      value={product.description} 
+                      value={description} 
+                      onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </div>
-                  <button type="submit" className="btn btn-primary mr-2">
+                  <button  className="btn btn-primary mr-2" 
+                  onClick={(e)=>updateProduct(e,product.id)}>
                     Update
                   </button>
                   <button className="btn btn-light">Cancel</button>

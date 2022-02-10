@@ -39,7 +39,7 @@ import "../css/pagination.css"
   const deleteProduct = (id,name) => { //delproduct
     if (window.confirm(`Are you sure! Delete ${name} Product?`)) {
       axios
-        .delete("/delete_product", { params: { id } })
+        .delete("/delete_product", { params: { id }})
         .then((res) => {
           let newProducts = [...display];
           newProducts = newProducts.filter(

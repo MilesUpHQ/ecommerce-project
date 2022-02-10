@@ -21,6 +21,7 @@ const addProducts = require("./routes/addProducts");
 const displayProducts = require("./routes/displayProducts");
 const productinfo = require("./routes/productinfo");
 const products = require("./routes/products");
+const editProduct = require("./routes/editProduct");
 const productsByCategory = require("./routes/productsByCategory");
 const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
@@ -39,6 +40,7 @@ app.use("/api/admin/products", displayProducts);
 app.use("/api/products/category", productsByCategory);
 app.use('/api/delete_product',displayProducts);
 app.use('/api/product_info',productinfo);
+app.use('/api/admin/edit_product',editProduct);
 
 app.use(bodyParser.json());
 passport.use(strategy);
