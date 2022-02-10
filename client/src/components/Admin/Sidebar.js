@@ -16,7 +16,7 @@ const Sidebar = () => {
             </a>
           </li>
 	 <li className="nav-item">
-            <a className="nav-link" href="/add-products">
+            <a className="nav-link" href="/admin/add_products">
               <i className="icon-grid menu-icon"></i>
               <span className="menu-title">Add Products</span>
             </a>
