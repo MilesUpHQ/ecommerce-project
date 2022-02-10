@@ -35,7 +35,7 @@ app.use("/api/reset-password", resetPassword);
 app.use("/api/forgot-password", forgotPassword);
 app.use("/api/featuredProducts", featuredProducts);
 app.use("/api/admin/delete-featured-product", featuredProducts);
-app.use("/api/admin/products/view", products);
+app.use("/api/admin/products", products);
 app.use("/api/admin/add_products", addProducts);
 app.use("/api", adminRouter);
 app.use("/api/admin/products", displayProducts);

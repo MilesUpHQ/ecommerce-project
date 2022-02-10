@@ -18,12 +18,9 @@ const FeaturedProduct = () => {
 
   const handleFunction = () => {
     console.log("inputs :::::", input);
-    if (input.length < 3) {
-      return;
-    }
     axios
-      .post("/products/add", {
-        products: input,
+      .post("/admin/products", {
+        name: input,
       })
       .then((res) => {
         setMessage(res.data.message);
@@ -57,7 +54,7 @@ const FeaturedProduct = () => {
   useEffect(async () => {
     // *******************products***********//
     axios
-      .get("/admin/products/view")
+      .get("/admin/products")
       .then((res) => {
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
