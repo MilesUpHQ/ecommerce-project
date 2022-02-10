@@ -12,12 +12,15 @@ router.get(
     console.log("req.user", user_id);
     knex("cart")
       .join("cart_items", "cart.id", "cart_items.cart_id")
-      .join("products", "cart_items.product_id", "products.id")
+      .join("variants", "cart_items.variant_id", "variants.id")
+      .join("variant_images", "variants.id", "variant_images.variant_id")
+      .join("products", "variants.product_id", "products.id")
       .select(
         "products.name",
         "products.id",
         "cart_items.quantity",
-        "cart_items.price",
+        "variants.price",
+        "variant_images.image_url",
         "cart.price as total"
       )
       .where({ "cart.user_id": user_id })
