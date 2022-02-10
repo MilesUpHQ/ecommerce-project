@@ -34,6 +34,14 @@ const AddForm = () => {
       setErrormsg("Name cannot be empty");
       return;
     }
+    if (price == "") {
+      setErrormsg("Price cannot be empty");
+      return;
+    }
+    if (description == "") {
+      setErrormsg("Description cannot be empty");
+      return;
+    }
     axios
       .post("/admin/add_products", 
         imageData

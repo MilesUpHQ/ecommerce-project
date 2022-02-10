@@ -69,6 +69,7 @@ import "../css/pagination.css"
                   <th>Name</th>
                   <th>Description</th>
                   <th>Amount</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
