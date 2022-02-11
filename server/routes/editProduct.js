@@ -5,6 +5,7 @@ const knex = require("../utils/dbConfig");
 router.put("/", (req, res) => {
   console.log("rerdtr", req.body);
   console.log(req.body.id);
+  console.log(req.body.categoryid);
   knex("variants")
     .where("product_id", req.body.id)
     .update({
@@ -22,7 +23,7 @@ router.put("/", (req, res) => {
         .update({
           name: req.body.name,
           description: req.body.description,
-          category_id: req.body.category,
+          category_id: req.body.categoryid,
         })
         .returning("products.id")
         .then((row) => {

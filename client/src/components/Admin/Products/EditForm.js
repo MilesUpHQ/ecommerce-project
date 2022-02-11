@@ -17,7 +17,7 @@ export const EditForm = (props) => {
   
   function updateProduct(e, id) {
     e.preventDefault();
-    console.log("ede", id);
+    console.log("ede", categoryid);
     if (name == "") {
       setErrormsg("Name cannot be empty");
       return;
@@ -30,12 +30,17 @@ export const EditForm = (props) => {
       setErrormsg("Description cannot be empty");
       return;
     }
+    if (categoryid == "") {
+      setErrormsg("Please select a category");
+      return;
+    }
     axios
       .put("/admin/product/edit", {
         id,
         name,
         size,
         color,
+        categoryid,
         type,
         price,
         description,
