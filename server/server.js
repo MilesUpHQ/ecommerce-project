@@ -23,8 +23,10 @@ const productinfo = require("./routes/productinfo");
 const products = require("./routes/products");
 const editProduct = require("./routes/editProduct");
 const productsByCategory = require("./routes/productsByCategory");
+//const { default: DisplayProducts } = require("../client/src/components/Product-List/DisplayProducts");
 const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
+const cart = require("./routes/cart");
 
 // middlewares
 app.use(express.json());
@@ -41,6 +43,7 @@ app.use("/api/products/category", productsByCategory);
 app.use('/api/delete_product',displayProducts);
 app.use('/api/product_info',productinfo);
 app.use('/api/admin/edit_product',editProduct);
+app.use("/api/cart", cart);
 
 app.use(bodyParser.json());
 passport.use(strategy);

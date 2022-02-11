@@ -24,6 +24,7 @@ import { ProductView } from "./components/Admin/Products/ProductView";
 import Navbar from "./components/Navbar/Navbar";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
 import { Edit } from "./components/Admin/Products/Edit";
+import Cart from "./components/Cart/Cart";
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
         <Route path="/products/:category" element={<ProductsByCategory />} />
 	      <Route path="/admin/product_view/:id" element={<ProductView/>} />
         <Route path="/admin/product/:id/update" element={<Edit/>} />
+        <Route path="/cart" element={<Cart />} />
         <Route
           exact
           path="/admin"
