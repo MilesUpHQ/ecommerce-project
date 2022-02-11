@@ -15,6 +15,7 @@ const FeaturedProduct = () => {
   const [input, setInput] = useState([]);
   const [inputArray, setinputArray] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleFunction = () => {
     console.log("inputs :::::", input);
@@ -23,6 +24,7 @@ const FeaturedProduct = () => {
         name: input,
       })
       .then((res) => {
+        setIsOpen(false);
         setMessage(res.data.message);
         setTimeout(() => {
           setMessage(null);
@@ -98,54 +100,82 @@ const FeaturedProduct = () => {
   }, []);
 
   return (
-    <div>
-      <form className="forms-sample">
-        <div className="form-group">
-          <table className="table table-hover">
-            {message && <thead className="messageHead">{message}</thead>}
-            <tbody>
-              <tr>
-                <td style={{ border: 0 }}>
-                  <div class="form-group">
-                    <label for="products">Products</label>
-                    <Typeahead
-                      id="basic-typeahead-multiple"
-                      labelKey="name"
-                      multiple
-                      onChange={setInput}
-                      options={inputArray}
-                      placeholder="Choose several Products..."
-                      selected={input}
-                    />
-                  </div>
-                </td>
-                <td style={{ border: 0 }}>
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-icon-text mt-1 "
-                    onClick={handleFunction}
-                  >
-                    Submit
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <React.Fragment>
+      <div className="main-panel">
+        <div className="content-wrapper">
+          <div className="container">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                margin: "1%",
+                alignItems: "center",
+              }}
+            >
+              <h3>Featured Products</h3>
+              <button
+                type="button"
+                className="btn btn-primary btn-icon-text"
+                style={{ height: "fit-content" }}
+                onClick={() => setIsOpen(true)}
+              >
+                Add to featured products
+              </button>
+            </div>
+            {isOpen && (
+              <form className="forms-sample">
+                <div className="form-group">
+                  <table className="table table-hover">
+                    {message && (
+                      <thead className="messageHead">{message}</thead>
+                    )}
+                    <tbody>
+                      <tr>
+                        <td style={{ border: 0 }}>
+                          <div class="form-group">
+                            <label for="products">Products</label>
+                            <Typeahead
+                              id="basic-typeahead-multiple"
+                              labelKey="name"
+                              multiple
+                              onChange={setInput}
+                              options={inputArray}
+                              placeholder="Choose several Products..."
+                              selected={input}
+                            />
+                          </div>
+                        </td>
+                        <td style={{ border: 0 }}>
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-icon-text mt-1 "
+                            onClick={handleFunction}
+                          >
+                            Submit
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </form>
+            )}
+            {featuredProducts.length > 0 && (
+              <GetFeaturedProducts
+                featuredProducts={featuredProducts}
+                currPage={currPage}
+                lastPage={lastPage}
+                totalPages={totalPages}
+                handlePagination={handlePagination}
+                setfeaturedProducts={setfeaturedProducts}
+                setCurrPage={setCurrPage}
+                setErrorMsg={setErrorMsg}
+              />
+            )}
+          </div>
         </div>
-      </form>
-      {featuredProducts.length > 0 && (
-        <GetFeaturedProducts
-          featuredProducts={featuredProducts}
-          currPage={currPage}
-          lastPage={lastPage}
-          totalPages={totalPages}
-          handlePagination={handlePagination}
-          setfeaturedProducts={setfeaturedProducts}
-          setCurrPage={setCurrPage}
-          setErrorMsg={setErrorMsg}
-        />
-      )}
-    </div>
+      </div>
+    </React.Fragment>
   );
 };
 
