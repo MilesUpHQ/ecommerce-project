@@ -70,7 +70,7 @@ export const EditForm = (props) => {
   }, []);
   useEffect(() => {
     axios
-      .get("/admin/add_products")
+      .get("/admin/product/add")
       .then((res) => {
         setCategories(res.data);
       })

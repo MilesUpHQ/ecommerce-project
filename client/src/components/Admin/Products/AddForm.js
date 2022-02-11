@@ -43,7 +43,7 @@ const AddForm = () => {
       return;
     }
     axios
-      .post("/admin/add_products", 
+      .post("/admin/product/add", 
         imageData
       )
       .then((res) => {
@@ -56,7 +56,7 @@ const AddForm = () => {
 
   useEffect(() => {
   axios
-  .get("/admin/add_products")
+  .get("/admin/product/add")
   .then((res) => {
     setCategories(res.data);
   })
