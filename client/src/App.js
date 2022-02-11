@@ -26,6 +26,7 @@ import ProductsByCategory from "./components/ProductsByCategory/ProductsByCatego
 import FeaturedProductsList from "./components/Home/ProductList";
 import FeaturedProductLayout from "./components/Admin/FeatureProducts/FeaturedProductLayout";
 import { Edit } from "./components/Admin/Products/Edit";
+import Cart from "./components/Cart/Cart";
 
 const App = () => {
   return (
@@ -41,12 +42,13 @@ const App = () => {
           path="/admin/product/featured"
           element={<FeaturedProductLayout />}
         />
-        <Route path="/admin/add_products" element={<AddProducts />} />
+        <Route path="/admin/products/add" element={<AddProducts />} />
         <Route path="/admin/products" element={<ProductLayout />} />
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
-        <Route path="/admin/product_view/:id" element={<ProductView />} />
+        <Route path="/admin/products/:id/view" element={<ProductView />} />
         <Route path="/admin/product/:id/update" element={<Edit />} />
+        <Route path="/cart" element={<Cart />} />
         <Route
           exact
           path="/admin"

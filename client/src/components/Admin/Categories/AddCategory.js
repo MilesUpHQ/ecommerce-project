@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { AsyncTypeahead } from "react-bootstrap-typeahead";
+// import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import axios from "../../../utils/ajax-helper";
+import TypeAhead from "./TypeAhead";
 
 const AddCategory = ({
   category,
   handleFunction,
   input,
   setInput,
-  parentCategory,
-  setParentCategory,
+  searchItem,
+  setSearchItem,
 }) => {
   const [options, setOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (category !== undefined) {
-      console.log(category)
       setInput(category.category);
       if (category.parent_category !== null) {
-        setParentCategory([{ label: category.parent_category }]);
+        setSearchItem([{ label: category.parent_category }]);
       }
     }
   }, [category]);
@@ -51,16 +51,13 @@ const AddCategory = ({
           />
         </td>
         <td style={{ border: 0 }}>
-          <AsyncTypeahead
-            filterBy={() => true}
-            id="async-example"
-            isLoading={isLoading}
-            minLength={3}
-            onSearch={handleSearch}
+          <TypeAhead
             options={options}
-            onChange={setParentCategory}
-            placeholder="Choose a Parent Category..."
-            selected={parentCategory}
+            handleSearch={handleSearch}
+            setSearchItem={setSearchItem}
+            searchItem={searchItem}
+            isLoading={isLoading}
+            placeholder={"Choose a Parent Category..."}
           />
         </td>
         <td style={{ border: 0 }}>

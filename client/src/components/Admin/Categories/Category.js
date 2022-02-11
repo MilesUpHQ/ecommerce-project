@@ -7,7 +7,7 @@ import ErrorAlert from "./ErrorAlert";
 const Category = () => {
   const [input, setInput] = useState("");
   const [categories, setCategories] = useState(null);
-  const [parentCategory, setParentCategory] = useState([]);
+  const [searchItem, setSearchItem] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [currPage, setCurrPage] = useState(null);
   const [lastPage, setLastPage] = useState(null);
@@ -18,15 +18,15 @@ const Category = () => {
     if (input.length < 3) {
       return;
     }
-    let id = parentCategory.length !== 0 ? parentCategory[0].value : 0;
+    let id = searchItem.length !== 0 ? searchItem[0].value : 0;
     axios
       .post("/category", {
         categoryName: input,
-        parentCategoryId: id,
+        searchItemId: id,
       })
       .then((res) => {
         setIsOpen(false);
-        setParentCategory([]);
+        setSearchItem([]);
         setInput("");
         let newCategory = {
           id: res.data.id,
@@ -37,7 +37,6 @@ const Category = () => {
         };
         let newCategories = [...categories];
         newCategories.splice(0, 0, newCategory);
-        console.log(newCategories);
         setCategories(newCategories);
       })
       .catch((err) => {
@@ -105,8 +104,8 @@ const Category = () => {
                         input={input}
                         setInput={setInput}
                         handleFunction={handleAddCategory}
-                        parentCategory={parentCategory}
-                        setParentCategory={setParentCategory}
+                        searchItem={searchItem}
+                        setSearchItem={setSearchItem}
                       />
                     </tbody>
                   </table>

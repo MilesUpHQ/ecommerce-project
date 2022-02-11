@@ -5,8 +5,8 @@ const knex = require("../utils/dbConfig");
 router.get("/:id", async (req, res, next) => {
   // get products by product category with variants
   knex("products")
-    .join("variants", "products.id", "variants.product_id")
-    .join("variant_images", "variants.id", "variant_images.variant_id")
+    .leftJoin("variants", "products.id", "variants.product_id")
+    .leftJoin("variant_images", "variants.id", "variant_images.variant_id")
     .where("products.category_id", req.params.id)
     .select(
       "products.id",

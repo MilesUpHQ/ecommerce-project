@@ -26,6 +26,8 @@ const editProduct = require("./routes/editProduct");
 const productsByCategory = require("./routes/productsByCategory");
 const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
+const search = require("./routes/searchProducts");
+const cart = require("./routes/cart");
 
 // middlewares
 app.use(express.json());
@@ -37,13 +39,6 @@ app.use("/api/forgot-password", forgotPassword);
 app.use("/api/featuredProducts", featuredProducts);
 app.use("/api/admin/delete-featured-product", featuredProducts);
 app.use("/api/admin/products", products);
-app.use("/api/admin/add_products", addProducts);
-app.use("/api", adminRouter);
-app.use("/api/admin/products", displayProducts);
-app.use("/api/products/category", productsByCategory);
-app.use("/api/delete_product", displayProducts);
-app.use("/api/product_info", productinfo);
-app.use("/api/admin/edit_product", editProduct);
 
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
@@ -55,6 +50,16 @@ app.get(
     res.json(req.user);
   }
 );
+app.use("/api/products", products);
+app.use("/api/admin/products/add", addProducts);
+app.use("/api", adminRouter);
+app.use("/api/admin/products", displayProducts);
+app.use("/api/products/category", productsByCategory);
+app.use("/api", search);
+app.use("/api/delete_product", displayProducts);
+app.use("/api/admin/product", productinfo);
+app.use("/api/admin/product/edit", editProduct);
+app.use("/api/cart", cart);
 
 app.use(bodyParser.json());
 passport.use(strategy);
