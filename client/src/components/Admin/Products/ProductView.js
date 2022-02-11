@@ -1,16 +1,14 @@
 import React from "react";
-import {useParams} from "react-router-dom";
-import  ProductInfo  from "./ProductInfo";
-import AdminHome from "../AdminHome";
+import { useParams } from "react-router-dom";
+import ProductInfo from "./ProductInfo";
+import AdminLayout from "../AdminLayout";
 import "../css/admin-style.css";
 
 export const ProductView = () => {
-  let  { id }  = useParams("id");
+  let { id } = useParams("id");
   return (
-    <AdminHome>
-      <ProductInfo
-      id={id}
-      />
-    </AdminHome>
+    <AdminLayout>
+      <ProductInfo id={id} />
+    </AdminLayout>
   );
 };
