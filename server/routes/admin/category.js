@@ -66,7 +66,7 @@ router.get("/categories", async (req, res) => {
 
         res.json({ categories, currPage, lastPage, totalPages });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => res.status(401).json({ error: err }));
   } catch (err) {
     res.status(401).json({ error: err });
   }

@@ -25,6 +25,7 @@ const editProduct = require("./routes/editProduct");
 const productsByCategory = require("./routes/productsByCategory");
 const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
+const search = require("./routes/searchProducts")
 const cart = require("./routes/cart");
 
 // middlewares
@@ -39,6 +40,7 @@ app.use("/api/admin/products/add", addProducts);
 app.use("/api", adminRouter);
 app.use("/api/admin/products", displayProducts);
 app.use("/api/products/category", productsByCategory);
+app.use('/api', search)
 app.use('/api/delete_product',displayProducts);
 app.use('/api/admin/product',productinfo);
 app.use('/api/admin/product/edit',editProduct);
