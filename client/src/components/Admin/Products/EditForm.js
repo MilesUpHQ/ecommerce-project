@@ -31,7 +31,7 @@ export const EditForm = (props) => {
       return;
     }
     axios
-      .put("/admin/edit_product", {
+      .put("/admin/product/edit", {
         id,
         name,
         size,
@@ -50,7 +50,7 @@ export const EditForm = (props) => {
   }
   useEffect(() => {
     axios
-      .get(`/product_info/${props.id}`)
+      .get(`/admin/product/${props.id}`)
       .then((res) => {
         setName(res.data.name);
         setSize(res.data.size);

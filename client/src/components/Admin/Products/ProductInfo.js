@@ -7,7 +7,7 @@ const ProductInfo = (props) => {
   const [errormsg, setErrormsg] = useState(null);
   useEffect(() => {
     axios
-      .get(`/product_info/${props.id}`)
+      .get(`/admin/product/${props.id}`)
       .then((res) => {
         setProduct(res.data);
       })

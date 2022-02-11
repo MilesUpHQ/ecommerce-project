@@ -39,8 +39,8 @@ app.use("/api", adminRouter);
 app.use("/api/admin/products", displayProducts);
 app.use("/api/products/category", productsByCategory);
 app.use('/api/delete_product',displayProducts);
-app.use('/api/product_info',productinfo);
-app.use('/api/admin/edit_product',editProduct);
+app.use('/api/admin/product',productinfo);
+app.use('/api/admin/product/edit',editProduct);
 
 app.use(bodyParser.json());
 passport.use(strategy);
