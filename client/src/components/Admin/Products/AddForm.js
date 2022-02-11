@@ -34,8 +34,16 @@ const AddForm = () => {
       setErrormsg("Name cannot be empty");
       return;
     }
+    if (price == "") {
+      setErrormsg("Price cannot be empty");
+      return;
+    }
+    if (description == "") {
+      setErrormsg("Description cannot be empty");
+      return;
+    }
     axios
-      .post("/admin/add_products", 
+      .post("/admin/products/add", 
         imageData
       )
       .then((res) => {
@@ -48,7 +56,7 @@ const AddForm = () => {
 
   useEffect(() => {
   axios
-  .get("/admin/add_products")
+  .get("/admin/products/add")
   .then((res) => {
     setCategories(res.data);
   })
