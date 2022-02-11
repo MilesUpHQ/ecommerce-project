@@ -14,7 +14,6 @@ import "../css/pagination.css"
     axios
       .get("/admin/products")
       .then((res) => {
-        console.log(res);
         setdisplay(res.data.products);
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);

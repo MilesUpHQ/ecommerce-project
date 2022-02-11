@@ -28,8 +28,9 @@ let page = parseInt(req.query.page) || 1;
   await knex("products")
     .leftJoin("variants", "variants.product_id", "products.id")
     .select("products.id","products.name", "products.description", "variants.price")
+    .orderBy('products.name','asc')
     .paginate({
-        perPage: 4,
+        perPage: 15,
         currentPage: page,
         isLengthAware: true,
       })

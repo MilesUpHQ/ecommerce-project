@@ -15,6 +15,7 @@ router.put("/", (req, res) => {
       price: req.body.price,
       product_id: req.body.id,
     })
+  //  .orderby("product_id",'asc')
     .returning("variants.id")
     .then((row) => {
       console.log("Insided", row);
@@ -25,6 +26,7 @@ router.put("/", (req, res) => {
           description: req.body.description,
           category_id: req.body.categoryid,
         })
+       // .orderby("id",'asc')
         .returning("products.id")
         .then((row) => {
           res.json(row);

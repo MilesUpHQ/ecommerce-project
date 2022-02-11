@@ -17,7 +17,6 @@ export const EditForm = (props) => {
   
   function updateProduct(e, id) {
     e.preventDefault();
-    console.log("ede", categoryid);
     if (name == "") {
       setErrormsg("Name cannot be empty");
       return;
@@ -46,7 +45,6 @@ export const EditForm = (props) => {
         description,
       })
       .then((res) => {
-        console.log("jdghf", res);
         navigate("/admin/products");
       })
       .catch((err) => {
