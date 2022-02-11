@@ -72,7 +72,7 @@ const Navbar = ({
               </a>
             </li>
             <li className="nav-item nav-profile dropdown">
-              <a href="#">
+              <a href="/cart">
                 <FaShoppingCart className="navBarIcon" />
               </a>
             </li>
