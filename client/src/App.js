@@ -17,11 +17,13 @@ import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import FeaturedProducts from "./components/FeaturedProducts/FeaturedProducts";
 import ViewProduct from "./components/ViewProducts/ViewProduct";
-import AddProducts from "./components/Product-List/AddProducts";
-import DisplayProducts from "./components/Product-List/DisplayProducts";
-import { ProductLayout } from "./components/Product-List/ProductLayout";
+import AddProducts from "./components/Admin/Products/AddProducts";
+import DisplayProducts from "./components/Admin/Products/DisplayProducts";
+import { ProductLayout } from "./components/Admin/Products/ProductLayout";
+import { ProductView } from "./components/Admin/Products/ProductView";
 import Navbar from "./components/Navbar/Navbar";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
+import { Edit } from "./components/Admin/Products/Edit";
 import Cart from "./components/Cart/Cart";
 
 const App = () => {
@@ -34,10 +36,12 @@ const App = () => {
         <Route path="signup" element={<Signup />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/view_product/:id" element={<ViewProduct />} />
-        <Route path="/add-products" element={<AddProducts />} />
-        <Route path="/display-products" element={<ProductLayout />} />
+        <Route path="/admin/add_products" element={<AddProducts />} />
+        <Route path="/admin/products" element={<ProductLayout />} />
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
+	      <Route path="/admin/product_view/:id" element={<ProductView/>} />
+        <Route path="/admin/product/:id/update" element={<Edit/>} />
         <Route path="/cart" element={<Cart />} />
         <Route
           exact

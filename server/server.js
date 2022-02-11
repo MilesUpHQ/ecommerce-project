@@ -19,7 +19,9 @@ const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
 const addProducts = require("./routes/addProducts");
 const displayProducts = require("./routes/displayProducts");
+const productinfo = require("./routes/productinfo");
 const products = require("./routes/products");
+const editProduct = require("./routes/editProduct");
 const productsByCategory = require("./routes/productsByCategory");
 //const { default: DisplayProducts } = require("../client/src/components/Product-List/DisplayProducts");
 const signup = require("./routes/signup");
@@ -38,6 +40,9 @@ app.use("/api/admin/add_products", addProducts);
 app.use("/api", adminRouter);
 app.use("/api/admin/products", displayProducts);
 app.use("/api/products/category", productsByCategory);
+app.use('/api/delete_product',displayProducts);
+app.use('/api/product_info',productinfo);
+app.use('/api/admin/edit_product',editProduct);
 app.use("/api/cart", cart);
 
 app.use(bodyParser.json());
@@ -54,13 +59,6 @@ app.get("/", (req, res) => {
 app.listen(port, () =>
   console.log(`JS Bootcamp project listening on port ${port}!`)
 );
-//routes
-app.use("/api/reset_password", resetPassword);
-app.use("/api/forgot_password", forgotPassword);
-app.use("/api/admin/add_products", addProducts);
-app.use("/api", adminRouter);
-app.use("/api/admin/products", displayProducts);
-
 app.use("/", adminRouter);
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
