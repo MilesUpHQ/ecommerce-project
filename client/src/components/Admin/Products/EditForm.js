@@ -64,7 +64,6 @@ export const EditForm = (props) => {
         setType(res.data.type);
         setPrice(res.data.price);
         setDescription(res.data.description);
-
         setProduct(res.data);
       })
       .catch((err) => {

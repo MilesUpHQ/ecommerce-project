@@ -85,9 +85,9 @@ import "../css/pagination.css"
                      {display.price}
                    </td>
                    <td>
-                   <a href={`/admin/product_view/${display.id}`} type="button" class="btn btn-light btn-small"><i class="fas fa-eye"></i> View</a>
-                   <a href={`/admin/product/${display.id}/update`} type="button" class="btn btn-light btn-small"><i class="fas fa-edit"></i> Edit</a>
-                   <a  type="button" onClick={()=>deleteProduct(display.id , display.name)} class="btn btn-light btn-small"><i class="fas fa-trash"></i> Delete</a>
+                   <a href={`/admin/product_view/${display.id}`} type="button" class="btn btn-info btn-small mr-2"><i class="fas fa-eye"></i> View</a>
+                   <a href={`/admin/product/${display.id}/update`} type="button" class="btn btn-light btn-small mr-2"><i class="fas fa-edit"></i> Edit</a>
+                   <a  type="button" onClick={()=>deleteProduct(display.id , display.name)} class="btn btn-danger btn-small"><i class="fas fa-trash"></i> Delete</a>
                    </td>
                  </tr> 
                 ))}
