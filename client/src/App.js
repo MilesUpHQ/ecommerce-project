@@ -36,11 +36,11 @@ const App = () => {
         <Route path="signup" element={<Signup />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/view_product/:id" element={<ViewProduct />} />
-        <Route path="/admin/product/add" element={<AddProducts />} />
+        <Route path="/admin/products/add" element={<AddProducts />} />
         <Route path="/admin/products" element={<ProductLayout />} />
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
-	      <Route path="/admin/product_view/:id" element={<ProductView/>} />
+	      <Route path="/admin/products/:id/view" element={<ProductView/>} />
         <Route path="/admin/product/:id/update" element={<Edit/>} />
         <Route path="/cart" element={<Cart />} />
         <Route
