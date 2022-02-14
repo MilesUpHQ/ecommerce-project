@@ -1,5 +1,5 @@
 import React from "react";
-import './css/admin-style.css'
+import "./css/admin-style.css";
 
 const Sidebar = () => {
   return (
@@ -15,10 +15,16 @@ const Sidebar = () => {
               <span className="menu-title">Products</span>
             </a>
           </li>
-	 <li className="nav-item">
+          <li className="nav-item">
             <a className="nav-link" href="/admin/products/add">
               <i className="icon-grid menu-icon"></i>
               <span className="menu-title">Add Products</span>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/admin/product/featured">
+              <i className="icon-grid menu-icon"></i>
+              <span className="menu-title"> Featured Products</span>
             </a>
           </li>
           <li className="nav-item">

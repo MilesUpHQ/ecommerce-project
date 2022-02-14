@@ -19,13 +19,14 @@ const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
 const addProducts = require("./routes/addProducts");
 const displayProducts = require("./routes/displayProducts");
+const featuredProducts = require("./routes/featuredProducts");
 const productinfo = require("./routes/productinfo");
 const products = require("./routes/products");
 const editProduct = require("./routes/editProduct");
 const productsByCategory = require("./routes/productsByCategory");
 const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
-const search = require("./routes/searchProducts")
+const search = require("./routes/searchProducts");
 const cart = require("./routes/cart");
 
 // middlewares
@@ -35,15 +36,29 @@ app.use(cors());
 //routes
 app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
+app.use("/api/featured_products", featuredProducts);
+app.use("/api/admin/featured_products", featuredProducts);
+app.use("/api/admin/products", products);
+
+app.use("/api/signup", signup);
+app.use("/api/getToken", getToken);
+
+app.get(
+  "/api/getUser",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
+);
 app.use("/api/products", products);
 app.use("/api/admin/products/add", addProducts);
 app.use("/api", adminRouter);
 app.use("/api/admin/products", displayProducts);
 app.use("/api/products/category", productsByCategory);
-app.use('/api', search)
-app.use('/api/delete_product',displayProducts);
-app.use('/api/admin/product',productinfo);
-app.use('/api/admin/product/edit',editProduct);
+app.use("/api", search);
+app.use("/api/delete_product", displayProducts);
+app.use("/api/admin/product", productinfo);
+app.use("/api/admin/product/edit", editProduct);
 app.use("/api/cart", cart);
 
 app.use(bodyParser.json());
@@ -59,15 +74,4 @@ app.get("/", (req, res) => {
 
 app.listen(port, () =>
   console.log(`JS Bootcamp project listening on port ${port}!`)
-);
-app.use("/", adminRouter);
-app.use("/api/signup", signup);
-app.use("/api/getToken", getToken);
-
-app.get(
-  "/api/getUser",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json(req.user);
-  }
 );

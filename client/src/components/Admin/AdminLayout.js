@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
-const AdminHome = ({children}) => {
+const AdminLayout = ({ children }) => {
   return (
     <div>
       <div className="container-scroller">
@@ -16,4 +16,4 @@ const AdminHome = ({children}) => {
   );
 };
 
-export default AdminHome;
+export default AdminLayout;

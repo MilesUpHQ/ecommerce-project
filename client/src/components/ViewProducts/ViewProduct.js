@@ -4,8 +4,8 @@ import axios from "../../utils/ajax-helper";
 import Navbar from "../Navbar/Navbar";
 import { Card, Button, Container, Row, Col, Carousel } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
-import ErrorAlert from "../FeaturedProducts/ErrorAlert";
-import "../FeaturedProducts/featuredProducts.css";
+import ErrorAlert from "../Common/ErrorAlert";
+import "../Home/home.css";
 const ViewProduct = () => {
   let [product, setProduct] = useState([]);
   let [category, setCategory] = useState("");
@@ -30,7 +30,7 @@ const ViewProduct = () => {
 
   useEffect(async () => {
     axios
-      .get(`/products/${id}`)
+      .get(`/featured_products/${id}`)
       .then((response) => {
         setCategory(response.data.categories[0].name);
         setProduct(response.data.product[0]);
