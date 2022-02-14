@@ -34,10 +34,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 //routes
-app.use("/api/reset-password", resetPassword);
-app.use("/api/forgot-password", forgotPassword);
-app.use("/api/featuredProducts", featuredProducts);
-app.use("/api/admin/delete-featured-product", featuredProducts);
+app.use("/api/reset_password", resetPassword);
+app.use("/api/forgot_password", forgotPassword);
+app.use("/api/featured_products", featuredProducts);
+app.use("/api/admin/featured_products", featuredProducts);
 app.use("/api/admin/products", products);
 
 app.use("/api/signup", signup);

@@ -17,7 +17,7 @@ const GetFeaturedProducts = ({
       window.confirm(`Are you sure! Delete ${name} from Featured Product list?`)
     ) {
       axios
-        .delete(`/admin/delete-featured-product/${id}`)
+        .delete(`/admin/featured_products/${id}/delete`)
         .then((res) => {
           let newFeaturedProduct = [...featuredProducts];
           newFeaturedProduct = newFeaturedProduct.filter(

@@ -40,7 +40,7 @@ const FeaturedProduct = () => {
 
   const handlePagination = (page) => {
     axios
-      .get(`/featuredProducts?page=${page}`)
+      .get(`/featured_products?page=${page}`)
       .then((res) => {
         setfeaturedProducts(res.data.featuredProducts);
         setCurrPage(res.data.currPage);
@@ -77,7 +77,7 @@ const FeaturedProduct = () => {
       });
     // ****************************featured Products**************//
     axios
-      .get("/featuredProducts")
+      .get("/featured_products")
       .then((res) => {
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);

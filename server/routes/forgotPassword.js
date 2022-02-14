@@ -24,7 +24,7 @@ router.post("", (req, res) => {
           subject: "LINK TO RESET PASSWORD",
           text:
             "Please click on the following link to reset ur password : \n\n" +
-            `${req.body.link}/reset-password/${token}\n\n` +
+            `${req.body.link}/reset_password/${token}\n\n` +
             "If you did not requested,Please ignore this one ,JOLLY\n",
         };
         transporter.sendMail(mailOptions, function (err, response) {

@@ -165,7 +165,7 @@ router.get("/:id", async (req, res, next) => {
 
 //**************************************deleting product***************************** */
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id/delete", (req, res) => {
   knex("featured_products")
     .where("id", req.params.id)
     .del(["id"])
