@@ -1870,7 +1870,10 @@
       transform: scale(1, 1);
     }
   }
-  
+  .rounded-circle{
+    width: 340px;
+    height: 340px;
+  }
   @-moz-keyframes wiggle {
     0% {
       -webkit-transform: skewX(9deg);

@@ -9,14 +9,29 @@ export const EditForm = (props) => {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [fileData, setFileData] = useState([]);
   const [description, setDescription] = useState("");
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
   const [type, setType] = useState("");
   const [categoryid, setCategory] = useState("");
+  const [productId, setProductId] = useState("");
+  const [variantId, setVariantId] = useState("");
   
-  function updateProduct(e, id) {
+  const updateProduct = async(e, id) =>{
     e.preventDefault();
+    const imageData = new FormData();
+    imageData.append("file", fileData);
+    imageData.append("name", name);
+    imageData.append("price", price);
+    imageData.append("description", description);
+    imageData.append("size", size);
+    imageData.append("color", color);
+    imageData.append("type", type);
+    imageData.append("category", categoryid);
+    imageData.append("id",productId);
+    imageData.append("vid",variantId);
+    console.log("Filedata:::",imageData);
     if (name == "") {
       setErrormsg("Name cannot be empty");
       return;
@@ -34,16 +49,9 @@ export const EditForm = (props) => {
       return;
     }
     axios
-      .put("/admin/product/edit", {
-        id,
-        name,
-        size,
-        color,
-        categoryid,
-        type,
-        price,
-        description,
-      })
+      .put("/admin/product/edit", 
+        imageData,
+      )
       .then((res) => {
         navigate("/admin/products");
       })
@@ -55,6 +63,7 @@ export const EditForm = (props) => {
     axios
       .get(`/admin/product/${props.id}`)
       .then((res) => {
+        console.log("dsjh",res.data)
         setName(res.data.name);
         setSize(res.data.size);
         setColor(res.data.color);
@@ -63,6 +72,8 @@ export const EditForm = (props) => {
         setPrice(res.data.price);
         setDescription(res.data.description);
         setProduct(res.data);
+        setVariantId(res.data.id)
+        setProductId(props.id);
       })
       .catch((err) => {
         setErrormsg("Sorry! Something went wrong. Please Try again");
@@ -78,6 +89,11 @@ export const EditForm = (props) => {
         setErrormsg("Oopps! Something went wrong. Please Try again", err);
       });
   }, []);
+  const fileChangeHandler = (e) => {
+    console.log("target.files", e.target.files[0]);
+    setFileData(e.target.files[0]);
+  };
+
   return (
     <div className="main-panel">
       <div className="content-wrapper">
@@ -113,7 +129,8 @@ export const EditForm = (props) => {
                   </div>
                   <div className="form-group">
                     <label htmlFor="imageupload">Upload image</label>
-                    <input type="file" name="image" />
+                    <input type="file" name="image" 
+                     onChange={fileChangeHandler}/>
                   </div>
 
                   <div className="form-group ">
