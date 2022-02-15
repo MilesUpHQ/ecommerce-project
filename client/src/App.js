@@ -27,6 +27,7 @@ import FeaturedProductsList from "./components/Home/ProductList";
 import FeaturedProductLayout from "./components/Admin/FeatureProducts/FeaturedProductLayout";
 import { Edit } from "./components/Admin/Products/Edit";
 import Cart from "./components/Cart/Cart";
+import Add from "./components/Cart/Add";
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="/admin/products/:id/view" element={<ProductView />} />
         <Route path="/admin/product/:id/update" element={<Edit />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/cart/add/:id" element={<Add />} />
         <Route
           exact
           path="/admin"
