@@ -16,6 +16,7 @@ router.get("/:id", async (req, res, next) => {
       "variants.size",
       "variants.type",
       "variants.price",
+      "variants.id as variant_id",
       "variant_images.image_url"
     )
     .then((row) => {
