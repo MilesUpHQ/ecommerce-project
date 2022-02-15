@@ -29,7 +29,6 @@ const AddForm = () => {
     imageData.append("color", color);
     imageData.append("type", type);
     imageData.append("category", categoryid);
-     console.log("Filedata:::",imageData);
     if (name == "") {
       setErrormsg("Name cannot be empty");
       return;
@@ -66,7 +65,6 @@ const AddForm = () => {
 }, []);
 
   const fileChangeHandler = (e) => {
-    console.log("target.files", e.target.files[0]);
     setFileData(e.target.files[0]);
   };
 

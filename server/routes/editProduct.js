@@ -15,10 +15,6 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({storage:fileStorageEngine});
 
 router.put("/", upload.single("file"),(req, res) => {
-  console.log("rerdtr", req.body);
-  console.log("img",req.file);
-  console.log("id",req.body.id)
-  console.log("vid",req.body.vid)
   knex("variants")
     .where("product_id", req.body.id)
     .update({
@@ -29,7 +25,6 @@ router.put("/", upload.single("file"),(req, res) => {
     })
     .returning("variants.id")
     .then((row) => {
-      console.log("Insided", req.body.id);
       knex("products")
         .where("id", req.body.id)
         .update({
@@ -40,15 +35,12 @@ router.put("/", upload.single("file"),(req, res) => {
         .returning("products.id")
         .then((row) => {
           knex("variant_images")
-          .where("variant_id",req.body.vid)
+          .where("variant_id",req.body.variantId)
           .update({image_url:req.file.path})
-          .returning("variant_images.id")
           .then(row=>{
           res.json(row);
-          console.log("congratulations u made it");
         })
         .catch((err)=>{
-          console.log("check",err);
           res.status(400).send("Unable to post image");
         })
         })

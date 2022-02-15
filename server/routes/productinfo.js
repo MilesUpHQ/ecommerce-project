@@ -7,7 +7,7 @@ router.get("/:id", (req, res) => {
       .leftJoin("variants", "variants.product_id", "products.id")
       .leftJoin("variant_images", "variants.id", "variant_images.variant_id")
       .select("products.id","products.name","variants.size","variants.color",
-      "variants.type", "variants.price","variants.id as variants_id","products.description","image_url")
+      "variants.type", "variants.price","variants.id as variant_id","products.description","variant_images.image_url")
       .where("products.id",req.params.id)
       .then((row) => {
         console.log("hbh",row)

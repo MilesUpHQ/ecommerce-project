@@ -18,7 +18,7 @@ export const EditForm = (props) => {
   const [productId, setProductId] = useState("");
   const [variantId, setVariantId] = useState("");
   
-  const updateProduct = async(e, id) =>{
+  const updateProduct = (e) =>{
     e.preventDefault();
     const imageData = new FormData();
     imageData.append("file", fileData);
@@ -30,8 +30,7 @@ export const EditForm = (props) => {
     imageData.append("type", type);
     imageData.append("category", categoryid);
     imageData.append("id",productId);
-    imageData.append("vid",variantId);
-    console.log("Filedata:::",imageData);
+    imageData.append("variantId",variantId);
     if (name == "") {
       setErrormsg("Name cannot be empty");
       return;
@@ -63,7 +62,6 @@ export const EditForm = (props) => {
     axios
       .get(`/admin/product/${props.id}`)
       .then((res) => {
-        console.log("dsjh",res.data)
         setName(res.data.name);
         setSize(res.data.size);
         setColor(res.data.color);
@@ -72,7 +70,7 @@ export const EditForm = (props) => {
         setPrice(res.data.price);
         setDescription(res.data.description);
         setProduct(res.data);
-        setVariantId(res.data.id)
+        setVariantId(res.data.variant_id);
         setProductId(props.id);
       })
       .catch((err) => {
@@ -90,7 +88,6 @@ export const EditForm = (props) => {
       });
   }, []);
   const fileChangeHandler = (e) => {
-    console.log("target.files", e.target.files[0]);
     setFileData(e.target.files[0]);
   };
 
