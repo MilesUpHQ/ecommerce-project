@@ -10,6 +10,7 @@ export default function Cart() {
   // get items for the server and store in state and update in cart component
   const [cartItems, setCartItems] = React.useState([]);
   const [errorMsg, setErrorMsg] = React.useState(null);
+  const [total, setTotal] = React.useState(0);
 
   useEffect(() => {
     axios
