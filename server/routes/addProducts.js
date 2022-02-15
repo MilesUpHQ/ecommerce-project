@@ -29,7 +29,6 @@ router.get("/",(req,res)=>{
   const upload = multer({storage:fileStorageEngine});
 
 router.post("/",upload.single("file"),(req,res)=>{
-    console.log("wdkwd",req.file);
     knex("products")
    .insert({ name:req.body.name, description:req.body.description , category_id:req.body.category })
    .returning("products.id")

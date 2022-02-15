@@ -1871,8 +1871,8 @@
     }
   }
   .rounded-circle{
-    width: 340px;
-    height: 340px;
+    width: 25%;
+    height: 20%;
   }
   @-moz-keyframes wiggle {
     0% {

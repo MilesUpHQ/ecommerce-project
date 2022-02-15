@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import "../css/admin-style.css";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const ProductInfo = (props) => {
   const [product, setProduct] = useState({});
   const [errormsg, setErrormsg] = useState(null);
@@ -34,7 +35,7 @@ const ProductInfo = (props) => {
             <h1 class="pdp-title">{product.name}</h1>
             <h1 class="pdp-name">{product.description}</h1>
             <img class="rounded-circle z-depth-2" 
-            alt="75x75" src={"http://localhost:4000/"+product.image_url}
+            alt="75x75" src={BASE_URL+"/"+product.image_url}
           data-holder-rendered="true"/>
           </div>
         </div>
