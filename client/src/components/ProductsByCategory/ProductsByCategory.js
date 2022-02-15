@@ -3,7 +3,12 @@ import axios from "../../utils/ajax-helper";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./ProductsByCategory.css";
+import { FaHeart } from "react-icons/fa";
 import Navbar from "../Navbar/Navbar";
+import "bootstrap/dist/css/bootstrap.css";
+
+import { Card, Button, Col, Container, Row, Carousel } from "react-bootstrap";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function ProductsByCategory() {
   const [products, setProducts] = React.useState([]);
   const [errorMsg, setErrorMsg] = React.useState(null);
@@ -27,7 +32,7 @@ export default function ProductsByCategory() {
     axios
       .get(`/typeahead-items?search_keyword=${value}`)
       .then((res) => {
-        console.log(res)
+        console.log(res);
         let array = res.data.map(({ id, name }) => ({
           label: name,
           value: id,
@@ -43,7 +48,7 @@ export default function ProductsByCategory() {
         .get(`/products-by-search?search_keyword=${searchItem[0].label}`)
         .then((res) => {
           setProducts(res.data);
-          setSearchItem([])
+          setSearchItem([]);
         })
         .catch((err) => console.log(err));
     }
@@ -56,22 +61,23 @@ export default function ProductsByCategory() {
         searchItem={searchItem}
         setSearchItem={setSearchItem}
         options={options}
-        placeholder={'Search for products'}
+        placeholder={"Search for products"}
       />
       <div>
-        <h1>Products By Category</h1>
-        <div className="row">
-          {errorMsg ? (
-            <div className="alert alert-danger">{errorMsg}</div>
-          ) : (
-            <></>
-          )}
-          {products.length > 0
+        <Container>
+          <h1>Products By Category</h1>
+          <div className="row">
+            {errorMsg ? (
+              <div className="alert alert-danger">{errorMsg}</div>
+            ) : (
+              <></>
+            )}
+            {/* {products.length > 0
             ? products.map((product) => (
                 <div className="col-md-4" key={product.id}>
                   <div className="card mb-4 shadow-sm card-width">
                     <img
-                      src={product.image_url}
+                      src={BASE_URL + "/" + product.image_url}
                       className="card-img-top card-img"
                       alt="product"
                     />
@@ -84,8 +90,60 @@ export default function ProductsByCategory() {
                   </div>
                 </div>
               ))
-            : null}
-        </div>
+            : null} */}
+            {products.length > 0 ? (
+              products.map((product) => (
+                <Col>
+                  {console.log(product)}
+
+                  <Card className="listCard">
+                    <Card.Img
+                      variant="top"
+                      src={BASE_URL + "/" + product.image_url}
+                      className="imgSlide"
+                    />
+                    <Card.Body>
+                      <Card.Title className="featuredProductName">
+                        {product.name}{" "}
+                      </Card.Title>
+                      <Card.Text className="iconText">
+                        <FaHeart className="icon" />
+                      </Card.Text>
+                      <br />
+                      <Card.Text className="featuredProductContent">
+                        {product.description}
+                      </Card.Text>
+                      <Card.Text className="featuredProductContent">
+                        Price : Rs.{product.price}
+                      </Card.Text>
+                      {/* onclick redict to cart/add/id */}
+                      <Button
+                        className="cartButton"
+                        variant="primary"
+                        href={`/cart/add/${product.variant_id}`}
+                      >
+                        Add to cart
+                      </Button>
+                      <br />
+                      <a
+                        className="viewProduct"
+                        href={`/product/view/${product.id}`}
+                      >
+                        View Product
+                      </a>
+                    </Card.Body>
+                  </Card>
+                  <br />
+                </Col>
+              ))
+            ) : (
+              // show no products found in category
+              <div className="noProducts">
+                <h1>No Products Found in the category</h1>
+              </div>
+            )}
+          </div>
+        </Container>
       </div>
     </>
   );
