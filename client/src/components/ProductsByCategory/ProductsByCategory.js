@@ -3,7 +3,12 @@ import axios from "../../utils/ajax-helper";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./ProductsByCategory.css";
+import { FaHeart } from "react-icons/fa";
 import Navbar from "../Navbar/Navbar";
+import "bootstrap/dist/css/bootstrap.css";
+
+import { Card, Button, Col, Container, Row, Carousel } from "react-bootstrap";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function ProductsByCategory() {
   const [products, setProducts] = React.useState([]);
   const [errorMsg, setErrorMsg] = React.useState(null);
@@ -117,11 +122,40 @@ export default function ProductsByCategory() {
       {/* <h1>Products By Category</h1> */}
 
       <br />
-      <div className="row">
-        <div className="col-4">
-          <aside className="ml-2">
-            <div className="card" style={{ display: "contents" }}>
-              {/* <article className="card-group-item">
+      {errorMsg ? <div className="alert alert-danger">{errorMsg}</div> : <></>}
+
+      <div>
+        <Container>
+          <h1>Products By Category</h1>
+          <div className="row">
+            {errorMsg ? (
+              <div className="alert alert-danger">{errorMsg}</div>
+            ) : (
+              <></>
+            )}
+            {/* {products.length > 0
+            ? products.map((product) => (
+                <div className="col-md-4" key={product.id}>
+                  <div className="card mb-4 shadow-sm card-width">
+                    <img
+                      src={BASE_URL + "/" + product.image_url}
+                      className="card-img-top card-img"
+                      alt="product"
+                    />
+                    <div className="card-body">
+                      <p className="card-text">{product.name}</p>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <p className="text-muted">${product.price}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            : null} */}
+            <div className="col-4">
+              <aside className="ml-2">
+                <div className="card" style={{ display: "contents" }}>
+                  {/* <article className="card-group-item">
                 <header className="card-header">
                   <h6 className="title">Filters</h6>
                 </header>
@@ -166,85 +200,127 @@ export default function ProductsByCategory() {
                   </div>
                 </div>
               </article> */}
-              <article className="card-group-item">
-                <header className="card-header">
-                  <h6 className="title">Price Filter</h6>
-                </header>
-                <div class="filter-content">
-                  <div class="card-body">
-                    <div class="custom-control custom-checkbox">
-                      <input
-                        type="checkbox"
-                        class="custom-control-input"
-                        id="Check1"
-                        onChange={(e) => handlePrice(e, minPrice, range)}
-                      />
-                      <label class="custom-control-label" for="Check1" style={{paddingTop: '3px'}}>
-                        {minPrice} - {range}
-                      </label>
+                  <article className="card-group-item">
+                    <header className="card-header">
+                      <h6 className="title">Price Filter</h6>
+                    </header>
+                    <div class="filter-content">
+                      <div class="card-body">
+                        <div class="custom-control custom-checkbox">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            id="Check1"
+                            onChange={(e) => handlePrice(e, minPrice, range)}
+                          />
+                          <label
+                            class="custom-control-label"
+                            for="Check1"
+                            style={{ paddingTop: "3px" }}
+                          >
+                            {minPrice} - {range}
+                          </label>
+                        </div>
+
+                        {range !== secondRange ? (
+                          <div class="custom-control custom-checkbox">
+                            <input
+                              type="checkbox"
+                              class="custom-control-input"
+                              id="Check2"
+                              onChange={(e) =>
+                                handlePrice(e, range, secondRange)
+                              }
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="Check2"
+                              style={{ paddingTop: "3px" }}
+                            >
+                              {range} - {secondRange}
+                            </label>
+                          </div>
+                        ) : (
+                          " "
+                        )}
+
+                        {maxPrice > 5000 && (
+                          <div class="custom-control custom-checkbox">
+                            <input
+                              type="checkbox"
+                              class="custom-control-input"
+                              id="Check3"
+                              onChange={(e) => handlePrice(e, 5000, maxPrice)}
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="Check3"
+                              style={{ paddingTop: "3px" }}
+                            >
+                              5000 & above
+                            </label>
+                          </div>
+                        )}
+                      </div>
                     </div>
-
-                    {range !== secondRange ? (
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="Check2"
-                          onChange={(e) => handlePrice(e, range, secondRange)}
-                        />
-                        <label class="custom-control-label" for="Check2" style={{paddingTop: '3px'}}>
-                          {range} - {secondRange}
-                        </label>
-                      </div>
-                    ) : (
-                      " "
-                    )}
-
-                    {maxPrice > 5000 && (
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="Check3"
-                          onChange={(e) => handlePrice(e, 5000, maxPrice)}
-                        />
-                        <label class="custom-control-label" for="Check3" style={{paddingTop: '3px'}}>
-                          5000 & above
-                        </label>
-                      </div>
-                    )}
-                  </div>
+                  </article>
                 </div>
-              </article>
+              </aside>
             </div>
-          </aside>
-        </div>
-        <div className="col-8">
-          {errorMsg ? (
-            <div className="alert alert-danger">{errorMsg}</div>
-          ) : (
-            <></>
-          )}
-          {products.length > 0
-            ? products.map((product) => (
-                <div className="col-md-4" key={product.id}>
-                  <div className="card mb-4 shadow-sm card-width">
-                    <img
-                      src={product.image_url}
-                      className="card-img-top card-img"
-                      alt="product"
+
+            {products.length > 0 ? (
+              products.map((product) => (
+                <Col>
+                  {console.log(product)}
+
+                  <Card className="listCard">
+                    <Card.Img
+                      variant="top"
+                      src={BASE_URL + "/" + product.image_url}
+                      className="imgSlide"
                     />
-                    <div className="card-body">
-                      <p className="card-text">{product.name}</p>
-                      <div className="d-flex justify-content-between align-items-center">
-                        <p className="text-muted">${product.price}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                    <Card.Body>
+                      <Card.Title className="featuredProductName">
+                        {product.name}{" "}
+                      </Card.Title>
+                      <Card.Text className="iconText">
+                        <FaHeart className="icon" />
+                      </Card.Text>
+                      <br />
+                      <Card.Text className="featuredProductContent">
+                        {product.description}
+                      </Card.Text>
+                      <Card.Text className="featuredProductContent">
+                        Price : Rs.{product.price}
+                      </Card.Text>
+                      {/* onclick redict to cart/add/id */}
+                      <Button
+                        className="cartButton"
+                        variant="primary"
+                        href={`/cart/add/${product.variant_id}`}
+                      >
+                        Add to cart
+                      </Button>
+                      <br />
+                      <a
+                        className="viewProduct"
+                        href={`/product/view/${product.id}`}
+                      >
+                        View Product
+                      </a>
+                    </Card.Body>
+                  </Card>
+                  <br />
+                </Col>
               ))
-            : null}
-        </div>
+            ) : (
+              // show no products found in category
+              <div className="noProducts">
+                <h1>No Products Found in the category</h1>
+              </div>
+            )}
+          </div>
+        </Container>
       </div>
     </>
   );

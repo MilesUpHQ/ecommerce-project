@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
+import toast, { Toaster } from "react-hot-toast";
 
 const AddForm = () => {
   const navigate = useNavigate();
@@ -46,7 +47,10 @@ const AddForm = () => {
         imageData
       )
       .then((res) => {
-        navigate("/admin/products");
+        toast.success("Product Created Sucessfully!");
+        setTimeout(() => {
+          navigate("/admin/products");
+        }, 1500);
       })
       .catch((err) => {
         setErrormsg("Oppsie! Something went wrong. Please try entering valid datas");
@@ -68,8 +72,9 @@ const AddForm = () => {
     setFileData(e.target.files[0]);
   };
 
-  return (
+  return ( 
     <div className="main-panel">
+       <Toaster />
       <div className="content-wrapper">
         <div className="row">
           {errormsg && <ErrorMessages msg={errormsg} />}
