@@ -31,7 +31,8 @@ export default function Signup() {
       .catch((err) => {
         if (err.response) {
           setError(err.response.data.message);
-        } else if (err.response.data[0].msg) {
+        }
+        if (err.response.data[0].msg) {
           setError(err.response.data[0].msg);
         } else {
           setError(err);
