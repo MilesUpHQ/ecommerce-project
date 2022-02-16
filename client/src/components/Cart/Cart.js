@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import "./cart-style.css";
 import axios from "../../utils/ajax-helper";
 import { getJWT } from "../../utils/jwt";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function Cart() {
   // get items for the server and store in state and update in cart component
@@ -20,8 +21,8 @@ export default function Cart() {
         },
       })
       .then((res) => {
-        console.log(res.data.cartItems);
-        setCartItems(res.data.cartItems);
+        console.log(res.data);
+        setCartItems(res.data);
       })
       .catch((err) => {
         setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
@@ -59,12 +60,12 @@ export default function Cart() {
                           </tr>
                         </thead>
                         <tbody>
-                          {cartItems.map((cart) => {
-                            <tr>
+                          {cartItems.map((cart) => (
+                            <tr key={cart.id}>
                               <th scope="row" className="border-0">
                                 <div className="p-2">
                                   <img
-                                    src={cart.image_url}
+                                    src={BASE_URL + "/" + cart.image_url}
                                     alt="product"
                                     width="70"
                                     className="img-fluid rounded shadow-sm"
@@ -73,7 +74,7 @@ export default function Cart() {
                                     <h5 className="mb-0">
                                       <a
                                         href={`/products/${cart.product_id}`}
-                                        classNameName="text-dark d-inline-block align-middle"
+                                        className="text-dark d-inline-block align-middle"
                                       >
                                         {cart.name}
                                       </a>
@@ -95,8 +96,8 @@ export default function Cart() {
                                   Remove
                                 </button>
                               </td>
-                            </tr>;
-                          })}
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     </div>
