@@ -12,9 +12,10 @@ export default function ProductsByCategory() {
   const [minPrice, setMinPrice] = React.useState(null);
   const [maxPrice, setMaxPrice] = React.useState(null);
   const [range, setRange] = React.useState(null);
+  const [secondRange, setSecondRange] = React.useState(null);
   const [prices, setPrices] = React.useState([]);
   const categoryId = useParams().category;
-  // console.log("categoryId", categoryId);
+  console.log("categoryId", categoryId);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,11 +28,14 @@ export default function ProductsByCategory() {
         }
         setMinPrice(minPrice);
         setMaxPrice(maxPrice);
-        const closest = data.reduce((a, b) => {
+        const firstRange = data.reduce((a, b) => {
           return Math.abs(b.price - 2500) < Math.abs(a.price - 2500) ? b : a;
         });
-        setRange(closest.price);
-        // prices.push(minPrice, closest.price, maxPrice)
+        const secondRange = data.reduce((a, b) => {
+          return Math.abs(b.price - 5000) < Math.abs(a.price - 5000) ? b : a;
+        });
+        setRange(firstRange.price);
+        setSecondRange(secondRange.price);
         setProducts(data);
       } catch (error) {
         setErrorMsg("Sorry! Something went wrong. Please Try again", error);
@@ -67,12 +71,16 @@ export default function ProductsByCategory() {
           }
           setMinPrice(minPrice);
           setMaxPrice(maxPrice);
-          const closest = res.data.reduce((a, b) => {
+          const firstRange = res.data.reduce((a, b) => {
             return Math.abs(b.price - 2500) < Math.abs(a.price - 2500) ? b : a;
           });
-          setRange(closest.price);
+          const secondRange = res.data.reduce((a, b) => {
+            return Math.abs(b.price - 5000) < Math.abs(a.price - 5000) ? b : a;
+          });
+          setRange(firstRange.price);
+          setSecondRange(secondRange.price);
           setProducts(res.data);
-          // setSearchItem([]);
+          setSearchItem([]);
         })
         .catch((err) => console.log(err));
     }
@@ -169,46 +177,42 @@ export default function ProductsByCategory() {
                         type="checkbox"
                         class="custom-control-input"
                         id="Check1"
-                        // value={`${minPrice} - ${range}`}
-                        // onChange={(e) =>
-                        //   e.target.checked
-                        //     ? handlePrice(e, minPrice, range)
-                        //     : (prices.pop(minPrice), prices.pop(range))
-                        // }
                         onChange={(e) => handlePrice(e, minPrice, range)}
                       />
-                      <label class="custom-control-label" for="Check1">
+                      <label class="custom-control-label" for="Check1" style={{paddingTop: '3px'}}>
                         {minPrice} - {range}
                       </label>
                     </div>
 
-                    <div class="custom-control custom-checkbox">
-                      <input
-                        type="checkbox"
-                        class="custom-control-input"
-                        id="Check2"
-                        // onChange={(e) =>
-                        //   e.target.checked
-                        //     ? handlePrice(range, maxPrice)
-                        //     : (prices.pop(range), prices.pop(maxPrice))
-                        // }
-                        onChange={(e) => handlePrice(e, range, maxPrice)}
-                      />
-                      <label class="custom-control-label" for="Check2">
-                        {range} - {maxPrice}
-                      </label>
-                    </div>
+                    {range !== secondRange ? (
+                      <div class="custom-control custom-checkbox">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="Check2"
+                          onChange={(e) => handlePrice(e, range, secondRange)}
+                        />
+                        <label class="custom-control-label" for="Check2" style={{paddingTop: '3px'}}>
+                          {range} - {secondRange}
+                        </label>
+                      </div>
+                    ) : (
+                      " "
+                    )}
 
-                    {/* <div class="custom-control custom-checkbox">
-                      <input
-                        type="checkbox"
-                        class="custom-control-input"
-                        id="Check3"
-                      />
-                      <label class="custom-control-label" for="Check3">
-                        5000 & above
-                      </label>
-                    </div> */}
+                    {maxPrice > 5000 && (
+                      <div class="custom-control custom-checkbox">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="Check3"
+                          onChange={(e) => handlePrice(e, 5000, maxPrice)}
+                        />
+                        <label class="custom-control-label" for="Check3" style={{paddingTop: '3px'}}>
+                          5000 & above
+                        </label>
+                      </div>
+                    )}
                   </div>
                 </div>
               </article>
