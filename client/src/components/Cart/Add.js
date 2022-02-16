@@ -8,7 +8,7 @@ export default function Add() {
   const [errorMsg, setErrorMsg] = React.useState(null);
   console.log("id", id);
   axios
-    .post(`/cart/add/${id}`, {
+    .get(`/cart/add/${id}`, {
       headers: {
         authorization: `Bearer ${getJWT()}`,
       },
