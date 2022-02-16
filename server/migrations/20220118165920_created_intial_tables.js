@@ -67,7 +67,7 @@ exports.up = function (knex) {
     })
     .createTable("cart", (table) => {
       table.increments("id").primary();
-      table.integer("price").notNullable();
+      table.float("price", 0.0);
       table.integer("user_id").unsigned().notNullable();
       table.foreign("user_id").references("users.id");
       table.timestamps(true, true);
