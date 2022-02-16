@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+
 export const EditForm = (props) => {
   const navigate = useNavigate();
   const [product, setProduct] = useState({});
@@ -52,7 +54,10 @@ export const EditForm = (props) => {
         imageData,
       )
       .then((res) => {
-        navigate("/admin/products");
+        toast.success("Product Updated Sucessfully!");
+        setTimeout(() => {
+          navigate("/admin/products");
+        }, 1500);
       })
       .catch((err) => {
         setErrormsg("Sorry! Couldn't update your product.Please try again");
@@ -93,6 +98,7 @@ export const EditForm = (props) => {
 
   return (
     <div className="main-panel">
+       <Toaster />
       <div className="content-wrapper">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
