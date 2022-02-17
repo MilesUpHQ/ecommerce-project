@@ -12,7 +12,6 @@ import axios from "../../utils/ajax-helper";
 import { BiEdit } from "react-icons/bi";
 import { MdDeleteOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import $ from "jquery";
 import "./address.css";
 import { getJWT } from "../../utils/jwt";
 import { parseJwt } from "../../utils/jwt";
@@ -34,7 +33,8 @@ const Address = () => {
         } else {
           setAddress(res.data);
           setAddress_id(res.data[0].id);
-          $(`#${res.data[0].id}`).css("border", "solid 2px blue");
+          document.getElementById(res.data[0].id).style.border =
+            "solid 2px blue";
         }
       })
       .catch((err) => {
@@ -68,10 +68,10 @@ const Address = () => {
   // ***********on select *****************//
   const clicked = (id) => {
     setAddress_id(id);
-    $(`#${id}`).css("border", "solid 2px blue");
+    document.getElementById(id).style.border = "solid 2px blue";
     for (let i = 0; i < addresses.length; i++) {
       if (id != addresses[i].id) {
-        $(`#${addresses[i].id}`).css("border", "none");
+        document.getElementById(addresses[i].id).style.border = "none";
       }
     }
   };
