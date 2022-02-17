@@ -27,6 +27,10 @@ import FeaturedProductsList from "./components/Home/ProductList";
 import FeaturedProductLayout from "./components/Admin/FeatureProducts/FeaturedProductLayout";
 import { Edit } from "./components/Admin/Products/Edit";
 import Cart from "./components/Cart/Cart";
+import Address from "./components/Address/Address";
+import NewAddress from "./components/Address/NewAddress";
+import EditAddress from "./components/Address/EditAddress";
+import Checkout from "./components/Address/Checkout";
 
 const App = () => {
   return (
@@ -49,6 +53,11 @@ const App = () => {
         <Route path="/admin/products/:id/view" element={<ProductView />} />
         <Route path="/admin/product/:id/update" element={<Edit />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/user/address" element={<Address />} />
+        <Route path="/user/address/new" element={<NewAddress />} />
+        <Route path="/user/address/:id/edit" element={<EditAddress />} />
+        <Route path="/checkout/:id" element={<Checkout />} />
+
         <Route
           exact
           path="/admin"

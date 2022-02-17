@@ -28,6 +28,7 @@ const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
 const search = require("./routes/searchProducts");
 const cart = require("./routes/cart");
+const address = require("./routes/address");
 
 // middlewares
 app.use(express.json());
@@ -39,6 +40,9 @@ app.use("/api/forgot_password", forgotPassword);
 app.use("/api/featured_products", featuredProducts);
 app.use("/api/admin/featured_products", featuredProducts);
 app.use("/api/admin/products", products);
+app.use("/api/user/address", address);
+app.use("/api/user/address/new", address);
+app.use("/api/user/", address);
 
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);

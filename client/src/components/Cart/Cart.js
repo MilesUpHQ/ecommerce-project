@@ -163,10 +163,10 @@ export default function Cart() {
                     </li>
                   </ul>
                   <a
-                    href="/checkout"
+                    href="/user/address"
                     className="btn btn-dark rounded-pill py-2 btn-block"
                   >
-                    Procceed to checkout
+                    Procceed
                   </a>
                 </div>
               </div>
