@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "../../utils/ajax-helper";
 import { useNavigate } from "react-router-dom";
 import "./address.css";
+import { getJWT } from "../../utils/jwt";
+import { parseJwt } from "../../utils/jwt";
 
 const NewAddress = () => {
   let [street, setStreet] = useState(null);
@@ -10,7 +12,8 @@ const NewAddress = () => {
   let [pin_code, setPin_code] = useState(null);
   let [state, setState] = useState(null);
   let [country_id, setCountry_id] = useState(null);
-  let [user_id, setUser_id] = useState(1);
+  let decoded = parseJwt(getJWT());
+  let [user_id, setUser_id] = useState(decoded.id);
   let [countries, setCountries] = useState(null);
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
@@ -39,7 +42,7 @@ const NewAddress = () => {
 
   useEffect(() => {
     axios
-      .get("/user/country")
+      .get("/country")
       .then((res) => {
         if (res.data.length == 0) {
           setMessage("no contry is available");
@@ -61,7 +64,7 @@ const NewAddress = () => {
               <h2>Add new address :</h2>
               <br />
               <div className="form-group">
-                <label for="exampleInputName1">Street</label>
+                <label htmlFor="exampleInputName1">Street</label>
                 <input
                   type="text"
                   className="form-control"
@@ -72,7 +75,7 @@ const NewAddress = () => {
                 />
               </div>
               <div className="form-group">
-                <label for="exampleInputName1">City</label>
+                <label htmlFor="exampleInputName1">City</label>
                 <input
                   type="text"
                   className="form-control"
@@ -84,7 +87,7 @@ const NewAddress = () => {
               </div>
 
               <div className="form-group">
-                <label for="exampleInputName1">pin_code</label>
+                <label htmlFor="exampleInputName1">pin_code</label>
                 <input
                   type="text"
                   className="form-control"
@@ -96,7 +99,7 @@ const NewAddress = () => {
               </div>
 
               <div className="form-group">
-                <label for="exampleInputName1">State</label>
+                <label htmlFor="exampleInputName1">State</label>
                 <input
                   type="text"
                   className="form-control"
@@ -108,7 +111,7 @@ const NewAddress = () => {
               </div>
               {countries && (
                 <div className="form-group">
-                  <label for="country">Country</label>
+                  <label htmlFor="country">Country</label>
                   <select
                     value={country_id}
                     className="form-control form-control-sm"
@@ -122,6 +125,7 @@ const NewAddress = () => {
                   </select>
                 </div>
               )}
+
               <button type="submit" className="btn btn-primary mr-2">
                 Submit
               </button>

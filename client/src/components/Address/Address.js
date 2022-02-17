@@ -14,20 +14,23 @@ import { MdDeleteOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import $ from "jquery";
 import "./address.css";
+import { getJWT } from "../../utils/jwt";
+import { parseJwt } from "../../utils/jwt";
 
 const Address = () => {
   let [addresses, setAddress] = useState([]);
   let [address_id, setAddress_id] = useState(null);
-  let [color, setColor] = useState("white");
   const [message, setMessage] = useState(null);
+  let decoded = parseJwt(getJWT());
+  let [user_id, setUser_id] = useState(decoded.id);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("/user/address")
+      .get(`/user/address/${user_id}`)
       .then((res) => {
         if (res.data.length == 0) {
-          setMessage("no address");
+          setMessage("No address found!! Please add new one");
         } else {
           setAddress(res.data);
           setAddress_id(res.data[0].id);
@@ -61,10 +64,10 @@ const Address = () => {
         });
     }
   };
+
   // ***********on select *****************//
   const clicked = (id) => {
     setAddress_id(id);
-    setColor("blue");
     $(`#${id}`).css("border", "solid 2px blue");
     for (let i = 0; i < addresses.length; i++) {
       if (id != addresses[i].id) {
@@ -72,6 +75,7 @@ const Address = () => {
       }
     }
   };
+
   // ********************on check out ***************/
   const onCheckOut = (address_id) => {
     navigate(`/checkout/${address_id}`);
@@ -89,7 +93,7 @@ const Address = () => {
             >
               New Address
             </a>
-            <h2>Address available :</h2>
+            {addresses.length > 0 && <h2>select an address :</h2>}
             <br />
             <div>
               {message && <h3>{message}</h3>}
@@ -133,13 +137,15 @@ const Address = () => {
                         </Card>
                       </Col>
                     ))}
-                  <button
-                    className="btn btn-dark rounded-pill py-2 btn-block"
-                    id="checkOut"
-                    onClick={() => onCheckOut(address_id)}
-                  >
-                    Check out
-                  </button>
+                  {addresses.length > 0 && (
+                    <button
+                      className="btn btn-dark rounded-pill py-2 btn-block"
+                      id="checkOut"
+                      onClick={() => onCheckOut(address_id)}
+                    >
+                      Check out
+                    </button>
+                  )}
                 </Row>
               </Container>
             </div>

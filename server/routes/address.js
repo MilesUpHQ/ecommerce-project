@@ -2,19 +2,22 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../utils/dbConfig");
 
-router.get("", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
+  console.log("user id", req.params.id);
   knex("address")
     .leftJoin("users", "address.user_id", "users.id")
     .leftJoin("country", "address.country_id", "country.id")
     .select(
       "address.id",
       "users.username",
+      "users.id as user_id",
       "address.street",
       "address.state",
       "address.city",
       "address.pin_code",
       "country.name as country"
     )
+    .where("users.id", req.params.id)
     .then((response) => {
       res.json(response);
     })

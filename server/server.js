@@ -28,6 +28,7 @@ const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
 const search = require("./routes/searchProducts");
 const address = require("./routes/address");
+const country = require("./routes/country");
 const cart = require("./routes/cart/cart");
 const addToCart = require("./routes/cart/addToCart");
 
@@ -44,6 +45,7 @@ app.use("/api/admin/products", products);
 app.use("/api/user/address", address);
 app.use("/api/user/address/new", address);
 app.use("/api/user/", address);
+app.use("/api/country", country);
 
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
