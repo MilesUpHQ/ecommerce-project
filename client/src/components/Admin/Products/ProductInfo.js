@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
-
+import "../css/admin-style.css";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const ProductInfo = (props) => {
   const [product, setProduct] = useState({});
   const [errormsg, setErrormsg] = useState(null);
@@ -9,6 +10,7 @@ const ProductInfo = (props) => {
     axios
       .get(`/admin/product/${props.id}`)
       .then((res) => {
+        console.log("xd",res);
         setProduct(res.data);
       })
       .catch((err) => {
@@ -30,8 +32,11 @@ const ProductInfo = (props) => {
         </nav>
         <div id="leftCol" className="a-column a-span4 dp_aib_left_column_t1">
           <div class="image-space">
-            <h1 class="pdp-title">Levis</h1>
-            <h1 class="pdp-name">Men Beige Solid Slim Fit Chino Trousers</h1>
+            <h1 class="pdp-title">{product.name}</h1>
+            <h1 class="pdp-name">{product.description}</h1>
+            <img class="rounded-circle z-depth-2" 
+            alt="75x75" src={BASE_URL+"/"+product.image_url}
+          data-holder-rendered="true"/>
           </div>
         </div>
         <div class="view-user p-5">

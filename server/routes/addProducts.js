@@ -37,8 +37,15 @@ router.post("/",upload.single("file"),(req,res)=>{
         knex("variants").insert({size:req.body.size,color:req.body.color,type:req.body.type,price: req.body.price,product_id:row[0].id})  
        .returning("variants.id")
         .then(row =>{
-          res.json(row);
-          console.log("congratulations u made it")
+          knex("variant_images").insert({image_url:req.file.path,variant_id:row[0].id})
+          .then(row=>{
+            res.json(row);
+            console.log("congratulations u made it")
+          })
+          .catch((err)=>{
+            res.status(400).send("Unable to post image");
+          })
+          
         })
         .catch((err)=>{
           res.status(400).send("Unable to Post data ");
@@ -60,10 +67,6 @@ router.post("/single", upload.single("variant_images"),  (req, res)=> {
    console.log(req.files);
    res.send("Multiple image upload sucess");
  });   
-
-
-
-
 
 router.get("/",(req,res)=>{
     knex("products") 
