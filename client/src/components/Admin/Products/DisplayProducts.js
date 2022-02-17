@@ -34,7 +34,6 @@ import "../css/pagination.css"
         setErrormsg("Sorry! Something went wrong. Please Try again");
       });
   };
-
   const deleteProduct = (id,name) => { //delproduct
     if (window.confirm(`Are you sure! Delete ${name} Product?`)) {
       axios

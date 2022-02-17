@@ -25,12 +25,13 @@ router.put("/", upload.single("file"),(req, res) => {
     })
     .returning("variants.id")
     .then((row) => {
+      console.log("deed",req.body.category)
       knex("products")
         .where("id", req.body.id)
         .update({
           name: req.body.name,
           description: req.body.description,
-          category_id: req.body.categoryid,
+          category_id: req.body.category,
         })
         .returning("products.id")
         .then((row) => {
@@ -50,7 +51,6 @@ router.put("/", upload.single("file"),(req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      // res.status(400).send("Unable to Post data ");
     });
 });
 

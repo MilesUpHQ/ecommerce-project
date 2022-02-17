@@ -16,10 +16,11 @@ export const EditForm = (props) => {
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
   const [type, setType] = useState("");
+  const [categoryName , setCategoryName]=useState("");
   const [categoryid, setCategory] = useState("");
   const [productId, setProductId] = useState("");
   const [variantId, setVariantId] = useState("");
-  
+
   const updateProduct = (e) =>{
     e.preventDefault();
     const imageData = new FormData();
@@ -39,10 +40,6 @@ export const EditForm = (props) => {
     }
     if (price == "") {
       setErrormsg("Price cannot be empty");
-      return;
-    }
-    if (description == "") {
-      setErrormsg("Description cannot be empty");
       return;
     }
     if (categoryid == "") {
@@ -72,6 +69,7 @@ export const EditForm = (props) => {
         setColor(res.data.color);
         setCategory(res.data.category);
         setType(res.data.type);
+        setCategoryName(res.data.categoryname);
         setPrice(res.data.price);
         setDescription(res.data.description);
         setProduct(res.data);
@@ -170,7 +168,7 @@ export const EditForm = (props) => {
                       name="category"
                       onChange={(e) => setCategory(e.target.value)}
                     >
-                      <option value="0">Reselect From The Following</option>
+                      <option value="0">{categoryName}</option>
                       {categories.map((category) => {
                         return (
                           <option value={category.id}>{category.name}</option>
@@ -216,7 +214,7 @@ export const EditForm = (props) => {
                   >
                     Update
                   </button>
-                  <button className="btn btn-light">Cancel</button>
+                  <button className="btn btn-light" onClick={(e)=> navigate('/admin/products')}>Cancel</button>
                 </form>
               </div>
             </div>
