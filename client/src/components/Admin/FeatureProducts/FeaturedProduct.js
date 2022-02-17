@@ -24,6 +24,7 @@ const FeaturedProduct = () => {
         name: input,
       })
       .then((res) => {
+        getFeaturedProducts();
         setIsOpen(false);
         setMessage(res.data.message);
         setTimeout(() => {
@@ -76,6 +77,10 @@ const FeaturedProduct = () => {
         }, 4000);
       });
     // ****************************featured Products**************//
+    getFeaturedProducts();
+  }, []);
+
+  function getFeaturedProducts() {
     axios
       .get("/featured_products")
       .then((res) => {
@@ -97,7 +102,7 @@ const FeaturedProduct = () => {
           setErrorMsg(null);
         }, 6000);
       });
-  }, []);
+  }
 
   return (
     <React.Fragment>
