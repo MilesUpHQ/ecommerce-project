@@ -18,6 +18,7 @@ router.get(
       .select(
         "products.name",
         "products.id",
+        "cart_items.id as cart_id",
         "cart_items.quantity",
         "variants.price",
         "variant_images.image_url",
