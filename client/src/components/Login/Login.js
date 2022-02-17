@@ -20,6 +20,10 @@ class Login extends Component {
   }
   submit(e) {
     e.preventDefault();
+    this.setState({
+      error: "",
+    });
+    e.preventDefault();
     axios
       .post("/getToken", {
         email: this.state.email,

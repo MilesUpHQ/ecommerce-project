@@ -13,7 +13,7 @@ export default function Cart() {
   const [errorMsg, setErrorMsg] = React.useState(null);
   const [total, setTotal] = React.useState(0);
 
-  useEffect(() => {
+  const getCartItems = () => {
     axios
       .get("/cart", {
         headers: {
@@ -27,7 +27,49 @@ export default function Cart() {
       .catch((err) => {
         setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
       });
+  };
+
+  useEffect(() => {
+    getCartItems();
   }, []);
+  // delete item from cart
+  const deleteItem = (id) => {
+    axios
+      .delete(`/cart/remove/${id}`, {
+        headers: {
+          Authorization: `Bearer ${getJWT()}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        getCartItems();
+      })
+      .catch((err) => {
+        setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
+      });
+  };
+  // update item in cart
+  const updateItem = (id, quantity) => {
+    axios
+      .put(`/cart/${id}`, {
+        quantity: quantity,
+      })
+      .then((res) => {
+        console.log(res);
+        setCartItems(res.data);
+      })
+      .catch((err) => {
+        setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
+      });
+  };
+  // calculate total
+  const calculateTotal = () => {
+    let total = 0;
+    cartItems.forEach((item) => {
+      total += item.price * item.quantity;
+    });
+    setTotal(total);
+  };
   return (
     <>
       <div className="px-4 px-lg-0">
@@ -73,7 +115,7 @@ export default function Cart() {
                                   <div className="ml-3 d-inline-block align-middle">
                                     <h5 className="mb-0">
                                       <a
-                                        href={`/products/${cart.product_id}`}
+                                        href={`/product/view/${cart.id}`}
                                         className="text-dark d-inline-block align-middle"
                                       >
                                         {cart.name}
@@ -92,6 +134,7 @@ export default function Cart() {
                                 <button
                                   type="button"
                                   className="btn btn-sm btn-outline-danger"
+                                  onClick={() => deleteItem(cart.cart_id)}
                                 >
                                   Remove
                                 </button>
