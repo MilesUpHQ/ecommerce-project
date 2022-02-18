@@ -4,9 +4,10 @@ const knex = require("../utils/dbConfig");
 
 router.get("/:id", (req, res) => {
     knex("products")
+      .leftJoin("product_categories","product_categories.parent_id","products.category_id")
       .leftJoin("variants", "variants.product_id", "products.id")
       .leftJoin("variant_images", "variants.id", "variant_images.variant_id")
-      .select("products.id","products.name","variants.size","variants.color",
+      .select("product_categories.name as categoryname","product_categories.id as categoryid","products.id","products.name","variants.size","variants.color",
       "variants.type", "variants.price","variants.id as variant_id","products.description","variant_images.image_url")
       .where("products.id",req.params.id)
       .then((row) => {

@@ -6,7 +6,13 @@ function deleteProduct( db,deleteProduct) {
   return db("variants")
     .delete()
     .where("product_id", deleteProduct.id)
+   // .returning("variants.id")
     .then((rows) => {
+      console.log("sxxghvgvgjhvjvvhvjhvjhvbjhvhvjhvhvs",variants.id);//this
+      db("variant_images")
+      .delete()
+      .where("variant_id",variants.id)
+      .then((rows)=>{ 
        db("products")
        .delete()
        .where("id",deleteProduct.id)
@@ -14,12 +20,17 @@ function deleteProduct( db,deleteProduct) {
          rows[0];
        })
        .catch((err)=>{
-        res.status(401).json({ error: err });
+         console.log(err);
        })
       return rows[0];
     })
+    .catch((err)=>{
+      console.log(err);
+    })
+    return rows[0];
+    })
 . catch ((err)=> {
-  res.status(401).json({ error: err });
+  console.log(err);
 })
 }
 
@@ -57,6 +68,7 @@ router.delete("/", async (req, res) => {
     await deleteProduct(knex, { id: req.query.id });
     res.json({ message: "deleted succesfully" });
   } catch (err) {
+    console.log(err);
     res.status(401).json({ error: err });
   }
 });

@@ -1874,6 +1874,22 @@
     width: 25%;
     height: 20%;
   }
+  .form-group-name   {
+    content:"*";
+    
+  }
+  .form-group-img{
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+  .form-group-cat{
+    content:"*";
+   
+  }
+  .form-group-pr{
+    content:"*";
+    
+  }
   @-moz-keyframes wiggle {
     0% {
       -webkit-transform: skewX(9deg);
