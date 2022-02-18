@@ -34,11 +34,12 @@ import "../css/pagination.css"
         setErrormsg("Sorry! Something went wrong. Please Try again");
       });
   };
-  const deleteProduct = (id,name) => { //delproduct
+  const deleteProduct = (id,variantid,name) => { //delproduct
     if (window.confirm(`Are you sure! Delete ${name} Product?`)) {
       axios
         .delete("/delete_product", { params: { id }})
         .then((res) => {
+          console.log("ooo",{params: {variantid}})
           let newProducts = [...display];
           newProducts = newProducts.filter(
             (product) => product.id !== id
@@ -50,7 +51,7 @@ import "../css/pagination.css"
         });
     }
   };
-
+ 
   return (
     <div className="main-panel">
    <div className="content-wrapper">
@@ -85,7 +86,7 @@ import "../css/pagination.css"
                    <td>
                    <a href={`/admin/products/${display.id}/view`} type="button" class="btn btn-info btn-small mr-2"><i class="fas fa-eye"></i> View</a>
                    <a href={`/admin/product/${display.id}/update`} type="button" class="btn btn-light btn-small mr-2"><i class="fas fa-edit"></i> Edit</a>
-                   <a  type="button" onClick={()=>deleteProduct(display.id , display.name)} class="btn btn-danger btn-small"><i class="fas fa-trash"></i> Delete</a>
+                   <a  type="button" onClick={()=>deleteProduct(display.id ,display.variantid, display.name)} class="btn btn-danger btn-small"><i class="fas fa-trash"></i> Delete</a>
                    </td>
                  </tr> 
                 ))}
