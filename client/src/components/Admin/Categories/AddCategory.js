@@ -10,6 +10,7 @@ const AddCategory = ({
   setInput,
   searchItem,
   setSearchItem,
+  setIsOpen
 }) => {
   const [options, setOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,18 +59,27 @@ const AddCategory = ({
             searchItem={searchItem}
             isLoading={isLoading}
             placeholder={"Choose a Parent Category..."}
+            asyncSearch={true}
+            notAsyncSearch={false}
           />
         </td>
         <td style={{ border: 0 }}>
           <button
             type="button"
             className={
-              "btn btn-primary btn-icon-text mt-1 " +
+              "btn btn-primary btn-icon-text mt-1 mr-4 " +
               `${input.length < 3 ? "disabled" : ""}`
             }
             onClick={handleFunction}
           >
             Submit
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary btn-icon-text mt-1"
+            onClick={() => setIsOpen(null)}
+          >
+            Cancel
           </button>
         </td>
       </tr>

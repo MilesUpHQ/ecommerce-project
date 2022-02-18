@@ -42,7 +42,7 @@ const Navbar = () => {
                 data-toggle="dropdown"
                 id="profileDropdown"
               >
-                <img src="/images/face28.jpg" alt="profile" />
+                {/* <img src="/images/face28.jpg" alt="profile" /> */}
               </a>
             </li>
           </ul>

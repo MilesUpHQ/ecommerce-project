@@ -6,7 +6,12 @@ const TypeAhead = ({
   setSearchItem,
   searchItem,
   isLoading,
-  placeholder
+  placeholder,
+  setSearchInput,
+  searchInput,
+  handleSearchFilter,
+  asyncSearch,
+  notAsyncSearch
 }) => {
   return (
     <AsyncTypeahead
@@ -14,11 +19,18 @@ const TypeAhead = ({
       id="async-example"
       isLoading={isLoading}
       minLength={3}
-      onSearch={handleSearch}
+      onSearch={asyncSearch && handleSearch}
       options={options}
+      onInputChange={(text, e) => {
+        notAsyncSearch && setSearchInput(text);
+        notAsyncSearch && handleSearch(text); 
+      }}
       onChange={setSearchItem}
       placeholder={placeholder}
       selected={searchItem}
+      onKeyDown={(e) =>
+        notAsyncSearch && e.key === "Enter" ? handleSearchFilter(searchInput) : ""
+      }
     />
   );
 };

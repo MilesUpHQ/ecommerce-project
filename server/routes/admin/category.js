@@ -87,7 +87,7 @@ router.get("/search-categories", async (req, res) => {
 router.post("/category", async (req, res) => {
   try {
     let newCategory = await addCategory(db, {
-      parent_id: req.body.parentCategoryId || null,
+      parent_id: req.body.searchItemId || null,
       name: req.body.categoryName,
     });
     if (newCategory.parent_id) {
@@ -107,7 +107,7 @@ router.put("/update-category", async (req, res) => {
     let newCategory = await updateCategory(db, {
       name: req.body.categoryName,
       id: req.body.categoryId,
-      parent_id: req.body.parentCategoryId,
+      parent_id: req.body.searchItemId,
     });
     if (newCategory.parent_id) {
       let parentCategory = await db("product_categories")

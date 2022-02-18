@@ -106,6 +106,7 @@ const Category = () => {
                         handleFunction={handleAddCategory}
                         searchItem={searchItem}
                         setSearchItem={setSearchItem}
+                        setIsOpen={setIsOpen}
                       />
                     </tbody>
                   </table>
