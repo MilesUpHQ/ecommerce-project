@@ -195,7 +195,7 @@ export default function Cart() {
                   <ul className="list-unstyled mb-4">
                     <li className="d-flex justify-content-between py-3 border-bottom">
                       <strong className="text-muted">Order Subtotal </strong>
-                      <strong>$0.00</strong>
+                      <strong>${cartItems[0]?.total || "0.00"}</strong>
                     </li>
 
                     <li className="d-flex justify-content-between py-3 border-bottom">
