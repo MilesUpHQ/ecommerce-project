@@ -32,6 +32,7 @@ const country = require("./routes/country");
 const cart = require("./routes/cart/cart");
 const addToCart = require("./routes/cart/addToCart");
 const removeFromCart = require("./routes/cart/removeFromCart");
+const updateQuantity = require("./routes/cart/updateQuantity");
 
 // middlewares
 app.use(express.json());
@@ -70,6 +71,7 @@ app.use("/api/admin/product/edit", editProduct);
 app.use("/api/cart", cart);
 app.use("/api/cart/add", addToCart);
 app.use("/api/cart/remove", removeFromCart);
+app.use("/api/cart/update", updateQuantity);
 
 app.use(bodyParser.json());
 passport.use(strategy);

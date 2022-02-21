@@ -51,24 +51,16 @@ export default function Cart() {
   // update item in cart
   const updateItem = (id, quantity) => {
     axios
-      .put(`/cart/${id}`, {
+      .put(`/cart/update/${id}`, {
         quantity: quantity,
       })
       .then((res) => {
         console.log(res);
-        setCartItems(res.data);
+        getCartItems();
       })
       .catch((err) => {
         setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
       });
-  };
-  // calculate total
-  const calculateTotal = () => {
-    let total = 0;
-    cartItems.forEach((item) => {
-      total += item.price * item.quantity;
-    });
-    setTotal(total);
   };
   return (
     <>
@@ -103,7 +95,7 @@ export default function Cart() {
                         </thead>
                         <tbody>
                           {cartItems.map((cart) => (
-                            <tr key={cart.id}>
+                            <tr key={cart.cart_id}>
                               <th scope="row" className="border-0">
                                 <div className="p-2">
                                   <img
@@ -127,9 +119,18 @@ export default function Cart() {
                               <td className="border-0 align-middle">
                                 <strong>${cart.price}</strong>
                               </td>
-                              <td className="border-0 align-middle">
-                                <strong>{cart.quantity}</strong>
+                              <td className="border-0 align-middle input-quantity">
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  value={cart.quantity}
+                                  onChange={(e) =>
+                                    updateItem(cart.cart_id, e.target.value)
+                                  }
+                                />
                               </td>
+                              {/* <strong>{cart.quantity}</strong>
+                              </td> */}
                               <td className="border-0 align-middle">
                                 <button
                                   type="button"
