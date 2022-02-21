@@ -67,8 +67,7 @@ const Navbar = ({
                   setSearchInput={setSearchInput}
                   searchInput={searchInput}
                   handleSearchFilter={handleSearchFilter}
-                  notAsyncSearch={true}
-                  isAsyncSearch={false}
+                  onEnterSearchItems={true}
                 />
               </div>
             </li>

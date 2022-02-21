@@ -59,8 +59,6 @@ const AddCategory = ({
             searchItem={searchItem}
             isLoading={isLoading}
             placeholder={"Choose a Parent Category..."}
-            asyncSearch={true}
-            notAsyncSearch={false}
           />
         </td>
         <td style={{ border: 0 }}>
