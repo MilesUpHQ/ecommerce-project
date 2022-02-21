@@ -14,15 +14,13 @@ const CategoryList = ({
   setCategories,
   setCurrPage,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [editId, setEditId] = useState(null);
   const [input, setInput] = useState("");
-  const [parentCategory, setParentCategory] = useState([]);
+  const [searchItem, setSearchItem] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
 
   const handleOpen = (id) => {
     setEditId(id);
-    setIsOpen(true);
   };
 
   const handleUpdateCategory = (category) => {
@@ -31,15 +29,15 @@ const CategoryList = ({
     }
 
     let id =
-      parentCategory.length !== 0
-        ? parentCategory[0].value
+      searchItem.length !== 0
+        ? searchItem[0].value
         : null;
 
     axios
       .put("/update-category", {
         categoryName: input,
         categoryId: category.id,
-        parentCategoryId: id,
+        searchItemId: id,
       })
       .then((res) => {
         setEditId(null);
@@ -127,9 +125,10 @@ const CategoryList = ({
                               handleUpdateCategory(category)
                             }
                             input={input}
-                            parentCategory={parentCategory}
-                            setParentCategory={setParentCategory}
+                            searchItem={searchItem}
+                            setSearchItem={setSearchItem}
                             setInput={setInput}
+                            setIsOpen={setEditId}
                           />
                         )}
                       </React.Fragment>

@@ -10,6 +10,9 @@ const Navbar = ({
   searchItem,
   options,
   placeholder,
+  setSearchInput,
+  searchInput,
+  handleSearchFilter
 }) => {
   // get categories from server and store in state and update in navbar
   // /categories
@@ -61,6 +64,10 @@ const Navbar = ({
                   handleSearch={handleSearch}
                   options={options}
                   placeholder={placeholder}
+                  setSearchInput={setSearchInput}
+                  searchInput={searchInput}
+                  handleSearchFilter={handleSearchFilter}
+                  onEnterSearchItems={true}
                 />
               </div>
             </li>

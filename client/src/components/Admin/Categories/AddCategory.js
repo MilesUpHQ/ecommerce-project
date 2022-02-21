@@ -10,6 +10,7 @@ const AddCategory = ({
   setInput,
   searchItem,
   setSearchItem,
+  setIsOpen
 }) => {
   const [options, setOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,12 +65,19 @@ const AddCategory = ({
           <button
             type="button"
             className={
-              "btn btn-primary btn-icon-text mt-1 " +
+              "btn btn-primary btn-icon-text mt-1 mr-4 " +
               `${input.length < 3 ? "disabled" : ""}`
             }
             onClick={handleFunction}
           >
             Submit
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary btn-icon-text mt-1"
+            onClick={() => setIsOpen(null)}
+          >
+            Cancel
           </button>
         </td>
       </tr>
