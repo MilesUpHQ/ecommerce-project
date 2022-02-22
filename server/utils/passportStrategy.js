@@ -12,6 +12,7 @@ const opts = {
 const strategy = new JWTStrategy(opts, (jwt_payload, next) => {
   db("users")
     .where({ id: jwt_payload.id })
+    .first()
     .then((user) => {
       if (user) {
         next(null, user);
