@@ -14,6 +14,7 @@ import "../css/pagination.css"
     axios
       .get("/admin/products")
       .then((res) => {
+        console.log(res.data.products);
         setdisplay(res.data.products);
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
@@ -55,6 +56,12 @@ import "../css/pagination.css"
   return (
     <div className="main-panel">
    <div className="content-wrapper">
+   <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+          integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA="
+          crossorigin="anonymous"
+        />
     <div className="contanier">
     <div class="col-lg-12 grid-margin stretch-card">
       <div class="card">
