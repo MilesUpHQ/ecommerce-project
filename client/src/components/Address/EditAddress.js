@@ -125,7 +125,9 @@ const EditAddress = () => {
               <button type="submit" className="btn btn-primary mr-2">
                 Update address
               </button>
-              <button className="btn btn-light">Cancel</button>
+              <a href="/user/address" className="btn btn-light">
+                Cancel
+              </a>
             </form>
           </div>
         </div>

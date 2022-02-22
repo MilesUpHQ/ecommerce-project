@@ -30,7 +30,7 @@ import Cart from "./components/Cart/Cart";
 import Address from "./components/Address/Address";
 import NewAddress from "./components/Address/NewAddress";
 import EditAddress from "./components/Address/EditAddress";
-import Checkout from "./components/Address/Checkout";
+import Checkout from "./components/CheckOut/Checkout";
 import Add from "./components/Cart/Add";
 
 const App = () => {

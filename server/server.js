@@ -28,11 +28,11 @@ const signup = require("./routes/signup");
 const getToken = require("./routes/getToken");
 const search = require("./routes/searchProducts");
 const address = require("./routes/address");
-const country = require("./routes/country");
 const cart = require("./routes/cart/cart");
 const addToCart = require("./routes/cart/addToCart");
 const removeFromCart = require("./routes/cart/removeFromCart");
 const updateQuantity = require("./routes/cart/updateQuantity");
+const checkout = require("./routes/checkout");
 
 // middlewares
 app.use(express.json());
@@ -46,7 +46,7 @@ app.use("/api/admin/featured_products", featuredProducts);
 app.use("/api/admin/products", products);
 app.use("/api/user/address/get", address);
 app.use("/api/user/new/address/", address);
-app.use("/api/country", country);
+app.use("/api/user/checkout", checkout);
 
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
