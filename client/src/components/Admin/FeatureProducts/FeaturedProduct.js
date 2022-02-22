@@ -158,6 +158,14 @@ const FeaturedProduct = () => {
                           >
                             Submit
                           </button>
+
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-icon-text mt-1 "
+                            onClick={() => setIsOpen(null)}
+                          >
+                            Cancel
+                          </button>
                         </td>
                       </tr>
                     </tbody>

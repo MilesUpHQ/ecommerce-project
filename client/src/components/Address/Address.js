@@ -26,7 +26,7 @@ const Address = () => {
 
   useEffect(() => {
     axios
-      .get(`/user/address/${user_id}`)
+      .get(`/user/address/get/${user_id}`)
       .then((res) => {
         if (res.data.length == 0) {
           setMessage("No address found!! Please add new one");

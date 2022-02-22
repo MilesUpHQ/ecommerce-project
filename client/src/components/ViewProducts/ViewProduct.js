@@ -14,6 +14,7 @@ const ViewProduct = () => {
   let [reviews, setReviews] = useState([]);
   let [imageUrls, setImage_url] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   let id = window.location.pathname.substring(14);
   const removeDuplicate = (array) => {
@@ -83,21 +84,11 @@ const ViewProduct = () => {
             <Container>
               <Row>
                 <Col>
-                  <Carousel>
-                    {imageUrls &&
-                      imageUrls.map((imageUrl) => {
-                        return (
-                          <Carousel.Item interval={1000}>
-                            <img
-                              className="d-block w-100"
-                              src={imageUrl}
-                              alt={product.name}
-                              className="imgSlide"
-                            />
-                          </Carousel.Item>
-                        );
-                      })}
-                  </Carousel>
+                  <Card.Img
+                    variant="top"
+                    src={BASE_URL + "/" + product.image_url}
+                    className="imgSlide"
+                  />
                 </Col>
                 <Col>
                   <Card.Body>

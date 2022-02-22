@@ -1,8 +1,10 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import axios from "../../utils/ajax-helper";
 import { useNavigate } from "react-router-dom";
 import "./address.css";
+import countryList from "react-select-country-list";
+import Select from "react-select";
 
 const EditAddress = () => {
   let [adrress, setAddress] = useState([]);
@@ -11,12 +13,16 @@ const EditAddress = () => {
   let [city, setCity] = useState(null);
   let [pin_code, setPin_code] = useState(null);
   let [state, setState] = useState(null);
-  let [country_id, setCountry_id] = useState(null);
+  let [country, setCountry] = useState(null);
   let [user_id, setUser_id] = useState(1);
-  let [countries, setCountries] = useState(null);
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
   let id = window.location.pathname.substring(14, 15);
+  const options = useMemo(() => countryList().getData(), []);
+
+  const changeHandler = (value) => {
+    setCountry(value);
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -27,7 +33,7 @@ const EditAddress = () => {
         city: city,
         pin_code: pin_code,
         state: state,
-        country_id: country_id,
+        country: country,
         user_id: user_id,
       })
       .then((res) => {
@@ -43,26 +49,13 @@ const EditAddress = () => {
   };
   useEffect(() => {
     axios
-      .get("/user/country")
-      .then((res) => {
-        if (res.data.length == 0) {
-          setMessage("no contry is available");
-        } else {
-          setCountries(res.data);
-        }
-      })
-      .catch((err) => {
-        setMessage("Sorry! Something went wrong. Please Try again", err);
-      });
-
-    axios
       .get(`/user/address/${id}`)
       .then((response) => {
         setStreet(response.data.street);
         setCity(response.data.city);
         setPin_code(response.data.pin_code);
         setState(response.data.state);
-        setCountry_id(response.data.country);
+        setCountry(response.data.country);
       })
       .catch((err) => {
         setMessage("Sorry we couldnot get address with error " + err);
@@ -123,22 +116,12 @@ const EditAddress = () => {
                   onChange={(e) => setState(e.target.value)}
                 />
               </div>
-              {countries && (
-                <div className="form-group">
-                  <label htmlFor="country">Country</label>
-                  <select
-                    value={country_id}
-                    className="form-control form-control-sm"
-                    name="country"
-                    onChange={(e) => setCountry_id(e.target.value)}
-                  >
-                    <option value="0">Select country</option>
-                    {countries.map((country) => {
-                      return <option value={country.id}>{country.name}</option>;
-                    })}
-                  </select>
-                </div>
-              )}
+              <Select
+                options={options}
+                value={country}
+                onChange={changeHandler}
+              />
+              <br />
               <button type="submit" className="btn btn-primary mr-2">
                 Update address
               </button>

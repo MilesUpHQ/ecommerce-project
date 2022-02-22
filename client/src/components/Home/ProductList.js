@@ -13,6 +13,8 @@ const ProductList = ({
   loading,
   imgArray,
 }) => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   if (loading) {
     return <h2>Loading...</h2>;
   }
@@ -24,7 +26,7 @@ const ProductList = ({
             return (
               <Col>
                 <Card className="listCard">
-                  <Carousel>
+                  {/* <Carousel>
                     {imgArray.map((image_url) => {
                       return (
                         <Carousel.Item interval={1000}>
@@ -37,7 +39,12 @@ const ProductList = ({
                         </Carousel.Item>
                       );
                     })}
-                  </Carousel>
+                  </Carousel> */}
+                  <Card.Img
+                    variant="top"
+                    src={BASE_URL + "/" + featuredProduct.image_url}
+                    className="imgSlide"
+                  />
                   <Card.Body>
                     <Card.Title className="featuredProductName">
                       {featuredProduct.name}{" "}

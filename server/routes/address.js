@@ -3,10 +3,8 @@ const router = express.Router();
 const knex = require("../utils/dbConfig");
 
 router.get("/:id", async (req, res, next) => {
-  console.log("user id", req.params.id);
   knex("address")
     .leftJoin("users", "address.user_id", "users.id")
-    .leftJoin("country", "address.country_id", "country.id")
     .select(
       "address.id",
       "users.username",
@@ -14,8 +12,8 @@ router.get("/:id", async (req, res, next) => {
       "address.street",
       "address.state",
       "address.city",
-      "address.pin_code",
-      "country.name as country"
+      "address.country",
+      "address.pin_code"
     )
     .where("users.id", req.params.id)
     .then((response) => {
@@ -26,27 +24,15 @@ router.get("/:id", async (req, res, next) => {
     });
 });
 
-//**********country **********************//
-router.get("/country", async (req, res, next) => {
-  knex("country")
-    .select("country.code", "country.name", "country.id")
-    .then((response) => {
-      res.json(response);
-    })
-    .catch((err) => {
-      res.send("error in getting country");
-    });
-});
-
 // ********* new address ******************//
-router.post("/new", async (req, res, next) => {
+router.post("", async (req, res, next) => {
   knex("address")
     .insert({
       street: req.body.street,
       city: req.body.city,
       pin_code: req.body.pin_code,
       state: req.body.state,
-      country_id: req.body.country_id,
+      country: req.body.country,
       user_id: req.body.user_id,
     })
     .then((rows) => {
@@ -54,7 +40,7 @@ router.post("/new", async (req, res, next) => {
     })
     .catch((err) => {
       res.json({
-        message: "Ooops some error in adding product!!!!!!!",
+        message: "Ooops some error in adding address!!!!!!!",
       });
     });
 });
@@ -75,15 +61,14 @@ router.delete("/:id/delete", (req, res) => {
 router.get("/:id", async (req, res, next) => {
   knex("address")
     .leftJoin("users", "address.user_id", "users.id")
-    .leftJoin("country", "address.country_id", "country.id")
     .select(
       "address.id",
       "users.username",
       "address.street",
       "address.state",
       "address.city",
-      "address.pin_code",
-      "country.name as country"
+      "address.country",
+      "address.pin_code"
     )
     .where({ "address.id": req.params.id })
     .then((response) => {
@@ -109,7 +94,7 @@ router.put("/:id/edit", (req, res, next) => {
             city: req.body.city,
             pin_code: req.body.pin_code,
             state: req.body.state,
-            country_id: req.body.country_id,
+            country: req.body.country,
             user_id: req.body.user_id,
           })
           .then((row) => {
