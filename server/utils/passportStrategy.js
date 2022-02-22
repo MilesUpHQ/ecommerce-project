@@ -2,18 +2,22 @@ const passport = require("passport");
 const passportJWT = require("passport-jwt");
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
-const User = require("../models/User");
+const db = require("../utils/dbConfig");
 
 const opts = {
-	jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-	secretOrKey: process.env.JWT_SECRET,
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET,
 };
 
 const strategy = new JWTStrategy(opts, (jwt_payload, next) => {
-	User.forge({ id: jwt_payload.id })
-		.fetch()
-		.then((res) => {
-			next(null, res);
-		});
+  db("users")
+    .where({ id: jwt_payload.id })
+    .then((user) => {
+      if (user) {
+        next(null, user);
+      } else {
+        next(null, false);
+      }
+    });
 });
 module.exports = strategy;
