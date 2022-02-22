@@ -1774,24 +1774,7 @@
       transform: scale(1, 1);
     }
   }
-  body{
-    background-color: #f8f9fa!important;
-    max-width: 8000px;
-}
-.p-4 {
-    padding: 1.5rem!important;
-    width: 3000px;
-    
-}
-.mb-0, .my-0 {
-    margin-bottom: 0!important;
-}
-.shadow-sm {
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-}    
-
-/* user-dashboard-info-box */
-.user-dashboard-info-box .candidates-list .thumb {
+  .user-dashboard-info-box .candidates-list .thumb {
     margin-right: 20px;
 }
 .user-dashboard-info-box .candidates-list .thumb img {
@@ -1841,7 +1824,7 @@
     color: #969696;
 }
 
-/* Candidate List */
+
 .candidate-list {
     background: #ffffff;
     display: -webkit-box;
@@ -1936,6 +1919,28 @@
     box-shadow: inherit;
     z-index: inherit;
 }
+.user-dashboard-info-box .candidates-list .thumb {
+  margin-right: 20px;
+}
+.shadow-smm {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+} 
+.shadow-smm {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}   
+
+  /* body{
+    background-color: #f8f9fa!important;
+    max-width: 8000px;
+}
+.p-4 {
+    padding: 1.5rem!important;
+    width: 3000px;
+    
+}
+.mb-0, .my-0 {
+    margin-bottom: 0!important;
+}
 
 .bg-white {
     background-color: #ffffff !important;
@@ -1946,13 +1951,8 @@
 .mb-0, .my-0 {
     margin-bottom: 0!important;
 }
-.shadow-sm {
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-}
 
-.user-dashboard-info-box .candidates-list .thumb {
-    margin-right: 20px;
-}
+ */
   @-webkit-keyframes pulse {
     0% {
       -webkit-transform: scale(1, 1);
