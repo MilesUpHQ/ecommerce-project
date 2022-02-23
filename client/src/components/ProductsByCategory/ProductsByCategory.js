@@ -36,6 +36,7 @@ export default function ProductsByCategory() {
   const [searchValue, setSearchValue] = React.useState(null);
   const categoryId = useParams().category;
   const [addToCart, setAddToCart] = React.useState(false);
+  const [updateNavbar, setUpdateNavbar] = React.useState(false);
   // console.log("categoryId", categoryId);
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +54,11 @@ export default function ProductsByCategory() {
 
   const handleAddToCart = (id) => {
     setAddToCart(id);
+    setUpdateNavbar(true);
+    setTimeout(() => {
+      setAddToCart(false);
+      setUpdateNavbar(false);
+    }, 2000);
   };
 
   const getPriceRanges = (data) => {
@@ -191,6 +197,7 @@ export default function ProductsByCategory() {
         placeholder={"Search for products"}
         setSearchInput={setSearchInput}
         searchInput={searchInput}
+        updateNavbar={updateNavbar}
       />
       {/* <h1>Products By Category</h1> */}
 
