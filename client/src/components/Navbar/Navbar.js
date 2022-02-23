@@ -3,7 +3,7 @@ import "./pagination-style.css";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import axios from "../../utils/ajax-helper";
 import TypeAhead from "../Admin/Categories/TypeAhead";
-
+import { getJWT } from "../../utils/jwt";
 const Navbar = ({
   handleSearch,
   setSearchItem,
@@ -12,12 +12,31 @@ const Navbar = ({
   placeholder,
   setSearchInput,
   searchInput,
-  handleSearchFilter
+  handleSearchFilter,
+  updateNavbar,
 }) => {
   // get categories from server and store in state and update in navbar
   // /categories
   const [categories, setCategories] = React.useState([]);
   const [errorMsg, setErrorMsg] = React.useState(null);
+  const [cartPrice, setCartPrice] = React.useState(0);
+  const [cartItems, setCartItems] = React.useState(0);
+
+  const updateCartDetails = () => {
+    axios
+      .get("/cart", {
+        headers: {
+          Authorization: `Bearer ${getJWT()}`,
+        },
+      })
+      .then((res) => {
+        setCartItems(res.data.length);
+        setCartPrice(res.data[0]?.total);
+      })
+      .catch((err) => {
+        setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
+      });
+  };
 
   useEffect(() => {
     axios
@@ -31,9 +50,16 @@ const Navbar = ({
       });
   }, []);
 
+  useEffect(() => {
+    updateCartDetails();
+  }, [updateNavbar]);
+
   return (
     <>
-      <nav className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"style={{position: 'sticky'}}>
+      <nav
+        className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"
+        style={{ position: "sticky" }}
+      >
         <div className="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul className="navbar-nav mr-lg-2">
             <li className="nav-item nav-search d-none d-lg-block">
@@ -80,7 +106,8 @@ const Navbar = ({
             </li>
             <li className="nav-item nav-profile dropdown">
               <a href="/cart">
-                <FaShoppingCart className="navBarIcon" />
+                <FaShoppingCart className="navBarIcon" />({cartItems}) ${""}
+                {cartPrice}
               </a>
             </li>
             <li className="nav-item ">
