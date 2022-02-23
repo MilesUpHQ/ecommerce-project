@@ -2,5 +2,4 @@ client/node_modules
 server/node_modules
 
 server/.DS_Store
-server/images
 .DS_Store
