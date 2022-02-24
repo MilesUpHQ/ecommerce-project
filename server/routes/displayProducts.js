@@ -48,7 +48,7 @@ router.get("/", async (req, res) => {
     .select(
       "products.id",
       "products.name",
-      "products.description",
+      "products.description as description",
       "variants.id as variantid",
       "variants.price"
     )
@@ -68,6 +68,7 @@ router.get("/", async (req, res) => {
         }
       }
       let products = response.data;
+      console.log("ededde",products);
       res.json({ products, currPage, lastPage, totalPages });
     })
     .catch((err) => {

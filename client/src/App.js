@@ -21,6 +21,7 @@ import AddProducts from "./components/Admin/Products/AddProducts";
 import { ProductLayout } from "./components/Admin/Products/ProductLayout";
 import { ProductView } from "./components/Admin/Products/ProductView";
 import { User } from "./components/Admin/Products/User";
+import { UserView } from "./components/Admin/Products/UserView";
 import Navbar from "./components/Navbar/Navbar";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
 import FeaturedProductsList from "./components/Home/ProductList";
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
         <Route path="/admin/products/:id/view" element={<ProductView />} />
+        <Route path="/admin/user/:id/view" element={<UserView />}/>
         <Route path="/admin/product/:id/update" element={<Edit />} />
         <Route path="/admin/user" element={<User />}/>
         <Route path="/cart" element={<Cart />} />
