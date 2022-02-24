@@ -10,7 +10,6 @@ const ProductInfo = (props) => {
     axios
       .get(`/admin/product/${props.id}`)
       .then((res) => {
-        console.log("xd",res);
         setProduct(res.data);
       })
       .catch((err) => {

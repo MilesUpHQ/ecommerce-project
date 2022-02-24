@@ -44,7 +44,6 @@ const UserList = ({}) => {
       axios
         .delete("/delete_user", { params: { id }})
         .then((res) => {
-          console.log("ooo",{params: {id}});
           let newProducts = [...display];
           newProducts = newProducts.filter(
             (product) => product.id !== id

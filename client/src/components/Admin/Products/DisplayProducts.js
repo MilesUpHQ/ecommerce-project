@@ -40,7 +40,6 @@ import "../css/pagination.css"
       axios
         .delete("/delete_product", { params: { id }})
         .then((res) => {
-          console.log("ooo",{params: {variantid}})
           let newProducts = [...display];
           newProducts = newProducts.filter(
             (product) => product.id !== id
