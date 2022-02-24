@@ -4,7 +4,7 @@ const knex = require("../utils/dbConfig");
 
 function deleteUser(db, product) {
     db("users")
-      .select("users.id")
+      .del("users.id")
       .where("id", parseInt(product.id))
       .then((rows) => {
             return rows[0];
