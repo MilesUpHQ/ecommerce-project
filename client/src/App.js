@@ -32,7 +32,6 @@ import Address from "./components/Address/Address";
 import NewAddress from "./components/Address/NewAddress";
 import EditAddress from "./components/Address/EditAddress";
 import Checkout from "./components/Address/Checkout";
-import Add from "./components/Cart/Add";
 
 const App = () => {
   return (
@@ -62,7 +61,6 @@ const App = () => {
         <Route path="/user/address/:id/edit" element={<EditAddress />} />
         <Route path="/checkout/:id" element={<Checkout />} />
 
-        <Route path="/cart/add/:id" element={<Add />} />
         <Route
           exact
           path="/admin"
