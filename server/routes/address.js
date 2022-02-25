@@ -21,10 +21,10 @@ router.get("/:id", async (req, res, next) => {
     .where("users.id", req.params.id)
     .then((response) => {
       res.json(response);
+    })
+    .catch((err) => {
+      res.send("error in getting address");
     });
-  // .catch((err) => {
-  //   res.send("error in getting address");
-  // });
 });
 
 // ********* new address ******************//
@@ -43,12 +43,12 @@ router.post("", async (req, res, next) => {
     })
     .then((rows) => {
       res.json({ message: "sucessfully added !!" });
+    })
+    .catch((err) => {
+      res.json({
+        message: "Ooops some error in adding address!!!!!!!",
+      });
     });
-  // .catch((err) => {
-  //   res.json({
-  //     message: "Ooops some error in adding address!!!!!!!",
-  //   });
-  // });
 });
 
 // ******************delete address******************//

@@ -32,7 +32,7 @@ const CreateAddress = () => {
   };
   let submitHandler;
   let id = location.pathname.slice(14);
-  if (location.pathname == "/user/address/new") {
+  if (location.pathname == "/user/address/null") {
     submitHandler = async (e) => {
       e.preventDefault();
       axios
@@ -54,7 +54,7 @@ const CreateAddress = () => {
           setMessage(
             "Oppsie! Something went wrong. Please try entering valid datas"
           );
-          navigate("/user/address/new");
+          navigate("/user/address/null");
         });
     };
   }
