@@ -6,6 +6,7 @@ import "./ProductsByCategory.css";
 import { FaHeart } from "react-icons/fa";
 import Navbar from "../Navbar/Navbar";
 import "bootstrap/dist/css/bootstrap.css";
+import Add from "../Cart/Add";
 
 import {
   Card,
@@ -34,6 +35,8 @@ export default function ProductsByCategory() {
   const [showFilters, setShowFilters] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState(null);
   const categoryId = useParams().category;
+  const [addToCart, setAddToCart] = React.useState(false);
+  const [updateNavbar, setUpdateNavbar] = React.useState(false);
   // console.log("categoryId", categoryId);
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +51,15 @@ export default function ProductsByCategory() {
     };
     fetchData();
   }, [categoryId]);
+
+  const handleAddToCart = (id) => {
+    setAddToCart(id);
+    setUpdateNavbar(true);
+    setTimeout(() => {
+      setAddToCart(false);
+      setUpdateNavbar(false);
+    }, 2000);
+  };
 
   const getPriceRanges = (data) => {
     let minPrice = Number.POSITIVE_INFINITY;
@@ -175,6 +187,7 @@ export default function ProductsByCategory() {
 
   return (
     <>
+      {addToCart ? <Add id={addToCart} /> : null}
       <Navbar
         handleSearch={handleSearch}
         handleSearchFilter={handleSearchFilter}
@@ -184,6 +197,7 @@ export default function ProductsByCategory() {
         placeholder={"Search for products"}
         setSearchInput={setSearchInput}
         searchInput={searchInput}
+        updateNavbar={updateNavbar}
       />
       {/* <h1>Products By Category</h1> */}
 
@@ -360,7 +374,7 @@ export default function ProductsByCategory() {
                       <Button
                         className="cartButton"
                         variant="primary"
-                        href={`/cart/add/${product.variant_id}`}
+                        onClick={() => handleAddToCart(product.id)}
                       >
                         Add to cart
                       </Button>

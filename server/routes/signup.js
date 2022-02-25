@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
-const User = require("../models/User");
 const db = require("../utils/dbConfig");
-const bookshelf = require("bookshelf")(db);
-const securePassword = require("bookshelf-secure-password");
-bookshelf.plugin(securePassword);
+const bcrypt = require("bcrypt");
 
 router.post(
   "/",
@@ -40,15 +37,14 @@ router.post(
                 });
                 return;
               } else {
-                const user = new User({
-                  email: req.body.email,
-                  password: req.body.password,
-                  username: req.body.username,
-                  first_name: req.body.first_name,
-                  last_name: req.body.last_name,
-                });
-                user
-                  .save()
+                db("users")
+                  .insert({
+                    email: req.body.email,
+                    password_digest: bcrypt.hashSync(req.body.password, 10),
+                    username: req.body.username,
+                    first_name: req.body.first_name,
+                    last_name: req.body.last_name,
+                  })
                   .then((user) => {
                     res.status(201).json(user);
                   })
