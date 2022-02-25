@@ -36,6 +36,9 @@ exports.up = function (knex) {
       // })
       .createTable("address", (table) => {
         table.increments("id").primary();
+        table.string("name").notNullable();
+        table.string("email").notNullable();
+        table.string("phone").checkRegex("[0-9]{10}");
         table.string("street").notNullable();
         table.string("city").notNullable();
         table.string("state").notNullable();

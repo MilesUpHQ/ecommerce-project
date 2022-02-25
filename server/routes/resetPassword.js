@@ -3,14 +3,7 @@ const router = express.Router();
 const knex = require("../utils/dbConfig");
 const bcrypt = require("bcryptjs");
 const transporter = require("../utils/nodemailer");
-const API_KEY = process.env.API_KEY;
-const DOMAIN = process.env.DOMAIN_NAME;
-
-const formData = require("form-data");
-const Mailgun = require("mailgun.js");
-
-const mailgun = new Mailgun(formData);
-const client = mailgun.client({ username: "api", key: API_KEY });
+const client = require("../utils/mailGun");
 
 router.put("/", async (req, res, next) => {
   knex("users")

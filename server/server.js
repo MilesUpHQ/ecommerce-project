@@ -5,9 +5,6 @@ const cors = require("cors");
 const db = require("./utils/dbConfig");
 const port = process.env.NODE_PORT;
 const passport = require("passport");
-const bookshelf = require("bookshelf")(db);
-const securePassword = require("bookshelf-secure-password");
-bookshelf.plugin(securePassword);
 const bodyParser = require("body-parser");
 const strategy = require("./utils/passportStrategy");
 dotenv.config();
@@ -45,6 +42,7 @@ app.use("/api/featured_products", featuredProducts);
 app.use("/api/admin/featured_products", featuredProducts);
 app.use("/api/admin/products", products);
 app.use("/api/user/address/get", address);
+app.use("/api/user/address/", address);
 app.use("/api/user/new/address/", address);
 app.use("/api/user/checkout", checkout);
 

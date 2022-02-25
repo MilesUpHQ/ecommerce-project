@@ -1,35 +1,36 @@
 import axios from "../../utils/ajax-helper";
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
 import { getJWT } from "../../utils/jwt";
-export default function Add() {
+import toast, { Toaster } from "react-hot-toast";
+
+export default function Add({ id, quantity }) {
   // add product to cart in server and redirect to cart component
-  const id = useParams().id;
-  const [errorMsg, setErrorMsg] = React.useState(null);
-  console.log("id", id);
-  axios
-    .get(`/cart/add/${id}`, {
-      headers: {
-        authorization: `Bearer ${getJWT()}`,
-      },
-    })
-    .then((res) => {
-      console.log(res);
-      window.location.href = "/cart";
-    })
-    .catch((err) => {
-      console.log(err);
-      setErrorMsg("Sorry! Something went wrong. Please Try again");
-    });
+  if (!quantity) {
+    quantity = 1;
+  }
+  useEffect(() => {
+    console.log("id", id);
+    console.log("JWt", getJWT());
+    axios
+      .get(`/cart/add/${id}`, {
+        headers: {
+          authorization: `Bearer ${getJWT()}`,
+        },
+        body: {
+          quantity: quantity,
+        },
+      })
+      .then((res) => {
+        toast.success("Iteam added to cart");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Sorry! Something went wrong. Please Try again " + err);
+      });
+  }, [id, quantity]);
   return (
     <div>
-      {errorMsg ? (
-        <div>{errorMsg}</div>
-      ) : (
-        <div>
-          <h1>Adding........</h1>
-        </div>
-      )}
+      <Toaster />
     </div>
   );
 }

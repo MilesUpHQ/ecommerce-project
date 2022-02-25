@@ -9,6 +9,9 @@ router.get("/:id", async (req, res, next) => {
       "address.id",
       "users.username",
       "users.id as user_id",
+      "address.name",
+      "address.phone",
+      "address.email",
       "address.street",
       "address.state",
       "address.city",
@@ -28,6 +31,9 @@ router.get("/:id", async (req, res, next) => {
 router.post("", async (req, res, next) => {
   knex("address")
     .insert({
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
       street: req.body.street,
       city: req.body.city,
       pin_code: req.body.pin_code,
@@ -58,12 +64,15 @@ router.delete("/:id/delete", (req, res) => {
     });
 });
 //******************************get by id*********************** */
-router.get("/:id", async (req, res, next) => {
+router.get("/:id/getById", async (req, res, next) => {
   knex("address")
     .leftJoin("users", "address.user_id", "users.id")
     .select(
       "address.id",
       "users.username",
+      "address.name",
+      "address.email",
+      "address.phone",
       "address.street",
       "address.state",
       "address.city",
@@ -90,6 +99,9 @@ router.put("/:id/edit", (req, res, next) => {
         knex("address")
           .where("id", req.body.id)
           .update({
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
             street: req.body.street,
             city: req.body.city,
             pin_code: req.body.pin_code,
