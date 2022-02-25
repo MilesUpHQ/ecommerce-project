@@ -1,5 +1,5 @@
 import React from "react";
-import './css/admin-style.css'
+import "./css/admin-style.css";
 
 const Navbar = () => {
   return (
@@ -36,14 +36,7 @@ const Navbar = () => {
           </ul>
           <ul className="navbar-nav navbar-nav-right">
             <li className="nav-item nav-profile dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                data-toggle="dropdown"
-                id="profileDropdown"
-              >
-                {/* <img src="/images/face28.jpg" alt="profile" /> */}
-              </a>
+              <a href="/">Home</a>
             </li>
           </ul>
           <button

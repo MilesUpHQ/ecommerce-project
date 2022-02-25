@@ -15,6 +15,7 @@ const Home = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [message, setMessage] = useState(null);
   const [imgArray, setimgArray] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const handlePagination = (page) => {
     axios
@@ -67,7 +68,7 @@ const Home = () => {
                     <Carousel.Item interval={1000}>
                       <img
                         className="d-block w-100"
-                        src={imageUrl}
+                        src={BASE_URL + "/" + imageUrl}
                         className="imageSlide"
                       />
                     </Carousel.Item>

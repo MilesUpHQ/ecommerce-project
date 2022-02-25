@@ -34,12 +34,18 @@ router.get("", async (req, res, next) => {
   knex("featured_products")
     .leftJoin("products", "featured_products.product_id", "products.id")
     .leftJoin("variants", "variants.product_id", "products.id")
+    .leftJoin("variant_images", "variants.id", "variant_images.variant_id")
     .select(
       "featured_products.id",
       "products.name",
       "products.id as product_id",
       "products.description",
-      "variants.price"
+      "variants.color",
+      "variants.size",
+      "variants.type",
+      "variants.price",
+      "variants.id as variant_id",
+      "variant_images.image_url"
     )
     .whereNotNull("variants.price")
     .orderBy("products.updated_at", "desc")
@@ -147,11 +153,17 @@ router.get("/:id", async (req, res, next) => {
   knex("featured_products")
     .leftJoin("products", "featured_products.product_id", "products.id")
     .leftJoin("variants", "variants.product_id", "products.id")
+    .leftJoin("variant_images", "variants.id", "variant_images.variant_id")
     .select(
       "products.name",
       "products.id as product_id",
       "products.description",
-      "variants.price"
+      "variants.color",
+      "variants.size",
+      "variants.type",
+      "variants.price",
+      "variants.id as variant_id",
+      "variant_images.image_url"
     )
     .where({ "products.id": req.params.id })
     .then((response) => {

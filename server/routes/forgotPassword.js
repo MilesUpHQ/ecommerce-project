@@ -4,6 +4,8 @@ const knex = require("../utils/dbConfig");
 const jwt = require("jsonwebtoken");
 const transporter = require("../utils/nodemailer");
 
+const client = require("../utils/mailGun");
+
 router.post("", (req, res) => {
   if (req.body.email == "") {
     res.status(400).send("email required");
@@ -18,7 +20,7 @@ router.post("", (req, res) => {
           expiresIn: "1hr",
         });
 
-        const mailOptions = {
+        const messageData = {
           from: process.env.GMAIL_AUTH_USER,
           to: req.body.email,
           subject: "LINK TO RESET PASSWORD",
@@ -27,13 +29,17 @@ router.post("", (req, res) => {
             `${req.body.link}/reset_password/${token}\n\n` +
             "If you did not requested,Please ignore this one ,JOLLY\n",
         };
-        transporter.sendMail(mailOptions, function (err, response) {
-          if (err) {
-            res.status(505).json(err);
-          } else {
+
+        client.messages
+          .create(DOMAIN, messageData)
+          .then((res) => {
             res.status(200).json("recovery email sent");
-          }
-        });
+            console.log(res);
+          })
+          .catch((err) => {
+            res.status(505).json(err);
+            console.error(err);
+          });
       }
     });
 });

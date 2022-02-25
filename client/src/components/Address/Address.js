@@ -26,7 +26,7 @@ const Address = () => {
 
   useEffect(() => {
     axios
-      .get(`/user/address/${user_id}`)
+      .get(`/user/address/get/${user_id}`)
       .then((res) => {
         if (res.data.length == 0) {
           setMessage("No address found!! Please add new one");
@@ -87,7 +87,7 @@ const Address = () => {
         <div className="content-wrapper">
           <div className="container">
             <a
-              href="/user/address/new"
+              href="/user/address/null"
               id="newAddress"
               className="btn btn-dark rounded-pill py-2 btn-block "
             >
@@ -108,7 +108,13 @@ const Address = () => {
                           onClick={() => clicked(address.id)}
                         >
                           <Card.Text className="bolderText">
-                            {address.username}
+                            {address.name}
+                          </Card.Text>
+                          <Card.Text className="bolderText">
+                            {address.email}
+                          </Card.Text>
+                          <Card.Text className="bolderText">
+                            {address.phone}
                           </Card.Text>
                           <Card.Text>{address.street}</Card.Text>
                           <Card.Text className="bolderText">
@@ -122,7 +128,7 @@ const Address = () => {
                           >
                             <Button variant="light">
                               {" "}
-                              <a href={`/user/address/${address.id}/edit`}>
+                              <a href={`/user/address/${address.id}`}>
                                 <BiEdit />
                               </a>
                             </Button>{" "}
