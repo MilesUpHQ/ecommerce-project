@@ -4,14 +4,7 @@ const knex = require("../utils/dbConfig");
 const jwt = require("jsonwebtoken");
 const transporter = require("../utils/nodemailer");
 
-const API_KEY = process.env.API_KEY;
-const DOMAIN = process.env.DOMAIN_NAME;
-
-const formData = require("form-data");
-const Mailgun = require("mailgun.js");
-
-const mailgun = new Mailgun(formData);
-const client = mailgun.client({ username: "api", key: API_KEY });
+const client = require("../utils/mailGun");
 
 router.post("", (req, res) => {
   if (req.body.email == "") {

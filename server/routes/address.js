@@ -9,6 +9,9 @@ router.get("/:id", async (req, res, next) => {
       "address.id",
       "users.username",
       "users.id as user_id",
+      "address.name",
+      "address.phone",
+      "address.email",
       "address.street",
       "address.state",
       "address.city",
@@ -18,16 +21,19 @@ router.get("/:id", async (req, res, next) => {
     .where("users.id", req.params.id)
     .then((response) => {
       res.json(response);
-    })
-    .catch((err) => {
-      res.send("error in getting address");
     });
+  // .catch((err) => {
+  //   res.send("error in getting address");
+  // });
 });
 
 // ********* new address ******************//
 router.post("", async (req, res, next) => {
   knex("address")
     .insert({
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
       street: req.body.street,
       city: req.body.city,
       pin_code: req.body.pin_code,
@@ -37,12 +43,12 @@ router.post("", async (req, res, next) => {
     })
     .then((rows) => {
       res.json({ message: "sucessfully added !!" });
-    })
-    .catch((err) => {
-      res.json({
-        message: "Ooops some error in adding address!!!!!!!",
-      });
     });
+  // .catch((err) => {
+  //   res.json({
+  //     message: "Ooops some error in adding address!!!!!!!",
+  //   });
+  // });
 });
 
 // ******************delete address******************//
@@ -58,12 +64,15 @@ router.delete("/:id/delete", (req, res) => {
     });
 });
 //******************************get by id*********************** */
-router.get("/:id", async (req, res, next) => {
+router.get("/:id/getById", async (req, res, next) => {
   knex("address")
     .leftJoin("users", "address.user_id", "users.id")
     .select(
       "address.id",
       "users.username",
+      "address.name",
+      "address.email",
+      "address.phone",
       "address.street",
       "address.state",
       "address.city",
@@ -90,6 +99,9 @@ router.put("/:id/edit", (req, res, next) => {
         knex("address")
           .where("id", req.body.id)
           .update({
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
             street: req.body.street,
             city: req.body.city,
             pin_code: req.body.pin_code,

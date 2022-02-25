@@ -108,7 +108,13 @@ const Address = () => {
                           onClick={() => clicked(address.id)}
                         >
                           <Card.Text className="bolderText">
-                            {address.username}
+                            {address.name}
+                          </Card.Text>
+                          <Card.Text className="bolderText">
+                            {address.email}
+                          </Card.Text>
+                          <Card.Text className="bolderText">
+                            {address.phone}
                           </Card.Text>
                           <Card.Text>{address.street}</Card.Text>
                           <Card.Text className="bolderText">
@@ -122,7 +128,7 @@ const Address = () => {
                           >
                             <Button variant="light">
                               {" "}
-                              <a href={`/user/address/${address.id}/edit`}>
+                              <a href={`/user/address/${address.id}`}>
                                 <BiEdit />
                               </a>
                             </Button>{" "}

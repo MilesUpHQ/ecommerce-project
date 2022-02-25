@@ -28,8 +28,7 @@ import FeaturedProductLayout from "./components/Admin/FeatureProducts/FeaturedPr
 import { Edit } from "./components/Admin/Products/Edit";
 import Cart from "./components/Cart/Cart";
 import Address from "./components/Address/Address";
-import NewAddress from "./components/Address/NewAddress";
-import EditAddress from "./components/Address/EditAddress";
+import CreateAddress from "./components/Address/CreateAddress";
 import Checkout from "./components/Address/Checkout";
 import Add from "./components/Cart/Add";
 
@@ -55,8 +54,7 @@ const App = () => {
         <Route path="/admin/product/:id/update" element={<Edit />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/user/address" element={<Address />} />
-        <Route path="/user/address/new" element={<NewAddress />} />
-        <Route path="/user/address/:id/edit" element={<EditAddress />} />
+        <Route path="/user/address/:id" element={<CreateAddress />} />
         <Route path="/checkout/:id" element={<Checkout />} />
 
         <Route path="/cart/add/:id" element={<Add />} />

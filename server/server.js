@@ -45,6 +45,7 @@ app.use("/api/featured_products", featuredProducts);
 app.use("/api/admin/featured_products", featuredProducts);
 app.use("/api/admin/products", products);
 app.use("/api/user/address/get", address);
+app.use("/api/user/address/", address);
 app.use("/api/user/new/address/", address);
 app.use("/api/country", country);
 
