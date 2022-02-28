@@ -18,10 +18,9 @@ import ResetPassword from "./components/ResetPassword/ResetPassword";
 import FeaturedProducts from "./components/Home/Home";
 import ViewProduct from "./components/ViewProducts/ViewProduct";
 import AddProducts from "./components/Admin/Products/AddProducts";
+import DisplayProducts from "./components/Admin/Products/DisplayProducts";
 import { ProductLayout } from "./components/Admin/Products/ProductLayout";
 import { ProductView } from "./components/Admin/Products/ProductView";
-import { User } from "./components/Admin/Products/User";
-import { UserView } from "./components/Admin/Products/UserView";
 import Navbar from "./components/Navbar/Navbar";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
 import FeaturedProductsList from "./components/Home/ProductList";
@@ -30,9 +29,13 @@ import { Edit } from "./components/Admin/Products/Edit";
 import Cart from "./components/Cart/Cart";
 import Address from "./components/Address/Address";
 import CreateAddress from "./components/Address/CreateAddress";
+<<<<<<< HEAD
+import Checkout from "./components/Address/Checkout";
+import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
+=======
 import Checkout from "./components/CheckOut/Checkout";
 import Add from "./components/Cart/Add";
-import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
+>>>>>>> f3b487afbb6402560865af4828ad053747daf3e3
 const App = () => {
   return (
     <Router>
@@ -52,9 +55,7 @@ const App = () => {
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
         <Route path="/admin/products/:id/view" element={<ProductView />} />
-        <Route path="/admin/user/:id/view" element={<UserView />}/>
         <Route path="/admin/product/:id/update" element={<Edit />} />
-        <Route path="/admin/user" element={<User />}/>
         <Route path="/cart" element={<Cart />} />
         <Route path="/user/address" element={<Address />} />
         <Route path="/user/address/:id" element={<CreateAddress />} />
