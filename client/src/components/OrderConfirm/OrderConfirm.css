@@ -7,6 +7,7 @@ body {
 
 .card {
   border: none;
+  width: auto;
 }
 
 .logo {
