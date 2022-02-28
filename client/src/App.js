@@ -29,8 +29,8 @@ import { Edit } from "./components/Admin/Products/Edit";
 import Cart from "./components/Cart/Cart";
 import Address from "./components/Address/Address";
 import CreateAddress from "./components/Address/CreateAddress";
-import Checkout from "./components/Address/Checkout";
-
+import Checkout from "./components/CheckOut/Checkout";
+import Add from "./components/Cart/Add";
 const App = () => {
   return (
     <Router>
