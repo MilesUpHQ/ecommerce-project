@@ -14,6 +14,7 @@ import "../css/pagination.css"
     axios
       .get("/admin/products")
       .then((res) => {
+        console.log(res.data.products);
         setdisplay(res.data.products);
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
@@ -39,7 +40,6 @@ import "../css/pagination.css"
       axios
         .delete("/delete_product", { params: { id }})
         .then((res) => {
-          console.log("ooo",{params: {variantid}})
           let newProducts = [...display];
           newProducts = newProducts.filter(
             (product) => product.id !== id
