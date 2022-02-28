@@ -1,84 +1,78 @@
 import React from "react";
-
-export default function OrderTotal(
-  Subtotal,
-  ShippingFee,
-  TaxFee,
-  Discount,
-  Total
-) {
+import "../OrderConfirm.css";
+export default function OrderTotal(props) {
   return (
-    <div class="row d-flex justify-content-end">
-      <div class="col-md-5">
-        <table class="table table-borderless">
-          <tbody class="totals">
+    <div className="row d-flex justify-content-end">
+      <div className="col-md-5">
+        <table className="table table-borderless">
+          <tbody className="totals">
             <tr>
               <td>
-                <div class="text-left">
+                <div className="text-left">
                   {" "}
-                  <span class="text-muted">Subtotal</span>{" "}
+                  <span className="text-muted">Subtotal</span>{" "}
                 </div>
               </td>
               <td>
-                <div class="text-right">
+                <div className="text-right">
                   {" "}
-                  <span>{Subtotal}</span>{" "}
+                  <span>${props.Subtotal}</span>{" "}
                 </div>
               </td>
             </tr>
             <tr>
               <td>
-                <div class="text-left">
+                <div className="text-left">
                   {" "}
-                  <span class="text-muted">Shipping Fee</span>{" "}
+                  <span className="text-muted">Shipping Fee</span>{" "}
                 </div>
               </td>
               <td>
-                <div class="text-right">
+                <div className="text-right">
                   {" "}
-                  <span>{ShippingFee}</span>{" "}
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="text-left">
-                  {" "}
-                  <span class="text-muted">Tax Fee</span>{" "}
-                </div>
-              </td>
-              <td>
-                <div class="text-right">
-                  {" "}
-                  <span>{TaxFee}</span>{" "}
+                  <span>${props.ShippingFee}</span>{" "}
                 </div>
               </td>
             </tr>
             <tr>
               <td>
-                <div class="text-left">
+                <div className="text-left">
                   {" "}
-                  <span class="text-muted">Discount</span>{" "}
+                  <span className="text-muted">Tax Fee</span>{" "}
                 </div>
               </td>
               <td>
-                <div class="text-right">
+                <div className="text-right">
                   {" "}
-                  <span class="text-success">${Discount}</span>{" "}
+                  <span>${props.TaxFee}</span>{" "}
                 </div>
               </td>
             </tr>
-            <tr class="border-top border-bottom">
+            <tr>
               <td>
-                <div class="text-left">
+                <div className="text-left">
                   {" "}
-                  <span class="font-weight-bold">Subtotal</span>{" "}
+                  <span className="text-muted">Discount</span>{" "}
                 </div>
               </td>
               <td>
-                <div class="text-right">
+                <div className="text-right">
                   {" "}
-                  <span class="font-weight-bold">${Total}</span>{" "}
+                  <span className="text-success">${props.Discount}</span>{" "}
+                </div>
+              </td>
+            </tr>
+            <tr className="border-top border-bottom">
+              <td>
+                <div className="text-left">
+                  {" "}
+                  <span className="font-weight-bold">Subtotal</span>{" "}
+                </div>
+              </td>
+              <td>
+                <div className="text-right">
+                  {" "}
+                  <span className="font-weight-bold">${props.Total}</span>{" "}
                 </div>
               </td>
             </tr>

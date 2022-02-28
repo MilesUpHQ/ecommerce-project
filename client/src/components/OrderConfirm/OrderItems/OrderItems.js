@@ -1,9 +1,10 @@
 import React from "react";
+import "../OrderConfirm.css";
 
 export default function OrderItems(Items) {
   return (
-    <div class="product border-bottom table-responsive">
-      <table class="table table-borderless">
+    <div className="product border-bottom table-responsive">
+      <table className="table table-borderless">
         <tbody>
           <tr>
             <td width="20%">
@@ -12,16 +13,17 @@ export default function OrderItems(Items) {
             </td>
             <td width="60%">
               {" "}
-              <span class="font-weight-bold">Men's Sports cap</span>
-              <div class="product-qty">
+              <span className="font-weight-bold">Men's Sports cap</span>
+              <div className="product-qty">
                 {" "}
-                <span class="d-block">Quantity:1</span> <span>Color:Dark</span>{" "}
+                <span className="d-block">Quantity:1</span>{" "}
+                <span>Color:Dark</span>{" "}
               </div>
             </td>
             <td width="20%">
-              <div class="text-right">
+              <div className="text-right">
                 {" "}
-                <span class="font-weight-bold">$67.50</span>{" "}
+                <span className="font-weight-bold">$67.50</span>{" "}
               </div>
             </td>
           </tr>
@@ -32,17 +34,17 @@ export default function OrderItems(Items) {
             </td>
             <td width="60%">
               {" "}
-              <span class="font-weight-bold">Men's Collar T-shirt</span>
-              <div class="product-qty">
+              <span className="font-weight-bold">Men's Collar T-shirt</span>
+              <div className="product-qty">
                 {" "}
-                <span class="d-block">Quantity:1</span>{" "}
+                <span className="d-block">Quantity:1</span>{" "}
                 <span>Color:Orange</span>{" "}
               </div>
             </td>
             <td width="20%">
-              <div class="text-right">
+              <div className="text-right">
                 {" "}
-                <span class="font-weight-bold">$77.50</span>{" "}
+                <span className="font-weight-bold">$77.50</span>{" "}
               </div>
             </td>
           </tr>
