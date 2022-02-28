@@ -29,9 +29,13 @@ import { Edit } from "./components/Admin/Products/Edit";
 import Cart from "./components/Cart/Cart";
 import Address from "./components/Address/Address";
 import CreateAddress from "./components/Address/CreateAddress";
+<<<<<<< HEAD
+import Checkout from "./components/Address/Checkout";
+import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
+=======
 import Checkout from "./components/CheckOut/Checkout";
 import Add from "./components/Cart/Add";
-import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
+>>>>>>> f3b487afbb6402560865af4828ad053747daf3e3
 const App = () => {
   return (
     <Router>
