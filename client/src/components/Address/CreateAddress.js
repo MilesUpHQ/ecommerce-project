@@ -59,7 +59,7 @@ const CreateAddress = () => {
         });
     };
   }
-  if (location.pathname == `/user/address/${id}`) {
+  if (!(location.pathname == "/user/address/null")) {
     submitHandler = async (e) => {
       e.preventDefault();
       axios
@@ -88,7 +88,7 @@ const CreateAddress = () => {
   }
 
   useEffect(() => {
-    if (location.pathname == `/user/address/${id}`) {
+    if (!(location.pathname == "/user/address/null")) {
       axios
         .get(`/user/address/${id}/getById`)
         .then((response) => {
