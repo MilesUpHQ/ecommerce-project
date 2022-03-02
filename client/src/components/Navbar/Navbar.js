@@ -75,27 +75,17 @@ const Navbar = ({
               </li>
             ))}
             <li className="nav-item nav-search d-none d-lg-block">
-              <div className="input-group">
-                <div
-                  className="input-group-prepend hover-cursor"
-                  id="navbar-search-icon"
-                >
-                  <span className="input-group-text" id="search">
-                    <i className="icon-search"></i>
-                  </span>
-                </div>
-                <TypeAhead
-                  setSearchItem={setSearchItem}
-                  searchItem={searchItem}
-                  handleSearch={handleSearch}
-                  options={options}
-                  placeholder={placeholder}
-                  setSearchInput={setSearchInput}
-                  searchInput={searchInput}
-                  handleSearchFilter={handleSearchFilter}
-                  onEnterSearchItems={true}
-                />
-              </div>
+              <TypeAhead
+                setSearchItem={setSearchItem}
+                searchItem={searchItem}
+                handleSearch={handleSearch}
+                options={options}
+                placeholder={placeholder}
+                setSearchInput={setSearchInput}
+                searchInput={searchInput}
+                handleSearchFilter={handleSearchFilter}
+                onEnterSearchItems={true}
+              />
             </li>
           </ul>
           <ul className="navbar-nav navbar-nav-right">
@@ -123,6 +113,11 @@ const Navbar = ({
           </button>
         </div>
       </nav>
+      <style>{`
+        .rbt-input-main {
+          padding: 0 5rem 0 5px;
+        }
+      `}</style>
     </>
   );
 };

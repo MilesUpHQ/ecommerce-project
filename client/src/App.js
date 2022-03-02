@@ -33,6 +33,7 @@ import CreateAddress from "./components/Address/CreateAddress";
 // import Checkout from "./components/CheckOut/Checkout";
 import Add from "./components/Cart/Add";
 import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
+import OrderFailed from "./components/FailedError/FailedError";
 const App = () => {
   return (
     <Router>
@@ -59,6 +60,7 @@ const App = () => {
         <Route path="/user/address" element={<Address />} />
         <Route path="/user/address/:id" element={<CreateAddress />} />
         <Route path="/order/confirm" element={<OrderConfirm />} />
+        <Route path="/order/error" element={<OrderFailed />} />
 
         <Route
           exact

@@ -3,7 +3,10 @@ const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
 const db = require("./utils/dbConfig");
-const port = process.env.NODE_PORT;
+const port =
+  process.env.NODE_ENV === "production"
+    ? process.env.PORT
+    : process.env.NODE_PORT;
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const strategy = require("./utils/passportStrategy");
@@ -33,6 +36,8 @@ const removeFromCart = require("./routes/cart/removeFromCart");
 const updateQuantity = require("./routes/cart/updateQuantity");
 const payment = require("./routes/payment");
 const orders = require("./routes/orders");
+// const checkout = require("./routes/checkout");
+const OrderConfirm = require("./routes/order/confirm");
 
 // middlewares
 app.use(express.json());
@@ -77,6 +82,7 @@ app.use("/api/cart", cart);
 app.use("/api/cart/add", addToCart);
 app.use("/api/cart/remove", removeFromCart);
 app.use("/api/cart/update", updateQuantity);
+app.use("/api/order/confirm", OrderConfirm);
 
 app.use(bodyParser.json());
 passport.use(strategy);
