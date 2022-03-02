@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import "./cart-style.css";
 import axios from "../../utils/ajax-helper";
 import { getJWT } from "../../utils/jwt";
+import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function Cart() {
@@ -64,6 +65,7 @@ export default function Cart() {
   };
   return (
     <>
+      <SimpleNavBar />
       <div className="px-4 px-lg-0">
         <div className="pb-5">
           <div className="container">
