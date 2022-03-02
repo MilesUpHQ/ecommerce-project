@@ -33,6 +33,7 @@ import CreateAddress from "./components/Address/CreateAddress";
 import Checkout from "./components/CheckOut/Checkout";
 import Add from "./components/Cart/Add";
 import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
+import OrderFailed from "./components/FailedError/FailedError";
 const App = () => {
   return (
     <Router>
@@ -52,14 +53,15 @@ const App = () => {
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
         <Route path="/admin/products/:id/view" element={<ProductView />} />
-        <Route path="/admin/user/:id/view" element={<UserView />}/>
+        <Route path="/admin/user/:id/view" element={<UserView />} />
         <Route path="/admin/product/:id/update" element={<Edit />} />
-        <Route path="/admin/user" element={<User />}/>
+        <Route path="/admin/user" element={<User />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/user/address" element={<Address />} />
         <Route path="/user/address/:id" element={<CreateAddress />} />
         <Route path="/checkout/:id" element={<Checkout />} />
         <Route path="/order/confirm" element={<OrderConfirm />} />
+        <Route path="/order/error" element={<OrderFailed />} />
 
         <Route
           exact
