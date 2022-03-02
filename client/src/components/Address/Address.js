@@ -36,21 +36,26 @@ const Address = () => {
   let decoded = parseJwt(getJWT());
   let [user_id, setUser_id] = useState(decoded.id);
   const navigate = useNavigate();
-  let [response, setResponse] = useState(null);
+  let [razor, setRazor] = useState(null);
   let [name, setName] = useState(null);
   let [email, setEmail] = useState(null);
   let [phone, setPhone] = useState(null);
 
+  const nullMessage = () => {
+    return setTimeout(() => {
+      setMessage(null);
+    }, 6000);
+  };
+
   useEffect(() => {
     axios
-      .post("/user/checkout/razorpay/")
+      .post(`/user/razor/razorpay/${user_id}`)
       .then((res) => {
-        setResponse(res.data);
-        console.log("res : ", res);
-        console.log("response : ", response);
+        setRazor(res.data);
       })
       .catch((err) => {
-        console.log("err :", err);
+        setMessage("error in razor pay");
+        nullMessage();
       });
 
     axios
@@ -58,13 +63,15 @@ const Address = () => {
       .then((res) => {
         if (res.data.length == 0) {
           setMessage("No address found!! Please add new one");
+          nullMessage();
         } else {
           setAddress(res.data);
           setAddress_id(res.data[0].id);
           try {
             getById(res.data[0].id);
           } catch (error) {
-            console.log("err :", error);
+            setMessage("error in getting address");
+            nullMessage();
           }
           document.getElementById(res.data[0].id).style.border =
             "solid 2px blue";
@@ -72,28 +79,32 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("Sorry! Something went wrong. Please Try again", err);
+        nullMessage();
       });
   }, []);
   const displayRazorPay = async () => {
-    const res = await loadRazorPay(
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
+    const res = await loadRazorPay(process.env.CHECKOUT);
     if (!res) {
-      alert("something went wrong ! cant load razor pay,Check internet");
+      setMessage("something went wrong ! cant load razor pay,Check internet");
       return;
     }
     var options = {
       key: process.env.RAZOR_PAY_KEY,
-      amount: response.amount.toString(),
-      currency: response.currency,
+      amount: razor.amount.toString(),
+      currency: razor.currency,
       name: "E-commerence",
       description: "Transaction for placing an order",
-      order_id: response.id,
-      handler: function (response) {
-        alert("successfull");
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
+      order_id: razor.id,
+      handler: function (result) {
+        setMessage("opening razorpay");
+        nullMessage();
+        try {
+          orderPlaced(result.razorpay_order_id, result.razorpay_payment_id);
+        } catch (error) {
+          setMessage("error in placing order");
+          nullMessage();
+          navigate("/cart");
+        }
       },
 
       prefill: {
@@ -105,32 +116,90 @@ const Address = () => {
     var paymentObj = new window.Razorpay(options);
     paymentObj.open();
     paymentObj.on("payment.failed", function (response) {
-      alert(response.error.code);
-      alert(response.error.description);
-      alert(response.error.source);
-      alert(response.error.step);
-      alert(response.error.reason);
-      alert(response.error.metadata.order_id);
-      alert(response.error.metadata.payment_id);
+      setMessage("error in openin razor pay");
+      nullMessage();
+      navigate("/cart");
     });
   };
 
-  // const submitHandler = async (e) => {
-  //   e.preventDefault();
-  //   displayRazorPay();
-  // };
+  const orderPlaced = async (order_id, payment_id) => {
+    let ordersID;
+    axios
+      .post("/user/order/confirm/", {
+        order_id: order_id,
+        order_date: new Date(),
+        total_price: razor.amount / 100,
+        status: "confirmed",
+        address_id: address_id,
+        user_id: user_id,
+      })
+      .then((res) => {
+        ordersID = res.data.id;
+        axios
+          .post("/user/order/payment/", {
+            order_id: res.data.id,
+            type: "card",
+            status: "confirmed",
+            payment_id: payment_id,
+          })
+          .then((res) => {
+            axios
+              .get(`/user/cart/${user_id}/details`)
+              .then((res) => {
+                let quantity = res.data.quantity;
+                let variant_id = res.data.variant_id;
+                axios
+                  .post("/user/order/items/", {
+                    quantity: quantity,
+                    variant_id: variant_id,
+                    order_id: ordersID,
+                  })
+                  .then((res) => {
+                    if (res.data.message == "sucessfully added order items!!") {
+                      setMessage("sucessfully placed order ");
+                      nullMessage();
+                      navigate("/order/confirm");
+                    } else {
+                      setMessage("error in adding order items");
+                      nullMessage();
+                      navigate("/cart");
+                    }
+                  })
+                  .catch((err) => {
+                    setMessage("error in adding order items");
+                    nullMessage();
+                    navigate("/cart");
+                  });
+              })
+              .catch((err) => {
+                setMessage("error in getting cart details");
+                nullMessage();
+              });
+          })
+          .catch((err) => {
+            setMessage("error in payment");
+            nullMessage();
+            navigate("/cart");
+          });
+      })
+      .catch((err) => {
+        setMessage("error in placing order");
+        nullMessage();
+        navigate("/cart");
+      });
+  };
 
   const getById = (id) => {
     axios
       .get(`/user/address/${id}/getById`)
       .then((res) => {
-        console.log("res :", res.data);
         setName(res.data.name);
         setEmail(res.data.email);
         setPhone(res.data.phone);
       })
       .catch((err) => {
-        console.log("err :", err);
+        setMessage("error in getting address by id");
+        nullMessage();
       });
   };
   // ****************************delete address********************//
@@ -143,28 +212,20 @@ const Address = () => {
           newAddress = newAddress.filter((address) => address.id !== id);
           setAddress(newAddress);
           setMessage("Delete successfull!!!!!!!");
-          setTimeout(() => {
-            setMessage(null);
-          }, 6000);
+          nullMessage();
         })
         .catch((err) => {
           setMessage("Sorry! You can't delete this address");
-          setTimeout(() => {
-            setMessage(null);
-          }, 6000);
+          nullMessage();
         });
     }
   };
 
   // ***********on select *****************//
   const clicked = (id) => {
-    console.log("event target :", id);
     try {
       getById(id);
-    } catch (error) {
-      console.log("err :", error);
-    }
-
+    } catch (error) {}
     setAddress_id(id);
     document.getElementById(id).style.border = "solid 2px blue";
     for (let i = 0; i < addresses.length; i++) {
@@ -172,11 +233,6 @@ const Address = () => {
         document.getElementById(addresses[i].id).style.border = "none";
       }
     }
-  };
-
-  // ********************on check out ***************/
-  const onCheckOut = (address_id) => {
-    navigate(`/checkout/${address_id}`);
   };
 
   return (
@@ -241,22 +297,13 @@ const Address = () => {
                         </Card>
                       </Col>
                     ))}
-                  {response && addresses.length > 0 && (
-                    // <button
-                    //   className="btn btn-dark rounded-pill py-2 btn-block"
-                    //   id="checkOut"
-                    //   onClick={() => onCheckOut(address_id)}
-                    // >
-                    //   Check out
-                    // </button>
-                    // {response && (
+                  {razor && addresses.length > 0 && (
                     <button
                       onClick={displayRazorPay}
                       className="btn btn-primary mr-2"
                     >
-                      Pay {response.amount / 100}
+                      Pay {razor.amount / 100}
                     </button>
-                    // )}
                   )}
                 </Row>
               </Container>

@@ -31,7 +31,8 @@ const cart = require("./routes/cart/cart");
 const addToCart = require("./routes/cart/addToCart");
 const removeFromCart = require("./routes/cart/removeFromCart");
 const updateQuantity = require("./routes/cart/updateQuantity");
-const checkout = require("./routes/checkout");
+const razor = require("./routes/razor");
+const payment = require("./routes/payment");
 
 // middlewares
 app.use(express.json());
@@ -46,7 +47,9 @@ app.use("/api/admin/products", products);
 app.use("/api/user/address/get", address);
 app.use("/api/user/address/", address);
 app.use("/api/user/new/address/", address);
-app.use("/api/user/checkout", checkout);
+app.use("/api/user/razor", razor);
+app.use("/api/user/order/", payment);
+app.use("/api/user/cart/", payment);
 
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
@@ -65,11 +68,11 @@ app.use("/api/admin/products", displayProducts);
 app.use("/api/products/category", productsByCategory);
 app.use("/api", search);
 app.use("/api/delete_product", displayProducts);
-app.use("/api/delete_user",userList);
+app.use("/api/delete_user", userList);
 app.use("/api/admin/product", productinfo);
 app.use("/api/admin/product/edit", editProduct);
 app.use("/api/admin/userData", userList);
-app.use("/api/admin/user",userInfo);
+app.use("/api/admin/user", userInfo);
 app.use("/api/cart", cart);
 app.use("/api/cart/add", addToCart);
 app.use("/api/cart/remove", removeFromCart);
