@@ -10,8 +10,29 @@ const TypeAhead = ({
   setSearchInput,
   searchInput,
   handleSearchFilter,
-  onEnterSearchItems
+  onEnterSearchItems,
 }) => {
+  const SearchButton = ({ onClick }) => (
+    <button
+      onClick={onClick}
+      onMouseDown={(e) => {
+        e.preventDefault();
+      }}
+      className="btn btn-primary"
+      style={{
+        top: 0,
+        right: 0,
+        bottom: 0,
+        border: 0,
+        padding: "0 12px",
+        position: "absolute",
+        borderRadius: "0 5px 5px 0",
+      }}
+    >
+      Search
+    </button>
+  );
+
   return (
     <AsyncTypeahead
       filterBy={() => true}
@@ -21,15 +42,21 @@ const TypeAhead = ({
       options={options}
       onInputChange={(text, e) => {
         onEnterSearchItems && setSearchInput(text);
-        handleSearch(text); 
+        handleSearch(text);
       }}
       onChange={setSearchItem}
       placeholder={placeholder}
       selected={searchItem}
       onKeyDown={(e) =>
-        onEnterSearchItems && e.key === "Enter" ? handleSearchFilter(searchInput) : ""
+        onEnterSearchItems && e.key === "Enter"
+          ? handleSearchFilter(searchInput)
+          : ""
       }
-    />
+    >
+      {onEnterSearchItems && (
+        <SearchButton onClick={() => handleSearchFilter(searchInput)} />
+      )}
+    </AsyncTypeahead>
   );
 };
 

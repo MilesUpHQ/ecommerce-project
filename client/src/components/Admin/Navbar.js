@@ -23,14 +23,14 @@ const Navbar = () => {
                     <i className="icon-search"></i>
                   </span>
                 </div>
-                <input
+                {/* <input
                   type="text"
                   className="form-control"
                   id="navbar-search-input"
                   placeholder="Search now"
                   aria-label="search"
                   aria-describedby="search"
-                />
+                /> */}
               </div>
             </li>
           </ul>

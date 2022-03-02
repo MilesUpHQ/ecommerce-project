@@ -3,7 +3,7 @@ const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
 const db = require("./utils/dbConfig");
-const port = process.env.NODE_PORT;
+const port = process.env.NODE_ENV === "production" ? process.env.PORT : process.env.NODE_PORT;
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const strategy = require("./utils/passportStrategy");

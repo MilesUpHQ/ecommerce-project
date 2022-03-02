@@ -42,9 +42,11 @@ export default function ProductsByCategory() {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(`/products/category/${categoryId}`);
-        getPriceRanges(data);
         setProducts(data);
         setFilteredProducts(data);
+        if (data.length > 0) {
+          getPriceRanges(data);
+        }
       } catch (error) {
         setErrorMsg("Sorry! Something went wrong. Please Try again", error);
       }
@@ -114,28 +116,39 @@ export default function ProductsByCategory() {
     axios
       .get(`/filter-products?search_keyword=${searchVal}`)
       .then((res) => {
-        setProducts(res.data.row);
-        setFilteredProducts(res.data.row);
-        setShowFilters(true);
-        setSelectedCategory(null);
-        let filterCategories = [];
-        for (let item of res.data.row) {
-          filterCategories.push({ id: item.category_id, name: item.category });
-        }
-        let result = filterCategories.reduce((unique, item) => {
-          if (
-            !unique.some((obj) => obj.id === item.id && obj.name === item.name)
-          ) {
-            unique.push(item);
+        if (res.data.row.length > 0) {
+          setProducts(res.data.row);
+          setFilteredProducts(res.data.row);
+          setShowFilters(true);
+          setSelectedCategory(null);
+          let filterCategories = [];
+          for (let item of res.data.row) {
+            filterCategories.push({
+              id: item.category_id,
+              name: item.category,
+            });
           }
-          return unique;
-        }, []);
-        getPriceRanges(res.data.row);
-        setFilterCategories(result);
+          let result = filterCategories.reduce((unique, item) => {
+            if (
+              !unique.some(
+                (obj) => obj.id === item.id && obj.name === item.name
+              )
+            ) {
+              unique.push(item);
+            }
+            return unique;
+          }, []);
+          getPriceRanges(res.data.row);
+          setFilterCategories(result);
+        } else {
+          setProducts(res.data.row);
+          setFilteredProducts(res.data.row);
+          setShowFilters(false);
+        }
       })
-      .catch((err) =>
-        setErrorMsg("Sorry! Something went wrong. Please Try again", err)
-      );
+      .catch((err) => {
+        setErrorMsg("Sorry! Something went wrong. Please Try again", err);
+      });
   };
 
   useEffect(() => {
