@@ -9,7 +9,6 @@ router.get(
   (req, res) => {
     let cart;
     user_id = req.user.id;
-    console.log("req.user", user_id);
     knex("cart")
       .join("cart_items", "cart.id", "cart_items.cart_id")
       .join("variants", "cart_items.variant_id", "variants.id")
@@ -27,7 +26,6 @@ router.get(
       .where({ "cart.user_id": user_id })
       .then((row) => {
         cart = row;
-        console.log("cart", cart);
         res.json(cart);
       })
       .catch((err) => {
@@ -37,5 +35,26 @@ router.get(
       });
   }
 );
+
+// ******************delete address******************//
+router.delete("/:cart_id/delete", (req, res) => {
+  knex("cart_items")
+    .delete()
+    .where("cart_id", req.params.cart_id)
+    .then((rows) => {
+      knex("cart")
+        .delete()
+        .where("id", req.params.cart_id)
+        .then((result) => {
+          res.json({ message: "sucessfully deleted cart" });
+        })
+        .catch((err) => {
+          res.json({ message: "error in deleting cart" });
+        });
+    })
+    .catch((err) => {
+      res.json({ message: "error in deleting cart" });
+    });
+});
 
 module.exports = router;

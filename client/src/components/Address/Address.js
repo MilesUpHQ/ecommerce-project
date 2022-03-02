@@ -49,7 +49,7 @@ const Address = () => {
 
   useEffect(() => {
     axios
-      .post(`/user/razor/razorpay/${user_id}`)
+      .post(`/user/checkout/payment/${user_id}`)
       .then((res) => {
         setRazor(res.data);
       })
@@ -83,7 +83,7 @@ const Address = () => {
       });
   }, []);
   const displayRazorPay = async () => {
-    const res = await loadRazorPay(process.env.CHECKOUT);
+    const res = await loadRazorPay(process.env.REACT_APP_CHECKOUT_URL);
     if (!res) {
       setMessage("something went wrong ! cant load razor pay,Check internet");
       return;
@@ -146,6 +146,7 @@ const Address = () => {
             axios
               .get(`/user/cart/${user_id}/details`)
               .then((res) => {
+                let cart_id = res.data.id;
                 let quantity = res.data.quantity;
                 let variant_id = res.data.variant_id;
                 axios
@@ -154,11 +155,14 @@ const Address = () => {
                     variant_id: variant_id,
                     order_id: ordersID,
                   })
-                  .then((res) => {
+                  .then(async (res) => {
                     if (res.data.message == "sucessfully added order items!!") {
                       setMessage("sucessfully placed order ");
                       nullMessage();
-                      navigate("/order/confirm");
+                      try {
+                        await deleteCart(cart_id);
+                        navigate("/order/confirm");
+                      } catch (error) {}
                     } else {
                       setMessage("error in adding order items");
                       nullMessage();
@@ -220,7 +224,17 @@ const Address = () => {
         });
     }
   };
-
+  // **********************delete cart************************//
+  const deleteCart = (cart_id) => {
+    axios
+      .delete(`/cart/${cart_id}/delete`)
+      .then((res) => {
+        setMessage("Empty cart");
+      })
+      .catch((err) => {
+        setMessage("could not empty cart");
+      });
+  };
   // ***********on select *****************//
   const clicked = (id) => {
     try {

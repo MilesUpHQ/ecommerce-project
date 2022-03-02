@@ -31,8 +31,8 @@ const cart = require("./routes/cart/cart");
 const addToCart = require("./routes/cart/addToCart");
 const removeFromCart = require("./routes/cart/removeFromCart");
 const updateQuantity = require("./routes/cart/updateQuantity");
-const razor = require("./routes/razor");
 const payment = require("./routes/payment");
+const orders = require("./routes/orders");
 
 // middlewares
 app.use(express.json());
@@ -47,9 +47,9 @@ app.use("/api/admin/products", products);
 app.use("/api/user/address/get", address);
 app.use("/api/user/address/", address);
 app.use("/api/user/new/address/", address);
-app.use("/api/user/razor", razor);
-app.use("/api/user/order/", payment);
-app.use("/api/user/cart/", payment);
+app.use("/api/user/checkout/payment/", payment);
+app.use("/api/user/order/", orders);
+app.use("/api/user/cart/", orders);
 
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
