@@ -32,6 +32,7 @@ const addToCart = require("./routes/cart/addToCart");
 const removeFromCart = require("./routes/cart/removeFromCart");
 const updateQuantity = require("./routes/cart/updateQuantity");
 const checkout = require("./routes/checkout");
+const OrderConfirm = require("./routes/order/confirm");
 
 // middlewares
 app.use(express.json());
@@ -65,15 +66,16 @@ app.use("/api/admin/products", displayProducts);
 app.use("/api/products/category", productsByCategory);
 app.use("/api", search);
 app.use("/api/delete_product", displayProducts);
-app.use("/api/delete_user",userList);
+app.use("/api/delete_user", userList);
 app.use("/api/admin/product", productinfo);
 app.use("/api/admin/product/edit", editProduct);
 app.use("/api/admin/userData", userList);
-app.use("/api/admin/user",userInfo);
+app.use("/api/admin/user", userInfo);
 app.use("/api/cart", cart);
 app.use("/api/cart/add", addToCart);
 app.use("/api/cart/remove", removeFromCart);
 app.use("/api/cart/update", updateQuantity);
+app.use("/api/order/confirm", OrderConfirm);
 
 app.use(bodyParser.json());
 passport.use(strategy);
