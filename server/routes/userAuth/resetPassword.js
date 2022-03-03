@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../utils/dbConfig");
+const knex = require("../../utils/dbConfig");
 const bcrypt = require("bcryptjs");
-const transporter = require("../utils/nodemailer");
-const client = require("../utils/mailGun");
+const transporter = require("../../utils/nodemailer");
+const client = require("../../utils/mailGun");
 
 router.put("/", async (req, res, next) => {
   knex("users")

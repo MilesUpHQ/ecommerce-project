@@ -3,7 +3,10 @@ const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
 const db = require("./utils/dbConfig");
-const port = process.env.NODE_ENV === "production" ? process.env.PORT : process.env.NODE_PORT;
+const port =
+  process.env.NODE_ENV === "production"
+    ? process.env.PORT
+    : process.env.NODE_PORT;
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const strategy = require("./utils/passportStrategy");
@@ -12,27 +15,27 @@ const path = require("path");
 
 // routes imports
 
-var adminRouter = require("./routes/admin/category");
-const resetPassword = require("./routes/resetPassword");
-const forgotPassword = require("./routes/forgotPassword");
-const addProducts = require("./routes/addProducts");
-const displayProducts = require("./routes/displayProducts");
-const featuredProducts = require("./routes/featuredProducts");
-const productinfo = require("./routes/productinfo");
-const products = require("./routes/products");
-const editProduct = require("./routes/editProduct");
-const userList = require("./routes/userList");
-const userInfo = require("./routes/userInfo");
-const productsByCategory = require("./routes/productsByCategory");
-const signup = require("./routes/signup");
-const getToken = require("./routes/getToken");
-const search = require("./routes/searchProducts");
-const address = require("./routes/address");
+var adminRouter = require("./routes/admin/categories/category");
+const resetPassword = require("./routes/userAuth/resetPassword");
+const forgotPassword = require("./routes/userAuth/forgotPassword");
+const addProducts = require("./routes/admin/products/addProducts");
+const displayProducts = require("./routes/admin/products/displayProducts");
+const featuredProducts = require("./routes/admin/products/featuredProducts");
+const productinfo = require("./routes/admin/products/productinfo");
+const products = require("./routes/products/products");
+const editProduct = require("./routes/admin/products/editProduct");
+const userList = require("./routes/admin/users/userList");
+const userInfo = require("./routes/admin/users/userInfo");
+const productsByCategory = require("./routes/products/productsByCategory");
+const signup = require("./routes/userAuth/signup");
+const getToken = require("./routes/userAuth/getToken");
+const search = require("./routes/products/searchProducts");
+const address = require("./routes/order/address");
 const cart = require("./routes/cart/cart");
 const addToCart = require("./routes/cart/addToCart");
 const removeFromCart = require("./routes/cart/removeFromCart");
 const updateQuantity = require("./routes/cart/updateQuantity");
-const checkout = require("./routes/checkout");
+const checkout = require("./routes/order/checkout");
 const OrderConfirm = require("./routes/order/confirm");
 
 // middlewares
@@ -58,7 +61,6 @@ app.use("/api/user/address/get", address);
 app.use("/api/user/address/", address);
 app.use("/api/user/new/address/", address);
 app.use("/api/user/checkout", checkout);
-
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
 app.use("/api/products", products);

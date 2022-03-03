@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const { attachPaginate } = require("knex-paginate");
-const db = require("../../utils/dbConfig");
+const db = require("../../../utils/dbConfig");
 
 attachPaginate();
 

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../utils/dbConfig");
+const knex = require("../../../utils/dbConfig");
 
 function deleteProduct(db, product) {
   let store_variant_id;
@@ -11,7 +11,7 @@ function deleteProduct(db, product) {
       store_variant_id = rows[0].id;
       db("variant_images")
         .delete()
-        .where("variant_id", store_variant_id) 
+        .where("variant_id", store_variant_id)
         .then((rows) => {
           db("variants")
             .delete()
@@ -68,7 +68,7 @@ router.get("/", async (req, res) => {
         }
       }
       let products = response.data;
-      console.log("ededde",products);
+      console.log("ededde", products);
       res.json({ products, currPage, lastPage, totalPages });
     })
     .catch((err) => {
