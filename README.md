@@ -21,6 +21,8 @@ This project features a robust ecommerce backend built with Express and Knex. It
 - Product Details
 - Cart
 - Checkout
+- Payment
+- Order History
 - Admin Dashboard
 
 ## Getting started
