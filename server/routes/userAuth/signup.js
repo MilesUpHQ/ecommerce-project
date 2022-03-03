@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const db = require("../../utils/dbConfig");
-const bcrypt = require("bcrypt");
+const { insertUser } = require("../../queries/user");
 
 const userValidation = [
   body("email", "Email is not valid").isEmail(),
@@ -38,14 +38,7 @@ router.post("/", ...userValidation, (req, res) => {
               });
               return;
             } else {
-              db("users")
-                .insert({
-                  email: req.body.email,
-                  password_digest: bcrypt.hashSync(req.body.password, 10),
-                  username: req.body.username,
-                  first_name: req.body.first_name,
-                  last_name: req.body.last_name,
-                })
+              insertUser(req.body)
                 .then((user) => {
                   res.status(201).json(user);
                 })
