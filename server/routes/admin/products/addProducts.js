@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../../../utils/dbConfig");
 const multer = require("multer");
+const { insertProduct } = require("../../../queries/product");
 
 router.get("/", (req, res) => {
   let categories;
@@ -27,15 +28,9 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({ storage: fileStorageEngine });
 
 router.post("/", upload.single("file"), (req, res) => {
-  knex("products")
-    .insert({
-      name: req.body.name,
-      description: req.body.description,
-      category_id: req.body.category,
-    })
+  insertProduct(req.body)
     .returning("products.id")
     .then((row) => {
-      console.log("Insided", row);
       knex("variants")
         .insert({
           size: req.body.size,
