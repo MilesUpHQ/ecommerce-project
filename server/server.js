@@ -11,6 +11,7 @@ dotenv.config();
 const path = require("path");
 
 // routes imports
+
 var adminRouter = require("./routes/admin/category");
 const resetPassword = require("./routes/resetPassword");
 const forgotPassword = require("./routes/forgotPassword");
@@ -35,10 +36,19 @@ const checkout = require("./routes/checkout");
 const OrderConfirm = require("./routes/order/confirm");
 
 // middlewares
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(bodyParser.json());
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(express.static("public"));
+app.use("/images", express.static("images"));
+app.use("/images", express.static(path.join("backend/images")));
+
 //routes
+
 app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
 app.use("/api/featured_products", featuredProducts);
@@ -51,14 +61,6 @@ app.use("/api/user/checkout", checkout);
 
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
-
-app.get(
-  "/api/getUser",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json(req.user);
-  }
-);
 app.use("/api/products", products);
 app.use("/api/admin/products/add", addProducts);
 app.use("/api", adminRouter);
@@ -77,12 +79,13 @@ app.use("/api/cart/remove", removeFromCart);
 app.use("/api/cart/update", updateQuantity);
 app.use("/api/order/confirm", OrderConfirm);
 
-app.use(bodyParser.json());
-passport.use(strategy);
-app.use(passport.initialize());
-app.use(express.static("public"));
-app.use("/images", express.static("images"));
-app.use("/images", express.static(path.join("backend/images")));
+app.get(
+  "/api/getUser",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
+);
 
 app.get("/", (req, res) => {
   res.json({ name: "Magesh", company: "Sedin pvt" });
