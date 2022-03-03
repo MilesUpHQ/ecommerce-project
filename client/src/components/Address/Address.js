@@ -15,19 +15,7 @@ import { useNavigate } from "react-router-dom";
 import "./address.css";
 import { getJWT } from "../../utils/jwt";
 import { parseJwt } from "../../utils/jwt";
-function loadRazorPay(src) {
-  return new Promise((resolve) => {
-    const script = document.createElement("script");
-    script.src = src;
-    script.onload = () => {
-      resolve(true);
-    };
-    script.onerror = () => {
-      resolve(false);
-    };
-    document.body.appendChild(script);
-  });
-}
+import { Razorpay } from "razorpay-checkout";
 
 const Address = () => {
   let [addresses, setAddress] = useState([]);
@@ -83,11 +71,6 @@ const Address = () => {
       });
   }, []);
   const displayRazorPay = async () => {
-    const res = await loadRazorPay(process.env.REACT_APP_CHECKOUT_URL);
-    if (!res) {
-      setMessage("something went wrong ! cant load razor pay,Check internet");
-      return;
-    }
     var options = {
       key: process.env.RAZOR_PAY_KEY,
       amount: razor.amount.toString(),
@@ -103,22 +86,21 @@ const Address = () => {
         } catch (error) {
           setMessage("error in placing order");
           nullMessage();
-          navigate("/cart");
+          navigate("/order/error");
         }
       },
-
       prefill: {
         name: name,
         email: email,
         contact: phone,
       },
     };
-    var paymentObj = new window.Razorpay(options);
+    var paymentObj = new Razorpay(options);
     paymentObj.open();
     paymentObj.on("payment.failed", function (response) {
       setMessage("error in openin razor pay");
       nullMessage();
-      navigate("/cart");
+      navigate("/order/error");
     });
   };
 
@@ -166,13 +148,13 @@ const Address = () => {
                     } else {
                       setMessage("error in adding order items");
                       nullMessage();
-                      navigate("/cart");
+                      navigate("/order/error");
                     }
                   })
                   .catch((err) => {
                     setMessage("error in adding order items");
                     nullMessage();
-                    navigate("/cart");
+                    navigate("/order/error");
                   });
               })
               .catch((err) => {
@@ -183,13 +165,13 @@ const Address = () => {
           .catch((err) => {
             setMessage("error in payment");
             nullMessage();
-            navigate("/cart");
+            navigate("/order/error");
           });
       })
       .catch((err) => {
         setMessage("error in placing order");
         nullMessage();
-        navigate("/cart");
+        navigate("/order/error");
       });
   };
 
