@@ -64,14 +64,66 @@ const App = () => {
 
         <Route
           path="/admin/product/featured"
-          element={<FeaturedProductLayout />}
-        />
-        <Route path="/admin/products/add" element={<AddProducts />} />
-        <Route path="/admin/products" element={<ProductLayout />} />
-        <Route path="/admin/products/:id/view" element={<ProductView />} />
-        <Route path="/admin/user/:id/view" element={<UserView />} />
-        <Route path="/admin/product/:id/update" element={<Edit />} />
-        <Route path="/admin/user" element={<User />} />
+          element={
+            <PrivateRoute>
+              <FeaturedProductLayout />
+            </PrivateRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/admin/products/add"
+          element={
+            <PrivateRoute>
+              <AddProducts />
+            </PrivateRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/admin/products/"
+          element={
+            <PrivateRoute>
+              <ProductLayout />
+            </PrivateRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/admin/products/:id/view"
+          element={
+            <PrivateRoute>
+              <ProductView />
+            </PrivateRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/admin/user/:id/view"
+          element={
+            <PrivateRoute>
+              <UserView />
+            </PrivateRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/admin/product/:id/update"
+          element={
+            <PrivateRoute>
+              <Edit />
+            </PrivateRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/admin/user"
+          element={
+            <PrivateRoute>
+              <User />
+            </PrivateRoute>
+          }
+        ></Route>
 
         {/* User Routes */}
         <Route path="/" element={<FeaturedProducts />}></Route>
