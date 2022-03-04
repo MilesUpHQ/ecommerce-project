@@ -35,23 +35,31 @@ export default function Cart() {
   }, []);
   // delete item from cart
   const deleteItem = (id) => {
-    axios
-      .delete(`/cart/remove/${id}`, {
-        headers: {
-          Authorization: `Bearer ${getJWT()}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        getCartItems();
-      })
-      .catch((err) => {
-        setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
-      });
+    //  show a confirmation dialog
+    //  if confirmed then delete the item
+    //  else do nothing
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      axios
+        .delete(`/cart/remove/${id}`, {
+          headers: {
+            Authorization: `Bearer ${getJWT()}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          getCartItems();
+        })
+        .catch((err) => {
+          setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
+        });
+    }
   };
   // update item in cart
 
   const updateItem = (id, quantity) => {
+    if (quantity <= 0) {
+      deleteItem(id);
+    }
     setCartItems(
       cartItems.map((item) =>
         item.cart_id === id
