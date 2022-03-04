@@ -14,22 +14,23 @@ dotenv.config();
 const path = require("path");
 
 // routes imports
-var adminRouter = require("./routes/admin/category");
-const resetPassword = require("./routes/resetPassword");
-const forgotPassword = require("./routes/forgotPassword");
-const addProducts = require("./routes/addProducts");
-const displayProducts = require("./routes/displayProducts");
-const featuredProducts = require("./routes/featuredProducts");
-const productinfo = require("./routes/productinfo");
-const products = require("./routes/products");
-const editProduct = require("./routes/editProduct");
-const userList = require("./routes/userList");
-const userInfo = require("./routes/userInfo");
-const productsByCategory = require("./routes/productsByCategory");
-const signup = require("./routes/signup");
-const getToken = require("./routes/getToken");
-const search = require("./routes/searchProducts");
-const address = require("./routes/address");
+
+var adminRouter = require("./routes/admin/categories/category");
+const resetPassword = require("./routes/userAuth/resetPassword");
+const forgotPassword = require("./routes/userAuth/forgotPassword");
+const addProducts = require("./routes/admin/products/addProducts");
+const displayProducts = require("./routes/admin/products/displayProducts");
+const featuredProducts = require("./routes/admin/products/featuredProducts");
+const productinfo = require("./routes/admin/products/productinfo");
+const products = require("./routes/products/products");
+const editProduct = require("./routes/admin/products/editProduct");
+const userList = require("./routes/admin/users/userList");
+const userInfo = require("./routes/admin/users/userInfo");
+const productsByCategory = require("./routes/products/productsByCategory");
+const signup = require("./routes/userAuth/signup");
+const getToken = require("./routes/userAuth/getToken");
+const search = require("./routes/products/searchProducts");
+const address = require("./routes/order/address");
 const cart = require("./routes/cart/cart");
 const addToCart = require("./routes/cart/addToCart");
 const removeFromCart = require("./routes/cart/removeFromCart");
@@ -40,10 +41,19 @@ const orders = require("./routes/orders");
 const OrderConfirm = require("./routes/order/confirm");
 
 // middlewares
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(bodyParser.json());
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(express.static("public"));
+app.use("/images", express.static("images"));
+app.use("/images", express.static(path.join("backend/images")));
+
 //routes
+
 app.use("/api/reset_password", resetPassword);
 app.use("/api/forgot_password", forgotPassword);
 app.use("/api/featured_products", featuredProducts);
@@ -58,14 +68,6 @@ app.use("/api/user/cart/", orders);
 
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
-
-app.get(
-  "/api/getUser",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json(req.user);
-  }
-);
 app.use("/api/products", products);
 app.use("/api/admin/products/add", addProducts);
 app.use("/api", adminRouter);
@@ -84,12 +86,13 @@ app.use("/api/cart/remove", removeFromCart);
 app.use("/api/cart/update", updateQuantity);
 app.use("/api/order/confirm", OrderConfirm);
 
-app.use(bodyParser.json());
-passport.use(strategy);
-app.use(passport.initialize());
-app.use(express.static("public"));
-app.use("/images", express.static("images"));
-app.use("/images", express.static(path.join("backend/images")));
+app.get(
+  "/api/getUser",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
+);
 
 app.get("/", (req, res) => {
   res.json({ name: "Magesh", company: "Sedin pvt" });

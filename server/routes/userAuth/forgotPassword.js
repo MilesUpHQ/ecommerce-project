@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../utils/dbConfig");
+const knex = require("../../utils/dbConfig");
 const jwt = require("jsonwebtoken");
-const transporter = require("../utils/nodemailer");
+const transporter = require("../../utils/nodemailer");
 
-const client = require("../utils/mailGun");
+const client = require("../../utils/mailGun");
 
 router.post("", (req, res) => {
   if (req.body.email == "") {

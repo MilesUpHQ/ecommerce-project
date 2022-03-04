@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const db = require("../utils/dbConfig");
+const db = require("../../utils/dbConfig");
 
 router.get("/typeahead-items", async (req, res) => {
   try {

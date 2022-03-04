@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../utils/dbConfig");
+const knex = require("../../utils/dbConfig");
 
 router.get("", async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;

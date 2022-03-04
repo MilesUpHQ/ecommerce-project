@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../utils/dbConfig");
+const knex = require("../../../utils/dbConfig");
 
 const removeDuplicate = (array) => {
   var dups = [];

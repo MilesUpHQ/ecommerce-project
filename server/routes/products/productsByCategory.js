@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../utils/dbConfig");
+const knex = require("../../utils/dbConfig");
 
 router.get("/:id", async (req, res, next) => {
   // get products by product category with variants
