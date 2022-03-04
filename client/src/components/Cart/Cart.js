@@ -207,7 +207,9 @@ export default function Cart() {
                     </li>
                     <li className="d-flex justify-content-between py-3 border-bottom">
                       <strong className="text-muted">Total</strong>
-                      <h5 className="font-weight-bold">$0.00</h5>
+                      <h5 className="font-weight-bold">
+                        ${cartItems[0]?.total || "0.00"}
+                      </h5>
                     </li>
                   </ul>
                   <a
