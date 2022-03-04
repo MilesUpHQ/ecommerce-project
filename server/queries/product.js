@@ -7,5 +7,13 @@ function insertProduct(params) {
     category_id: params.category,
   });
 }
+function updateProduct(params){
+    return db("products").where("id", params.id)
+    .update({
+      name: params.name,
+      description: params.description,
+      category_id: params.category,
+    })
+}
 
-module.exports = { insertProduct };
+module.exports = { insertProduct ,updateProduct};

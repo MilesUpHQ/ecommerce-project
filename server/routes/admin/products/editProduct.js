@@ -3,6 +3,7 @@ const router = express.Router();
 const knex = require("../../../utils/dbConfig");
 const multer = require("multer");
 const { updateVariants } = require("../../../queries/variants");
+const { updateProduct } = require("../../../queries/product");
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -19,13 +20,7 @@ router.put("/", upload.single("file"), (req, res) => {
     .returning("variants.id")
     .then((row) => {
       console.log("deed", req.body.category);
-      knex("products")
-        .where("id", req.body.id)
-        .update({
-          name: req.body.name,
-          description: req.body.description,
-          category_id: req.body.category,
-        })
+      updateProduct(req.body)
         .returning("products.id")
         .then((row) => {
           knex("variant_images")
