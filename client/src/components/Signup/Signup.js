@@ -14,6 +14,7 @@ export default function Signup() {
 
   const signup = (e) => {
     e.preventDefault();
+    setError(null);
     axios
       .post("/signup", {
         first_name: firstName,
