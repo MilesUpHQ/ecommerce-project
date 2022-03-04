@@ -3,7 +3,7 @@ const router = express.Router();
 const knex = require("../../../utils/dbConfig");
 const multer = require("multer");
 const { insertProduct } = require("../../../queries/product");
-const { insertVariants } = require("../../../queries/variants");
+const { insertVariant } = require("../../../queries/variants");
 
 router.get("/", (req, res) => {
   let categories;
@@ -32,7 +32,7 @@ router.post("/", upload.single("file"), (req, res) => {
   insertProduct(req.body)
     .returning("products.id")
     .then((row) => {
-      insertVariants(req.body,row[0].id)
+      insertVariant(req.body,row[0].id)
         .returning("variants.id")
         .then((row) => {
           knex("variant_images")
@@ -51,7 +51,6 @@ router.post("/", upload.single("file"), (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      // res.status(400).send("Unable to Post data ");
     });
 });
 

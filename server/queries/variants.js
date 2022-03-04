@@ -1,6 +1,6 @@
  const db = require("../utils/dbConfig");
 
-function insertVariants(params,id) {
+function insertVariant(params,id) {
   return db("variants").insert({
           size: params.size,
           color: params.color,
@@ -10,7 +10,7 @@ function insertVariants(params,id) {
   })
 }
 
-function updateVariants(params) {
+function updateVariant(params) {
   return db("variants").where("product_id", params.id)
     .update({
       size: params.size,
@@ -20,4 +20,4 @@ function updateVariants(params) {
     })
 }
 
- module.exports = { updateVariants , insertVariants};
+ module.exports = { updateVariant , insertVariant};
