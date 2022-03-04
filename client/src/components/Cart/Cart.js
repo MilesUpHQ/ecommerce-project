@@ -50,7 +50,18 @@ export default function Cart() {
       });
   };
   // update item in cart
+
   const updateItem = (id, quantity) => {
+    setCartItems(
+      cartItems.map((item) =>
+        item.cart_id === id
+          ? {
+              ...item,
+              quantity: quantity,
+            }
+          : item
+      )
+    );
     axios
       .put(`/cart/update/${id}`, {
         quantity: quantity,
@@ -126,6 +137,7 @@ export default function Cart() {
                                   type="number"
                                   className="form-control"
                                   value={cart.quantity}
+                                  required
                                   onChange={(e) =>
                                     updateItem(cart.cart_id, e.target.value)
                                   }
