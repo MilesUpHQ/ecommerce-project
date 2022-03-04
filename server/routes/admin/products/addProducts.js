@@ -3,6 +3,7 @@ const router = express.Router();
 const knex = require("../../../utils/dbConfig");
 const multer = require("multer");
 const { insertProduct } = require("../../../queries/product");
+const { insertVariants } = require("../../../queries/variants");
 
 router.get("/", (req, res) => {
   let categories;
@@ -31,14 +32,7 @@ router.post("/", upload.single("file"), (req, res) => {
   insertProduct(req.body)
     .returning("products.id")
     .then((row) => {
-      knex("variants")
-        .insert({
-          size: req.body.size,
-          color: req.body.color,
-          type: req.body.type,
-          price: req.body.price,
-          product_id: row[0].id,
-        })
+      insertVariants(req.body,row[0].id)
         .returning("variants.id")
         .then((row) => {
           knex("variant_images")
