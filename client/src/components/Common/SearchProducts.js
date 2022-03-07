@@ -21,6 +21,15 @@ export default function SearchProducts({ searchItem, searchInput }) {
   const [addToCart, setAddToCart] = React.useState(false);
   const [updateNavbar, setUpdateNavbar] = React.useState(false);
 
+  useEffect(() => {
+    if (searchItem.length > 0) {
+      getProductsBySearch(searchItem[0].label);
+    }
+    if (searchInput !== null) {
+      getProductsBySearch(searchInput);
+    }
+  }, [searchItem, searchInput]);
+  
   const handleAddToCart = (id) => {
     setAddToCart(id);
     setUpdateNavbar(true);
@@ -99,15 +108,6 @@ export default function SearchProducts({ searchItem, searchInput }) {
         setErrorMsg("Sorry! Something went wrong. Please Try again", err);
       });
   };
-
-  useEffect(() => {
-    if (searchItem.length > 0) {
-      getProductsBySearch(searchItem[0].label);
-    }
-    if (searchInput !== null) {
-      getProductsBySearch(searchInput);
-    }
-  }, [searchItem, searchInput]);
 
   const handlePrice = (e, min, max) => {
     if (e.target.checked) {
