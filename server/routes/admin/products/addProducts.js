@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../../../utils/dbConfig");
 const multer = require("multer");
+const { insertProduct } = require("../../../queries/product");
+const { insertVariant } = require("../../../queries/variants");
 
 router.get("/", (req, res) => {
   let categories;
@@ -27,23 +29,10 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({ storage: fileStorageEngine });
 
 router.post("/", upload.single("file"), (req, res) => {
-  knex("products")
-    .insert({
-      name: req.body.name,
-      description: req.body.description,
-      category_id: req.body.category,
-    })
+  insertProduct(req.body)
     .returning("products.id")
     .then((row) => {
-      console.log("Insided", row);
-      knex("variants")
-        .insert({
-          size: req.body.size,
-          color: req.body.color,
-          type: req.body.type,
-          price: req.body.price,
-          product_id: row[0].id,
-        })
+      insertVariant(req.body,row[0].id)
         .returning("variants.id")
         .then((row) => {
           knex("variant_images")
@@ -62,7 +51,6 @@ router.post("/", upload.single("file"), (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      // res.status(400).send("Unable to Post data ");
     });
 });
 

@@ -35,7 +35,9 @@ const cart = require("./routes/cart/cart");
 const addToCart = require("./routes/cart/addToCart");
 const removeFromCart = require("./routes/cart/removeFromCart");
 const updateQuantity = require("./routes/cart/updateQuantity");
-const checkout = require("./routes/order/checkout");
+const payment = require("./routes/payment");
+const orders = require("./routes/orders");
+// const checkout = require("./routes/checkout");
 const OrderConfirm = require("./routes/order/confirm");
 
 // middlewares
@@ -60,7 +62,10 @@ app.use("/api/admin/products", products);
 app.use("/api/user/address/get", address);
 app.use("/api/user/address/", address);
 app.use("/api/user/new/address/", address);
-app.use("/api/user/checkout", checkout);
+app.use("/api/user/checkout/payment/", payment);
+app.use("/api/user/order/", orders);
+app.use("/api/user/cart/", orders);
+
 app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
 app.use("/api/products", products);

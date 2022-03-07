@@ -25,21 +25,7 @@ const ProductList = ({
           {featuredProducts.map((featuredProduct) => {
             return (
               <Col>
-                <Card className="listCard">
-                  {/* <Carousel>
-                    {imgArray.map((image_url) => {
-                      return (
-                        <Carousel.Item interval={1000}>
-                          <img
-                            className="d-block w-100"
-                            src={image_url}
-                            alt={featuredProduct.name}
-                            className="imgSlide"
-                          />
-                        </Carousel.Item>
-                      );
-                    })}
-                  </Carousel> */}
+                <Card className="listCard" style={{ width: "300px" }}>
                   <Card.Img
                     variant="top"
                     src={BASE_URL + "/" + featuredProduct.image_url}

@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import "./address.css";
 import { getJWT } from "../../utils/jwt";
 import { parseJwt } from "../../utils/jwt";
+import { Razorpay } from "razorpay-checkout";
 
 const Address = () => {
   let [addresses, setAddress] = useState([]);
@@ -23,25 +24,174 @@ const Address = () => {
   let decoded = parseJwt(getJWT());
   let [user_id, setUser_id] = useState(decoded.id);
   const navigate = useNavigate();
+  let [razor, setRazor] = useState(null);
+  let [name, setName] = useState(null);
+  let [email, setEmail] = useState(null);
+  let [phone, setPhone] = useState(null);
+
+  const nullMessage = () => {
+    return setTimeout(() => {
+      setMessage(null);
+    }, 6000);
+  };
 
   useEffect(() => {
+    axios
+      .post(`/user/checkout/payment/${user_id}`)
+      .then((res) => {
+        setRazor(res.data);
+      })
+      .catch((err) => {
+        setMessage("error in razor pay");
+        nullMessage();
+      });
+
     axios
       .get(`/user/address/get/${user_id}`)
       .then((res) => {
         if (res.data.length == 0) {
           setMessage("No address found!! Please add new one");
+          nullMessage();
         } else {
           setAddress(res.data);
           setAddress_id(res.data[0].id);
+          try {
+            getById(res.data[0].id);
+          } catch (error) {
+            setMessage("error in getting address");
+            nullMessage();
+          }
           document.getElementById(res.data[0].id).style.border =
             "solid 2px blue";
         }
       })
       .catch((err) => {
         setMessage("Sorry! Something went wrong. Please Try again", err);
+        nullMessage();
       });
   }, []);
+  const displayRazorPay = async () => {
+    var options = {
+      key: process.env.RAZOR_PAY_KEY,
+      amount: razor.amount.toString(),
+      currency: razor.currency,
+      name: "E-commerence",
+      description: "Transaction for placing an order",
+      order_id: razor.id,
+      handler: (response) => onPaymentSuccess(response),
+      prefill: {
+        name: name,
+        email: email,
+        contact: phone,
+      },
+    };
 
+    var paymentObj = new Razorpay(options);
+    paymentObj.open();
+    paymentObj.on("payment.failed", (errResponse) =>
+      onPaymentFailure(errResponse)
+    );
+  };
+  function onPaymentFailure(response) {
+    setMessage("error in openin razor pay");
+    nullMessage();
+    navigate("/order/error");
+  }
+  function onPaymentSuccess(response) {
+    setMessage("opening razorpay");
+    nullMessage();
+    try {
+      orderPlaced(response.razorpay_order_id, response.razorpay_payment_id);
+    } catch (error) {
+      setMessage("error in placing order");
+      nullMessage();
+      navigate("/order/error");
+    }
+  }
+  const orderPlaced = async (order_id, payment_id) => {
+    let ordersID;
+    axios
+      .post("/user/order/confirm/", {
+        order_id: order_id,
+        order_date: new Date(),
+        total_price: razor.amount / 100,
+        status: "confirmed",
+        address_id: address_id,
+        user_id: user_id,
+      })
+      .then((res) => {
+        ordersID = res.data.id;
+        axios
+          .post("/user/order/payment/", {
+            order_id: res.data.id,
+            type: "card",
+            status: "confirmed",
+            payment_id: payment_id,
+          })
+          .then((res) => {
+            axios
+              .get(`/user/cart/${user_id}/details`)
+              .then((res) => {
+                let cart_id = res.data.id;
+                let quantity = res.data.quantity;
+                let variant_id = res.data.variant_id;
+                axios
+                  .post("/user/order/items/", {
+                    quantity: quantity,
+                    variant_id: variant_id,
+                    order_id: ordersID,
+                  })
+                  .then(async (res) => {
+                    if (res.data.message == "sucessfully added order items!!") {
+                      setMessage("sucessfully placed order ");
+                      nullMessage();
+                      try {
+                        await deleteCart(cart_id);
+                        navigate("/order/confirm");
+                      } catch (error) {}
+                    } else {
+                      setMessage("error in adding order items");
+                      nullMessage();
+                      navigate("/order/error");
+                    }
+                  })
+                  .catch((err) => {
+                    setMessage("error in adding order items");
+                    nullMessage();
+                    navigate("/order/error");
+                  });
+              })
+              .catch((err) => {
+                setMessage("error in getting cart details");
+                nullMessage();
+              });
+          })
+          .catch((err) => {
+            setMessage("error in payment");
+            nullMessage();
+            navigate("/order/error");
+          });
+      })
+      .catch((err) => {
+        setMessage("error in placing order");
+        nullMessage();
+        navigate("/order/error");
+      });
+  };
+
+  const getById = (id) => {
+    axios
+      .get(`/user/address/${id}/getById`)
+      .then((res) => {
+        setName(res.data.name);
+        setEmail(res.data.email);
+        setPhone(res.data.phone);
+      })
+      .catch((err) => {
+        setMessage("error in getting address by id");
+        nullMessage();
+      });
+  };
   // ****************************delete address********************//
   const handleDelete = (id) => {
     if (window.confirm(`Are you sure! want to delete selected address?`)) {
@@ -52,21 +202,30 @@ const Address = () => {
           newAddress = newAddress.filter((address) => address.id !== id);
           setAddress(newAddress);
           setMessage("Delete successfull!!!!!!!");
-          setTimeout(() => {
-            setMessage(null);
-          }, 6000);
+          nullMessage();
         })
         .catch((err) => {
           setMessage("Sorry! You can't delete this address");
-          setTimeout(() => {
-            setMessage(null);
-          }, 6000);
+          nullMessage();
         });
     }
   };
-
+  // **********************delete cart************************//
+  const deleteCart = (cart_id) => {
+    axios
+      .delete(`/cart/${cart_id}/delete`)
+      .then((res) => {
+        setMessage("Empty cart");
+      })
+      .catch((err) => {
+        setMessage("could not empty cart");
+      });
+  };
   // ***********on select *****************//
   const clicked = (id) => {
+    try {
+      getById(id);
+    } catch (error) {}
     setAddress_id(id);
     document.getElementById(id).style.border = "solid 2px blue";
     for (let i = 0; i < addresses.length; i++) {
@@ -74,11 +233,6 @@ const Address = () => {
         document.getElementById(addresses[i].id).style.border = "none";
       }
     }
-  };
-
-  // ********************on check out ***************/
-  const onCheckOut = (address_id) => {
-    navigate(`/checkout/${address_id}`);
   };
 
   return (
@@ -143,13 +297,12 @@ const Address = () => {
                         </Card>
                       </Col>
                     ))}
-                  {addresses.length > 0 && (
+                  {razor && addresses.length > 0 && (
                     <button
-                      className="btn btn-dark rounded-pill py-2 btn-block"
-                      id="checkOut"
-                      onClick={() => onCheckOut(address_id)}
+                      onClick={displayRazorPay}
+                      className="btn btn-primary mr-2"
                     >
-                      Check out
+                      Pay {razor.amount / 100}
                     </button>
                   )}
                 </Row>

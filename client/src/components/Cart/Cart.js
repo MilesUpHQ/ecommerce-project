@@ -35,22 +35,41 @@ export default function Cart() {
   }, []);
   // delete item from cart
   const deleteItem = (id) => {
-    axios
-      .delete(`/cart/remove/${id}`, {
-        headers: {
-          Authorization: `Bearer ${getJWT()}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        getCartItems();
-      })
-      .catch((err) => {
-        setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
-      });
+    //  show a confirmation dialog
+    //  if confirmed then delete the item
+    //  else do nothing
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      axios
+        .delete(`/cart/remove/${id}`, {
+          headers: {
+            Authorization: `Bearer ${getJWT()}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          getCartItems();
+        })
+        .catch((err) => {
+          setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
+        });
+    }
   };
   // update item in cart
+
   const updateItem = (id, quantity) => {
+    if (quantity <= 0) {
+      deleteItem(id);
+    }
+    setCartItems(
+      cartItems.map((item) =>
+        item.cart_id === id
+          ? {
+              ...item,
+              quantity: quantity,
+            }
+          : item
+      )
+    );
     axios
       .put(`/cart/update/${id}`, {
         quantity: quantity,
@@ -126,6 +145,7 @@ export default function Cart() {
                                   type="number"
                                   className="form-control"
                                   value={cart.quantity}
+                                  required
                                   onChange={(e) =>
                                     updateItem(cart.cart_id, e.target.value)
                                   }
@@ -207,7 +227,9 @@ export default function Cart() {
                     </li>
                     <li className="d-flex justify-content-between py-3 border-bottom">
                       <strong className="text-muted">Total</strong>
-                      <h5 className="font-weight-bold">$0.00</h5>
+                      <h5 className="font-weight-bold">
+                        ${cartItems[0]?.total || "0.00"}
+                      </h5>
                     </li>
                   </ul>
                   <a
