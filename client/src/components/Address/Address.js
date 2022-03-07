@@ -78,32 +78,36 @@ const Address = () => {
       name: "E-commerence",
       description: "Transaction for placing an order",
       order_id: razor.id,
-      handler: function (result) {
-        setMessage("opening razorpay");
-        nullMessage();
-        try {
-          orderPlaced(result.razorpay_order_id, result.razorpay_payment_id);
-        } catch (error) {
-          setMessage("error in placing order");
-          nullMessage();
-          navigate("/order/error");
-        }
-      },
+      handler: (response) => onPaymentSuccess(response),
       prefill: {
         name: name,
         email: email,
         contact: phone,
       },
     };
+
     var paymentObj = new Razorpay(options);
     paymentObj.open();
-    paymentObj.on("payment.failed", function (response) {
-      setMessage("error in openin razor pay");
+    paymentObj.on("payment.failed", (errResponse) =>
+      onPaymentFailure(errResponse)
+    );
+  };
+  function onPaymentFailure(response) {
+    setMessage("error in openin razor pay");
+    nullMessage();
+    navigate("/order/error");
+  }
+  function onPaymentSuccess(response) {
+    setMessage("opening razorpay");
+    nullMessage();
+    try {
+      orderPlaced(response.razorpay_order_id, response.razorpay_payment_id);
+    } catch (error) {
+      setMessage("error in placing order");
       nullMessage();
       navigate("/order/error");
-    });
-  };
-
+    }
+  }
   const orderPlaced = async (order_id, payment_id) => {
     let ordersID;
     axios

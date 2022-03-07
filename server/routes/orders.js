@@ -12,7 +12,7 @@ router.post("/payment", async (req, res, next) => {
       order_id: req.body.order_id,
     })
     .then((rows) => {
-      res.json({ message: "sucessfully added !!" });
+      res.json({ message: "Sucessfully added !!" });
     })
     .catch((err) => {
       res.json({
@@ -34,7 +34,7 @@ router.post("/confirm", async (req, res, next) => {
     })
     .returning("orders.id")
     .then((rows) => {
-      res.json({ message: "sucessfully added order!!", id: rows[0].id });
+      res.json({ message: "Sucessfully added order!!", id: rows[0].id });
     })
     .catch((err) => {
       res.json({
@@ -66,7 +66,7 @@ router.post("/items", async (req, res, next) => {
       product_id: req.body.variant_id,
     })
     .then((rows) => {
-      res.json({ message: "sucessfully added order items!!" });
+      res.json({ message: "Sucessfully added order items!!" });
     })
     .catch((err) => {
       res.json({
