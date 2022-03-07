@@ -6,7 +6,12 @@ import { Card, Button, Container, Row, Col, Carousel } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
 import ErrorAlert from "../Common/ErrorAlert";
 import "../Home/home.css";
+import Add from "../Cart/Add";
+
 const ViewProduct = () => {
+  const [addToCart, setAddToCart] = useState(false);
+  const [updateNavbar, setUpdateNavbar] = useState(false);
+
   let [product, setProduct] = useState([]);
   let [category, setCategory] = useState("");
   let [colors, setColors] = useState([]);
@@ -47,11 +52,21 @@ const ViewProduct = () => {
       });
   }, []);
 
+  const handleAddToCart = (id) => {
+    setAddToCart(id);
+    setUpdateNavbar(true);
+    setTimeout(() => {
+      setAddToCart(false);
+      setUpdateNavbar(false);
+    }, 2000);
+  };
+
   return (
     <div className="mainContainer">
       {product && imageUrls && (
         <div>
-          <Navbar />
+          {addToCart ? <Add id={addToCart} /> : null}
+          <Navbar updateNavbar={updateNavbar} />
           <br />
           <br />
           <hr />
@@ -157,7 +172,14 @@ const ViewProduct = () => {
                         name="name"
                         className="cartInput"
                       />
-                      <Button type="submit" variant="primary">
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleAddToCart(id);
+                        }}
+                      >
                         Add to cart
                       </Button>
                     </form>
