@@ -41,6 +41,7 @@ const AddressForm = ({
                     id="exampleInputName1"
                     placeholder="Name"
                     value={name}
+                    required={true}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
@@ -53,6 +54,7 @@ const AddressForm = ({
                     id="exampleInputName1"
                     placeholder="E-mail"
                     value={email}
+                    required={true}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -66,6 +68,7 @@ const AddressForm = ({
                     id="exampleInputName1"
                     placeholder="Phone Number"
                     value={phone}
+                    required={true}
                     onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
@@ -78,6 +81,7 @@ const AddressForm = ({
                     id="exampleInputName1"
                     placeholder="Street"
                     value={street}
+                    required={true}
                     onChange={(e) => setStreet(e.target.value)}
                   />
                 </div>
@@ -89,18 +93,20 @@ const AddressForm = ({
                     id="exampleInputName1"
                     placeholder="city"
                     value={city}
+                    required={true}
                     onChange={(e) => setCity(e.target.value)}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="exampleInputName1">pin_code</label>
+                  <label htmlFor="exampleInputName1">Pincode</label>
                   <input
                     type="text"
                     className="form-control"
                     id="exampleInputName1"
                     placeholder="pin_code"
                     value={pin_code}
+                    required={true}
                     onChange={(e) => setPin_code(e.target.value)}
                   />
                 </div>
@@ -113,6 +119,7 @@ const AddressForm = ({
                     id="exampleInputName1"
                     placeholder="state"
                     value={state}
+                    required={true}
                     onChange={(e) => setState(e.target.value)}
                   />
                 </div>
@@ -126,7 +133,9 @@ const AddressForm = ({
                 <button type="submit" className="btn btn-primary mr-2">
                   Submit
                 </button>
-                <button className="btn btn-light">Cancel</button>
+                <a href="/user/address" className="btn btn-light">
+                  Cancel
+                </a>
               </form>
             </div>
           </div>

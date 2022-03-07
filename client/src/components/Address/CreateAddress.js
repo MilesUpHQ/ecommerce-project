@@ -16,7 +16,7 @@ const CreateAddress = () => {
   let [pin_code, setPin_code] = useState(null);
   let [state, setState] = useState(null);
   let [country, setCountry] = useState(null);
-  let [title, setTitle] = useState("null");
+  let [title, setTitle] = useState("add An address");
   let [name, setName] = useState(null);
   let [email, setEmail] = useState(null);
   let [phone, setPhone] = useState(null);
@@ -33,7 +33,6 @@ const CreateAddress = () => {
   let submitHandler;
   let id = location.pathname.slice(14);
   if (location.pathname == "/user/address/null") {
-    // setTitle("Add an address");
     submitHandler = async (e) => {
       e.preventDefault();
       axios
@@ -59,7 +58,7 @@ const CreateAddress = () => {
         });
     };
   }
-  if (location.pathname == `/user/address/${id}`) {
+  if (!(location.pathname == "/user/address/null")) {
     submitHandler = async (e) => {
       e.preventDefault();
       axios
@@ -88,7 +87,7 @@ const CreateAddress = () => {
   }
 
   useEffect(() => {
-    if (location.pathname == `/user/address/${id}`) {
+    if (!(location.pathname == "/user/address/null")) {
       axios
         .get(`/user/address/${id}/getById`)
         .then((response) => {
@@ -100,7 +99,7 @@ const CreateAddress = () => {
           setPhone(response.data.phone);
           setName(response.data.name);
           setEmail(response.data.email);
-          setTitle("Address :");
+          setTitle("Address Edit:");
         })
         .catch((err) => {
           setMessage("Sorry we couldnot get address with error " + err);

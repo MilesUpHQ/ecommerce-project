@@ -27,7 +27,7 @@ import { Edit } from "./components/Admin/Products/Edit";
 import Cart from "./components/Cart/Cart";
 import Address from "./components/Address/Address";
 import CreateAddress from "./components/Address/CreateAddress";
-import Checkout from "./components/CheckOut/Checkout";
+import Add from "./components/Cart/Add";
 import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
 import OrderFailed from "./components/FailedError/FailedError";
 const App = () => {
@@ -40,6 +40,24 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/product/view/:id" element={<ViewProduct />} />
+        <Route
+          path="/admin/product/featured"
+          element={<FeaturedProductLayout />}
+        />
+        <Route path="/admin/products/add" element={<AddProducts />} />
+        <Route path="/admin/products" element={<ProductLayout />} />
+        <Route path="/" element={<FeaturedProducts />}></Route>
+        <Route path="/products/:category" element={<ProductsByCategory />} />
+        <Route path="/admin/products/:id/view" element={<ProductView />} />
+        <Route path="/admin/user/:id/view" element={<UserView />} />
+        <Route path="/admin/product/:id/update" element={<Edit />} />
+        <Route path="/admin/user" element={<User />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/user/address" element={<Address />} />
+        <Route path="/user/address/:id" element={<CreateAddress />} />
+        <Route path="/order/confirm" element={<OrderConfirm />} />
+        <Route path="/order/error" element={<OrderFailed />} />
 
         {/* Admin Routes */}
 
@@ -132,7 +150,6 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/user/address" element={<Address />} />
         <Route path="/user/address/:id" element={<CreateAddress />} />
-        <Route path="/checkout/:id" element={<Checkout />} />
         <Route path="/order/confirm" element={<OrderConfirm />} />
         <Route path="/order/error" element={<OrderFailed />} />
       </Routes>

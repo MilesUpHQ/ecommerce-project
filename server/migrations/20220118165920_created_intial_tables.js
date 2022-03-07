@@ -53,6 +53,7 @@ exports.up = function (knex) {
         table.dateTime("order_date").notNullable();
         table.integer("total_price").notNullable();
         table.string("status").notNullable();
+        table.string("order_id").notNullable();
         table.integer("address_id").unsigned().notNullable();
         table.foreign("address_id").references("address.id");
         table.integer("user_id").unsigned().notNullable();
@@ -95,6 +96,7 @@ exports.up = function (knex) {
       })
       .createTable("payment", (table) => {
         table.increments("id").primary();
+        table.string("payment_id").notNullable();
         table.string("type").notNullable();
         table.string("status").notNullable();
         table.integer("order_id").unsigned().notNullable();
