@@ -6,6 +6,8 @@ import { Card, Button, Container, Row, Col, Carousel } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
 import ErrorAlert from "../Common/ErrorAlert";
 import "../Home/home.css";
+import SearchProducts from "../Common/SearchProducts";
+
 const ViewProduct = () => {
   let [product, setProduct] = useState([]);
   let [category, setCategory] = useState("");
@@ -14,6 +16,8 @@ const ViewProduct = () => {
   let [reviews, setReviews] = useState([]);
   let [imageUrls, setImage_url] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
+  const [searchItem, setSearchItem] = React.useState([]);
+  const [searchInput, setSearchInput] = React.useState(null);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   let id = window.location.pathname.substring(14);
@@ -47,151 +51,166 @@ const ViewProduct = () => {
       });
   }, []);
 
+  const handleSearchFilter = (value) => {
+    setSearchInput(value);
+  };
+
   return (
     <div className="mainContainer">
       {product && imageUrls && (
         <div>
-          <Navbar />
+          <Navbar
+            searchItem={searchItem}
+            setSearchItem={setSearchItem}
+            placeholder={"Search for products"}
+            handleSearchFilter={handleSearchFilter}
+          />
           <br />
           <br />
           <hr />
           {errorMsg && <ErrorAlert msg={errorMsg} />}
-          <Card className="viewCard">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-              <div
-                className="collapse navbar-collapse"
-                id="navbarSupportedContent"
-              >
-                <ul className="navbar-nav mr-auto">
-                  <li className="nav-item active">
-                    <a className="nav-link" href="/">
-                      Home /
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    {category && (
-                      <a className="nav-link" href="#">
-                        {category} /
-                      </a>
-                    )}
-                  </li>
-                </ul>
-              </div>
-            </nav>
-          </Card>
-          <hr />
-          <Card className="containerCard">
-            <Container>
-              <Row>
-                <Col>
-                  <Card.Img
-                    variant="top"
-                    src={BASE_URL + "/" + product.image_url}
-                    className="imgSlide"
-                  />
-                </Col>
-                <Col>
-                  <Card.Body>
-                    <Card.Title className="productName">
-                      {product.name}{" "}
-                    </Card.Title>
-                    <Card.Text className="iconText">
-                      <FaHeart className="icon" />
-                    </Card.Text>
-                    <br />
-
-                    <Card.Text>{product.description}</Card.Text>
-                    <Card.Text>Price : Rs.{product.price}</Card.Text>
-                    <Container>
-                      <Row>
-                        <Col>
-                          <Card.Text>Sizes</Card.Text>
-                          <hr />
-                          <div>
-                            {" "}
-                            {sizes &&
-                              sizes.map((size) => {
-                                return (
-                                  <div>
-                                    <input
-                                      type="radio"
-                                      value="Male"
-                                      name={size.size}
-                                    />{" "}
-                                    {size.size}
-                                  </div>
-                                );
-                              })}
-                          </div>
-                        </Col>
-                        <Col>
-                          <Card.Text>Colors</Card.Text>
-                          <hr />
-                          <div>
-                            {colors &&
-                              colors.map((colors) => {
-                                return (
-                                  <div>
-                                    <input
-                                      type="radio"
-                                      value="Male"
-                                      name={colors.color}
-                                    />{" "}
-                                    {colors.color}
-                                  </div>
-                                );
-                              })}
-                          </div>
-                        </Col>
-                      </Row>
-                    </Container>
-                    <br />
-                    <form>
-                      <input
-                        type="text"
-                        pattern="[0-9]*"
-                        min="1"
-                        value="1"
-                        step="1"
-                        onkeydown="return false"
-                        name="name"
-                        className="cartInput"
-                      />
-                      <Button type="submit" variant="primary">
-                        Add to cart
-                      </Button>
-                    </form>
-                  </Card.Body>
-                </Col>
-              </Row>
+          {searchItem.length > 0 || searchInput !== null ? (
+            <SearchProducts searchItem={searchItem} searchInput={searchInput} />
+          ) : (
+            <>
+              <Card className="viewCard">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                  <div
+                    className="collapse navbar-collapse"
+                    id="navbarSupportedContent"
+                  >
+                    <ul className="navbar-nav mr-auto">
+                      <li className="nav-item active">
+                        <a className="nav-link" href="/">
+                          Home /
+                        </a>
+                      </li>
+                      <li className="nav-item">
+                        {category && (
+                          <a className="nav-link" href="#">
+                            {category} /
+                          </a>
+                        )}
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+              </Card>
               <hr />
-              <Row className="reviewsRow">
-                <Card.Text>Reviews</Card.Text>
+              <Card className="containerCard">
                 <Container>
-                  {reviews &&
-                    reviews.map((review) => {
-                      return (
-                        <div className="reviewsDiv">
-                          <Card.Text className="reviewComment">
-                            {review.comment}
-                          </Card.Text>
-                          <Card.Text className="text1">
-                            with the rating of
-                          </Card.Text>
-                          <Card.Text className="rating">
-                            {review.rating}
-                          </Card.Text>
-                          <Card.Text className="text2">by</Card.Text>
-                          <Card.Text className="username">
-                            {review.username}
-                          </Card.Text>
-                        </div>
-                      );
-                    })}
+                  <Row>
+                    <Col>
+                      <Card.Img
+                        variant="top"
+                        src={BASE_URL + "/" + product.image_url}
+                        className="imgSlide"
+                      />
+                    </Col>
+                    <Col>
+                      <Card.Body>
+                        <Card.Title className="productName">
+                          {product.name}{" "}
+                        </Card.Title>
+                        <Card.Text className="iconText">
+                          <FaHeart className="icon" />
+                        </Card.Text>
+                        <br />
+
+                        <Card.Text>{product.description}</Card.Text>
+                        <Card.Text>Price : Rs.{product.price}</Card.Text>
+                        <Container>
+                          <Row>
+                            <Col>
+                              <Card.Text>Sizes</Card.Text>
+                              <hr />
+                              <div>
+                                {" "}
+                                {sizes &&
+                                  sizes.map((size) => {
+                                    return (
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          value="Male"
+                                          name={size.size}
+                                        />{" "}
+                                        {size.size}
+                                      </div>
+                                    );
+                                  })}
+                              </div>
+                            </Col>
+                            <Col>
+                              <Card.Text>Colors</Card.Text>
+                              <hr />
+                              <div>
+                                {colors &&
+                                  colors.map((colors) => {
+                                    return (
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          value="Male"
+                                          name={colors.color}
+                                        />{" "}
+                                        {colors.color}
+                                      </div>
+                                    );
+                                  })}
+                              </div>
+                            </Col>
+                          </Row>
+                        </Container>
+                        <br />
+                        <form>
+                          <input
+                            type="text"
+                            pattern="[0-9]*"
+                            min="1"
+                            value="1"
+                            step="1"
+                            onkeydown="return false"
+                            name="name"
+                            className="cartInput"
+                          />
+                          <Button type="submit" variant="primary">
+                            Add to cart
+                          </Button>
+                        </form>
+                      </Card.Body>
+                    </Col>
+                  </Row>
+                  <hr />
+                  <Row className="reviewsRow">
+                    <Card.Text>Reviews</Card.Text>
+                    <Container>
+                      {reviews &&
+                        reviews.map((review) => {
+                          return (
+                            <div className="reviewsDiv">
+                              <Card.Text className="reviewComment">
+                                {review.comment}
+                              </Card.Text>
+                              <Card.Text className="text1">
+                                with the rating of
+                              </Card.Text>
+                              <Card.Text className="rating">
+                                {review.rating}
+                              </Card.Text>
+                              <Card.Text className="text2">by</Card.Text>
+                              <Card.Text className="username">
+                                {review.username}
+                              </Card.Text>
+                            </div>
+                          );
+                        })}
+                    </Container>
+                  </Row>
                 </Container>
-              </Row>
-            </Container>
-          </Card>
+              </Card>
+            </>
+          )}
         </div>
       )}
     </div>

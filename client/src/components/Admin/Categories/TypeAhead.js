@@ -1,3 +1,4 @@
+import React from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 
 const TypeAhead = ({
@@ -7,8 +8,8 @@ const TypeAhead = ({
   searchItem,
   isLoading,
   placeholder,
-  setSearchInput,
-  searchInput,
+  // setSearchInput,
+  // searchInput,
   handleSearchFilter,
   onEnterSearchItems,
 }) => {
@@ -33,6 +34,7 @@ const TypeAhead = ({
     </button>
   );
 
+  const [value, setValue] = React.useState(null);
   return (
     <AsyncTypeahead
       filterBy={() => true}
@@ -41,7 +43,7 @@ const TypeAhead = ({
       minLength={3}
       options={options}
       onInputChange={(text, e) => {
-        onEnterSearchItems && setSearchInput(text);
+        onEnterSearchItems && setValue(text);
         handleSearch(text);
       }}
       onChange={setSearchItem}
@@ -49,12 +51,12 @@ const TypeAhead = ({
       selected={searchItem}
       onKeyDown={(e) =>
         onEnterSearchItems && e.key === "Enter"
-          ? handleSearchFilter(searchInput)
+          ? handleSearchFilter(value)
           : ""
       }
     >
       {onEnterSearchItems && (
-        <SearchButton onClick={() => handleSearchFilter(searchInput)} />
+        <SearchButton onClick={() => handleSearchFilter(value)} />
       )}
     </AsyncTypeahead>
   );
