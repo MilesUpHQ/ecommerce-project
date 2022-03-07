@@ -1,38 +1,13 @@
 var express = require("express");
 var router = express.Router();
 const { attachPaginate } = require("knex-paginate");
+const {
+  addCategory,
+  updateCategory,
+  deleteCategory,
+} = require("../../../queries/admin/category");
 const db = require("../../../utils/dbConfig");
-
 attachPaginate();
-
-function addCategory(db, newCategory) {
-  return db
-    .insert(newCategory, "*")
-    .into("product_categories")
-    .then((rows) => {
-      return rows[0];
-    });
-}
-
-function updateCategory(db, updateCategory) {
-  return db
-    .update("name", updateCategory.name, "*")
-    .update("parent_id", updateCategory.parent_id)
-    .where("id", updateCategory.id)
-    .into("product_categories")
-    .then((rows) => {
-      return rows[0];
-    });
-}
-
-function deleteCategory(db, deleteCategory) {
-  return db("product_categories")
-    .delete()
-    .where("id", deleteCategory.id)
-    .then((rows) => {
-      return rows[0];
-    });
-}
 
 router.get("/categories", async (req, res) => {
   try {
@@ -86,7 +61,7 @@ router.get("/search-categories", async (req, res) => {
 
 router.post("/category", async (req, res) => {
   try {
-    let newCategory = await addCategory(db, {
+    let newCategory = await addCategory({
       parent_id: req.body.searchItemId || null,
       name: req.body.categoryName,
     });
@@ -104,7 +79,7 @@ router.post("/category", async (req, res) => {
 
 router.put("/update-category", async (req, res) => {
   try {
-    let newCategory = await updateCategory(db, {
+    let newCategory = await updateCategory({
       name: req.body.categoryName,
       id: req.body.categoryId,
       parent_id: req.body.searchItemId,
@@ -123,7 +98,7 @@ router.put("/update-category", async (req, res) => {
 
 router.delete("/delete-category", async (req, res) => {
   try {
-    await deleteCategory(db, { id: req.query.id });
+    await deleteCategory({ id: req.query.id });
     res.json({ message: "deleted succesfully" });
   } catch (err) {
     res.status(401).json({ error: err });

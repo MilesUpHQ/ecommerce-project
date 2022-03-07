@@ -6,6 +6,7 @@ import Navbar from "../Navbar/Navbar";
 import ProductList from "./ProductList";
 import ErrorAlert from "../Common/ErrorAlert";
 import { Carousel, Card } from "react-bootstrap";
+import SearchProducts from "../Common/SearchProducts";
 
 const Home = () => {
   let [featuredProducts, setfeaturedProducts] = useState([]);
@@ -15,6 +16,8 @@ const Home = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [message, setMessage] = useState(null);
   const [imgArray, setimgArray] = useState([]);
+  const [searchItem, setSearchItem] = React.useState([]);
+  const [searchInput, setSearchInput] = React.useState(null);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const handlePagination = (page) => {
@@ -29,6 +32,11 @@ const Home = () => {
         setErrorMsg("Sorry! Something went wrong. Please Try again", err);
       });
   };
+
+  const handleSearchFilter = (value) => {
+    setSearchInput(value);
+  };
+
   useEffect(async () => {
     axios
       .get("/featured_products")
@@ -57,38 +65,52 @@ const Home = () => {
         </Card>
       )}
       <div>
-        <Navbar />
-        {errorMsg && <ErrorAlert msg={errorMsg} />}
-        {featuredProducts && (
-          <div>
-            <Carousel>
-              {imgArray &&
-                imgArray.map((imageUrl) => {
-                  return (
-                    <Carousel.Item interval={1000}>
-                      <img
-                        className="d-block w-100"
-                        src={BASE_URL + "/" + imageUrl}
-                        className="imageSlide"
-                      />
-                    </Carousel.Item>
-                  );
-                })}
-            </Carousel>
+        <Navbar
+          searchItem={searchItem}
+          setSearchItem={setSearchItem}
+          placeholder={"Search for products"}
+          handleSearchFilter={handleSearchFilter}
+        />
+        {searchItem.length > 0 || searchInput !== null ? (
+          <>
+            <br />
+            <SearchProducts searchItem={searchItem} searchInput={searchInput} />
+          </>
+        ) : (
+          <>
+            {errorMsg && <ErrorAlert msg={errorMsg} />}
+            {featuredProducts && (
+              <div>
+                <Carousel>
+                  {imgArray &&
+                    imgArray.map((imageUrl) => {
+                      return (
+                        <Carousel.Item interval={1000}>
+                          <img
+                            className="d-block w-100"
+                            src={BASE_URL + "/" + imageUrl}
+                            className="imageSlide"
+                          />
+                        </Carousel.Item>
+                      );
+                    })}
+                </Carousel>
 
-            <div className="mainContainer">
-              <ProductList
-                featuredProducts={featuredProducts}
-                currPage={currPage}
-                lastPage={lastPage}
-                totalPages={totalPages}
-                handlePagination={handlePagination}
-                setfeaturedProducts={setfeaturedProducts}
-                setCurrPage={setCurrPage}
-                imgArray={imgArray}
-              />
-            </div>
-          </div>
+                <div className="mainContainer">
+                  <ProductList
+                    featuredProducts={featuredProducts}
+                    currPage={currPage}
+                    lastPage={lastPage}
+                    totalPages={totalPages}
+                    handlePagination={handlePagination}
+                    setfeaturedProducts={setfeaturedProducts}
+                    setCurrPage={setCurrPage}
+                    imgArray={imgArray}
+                  />
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

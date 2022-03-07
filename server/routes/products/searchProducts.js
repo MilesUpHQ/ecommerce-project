@@ -79,7 +79,6 @@ router.get("/typeahead-items", async (req, res) => {
 // });
 
 router.get("/filter-products", (req, res) => {
-  console.log(req.query);
   let priceRange =
     (req.query.prices_range && JSON.parse(req.query.prices_range)) || null;
   try {

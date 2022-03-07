@@ -5,10 +5,10 @@ import axios from "../../utils/ajax-helper";
 import TypeAhead from "../Admin/Categories/TypeAhead";
 import { getJWT } from "../../utils/jwt";
 const Navbar = ({
-  handleSearch,
+  // handleSearch,
   setSearchItem,
   searchItem,
-  options,
+  // options,
   placeholder,
   setSearchInput,
   searchInput,
@@ -21,6 +21,7 @@ const Navbar = ({
   const [errorMsg, setErrorMsg] = React.useState(null);
   const [cartPrice, setCartPrice] = React.useState(0);
   const [cartItems, setCartItems] = React.useState(0);
+  const [options, setOptions] = React.useState([]);
 
   const updateCartDetails = () => {
     axios
@@ -36,6 +37,19 @@ const Navbar = ({
       .catch((err) => {
         setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
       });
+  };
+
+  const handleSearch = (value) => {
+    axios
+      .get(`/typeahead-items?search_keyword=${value}`)
+      .then((res) => {
+        let array = res.data.map(({ id, name }) => ({
+          label: name,
+          value: id,
+        }));
+        setOptions(array);
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
