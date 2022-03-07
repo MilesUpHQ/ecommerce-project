@@ -5,12 +5,10 @@ export default function OrderItems(props) {
   const { orderId } = props.orderId;
   const [orderItems, setOrderItems] = React.useState([]);
   const [errorMsg, setErrorMsg] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       setIsError(false);
       try {
         const response = await fetch(
@@ -33,7 +31,6 @@ export default function OrderItems(props) {
         setErrorMsg(error.message);
         setIsError(true);
       }
-      setIsLoading(false);
     };
     fetchData();
   }, [orderId]);
@@ -42,6 +39,11 @@ export default function OrderItems(props) {
     <div className="product border-bottom table-responsive">
       <table className="table table-borderless">
         <tbody>
+          {isError ? (
+            <div class="alert alert-danger" role="alert">
+              {errorMsg}
+            </div>
+          ) : null}
           {orderItems ? (
             <>
               {orderItems.map((item, index) => (
