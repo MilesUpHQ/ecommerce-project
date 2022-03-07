@@ -6,13 +6,10 @@ import { Card, Button, Container, Row, Col, Carousel } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
 import ErrorAlert from "../Common/ErrorAlert";
 import "../Home/home.css";
-import Add from "../Cart/Add";
 import SearchProducts from "../Common/SearchProducts";
+import Add from "../Cart/Add";
 
 const ViewProduct = () => {
-  const [addToCart, setAddToCart] = useState(false);
-  const [updateNavbar, setUpdateNavbar] = useState(false);
-
   let [product, setProduct] = useState([]);
   let [category, setCategory] = useState("");
   let [colors, setColors] = useState([]);
@@ -23,6 +20,8 @@ const ViewProduct = () => {
   const [searchItem, setSearchItem] = React.useState([]);
   const [searchInput, setSearchInput] = React.useState(null);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const [addToCart, setAddToCart] = React.useState(false);
+  const [updateNavbar, setUpdateNavbar] = React.useState(false);
 
   let id = window.location.pathname.substring(14);
   const removeDuplicate = (array) => {
@@ -57,6 +56,8 @@ const ViewProduct = () => {
 
   const handleSearchFilter = (value) => {
     setSearchInput(value);
+  };
+
   const handleAddToCart = (id) => {
     setAddToCart(id);
     setUpdateNavbar(true);
@@ -68,15 +69,15 @@ const ViewProduct = () => {
 
   return (
     <div className="mainContainer">
+      {addToCart ? <Add id={addToCart} /> : null}
       {product && imageUrls && (
         <div>
-          {addToCart ? <Add id={addToCart} /> : null}
           <Navbar
             searchItem={searchItem}
             setSearchItem={setSearchItem}
             placeholder={"Search for products"}
             handleSearchFilter={handleSearchFilter}
-	    updateNavbar={updateNavbar}
+            updateNavbar={updateNavbar}
           />
           <br />
           <br />
@@ -176,106 +177,56 @@ const ViewProduct = () => {
                           </Row>
                         </Container>
                         <br />
-                    <form>
-                      <input
-                        type="text"
-                        pattern="[0-9]*"
-                        min="1"
-                        value="1"
-                        step="1"
-                        onkeydown="return false"
-                        name="name"
-                        className="cartInput"
-                      />
-                      <Button
-                        type="submit"
-                        variant="primary"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleAddToCart(id);
-                        }}
-                      >
-                        Add to cart
-                      </Button>
-                    </form>
-                  </Card.Body>
-                </Col>
-              </Row>
-              <hr />
-              <Row className="reviewsRow">
-                <Card.Text>Reviews</Card.Text>
-                <Container>
-                  {reviews &&
-                    reviews.map((review) => {
-                      return (
-                        <div className="reviewsDiv">
-                          <Card.Text className="reviewComment">
-                            {review.comment}
-                          </Card.Text>
-                          <Card.Text className="text1">
-                            with the rating of
-                          </Card.Text>
-                          <Card.Text className="rating">
-                            {review.rating}
-                          </Card.Text>
-                          <Card.Text className="text2">by</Card.Text>
-                          <Card.Text className="username">
-                            {review.username}
-                          </Card.Text>
-                        </div>
-                      );
-                    })}
-                    </Container>
-                    <br />
-                    <form>
-                      <input
-                        type="text"
-                        pattern="[0-9]*"
-                        min="1"
-                        value="1"
-                        step="1"
-                        onkeydown="return false"
-                        name="name"
-                        className="cartInput"
-                      />
-                      <Button
-                        type="submit"
-                        variant="primary"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleAddToCart(id);
-                        }}
-                      >
-                        Add to cart
-                      </Button>
-                    </form>
-                  </Card.Body>
-                </Col>
-              </Row>
-              <hr />
-              <Row className="reviewsRow">
-                <Card.Text>Reviews</Card.Text>
-                <Container>
-                  {reviews &&
-                    reviews.map((review) => {
-                      return (
-                        <div className="reviewsDiv">
-                          <Card.Text className="reviewComment">
-                            {review.comment}
-                          </Card.Text>
-                          <Card.Text className="text1">
-                            with the rating of
-                          </Card.Text>
-                          <Card.Text className="rating">
-                            {review.rating}
-                          </Card.Text>
-                          <Card.Text className="text2">by</Card.Text>
-                          <Card.Text className="username">
-                            {review.username}
-                          </Card.Text>
-                        </div>
-                      );
-                    })}
+                        <form>
+                          <input
+                            type="text"
+                            pattern="[0-9]*"
+                            min="1"
+                            value="1"
+                            step="1"
+                            onkeydown="return false"
+                            name="name"
+                            className="cartInput"
+                          />
+                          <Button
+                            type="submit"
+                            variant="primary"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleAddToCart(id);
+                            }}
+                          >
+                            {" "}
+                            Add to cart
+                          </Button>
+                        </form>
+                      </Card.Body>
+                    </Col>
+                  </Row>
+                  <hr />
+                  <Row className="reviewsRow">
+                    <Card.Text>Reviews</Card.Text>
+                    <Container>
+                      {reviews &&
+                        reviews.map((review) => {
+                          return (
+                            <div className="reviewsDiv">
+                              <Card.Text className="reviewComment">
+                                {review.comment}
+                              </Card.Text>
+                              <Card.Text className="text1">
+                                with the rating of
+                              </Card.Text>
+                              <Card.Text className="rating">
+                                {review.rating}
+                              </Card.Text>
+                              <Card.Text className="text2">by</Card.Text>
+                              <Card.Text className="username">
+                                {review.username}
+                              </Card.Text>
+                            </div>
+                          );
+                        })}
                     </Container>
                   </Row>
                 </Container>
