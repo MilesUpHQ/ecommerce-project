@@ -7,6 +7,7 @@ import { FaHeart } from "react-icons/fa";
 import ErrorAlert from "../Common/ErrorAlert";
 import "../Home/home.css";
 import SearchProducts from "../Common/SearchProducts";
+import Add from "../Cart/Add";
 
 const ViewProduct = () => {
   let [product, setProduct] = useState([]);
@@ -19,6 +20,8 @@ const ViewProduct = () => {
   const [searchItem, setSearchItem] = React.useState([]);
   const [searchInput, setSearchInput] = React.useState(null);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const [addToCart, setAddToCart] = React.useState(false);
+  const [updateNavbar, setUpdateNavbar] = React.useState(false);
 
   let id = window.location.pathname.substring(14);
   const removeDuplicate = (array) => {
@@ -55,8 +58,18 @@ const ViewProduct = () => {
     setSearchInput(value);
   };
 
+  const handleAddToCart = (id) => {
+    setAddToCart(id);
+    setUpdateNavbar(true);
+    setTimeout(() => {
+      setAddToCart(false);
+      setUpdateNavbar(false);
+    }, 2000);
+  };
+
   return (
     <div className="mainContainer">
+      {addToCart ? <Add id={addToCart} /> : null}
       {product && imageUrls && (
         <div>
           <Navbar
@@ -64,6 +77,7 @@ const ViewProduct = () => {
             setSearchItem={setSearchItem}
             placeholder={"Search for products"}
             handleSearchFilter={handleSearchFilter}
+            updateNavbar={updateNavbar}
           />
           <br />
           <br />
@@ -174,7 +188,15 @@ const ViewProduct = () => {
                             name="name"
                             className="cartInput"
                           />
-                          <Button type="submit" variant="primary">
+                          <Button
+                            type="submit"
+                            variant="primary"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleAddToCart(id);
+                            }}
+                          >
+                            {" "}
                             Add to cart
                           </Button>
                         </form>

@@ -28,6 +28,7 @@ const Address = () => {
   let [name, setName] = useState(null);
   let [email, setEmail] = useState(null);
   let [phone, setPhone] = useState(null);
+  let [cartItems, setCartItems] = useState(null);
 
   const nullMessage = () => {
     return setTimeout(() => {
@@ -36,6 +37,7 @@ const Address = () => {
   };
 
   useEffect(() => {
+    cartDetails();
     axios
       .post(`/user/checkout/payment/${user_id}`)
       .then((res) => {
@@ -70,6 +72,7 @@ const Address = () => {
         nullMessage();
       });
   }, []);
+
   const displayRazorPay = async () => {
     var options = {
       key: process.env.RAZOR_PAY_KEY,
@@ -108,73 +111,75 @@ const Address = () => {
       navigate("/order/error");
     }
   }
+  const postOrder = (orderid) => {
+    return axios.post("/user/order/confirm/", {
+      order_id: orderid,
+      order_date: new Date(),
+      total_price: razor.amount / 100,
+      status: "confirmed",
+      address_id: address_id,
+      user_id: user_id,
+    });
+  };
+  const postPaymentDetails = (orderid, paymentid) => {
+    return axios.post("/user/order/payment/", {
+      order_id: orderid,
+      type: "card",
+      status: "confirmed",
+      payment_id: paymentid,
+    });
+  };
+
+  const cartDetails = () => {
+    axios
+      .get(`/user/cart/${user_id}/details`)
+      .then((res) => {
+        let cartitems = {
+          cart_id: res.data.id,
+          quantity: res.data.quantity,
+          variant_id: res.data.variant_id,
+        };
+        setCartItems(cartitems);
+      })
+      .catch((err) => {
+        setMessage("error in getting cart details");
+        nullMessage();
+      });
+  };
+
+  const postOrderItems = (orderid) => {
+    return axios.post("/user/order/items/", {
+      quantity: cartItems.quantity,
+      variant_id: cartItems.variant_id,
+      order_id: orderid,
+    });
+  };
+
   const orderPlaced = async (order_id, payment_id) => {
     let ordersID;
-    axios
-      .post("/user/order/confirm/", {
-        order_id: order_id,
-        order_date: new Date(),
-        total_price: razor.amount / 100,
-        status: "confirmed",
-        address_id: address_id,
-        user_id: user_id,
-      })
+    postOrder(order_id)
       .then((res) => {
         ordersID = res.data.id;
-        axios
-          .post("/user/order/payment/", {
-            order_id: res.data.id,
-            type: "card",
-            status: "confirmed",
-            payment_id: payment_id,
-          })
+        postPaymentDetails(ordersID, payment_id)
           .then((res) => {
-            axios
-              .get(`/user/cart/${user_id}/details`)
-              .then((res) => {
-                let cart_id = res.data.id;
-                let quantity = res.data.quantity;
-                let variant_id = res.data.variant_id;
-                axios
-                  .post("/user/order/items/", {
-                    quantity: quantity,
-                    variant_id: variant_id,
-                    order_id: ordersID,
-                  })
-                  .then(async (res) => {
-                    if (res.data.message == "sucessfully added order items!!") {
-                      setMessage("sucessfully placed order ");
-                      nullMessage();
-                      try {
-                        await deleteCart(cart_id);
-                        navigate("/order/confirm");
-                      } catch (error) {}
-                    } else {
-                      setMessage("error in adding order items");
-                      nullMessage();
-                      navigate("/order/error");
-                    }
-                  })
-                  .catch((err) => {
-                    setMessage("error in adding order items");
-                    nullMessage();
-                    navigate("/order/error");
-                  });
+            postOrderItems(ordersID)
+              .then(async (res) => {
+                if (res.data.message == "Sucessfully added order items!!") {
+                  await deleteCart(cartItems.cart_id);
+                  navigate("/order/confirm");
+                } else {
+                  navigate("/order/error");
+                }
               })
               .catch((err) => {
-                setMessage("error in getting cart details");
-                nullMessage();
+                navigate("/order/error");
               });
           })
           .catch((err) => {
-            setMessage("error in payment");
-            nullMessage();
             navigate("/order/error");
           });
       })
       .catch((err) => {
-        setMessage("error in placing order");
-        nullMessage();
         navigate("/order/error");
       });
   };
@@ -237,7 +242,7 @@ const Address = () => {
 
   return (
     <React.Fragment>
-      <div className="main-panel">
+      <div className="main-div">
         <div className="content-wrapper">
           <div className="container">
             <a

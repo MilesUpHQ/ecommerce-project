@@ -1,7 +1,7 @@
 import React from "react";
 import Category from "./Category";
 import AdminLayout from "../AdminLayout";
-import "../css/admin-style.css";
+import "../../Common/css/admin-style.css";
 
 const CategoryLayout = () => {
   return (
