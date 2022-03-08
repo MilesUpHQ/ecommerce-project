@@ -1,6 +1,5 @@
 import React from "react";
 import AdminLayout from "../AdminLayout";
-import "../css/admin-style.css";
 import Orders from "./Orders";
 
 
