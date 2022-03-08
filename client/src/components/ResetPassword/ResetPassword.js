@@ -71,41 +71,6 @@ const ResetPassword = () => {
   return (
     <div>
       <div style={{ background: "#fcf0e2", height: "1000px" }}>
-        <nav className="navbar navbar-expand-lg ">
-          <a className="navbar-brand" href="#">
-            <h3>E-commerence</h3>
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul className="navbar-nav">
-              <li className="nav-item active">
-                <a className="nav-link" href="#">
-                  Men
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Women
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Kids
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
         <div className="card" style={{ marginLeft: "30%", marginTop: "10%" }}>
           <div className="card-header">
             <h5>Reset Password</h5>

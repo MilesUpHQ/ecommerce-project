@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
-import "../css/admin-style.css";
+import "../../Common/css/admin-style.css";
+
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const ProductInfo = (props) => {
   const [product, setProduct] = useState({});
@@ -33,9 +34,12 @@ const ProductInfo = (props) => {
           <div class="image-space">
             <h1 class="pdp-title">{product.name}</h1>
             <h1 class="pdp-name">{product.description}</h1>
-            <img class="rounded-circle z-depth-2" 
-            alt="75x75" src={BASE_URL+"/"+product.image_url}
-          data-holder-rendered="true"/>
+            <img
+              class="rounded-circle z-depth-2"
+              alt="75x75"
+              src={BASE_URL + "/" + product.image_url}
+              data-holder-rendered="true"
+            />
           </div>
         </div>
         <div class="view-user p-5">
@@ -60,14 +64,14 @@ const ProductInfo = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                      <th scope="row">{product.name}</th>
-                      <td>{product.size}</td>
-                      <td>{product.color}</td>
-                      <td>{product.type}</td>
-                      <td>{product.price}</td>
-                      <td>{product.description}</td>
-                    </tr>
+                  <tr>
+                    <th scope="row">{product.name}</th>
+                    <td>{product.size}</td>
+                    <td>{product.color}</td>
+                    <td>{product.type}</td>
+                    <td>{product.price}</td>
+                    <td>{product.description}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>

@@ -2,7 +2,7 @@ import React from "react";
 import Category from "./Category";
 import { Helmet } from "react-helmet";
 import AdminLayout from "../AdminLayout";
-import "../css/admin-style.css";
+import "../../Common/css/admin-style.css";
 
 const CategoryLayout = () => {
   return (

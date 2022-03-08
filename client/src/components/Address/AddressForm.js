@@ -123,12 +123,14 @@ const AddressForm = ({
                     onChange={(e) => setState(e.target.value)}
                   />
                 </div>
-
-                <Select
-                  options={options}
-                  value={country}
-                  onChange={changeHandler}
-                />
+                <div>
+                  <label htmlFor="exampleInputName1">Country</label>
+                  <Select
+                    options={options}
+                    value={country}
+                    onChange={changeHandler}
+                  />
+                </div>
                 <br />
                 <button type="submit" className="btn btn-primary mr-2">
                   Submit
