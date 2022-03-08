@@ -11,4 +11,8 @@ function insertUser(params) {
   });
 }
 
-module.exports = { insertUser };
+function getUserByFieldName(field, value) {
+  return db("users").where({ [field]: value });
+}
+
+module.exports = { insertUser, getUserByFieldName };

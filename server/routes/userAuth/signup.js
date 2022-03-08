@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const db = require("../../utils/dbConfig");
-const { insertUser } = require("../../queries/user");
+const { insertUser, getUserByFieldName } = require("../../queries/user");
 
 const userValidation = [
   body("email", "Email is not valid").isEmail(),
@@ -20,8 +20,7 @@ router.post("/", ...userValidation, (req, res) => {
     res.status(400).json(errors.errors);
     return;
   }
-  db("users")
-    .where({ email: req.body.email })
+  getUserByFieldName("email", req.body.email)
     .then((user) => {
       if (user.length > 0) {
         res.status(400).json({
@@ -29,24 +28,22 @@ router.post("/", ...userValidation, (req, res) => {
         });
         return;
       } else {
-        db("users")
-          .where({ username: req.body.username })
-          .then((user) => {
-            if (user.length > 0) {
-              res.status(400).json({
-                message: "Username already exists",
+        getUserByFieldName("username", req.body.username).then((user) => {
+          if (user.length > 0) {
+            res.status(400).json({
+              message: "Username already exists",
+            });
+            return;
+          } else {
+            insertUser(req.body)
+              .then((user) => {
+                res.status(201).json(user);
+              })
+              .catch((err) => {
+                res.status(500).json(err);
               });
-              return;
-            } else {
-              insertUser(req.body)
-                .then((user) => {
-                  res.status(201).json(user);
-                })
-                .catch((err) => {
-                  res.status(500).json(err);
-                });
-            }
-          });
+          }
+        });
       }
     })
     .catch((err) => {
