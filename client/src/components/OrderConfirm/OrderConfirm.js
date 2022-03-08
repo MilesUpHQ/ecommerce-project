@@ -17,10 +17,9 @@ function OrderConfirm() {
     const fetchData = async () => {
       setIsError(false);
       try {
-        axios.get(`/order/confirm/${orderId}`).then((response) => {
-          console.log(response.data);
-          setOrderInfo(response.data);
-        });
+        const response = await axios.get(`/order/confirm/${orderId}`);
+        console.log(response.data);
+        setOrderInfo(response.data);
       } catch (error) {
         setErrorMsg(error.message);
         setIsError(true);
