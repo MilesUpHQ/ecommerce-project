@@ -1,5 +1,6 @@
+import axios from "../../utils/ajax-helper";
 import React, { useEffect } from "react";
-import "../OrderConfirm.css";
+import "./OrderConfirm.css";
 
 export default function OrderItems(props) {
   const { orderId } = props.orderId;
@@ -11,22 +12,16 @@ export default function OrderItems(props) {
     const fetchData = async () => {
       setIsError(false);
       try {
-        const response = await fetch(
-          `${process.env.REACT_APP_BASE_URL}/order/confirm/${orderId}/items`,
-          {
-            method: "GET",
+        axios
+          .get(`/order/confirm/${orderId}`, {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: localStorage.getItem("token"),
             },
-          }
-        );
-        const responseData = await response.json();
-        if (response.status === 200) {
-          setOrderItems(responseData.orderItems);
-        } else {
-          setErrorMsg(responseData.message);
-          setIsError(true);
-        }
+          })
+          .then((response) => {
+            console.log(response.data);
+            setOrderItems(response.data);
+          });
       } catch (error) {
         setErrorMsg(error.message);
         setIsError(true);

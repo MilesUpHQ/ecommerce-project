@@ -1,5 +1,5 @@
 import React from "react";
-import "../OrderConfirm.css";
+import "./OrderConfirm.css";
 export default function OrderTotal(props) {
   return (
     <div className="row d-flex justify-content-end">

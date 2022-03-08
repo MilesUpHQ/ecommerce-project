@@ -142,7 +142,9 @@ const Address = () => {
                     order_id: ordersID,
                   })
                   .then(async (res) => {
-                    if (res.data.message == "sucessfully added order items!!") {
+                    if (
+                      res.data.message === "Sucessfully added order items!!"
+                    ) {
                       setMessage("sucessfully placed order ");
                       nullMessage();
                       try {

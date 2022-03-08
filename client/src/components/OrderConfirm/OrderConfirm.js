@@ -1,16 +1,33 @@
 import React from "react";
 import "./OrderConfirm.css";
-import OrderInfo from "./OrderInfo/OrderInfo";
-import OrderItems from "./OrderItems/OrderItems";
-import OrderTotal from "./OrderTotal/OrderTotal";
+import OrderInfo from "./OrderInfo";
+import OrderItems from "./OrderItems";
+import OrderTotal from "./OrderTotal";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
+import { useParams } from "react-router-dom";
+import axios from "../../utils/ajax-helper";
+
 function OrderConfirm() {
-  const [orderItems, setOrderItems] = React.useState([]);
   const [orderInfo, setOrderInfo] = React.useState({});
-  const [total, setTotal] = React.useState(0);
   const [errorMsg, setErrorMsg] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
+
+  const { orderId } = useParams();
+  React.useEffect(() => {
+    const fetchData = async () => {
+      setIsError(false);
+      try {
+        axios.get(`/order/confirm/${orderId}`).then((response) => {
+          console.log(response.data);
+          setOrderInfo(response.data);
+        });
+      } catch (error) {
+        setErrorMsg(error.message);
+        setIsError(true);
+      }
+    };
+    fetchData();
+  }, [orderId]);
 
   return (
     <>
@@ -27,11 +44,9 @@ function OrderConfirm() {
               ) : (
                 <div className="invoice p-5">
                   <h5>Your order Confirmed!</h5>{" "}
-                  <span className="font-weight-bold d-block mt-4">
-                    Hello, Mani
-                  </span>{" "}
+                  <span className="font-weight-bold d-block mt-4">Hello,</span>{" "}
                   <span>
-                    You order has been confirmed and will be shipped in next two
+                    You order has been confirmed and will be shipped in next few
                     days!
                   </span>
                   <OrderInfo
@@ -40,7 +55,7 @@ function OrderConfirm() {
                     Payment="Master Card"
                     Address="Tirupati"
                   />
-                  <OrderItems />
+                  <OrderItems orderId={orderId} />
                   <OrderTotal
                     Subtotal={200}
                     ShippingFee={5}
