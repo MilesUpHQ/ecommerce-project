@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CategoryList from "./CategoryList";
 import AddCategory from "./AddCategory";
 import axios from "../../../utils/ajax-helper";
-import ErrorAlert from "./ErrorAlert";
+import ErrorAlert from "../../Common/ErrorAlert";
 
 const Category = () => {
   const [input, setInput] = useState("");

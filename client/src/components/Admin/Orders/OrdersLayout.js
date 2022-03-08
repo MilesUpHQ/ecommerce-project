@@ -1,16 +1,17 @@
 import React from "react";
-import Category from "./Category";
 import AdminLayout from "../AdminLayout";
 import "../css/admin-style.css";
+import Orders from "./Orders";
 
-const CategoryLayout = () => {
+
+const OrdersLayout = () => {
   return (
     <>
       <AdminLayout>
-        <Category />
+        <Orders />
       </AdminLayout>
     </>
   );
 };
 
-export default CategoryLayout;
+export default OrdersLayout;

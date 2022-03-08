@@ -5,7 +5,7 @@ const {
   addCategory,
   updateCategory,
   deleteCategory,
-} = require("../../../queries/admin/category");
+} = require("../../../queries/category");
 const db = require("../../../utils/dbConfig");
 attachPaginate();
 

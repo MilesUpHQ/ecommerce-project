@@ -30,6 +30,8 @@ import CreateAddress from "./components/Address/CreateAddress";
 import Add from "./components/Cart/Add";
 import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
 import OrderFailed from "./components/FailedError/FailedError";
+import Orders from "./components/Admin/Orders/OrdersLayout";
+
 const App = () => {
   return (
     <Router>
@@ -139,6 +141,15 @@ const App = () => {
           element={
             <PrivateRoute>
               <User />
+            </PrivateRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/admin/orders"
+          element={
+            <PrivateRoute>
+              <Orders />
             </PrivateRoute>
           }
         ></Route>

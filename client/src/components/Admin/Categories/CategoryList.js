@@ -3,7 +3,7 @@ import AddCategory from "./AddCategory";
 import axios from "../../../utils/ajax-helper";
 import "../css/pagination.css";
 import Pagination from "./Pagination";
-import ErrorAlert from "./ErrorAlert";
+import ErrorAlert from "../../Common/ErrorAlert";
 
 const CategoryList = ({
   categories,
