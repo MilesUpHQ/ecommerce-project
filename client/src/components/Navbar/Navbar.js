@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./pagination-style.css";
+// import "./pagination-style.css";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import axios from "../../utils/ajax-helper";
 import TypeAhead from "../Admin/Categories/TypeAhead";

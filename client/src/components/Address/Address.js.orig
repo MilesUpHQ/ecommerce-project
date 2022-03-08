@@ -162,6 +162,41 @@ const Address = () => {
         ordersID = res.data.id;
         postPaymentDetails(ordersID, payment_id)
           .then((res) => {
+<<<<<<< HEAD
+            axios
+              .get(`/user/cart/${user_id}/details`)
+              .then((res) => {
+                let cart_id = res.data.id;
+                let quantity = res.data.quantity;
+                let variant_id = res.data.variant_id;
+                axios
+                  .post("/user/order/items/", {
+                    quantity: quantity,
+                    variant_id: variant_id,
+                    order_id: ordersID,
+                  })
+                  .then(async (res) => {
+                    if (
+                      res.data.message === "Sucessfully added order items!!"
+                    ) {
+                      setMessage("sucessfully placed order ");
+                      nullMessage();
+                      try {
+                        await deleteCart(cart_id);
+                        navigate("/order/confirm");
+                      } catch (error) {}
+                    } else {
+                      setMessage("error in adding order items");
+                      nullMessage();
+                      navigate("/order/error");
+                    }
+                  })
+                  .catch((err) => {
+                    setMessage("error in adding order items");
+                    nullMessage();
+                    navigate("/order/error");
+                  });
+=======
             postOrderItems(ordersID)
               .then(async (res) => {
                 if (res.data.message == "Sucessfully added order items!!") {
@@ -170,6 +205,7 @@ const Address = () => {
                 } else {
                   navigate("/order/error");
                 }
+>>>>>>> 2df11ac0b56d0e3a4546227390fca7a821efde3f
               })
               .catch((err) => {
                 navigate("/order/error");

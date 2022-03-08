@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AddCategory from "./AddCategory";
 import axios from "../../../utils/ajax-helper";
-import "../css/pagination.css";
+import "../../Common/css/pagination.css";
 import Pagination from "./Pagination";
 import ErrorAlert from "./ErrorAlert";
 
@@ -28,10 +28,7 @@ const CategoryList = ({
       return;
     }
 
-    let id =
-      searchItem.length !== 0
-        ? searchItem[0].value
-        : null;
+    let id = searchItem.length !== 0 ? searchItem[0].value : null;
 
     axios
       .put("/update-category", {
