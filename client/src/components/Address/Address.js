@@ -110,6 +110,7 @@ const Address = () => {
   }
   const orderPlaced = async (order_id, payment_id) => {
     let ordersID;
+
     axios
       .post("/user/order/confirm/", {
         order_id: order_id,
@@ -142,7 +143,7 @@ const Address = () => {
                     order_id: ordersID,
                   })
                   .then(async (res) => {
-                    if (res.data.message == "sucessfully added order items!!") {
+                    if (res.data.message == "Sucessfully added order items!!") {
                       setMessage("sucessfully placed order ");
                       nullMessage();
                       try {
@@ -237,7 +238,7 @@ const Address = () => {
 
   return (
     <React.Fragment>
-      <div className="main-panel">
+      <div className="main-div">
         <div className="content-wrapper">
           <div className="container">
             <a

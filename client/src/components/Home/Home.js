@@ -81,7 +81,7 @@ const Home = () => {
             {errorMsg && <ErrorAlert msg={errorMsg} />}
             {featuredProducts && (
               <div>
-                <Carousel>
+                <Carousel className="carouselItem">
                   {imgArray &&
                     imgArray.map((imageUrl) => {
                       return (

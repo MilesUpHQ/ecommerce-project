@@ -3,13 +3,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import Pagination from "../Categories/Pagination";
-import "../css/admin-style.css";
-import "../css/pagination.css"
+import "../../Common/css/admin-style.css";
+import "../../Common/css/pagination.css";
 
 const UserList = ({}) => {
-
-  const [display, setdisplay] = useState([]);  
-  const[Errormsg, setErrormsg]= useState(null);
+  const [display, setdisplay] = useState([]);
+  const [Errormsg, setErrormsg] = useState(null);
   const [currPage, setCurrPage] = useState(null);
   const [lastPage, setLastPage] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
@@ -39,15 +38,13 @@ const UserList = ({}) => {
       });
   };
 
-  const deleteUser = (id,name) => { 
+  const deleteUser = (id, name) => {
     if (window.confirm(`Are you sure! You want to delete ${name} ?`)) {
       axios
-        .delete("/delete_user", { params: { id }})
+        .delete("/delete_user", { params: { id } })
         .then((res) => {
           let newProducts = [...display];
-          newProducts = newProducts.filter(
-            (product) => product.id !== id
-          );
+          newProducts = newProducts.filter((product) => product.id !== id);
           setdisplay(newProducts);
         })
         .catch((err) => {
@@ -74,91 +71,91 @@ const UserList = ({}) => {
                       </tr>
                     </thead>
                     <tbody>
-                     {display.map(display=>( 
-                      <tr class="candidates-list">
-                        <td class="title">
-                          <div class="thumb">
-                            <img
-                              class="img-fluid"
-                              src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                              alt=""
-                            />
-                          </div>
-                          <div class="candidate-list-details">
-                            <div class="candidate-list-info">
-                              <div class="candidate-list-title">
-                                <h5 class="mb-0">
-                                  <a href="#">{display.first_name}</a>
-                                </h5>
-                              </div>
-                              <div class="candidate-list-option">
-                                <ul class="list-unstyled">
-                                  <li>
-                                    <i class="fas fa-filter pr-1"></i>
-                                    {display.username}
-                                  </li>
-                                  <li>
-                                    <i class="fas fa-map-marker-alt pr-1"></i>
-                                    {display.email}
-                                  </li>
-                                </ul>
+                      {display.map((display) => (
+                        <tr class="candidates-list">
+                          <td class="title">
+                            <div class="thumb">
+                              <img
+                                class="img-fluid"
+                                src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                alt=""
+                              />
+                            </div>
+                            <div class="candidate-list-details">
+                              <div class="candidate-list-info">
+                                <div class="candidate-list-title">
+                                  <h5 class="mb-0">
+                                    <a href="#">{display.first_name}</a>
+                                  </h5>
+                                </div>
+                                <div class="candidate-list-option">
+                                  <ul class="list-unstyled">
+                                    <li>
+                                      <i class="fas fa-filter pr-1"></i>
+                                      {display.username}
+                                    </li>
+                                    <li>
+                                      <i class="fas fa-map-marker-alt pr-1"></i>
+                                      {display.email}
+                                    </li>
+                                  </ul>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </td>
-                        <td class="candidate-list-favourite-time text-center">
-                          <a
-                            class="candidate-list-favourite order-2 text-danger"
-                            href="#"
-                          >
-                            <i class="fas fa-heart"></i>
-                          </a>
-                          <span class="candidate-list-time order-1">
-                            Admin
-                          </span>
-                        </td>
-                        <td>
-                          <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                            <li>
-                              <a
-                                href={`/admin/user/${display.id}/view`}
-                                class="text-primary"
-                                data-toggle="tooltip"
-                                title=""
-                                data-original-title="view"
-                              >
-                                <i class="far fa-eye mr-2"></i>
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                onClick={()=>deleteUser(display.id , display.first_name)}
-                                class="text-danger"
-                                data-toggle="tooltip"
-                                title=""
-                                data-original-title="Delete"
-                              >
-                                <i class="far fa-trash-alt"></i>
-                              </a>
-                            </li>
-                          </ul>
-                        </td>
-                      </tr>
-
+                          </td>
+                          <td class="candidate-list-favourite-time text-center">
+                            <a
+                              class="candidate-list-favourite order-2 text-danger"
+                              href="#"
+                            >
+                              <i class="fas fa-heart"></i>
+                            </a>
+                            <span class="candidate-list-time order-1">
+                              Admin
+                            </span>
+                          </td>
+                          <td>
+                            <ul class="list-unstyled mb-0 d-flex justify-content-end">
+                              <li>
+                                <a
+                                  href={`/admin/user/${display.id}/view`}
+                                  class="text-primary"
+                                  data-toggle="tooltip"
+                                  title=""
+                                  data-original-title="view"
+                                >
+                                  <i class="far fa-eye mr-2"></i>
+                                </a>
+                              </li>
+                              <li>
+                                <a
+                                  onClick={() =>
+                                    deleteUser(display.id, display.first_name)
+                                  }
+                                  class="text-danger"
+                                  data-toggle="tooltip"
+                                  title=""
+                                  data-original-title="Delete"
+                                >
+                                  <i class="far fa-trash-alt"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </td>
+                        </tr>
                       ))}
                     </tbody>
                   </table>
-                
                 </div>
               </div>
             </div>
           </div>
           <Pagination
-        currPage={currPage}
-        lastPage={lastPage}
-        totalPages={totalPages}
-        handlePagination={handlePagination}
-      />
+            currPage={currPage}
+            lastPage={lastPage}
+            totalPages={totalPages}
+            handlePagination={handlePagination}
+          />
         </div>
       </div>
     </div>
