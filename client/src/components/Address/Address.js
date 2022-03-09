@@ -16,6 +16,7 @@ import "./address.css";
 import { getJWT } from "../../utils/jwt";
 import { parseJwt } from "../../utils/jwt";
 import { Razorpay } from "razorpay-checkout";
+import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
 
 const Address = () => {
   let [addresses, setAddress] = useState([]);
@@ -238,6 +239,7 @@ const Address = () => {
 
   return (
     <React.Fragment>
+      <SimpleNavBar />
       <div className="main-div">
         <div className="content-wrapper">
           <div className="container">

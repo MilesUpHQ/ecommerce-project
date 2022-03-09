@@ -6,9 +6,9 @@ import "./address.css";
 import { getJWT } from "../../utils/jwt";
 import { parseJwt } from "../../utils/jwt";
 import countryList from "react-select-country-list";
-import Select from "react-select";
 import AddressForm from "./AddressForm";
 import { useLocation } from "react-router-dom";
+import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
 
 const CreateAddress = () => {
   let [street, setStreet] = useState(null);
@@ -110,28 +110,32 @@ const CreateAddress = () => {
   return (
     <div>
       {message && <h2>{message}</h2>}
+
+      <SimpleNavBar />
       {options && (
-        <AddressForm
-          street={street}
-          setStreet={setStreet}
-          city={city}
-          setCity={setCity}
-          pin_code={pin_code}
-          setPin_code={setPin_code}
-          state={state}
-          setState={setState}
-          country={country}
-          options={options}
-          changeHandler={changeHandler}
-          submitHandler={submitHandler}
-          title={title}
-          name={name}
-          setName={setName}
-          email={email}
-          setEmail={setEmail}
-          phone={phone}
-          setPhone={setPhone}
-        />
+        <div style={{ marginLeft: "10%" }}>
+          <AddressForm
+            street={street}
+            setStreet={setStreet}
+            city={city}
+            setCity={setCity}
+            pin_code={pin_code}
+            setPin_code={setPin_code}
+            state={state}
+            setState={setState}
+            country={country}
+            options={options}
+            changeHandler={changeHandler}
+            submitHandler={submitHandler}
+            title={title}
+            name={name}
+            setName={setName}
+            email={email}
+            setEmail={setEmail}
+            phone={phone}
+            setPhone={setPhone}
+          />
+        </div>
       )}
     </div>
   );
