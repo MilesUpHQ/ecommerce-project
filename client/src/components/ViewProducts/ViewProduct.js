@@ -109,6 +109,7 @@ const ViewProduct = () => {
                                           type="radio"
                                           value="Male"
                                           name={size.size}
+                                          defaultChecked
                                         />{" "}
                                         {size.size}
                                       </div>
@@ -128,6 +129,7 @@ const ViewProduct = () => {
                                           type="radio"
                                           value="Male"
                                           name={colors.color}
+                                          defaultChecked
                                         />{" "}
                                         {colors.color}
                                       </div>
