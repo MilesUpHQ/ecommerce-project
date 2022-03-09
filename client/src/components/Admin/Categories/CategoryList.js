@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AddCategory from "./AddCategory";
 import axios from "../../../utils/ajax-helper";
 import "../../Common/css/pagination.css";
-import Pagination from "./Pagination";
+import Pagination from "../../Common/Pagination";
 import ErrorAlert from "./ErrorAlert";
 
 const CategoryList = ({

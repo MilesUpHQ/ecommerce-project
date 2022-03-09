@@ -1,6 +1,6 @@
 import React from "react";
-import "../../Home/pagination-style.css";
-import Pagination from "../../Home/Pagination";
+import "../../Common/css/pagination-style.css";
+import Pagination from "../../Common/Pagination";
 import axios from "../../../utils/ajax-helper";
 
 const GetFeaturedProducts = ({

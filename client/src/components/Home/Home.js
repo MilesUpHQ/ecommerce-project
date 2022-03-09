@@ -64,55 +64,60 @@ const Home = () => {
           <h1>{message}</h1>
         </Card>
       )}
-      <div>
-        <Navbar
-          searchItem={searchItem}
-          setSearchItem={setSearchItem}
-          placeholder={"Search for products"}
-          handleSearchFilter={handleSearchFilter}
-        />
-        {searchItem.length > 0 || searchInput !== null ? (
-          <>
-            <br />
-            <SearchProducts searchItem={searchItem} searchInput={searchInput} />
-          </>
-        ) : (
-          <>
-            {errorMsg && <ErrorAlert msg={errorMsg} />}
-            {featuredProducts && (
-              <div>
-                <Carousel className="carouselItem">
-                  {imgArray &&
-                    imgArray.map((imageUrl) => {
-                      return (
-                        <Carousel.Item interval={1000}>
-                          <img
-                            className="d-block w-100"
-                            src={BASE_URL + "/" + imageUrl}
-                            className="imageSlide"
-                          />
-                        </Carousel.Item>
-                      );
-                    })}
-                </Carousel>
+      {featuredProducts.length > 0 && (
+        <div>
+          <Navbar
+            searchItem={searchItem}
+            setSearchItem={setSearchItem}
+            placeholder={"Search for products"}
+            handleSearchFilter={handleSearchFilter}
+          />
+          {searchItem.length > 0 || searchInput !== null ? (
+            <>
+              <br />
+              <SearchProducts
+                searchItem={searchItem}
+                searchInput={searchInput}
+              />
+            </>
+          ) : (
+            <>
+              {errorMsg && <ErrorAlert msg={errorMsg} />}
+              {featuredProducts && (
+                <div>
+                  <Carousel className="carouselItem">
+                    {imgArray &&
+                      imgArray.map((imageUrl) => {
+                        return (
+                          <Carousel.Item interval={1000}>
+                            <img
+                              className="d-block w-100"
+                              src={BASE_URL + "/" + imageUrl}
+                              className="imageSlide"
+                            />
+                          </Carousel.Item>
+                        );
+                      })}
+                  </Carousel>
 
-                <div className="mainContainer">
-                  <ProductList
-                    featuredProducts={featuredProducts}
-                    currPage={currPage}
-                    lastPage={lastPage}
-                    totalPages={totalPages}
-                    handlePagination={handlePagination}
-                    setfeaturedProducts={setfeaturedProducts}
-                    setCurrPage={setCurrPage}
-                    imgArray={imgArray}
-                  />
+                  <div className="mainContainer">
+                    <ProductList
+                      featuredProducts={featuredProducts}
+                      currPage={currPage}
+                      lastPage={lastPage}
+                      totalPages={totalPages}
+                      handlePagination={handlePagination}
+                      setfeaturedProducts={setfeaturedProducts}
+                      setCurrPage={setCurrPage}
+                      imgArray={imgArray}
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
-          </>
-        )}
-      </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };

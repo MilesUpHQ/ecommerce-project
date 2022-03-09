@@ -164,12 +164,8 @@ const Address = () => {
           .then((res) => {
             postOrderItems(ordersID)
               .then(async (res) => {
-                if (res.data.message == "Sucessfully added order items!!") {
-                  await deleteCart(cartItems.cart_id);
-                  navigate("/order/confirm");
-                } else {
-                  navigate("/order/error");
-                }
+                await deleteCart(cartItems.cart_id);
+                navigate("/order/confirm");
               })
               .catch((err) => {
                 navigate("/order/error");
@@ -246,7 +242,7 @@ const Address = () => {
         <div className="content-wrapper">
           <div className="container">
             <a
-              href="/user/address/null"
+              href="/user/address/new"
               id="newAddress"
               className="btn btn-dark rounded-pill py-2 btn-block "
             >

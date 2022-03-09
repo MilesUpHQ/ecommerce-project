@@ -32,7 +32,7 @@ const CreateAddress = () => {
   };
   let submitHandler;
   let id = location.pathname.slice(14);
-  if (location.pathname == "/user/address/null") {
+  if (location.pathname == "/user/address/new") {
     submitHandler = async (e) => {
       e.preventDefault();
       axios
@@ -54,11 +54,11 @@ const CreateAddress = () => {
           setMessage(
             "Oppsie! Something went wrong. Please try entering valid datas"
           );
-          navigate("/user/address/null");
+          navigate("/user/address/new");
         });
     };
   }
-  if (!(location.pathname == "/user/address/null")) {
+  if (!(location.pathname == "/user/address/new")) {
     submitHandler = async (e) => {
       e.preventDefault();
       axios
@@ -87,7 +87,7 @@ const CreateAddress = () => {
   }
 
   useEffect(() => {
-    if (!(location.pathname == "/user/address/null")) {
+    if (!(location.pathname == "/user/address/new")) {
       axios
         .get(`/user/address/${id}/getById`)
         .then((response) => {
