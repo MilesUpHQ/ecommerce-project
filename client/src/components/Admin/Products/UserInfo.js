@@ -19,7 +19,7 @@ const UserInfo = (props) => {
   }, []);
  
   return (
-    <div className="main-panel">
+    <div className="main-panel bg-light">
       <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -30,13 +30,12 @@ const UserInfo = (props) => {
             </li>
           </ol>
         </nav>
-
         <div id="leftCol" className="a-column a-span4 dp_aib_left_column_t1">
           <div class="image-space">
             <h1 class="pdp-title">Hello</h1>
             <h1 class="pdp-name">Check</h1>
-            <img class="rounded-circle z-depth-2" 
-            alt="95x95" src="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&w=1000&q=80"
+            <img class="rounded-circle z-depth-2 ml-4" 
+            alt="95x95" src="https://i.guim.co.uk/img/media/ec27f69b7e4ac14838e8f71842a4cc6db3b8d69c/112_4_1179_708/master/1179.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=1cb08a39c5acdc58423974865c54d7f7"
           data-holder-rendered="true"/>
           </div>
         </div>

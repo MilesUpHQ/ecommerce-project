@@ -71,7 +71,7 @@ app.use("/api/getToken", getToken);
 app.use("/api/products", products);
 app.use("/api/admin/products/add", addProducts);
 app.use("/api", adminRouter);
-app.use("/api/admin/products", displayProducts);
+app.use("/api/admin/productsList", displayProducts);
 app.use("/api/products/category", productsByCategory);
 app.use("/api", search);
 app.use("/api/delete_product", displayProducts);
