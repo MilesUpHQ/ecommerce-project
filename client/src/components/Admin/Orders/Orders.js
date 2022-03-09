@@ -43,7 +43,9 @@ const Orders = () => {
                           orders.map((order) => (
                             <tr>
                               <td>
-                                <a href="#">{order.order_id}</a>
+                                <a href={`/admin/order/${order.id}`}>
+                                  {order.order_id}
+                                </a>
                               </td>
                               <td>{order.username}</td>
                               <td>

@@ -29,7 +29,7 @@ export default function SearchProducts({ searchItem, searchInput }) {
       getProductsBySearch(searchInput);
     }
   }, [searchItem, searchInput]);
-  
+
   const handleAddToCart = (id) => {
     setAddToCart(id);
     setUpdateNavbar(true);
@@ -74,7 +74,7 @@ export default function SearchProducts({ searchItem, searchInput }) {
     console.log(searchVal);
     setSearchValue(searchVal);
     axios
-      .get(`/filter-products?search_keyword=${searchVal}`)
+      .get(`/search/filter-products?search_keyword=${searchVal}`)
       .then((res) => {
         if (res.data.row.length > 0) {
           setProducts(res.data.row);
@@ -140,7 +140,7 @@ export default function SearchProducts({ searchItem, searchInput }) {
     setSelectedCategory(e.target.value);
     axios
       .get(
-        `/filter-products?category_id=${e.target.value}&&search_keyword=${searchValue}`
+        `/search/filter-products?category_id=${e.target.value}&&search_keyword=${searchValue}`
       )
       .then((res) => {
         setProducts(res.data.row);

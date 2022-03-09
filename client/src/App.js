@@ -31,6 +31,7 @@ import Add from "./components/Cart/Add";
 import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
 import OrderFailed from "./components/FailedError/FailedError";
 import Orders from "./components/Admin/Orders/OrdersLayout";
+import OrderDetails from "./components/Admin/Orders/OrderDetailsLayout";
 
 const App = () => {
   return (
@@ -150,6 +151,16 @@ const App = () => {
           element={
             <PrivateRoute>
               <Orders />
+            </PrivateRoute>
+          }
+        ></Route>
+
+        <Route
+          exact
+          path="/admin/order/:id"
+          element={
+            <PrivateRoute>
+              <OrderDetails />
             </PrivateRoute>
           }
         ></Route>

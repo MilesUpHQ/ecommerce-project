@@ -20,7 +20,7 @@ const Category = () => {
     }
     let id = searchItem.length !== 0 ? searchItem[0].value : 0;
     axios
-      .post("/category", {
+      .post("/categories/add", {
         categoryName: input,
         searchItemId: id,
       })

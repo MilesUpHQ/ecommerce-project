@@ -1,0 +1,11 @@
+.orderId {
+  font-size: 30px;
+  color: #0007ff;
+  font-weight: 600;
+}
+
+.orderStats {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

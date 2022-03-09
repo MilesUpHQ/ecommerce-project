@@ -27,7 +27,7 @@ const AddCategory = ({
   const handleSearch = (query) => {
     setIsLoading(true);
     axios
-      .get(`/search-categories?search=${query}`)
+      .get(`/categories/parent-categories?search=${query}`)
       .then((res) => {
         let array = res.data.map(({ id, name }) => ({
           label: name,

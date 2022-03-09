@@ -9,7 +9,7 @@ const {
 const db = require("../../../utils/dbConfig");
 attachPaginate();
 
-router.get("/categories", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     let page = parseInt(req.query.page) || 1;
 
@@ -47,7 +47,7 @@ router.get("/categories", async (req, res) => {
   }
 });
 
-router.get("/search-categories", async (req, res) => {
+router.get("/parent-categories", async (req, res) => {
   try {
     const parent_categories = await db("product_categories")
       .select("id", "name")
@@ -59,7 +59,7 @@ router.get("/search-categories", async (req, res) => {
   }
 });
 
-router.post("/category", async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
     let newCategory = await addCategory({
       parent_id: req.body.searchItemId || null,
@@ -77,7 +77,7 @@ router.post("/category", async (req, res) => {
   }
 });
 
-router.put("/update-category", async (req, res) => {
+router.put("/update", async (req, res) => {
   try {
     let newCategory = await updateCategory({
       name: req.body.categoryName,
@@ -96,7 +96,7 @@ router.put("/update-category", async (req, res) => {
   }
 });
 
-router.delete("/delete-category", async (req, res) => {
+router.delete("/delete", async (req, res) => {
   try {
     await deleteCategory({ id: req.query.id });
     res.json({ message: "deleted succesfully" });
