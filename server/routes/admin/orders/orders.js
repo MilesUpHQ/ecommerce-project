@@ -19,6 +19,7 @@ router.get("/", async (req, res) => {
         res.json(row);
       })
       .catch((err) => {
+        console.log("sxxs",err);
         res.json(err);
       });
   } catch (err) {
