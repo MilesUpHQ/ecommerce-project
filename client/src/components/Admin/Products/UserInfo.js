@@ -31,12 +31,12 @@ const UserInfo = (props) => {
           </ol>
         </nav>
         <div id="leftCol" className="a-column a-span4 dp_aib_left_column_t1">
-          <div class="image-space">
-            <h1 class="pdp-title">Hello</h1>
-            <h1 class="pdp-name">Check</h1>
-            <img class="rounded-circle z-depth-2 ml-4" 
-            alt="95x95" src="https://i.guim.co.uk/img/media/ec27f69b7e4ac14838e8f71842a4cc6db3b8d69c/112_4_1179_708/master/1179.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=1cb08a39c5acdc58423974865c54d7f7"
-          data-holder-rendered="true"/>
+          <div className="image-space">
+            <h2 className="pdp-title ml-4">{userInfo.first_name}</h2>
+            <h2 className="pdp-name ml-4">{userInfo.last_name}</h2>
+            <img className="rounded-circle z-depth-2 ml-4" 
+            alt="95x95" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
+          data-holder-rendered="true" />
           </div>
         </div>
 
