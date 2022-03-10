@@ -3,7 +3,7 @@ const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { getUserByFieldName } = require("../../queries/user");
+const { getUserBy } = require("../../queries/user");
 
 router.post(
   "/",
@@ -18,7 +18,7 @@ router.post(
       return;
     }
 
-    getUserByFieldName("email", req.body.email).then((user) => {
+    getUserBy("email", req.body.email).then((user) => {
       if (user.length === 0) {
         res.status(400).json({
           message: "Email does not exist",

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const db = require("../../utils/dbConfig");
-const { insertUser, getUserByFieldName } = require("../../queries/user");
+const { insertUser, getUserBy } = require("../../queries/user");
 
 const userValidation = [
   body("email", "Email is not valid").isEmail(),
@@ -20,7 +20,7 @@ router.post("/", ...userValidation, (req, res) => {
     res.status(400).json(errors.errors);
     return;
   }
-  getUserByFieldName("email", req.body.email)
+  getUserBy("email", req.body.email)
     .then((user) => {
       if (user.length > 0) {
         res.status(400).json({
@@ -28,7 +28,7 @@ router.post("/", ...userValidation, (req, res) => {
         });
         return;
       } else {
-        getUserByFieldName("username", req.body.username).then((user) => {
+        getUserBy("username", req.body.username).then((user) => {
           if (user.length > 0) {
             res.status(400).json({
               message: "Username already exists",
