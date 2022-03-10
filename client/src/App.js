@@ -69,7 +69,7 @@ const App = () => {
           path="/admin"
           element={
             <PrivateRoute>
-              <AdminLayout />
+              <DisplayProducts />
             </PrivateRoute>
           }
         ></Route>
