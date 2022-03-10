@@ -3,7 +3,7 @@ import AddCategory from "./AddCategory";
 import axios from "../../../utils/ajax-helper";
 import "../../Common/css/pagination.css";
 import Pagination from "./Pagination";
-import ErrorAlert from "./ErrorAlert";
+import ErrorAlert from "../../Common/ErrorAlert";
 
 const CategoryList = ({
   categories,
@@ -31,7 +31,7 @@ const CategoryList = ({
     let id = searchItem.length !== 0 ? searchItem[0].value : null;
 
     axios
-      .put("/update-category", {
+      .put("/categories/update", {
         categoryName: input,
         categoryId: category.id,
         searchItemId: id,
@@ -61,7 +61,7 @@ const CategoryList = ({
   const handleDelete = (id, name) => {
     if (window.confirm(`Are you sure! Delete ${name} Category?`)) {
       axios
-        .delete("/delete-category", { params: { id } })
+        .delete("/categories/delete", { params: { id } })
         .then((res) => {
           let newCategories = [...categories];
           newCategories = newCategories.filter(

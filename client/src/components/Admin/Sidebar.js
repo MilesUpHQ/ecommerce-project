@@ -33,6 +33,12 @@ const Sidebar = () => {
               <span className="menu-title">Users</span>
             </a>
           </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/admin/orders">
+              <i className="icon-grid menu-icon"></i>
+              <span className="menu-title">Orders</span>
+            </a>
+          </li>
         </ul>
       </nav>
     </React.Fragment>
