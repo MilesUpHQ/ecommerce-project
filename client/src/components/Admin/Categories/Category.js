@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CategoryList from "./CategoryList";
 import AddCategory from "./AddCategory";
 import axios from "../../../utils/ajax-helper";
-import ErrorAlert from "./ErrorAlert";
+import ErrorAlert from "../../Common/ErrorAlert";
 
 const Category = () => {
   const [input, setInput] = useState("");
@@ -20,7 +20,7 @@ const Category = () => {
     }
     let id = searchItem.length !== 0 ? searchItem[0].value : 0;
     axios
-      .post("/category", {
+      .post("/categories/add", {
         categoryName: input,
         searchItemId: id,
       })
@@ -85,7 +85,7 @@ const Category = () => {
                 alignItems: "center",
               }}
             >
-              <h1>Categories</h1>
+              <h3>Categories</h3>
               <button
                 type="button"
                 className="btn btn-primary btn-icon-text"
