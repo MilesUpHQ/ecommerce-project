@@ -15,7 +15,7 @@ import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import FeaturedProducts from "./components/Home/Home";
 import ViewProduct from "./components/ViewProducts/ViewProduct";
-import AddProducts from "./components/Admin/Products/AddProducts";
+import AddForm from "./components/Admin/Products/AddForm";
 import DisplayProducts from "./components/Admin/Products/DisplayProducts";
 import { ProductView } from "./components/Admin/Products/ProductView";
 import { User } from "./components/Admin/Products/User";
@@ -48,7 +48,6 @@ const App = () => {
           path="/admin/product/featured"
           element={<FeaturedProductLayout />}
         />
-        <Route path="/admin/products/add" element={<AddProducts />} /> 
         <Route path="/admin/products" element={<DisplayProducts />} />
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
@@ -96,7 +95,7 @@ const App = () => {
           path="/admin/products/add"
           element={
             <PrivateRoute>
-              <AddProducts />
+              <AddForm />
             </PrivateRoute>
           }
         ></Route>
