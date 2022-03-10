@@ -47,7 +47,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/parent-categories", async (req, res) => {
+router.get("/parent", async (req, res) => {
   try {
     const parent_categories = await db("product_categories")
       .select("id", "name")

@@ -2,21 +2,21 @@ var express = require("express");
 var router = express.Router();
 const db = require("../../utils/dbConfig");
 
-router.get("/typeahead-items", async (req, res) => {
+router.get("/typeahead", async (req, res) => {
   try {
     const categories = await db("product_categories")
       .select("id", "name")
       .where(
         "name",
         "ILIKE",
-        `%${req.query.search_keyword.toLocaleLowerCase()}%`
+        `%${req.query.keyword.toLocaleLowerCase()}%`
       );
     const products = await db("products")
       .select("id", "name")
       .where(
         "name",
         "ILIKE",
-        `%${req.query.search_keyword.toLocaleLowerCase()}%`
+        `%${req.query.keyword.toLocaleLowerCase()}%`
       );
     let allItems = [...categories, ...products];
     res.json(allItems);
@@ -25,7 +25,7 @@ router.get("/typeahead-items", async (req, res) => {
   }
 });
 
-router.get("/filter-products", (req, res) => {
+router.get("/products", (req, res) => {
   try {
     const { category_id } = req.query;
     db("products")
@@ -52,19 +52,19 @@ router.get("/filter-products", (req, res) => {
             .andWhere(
               "products.name",
               "ILIKE",
-              `%${req.query.search_keyword.toLowerCase()}%`
+              `%${req.query.keyword.toLowerCase()}%`
             );
         } else {
           builder
             .where(
               "products.name",
               "ILIKE",
-              `%${req.query.search_keyword.toLowerCase()}%`
+              `%${req.query.keyword.toLowerCase()}%`
             )
             .orWhere(
               "c.name",
               "ILIKE",
-              `%${req.query.search_keyword.toLowerCase()}%`
+              `%${req.query.keyword.toLowerCase()}%`
             );
         }
       })
@@ -75,7 +75,7 @@ router.get("/filter-products", (req, res) => {
             .andWhere(
               "c.name",
               "ILIKE",
-              `%${req.query.search_keyword.toLowerCase()}%`
+              `%${req.query.keyword.toLowerCase()}%`
             );
         }
       })

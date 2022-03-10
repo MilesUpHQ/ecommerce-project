@@ -10,7 +10,7 @@ import Home from "./components/Home/Home";
 import Logout from "./components/Logout/Logout";
 import { getJWT } from "./utils/jwt";
 import AdminLayout from "./components/Admin/AdminLayout";
-import CategoryLayout from "./components/Admin/Categories/CategoryLayout";
+import Category from "./components/Admin/Categories/Category";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import FeaturedProducts from "./components/Home/Home";
@@ -30,8 +30,8 @@ import CreateAddress from "./components/Address/CreateAddress";
 import Add from "./components/Cart/Add";
 import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
 import OrderFailed from "./components/FailedError/FailedError";
-import Orders from "./components/Admin/Orders/OrdersLayout";
-import OrderDetails from "./components/Admin/Orders/OrderDetailsLayout";
+import Orders from "./components/Admin/Orders/Orders";
+import OrderDetails from "./components/Admin/Orders/OrderDetails";
 
 const App = () => {
   return (
@@ -48,7 +48,7 @@ const App = () => {
           path="/admin/product/featured"
           element={<FeaturedProductLayout />}
         />
-        <Route path="/admin/products/add" element={<AddProducts />} />
+        <Route path="/admin/products/add" element={<AddProducts />} /> 
         <Route path="/admin/products" element={<ProductLayout />} />
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
@@ -78,7 +78,7 @@ const App = () => {
           path="/admin/categories"
           element={
             <PrivateRoute>
-              <CategoryLayout />
+              <Category />
             </PrivateRoute>
           }
         ></Route>
@@ -181,7 +181,11 @@ const App = () => {
 
 function PrivateRoute({ children }) {
   const auth = useAuth();
-  return auth ? children : <Navigate to="/login" />;
+  return auth ? (
+    <AdminLayout>{children}</AdminLayout>
+  ) : (
+    <Navigate to="/login" />
+  );
 }
 function useAuth() {
   const jwt = getJWT();

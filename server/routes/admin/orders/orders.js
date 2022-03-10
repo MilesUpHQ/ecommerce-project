@@ -30,24 +30,8 @@ router.get("/:orderId", async (req, res) => {
   try {
     const orderDetails = await db("orders as o")
       .leftJoin("address as a", "o.address_id", "a.id")
-      .leftJoin("users as u", "o.user_id", "u.id")
       .where("o.id", req.params.orderId)
-      .select(
-        "o.id",
-        "o.total_price",
-        "o.status",
-        "o.order_id",
-        "o.order_date",
-        "a.name",
-        "a.email",
-        "a.phone",
-        "a.street",
-        "a.city",
-        "a.state",
-        "a.country",
-        "a.pin_code",
-        "u.username"
-      );
+      .select("o.*", "a.*");
 
     const orderItems = await db("order_items as items")
       .leftJoin("products as p", "items.product_id", "p.id")

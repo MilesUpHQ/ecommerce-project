@@ -36,9 +36,7 @@ const OrderDetails = () => {
         <div className="content-wrapper">
           <div className="container">
             <div>
-              <h1 className="orderId">
-                #{orderDetails[0] && orderDetails[0].order_id}
-              </h1>
+              <h3>#{orderDetails[0] && orderDetails[0].order_id}</h3>
               <div className="orderStats">
                 <h4>{orderDate}</h4>
                 <h4 className="badge badge-success">

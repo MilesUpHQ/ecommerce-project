@@ -22,7 +22,23 @@ const Orders = () => {
       <div className="main-panel">
         <div className="content-wrapper">
           <div className="container">
-            <h1>Orders</h1>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                margin: "1%",
+                alignItems: "center",
+              }}
+            >
+              <h3>Orders</h3>
+              <button
+                type="button"
+                className="btn btn-primary btn-icon-text"
+                style={{ height: "fit-content" }}
+              >
+                Create Order
+              </button>
+            </div>
             {errorMsg && <ErrorAlert msg={errorMsg} />}
             <div className="col-lg-12 grid-margin stretch-card">
               <div className="card">

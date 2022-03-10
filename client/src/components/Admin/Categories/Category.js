@@ -85,7 +85,7 @@ const Category = () => {
                 alignItems: "center",
               }}
             >
-              <h1>Categories</h1>
+              <h3>Categories</h3>
               <button
                 type="button"
                 className="btn btn-primary btn-icon-text"
