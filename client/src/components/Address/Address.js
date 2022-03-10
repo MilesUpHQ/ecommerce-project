@@ -31,12 +31,6 @@ const Address = () => {
   let [phone, setPhone] = useState(null);
   let [cartItems, setCartItems] = useState(null);
 
-  const nullMessage = () => {
-    return setTimeout(() => {
-      setMessage(null);
-    }, 6000);
-  };
-
   useEffect(() => {
     cartDetails();
     axios
@@ -46,7 +40,9 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in razor pay");
-        nullMessage();
+        setTimeout(() => {
+          setMessage(null);
+        }, 6000);
       });
 
     axios
@@ -54,7 +50,9 @@ const Address = () => {
       .then((res) => {
         if (res.data.length == 0) {
           setMessage("No address found!! Please add new one");
-          nullMessage();
+          setTimeout(() => {
+            setMessage(null);
+          }, 6000);
         } else {
           setAddress(res.data);
           setAddress_id(res.data[0].id);
@@ -62,7 +60,9 @@ const Address = () => {
             getById(res.data[0].id);
           } catch (error) {
             setMessage("error in getting address");
-            nullMessage();
+            setTimeout(() => {
+              setMessage(null);
+            }, 6000);
           }
           document.getElementById(res.data[0].id).style.border =
             "solid 2px blue";
@@ -70,7 +70,9 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("Sorry! Something went wrong. Please Try again", err);
-        nullMessage();
+        setTimeout(() => {
+          setMessage(null);
+        }, 6000);
       });
   }, []);
 
@@ -98,17 +100,23 @@ const Address = () => {
   };
   function onPaymentFailure(response) {
     setMessage("error in openin razor pay");
-    nullMessage();
+    setTimeout(() => {
+      setMessage(null);
+    }, 6000);
     navigate("/order/error");
   }
   function onPaymentSuccess(response) {
     setMessage("opening razorpay");
-    nullMessage();
+    setTimeout(() => {
+      setMessage(null);
+    }, 6000);
     try {
       orderPlaced(response.razorpay_order_id, response.razorpay_payment_id);
     } catch (error) {
       setMessage("error in placing order");
-      nullMessage();
+      setTimeout(() => {
+        setMessage(null);
+      }, 6000);
       navigate("/order/error");
     }
   }
@@ -144,7 +152,9 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in getting cart details");
-        nullMessage();
+        setTimeout(() => {
+          setMessage(null);
+        }, 6000);
       });
   };
 
@@ -191,7 +201,9 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in getting address by id");
-        nullMessage();
+        setTimeout(() => {
+          setMessage(null);
+        }, 6000);
       });
   };
   // ****************************delete address********************//
@@ -204,11 +216,15 @@ const Address = () => {
           newAddress = newAddress.filter((address) => address.id !== id);
           setAddress(newAddress);
           setMessage("Delete successfull!!!!!!!");
-          nullMessage();
+          setTimeout(() => {
+            setMessage(null);
+          }, 6000);
         })
         .catch((err) => {
           setMessage("Sorry! You can't delete this address");
-          nullMessage();
+          setTimeout(() => {
+            setMessage(null);
+          }, 6000);
         });
     }
   };

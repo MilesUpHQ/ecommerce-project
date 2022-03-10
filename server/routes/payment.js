@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const knex = require("../utils/dbConfig");
-const payment = require("../utils/paymentMode");
+const payment = require("../utils/paymentGateway");
 
 let options;
 let payment_capture;
