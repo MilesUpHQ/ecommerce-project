@@ -74,82 +74,6 @@ router.get("", async (req, res, next) => {
 // *********************************************** view Product ****************************************
 
 router.get("/:id", async (req, res, next) => {
-  let categories;
-  knex("products")
-    .leftJoin(
-      "product_categories",
-      "products.category_id",
-      "product_categories.id"
-    )
-    .select("product_categories.name")
-    .where({ "products.id": req.params.id })
-    .then((res) => {
-      categories = res;
-    })
-    .catch((err) => {
-      res.send("error in getting category");
-      categories = null;
-    });
-
-  let colors;
-  knex("variants")
-    .leftJoin("products", "products.id", "variants.product_id")
-    .select("variants.color")
-    .where({ "products.id": req.params.id })
-    .whereNotNull("variants.color")
-    .then((res) => {
-      colors = res;
-    })
-    .catch((err) => {
-      res.send("error in getting colors");
-      colors = null;
-    });
-
-  let sizes;
-  knex("variants")
-    .leftJoin("products", "products.id", "variants.product_id")
-    .select("variants.size")
-    .where({ "products.id": req.params.id })
-    .whereNotNull("variants.size")
-    .then((res) => {
-      sizes = res;
-    })
-    .catch((err) => {
-      res.send("error in getting sizes");
-      sizes = null;
-    });
-
-  let reviews;
-  knex("reviews")
-    .leftJoin("products", "products.id", "reviews.product_id")
-    .leftJoin("users", "users.id", "reviews.user_id")
-    .select("reviews.rating", "reviews.comment", "users.username")
-    .where({ "products.id": req.params.id })
-    .then((res) => {
-      reviews = res;
-    })
-    .catch((err) => {
-      res.send("error in getting reviews");
-      reviews = null;
-    });
-
-  let imgArray = [];
-  knex("variant_images")
-    .leftJoin("variants", "variant_images.variant_id", "variants.id")
-    .leftJoin("products", "products.id", "variants.product_id")
-    .select("variant_images.image_url")
-    .where({ "products.id": req.params.id })
-    .then((res) => {
-      for (let i = 0; i < res.length; i++) {
-        let url = res[i].image_url.toString();
-        imgArray.push(url);
-      }
-      imgArray = removeDuplicate(imgArray);
-    })
-    .catch((err) => {
-      res.send("error in getting variant images");
-      imgArray = null;
-    });
   knex("featured_products")
     .leftJoin("products", "featured_products.product_id", "products.id")
     .leftJoin("variants", "variants.product_id", "products.id")
@@ -167,8 +91,7 @@ router.get("/:id", async (req, res, next) => {
     )
     .where({ "products.id": req.params.id })
     .then((response) => {
-      let product = response;
-      res.json({ product, categories, colors, sizes, imgArray, reviews });
+      res.json(response[0]);
     })
     .catch((err) => {
       res.send("error in getting product");

@@ -7,6 +7,7 @@ import ProductList from "./ProductList";
 import ErrorAlert from "../Common/ErrorAlert";
 import { Carousel, Card } from "react-bootstrap";
 import SearchProducts from "../Common/SearchProducts";
+import imageData from "../../utils/imageData";
 
 const Home = () => {
   let [featuredProducts, setfeaturedProducts] = useState([]);
@@ -86,13 +87,13 @@ const Home = () => {
               {featuredProducts && (
                 <div>
                   <Carousel className="carouselItem">
-                    {imgArray &&
-                      imgArray.map((imageUrl) => {
+                    {imageData &&
+                      imageData.map((imageUrl) => {
                         return (
                           <Carousel.Item interval={1000}>
                             <img
                               className="d-block w-100"
-                              src={BASE_URL + "/" + imageUrl}
+                              src={imageUrl}
                               className="imageSlide"
                             />
                           </Carousel.Item>

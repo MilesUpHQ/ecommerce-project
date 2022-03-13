@@ -21,30 +21,12 @@ const ViewProduct = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   let id = window.location.pathname.substring(14);
-  const removeDuplicate = (array) => {
-    var dups = [];
-    var arr = array.filter(function (el) {
-      if (dups.indexOf(el.color || el.size) == -1) {
-        dups.push(el.color || el.size);
-        return true;
-      }
-      return false;
-    });
-    return arr;
-  };
 
   useEffect(async () => {
     axios
       .get(`/featured_products/${id}`)
       .then((response) => {
-        setCategory(response.data.categories[0].name);
-        setProduct(response.data.product[0]);
-        let color = removeDuplicate(response.data.colors);
-        setColors(color);
-        let size = removeDuplicate(response.data.sizes);
-        setSizes(size);
-        setImage_url(response.data.imgArray);
-        setReviews(response.data.reviews);
+        setProduct(response.data);
       })
       .catch((err) => {
         setErrorMsg("Sorry we couldnot get procuct with error " + err);
@@ -57,7 +39,7 @@ const ViewProduct = () => {
 
   return (
     <div className="mainContainer">
-      {product && imageUrls && (
+      {product && (
         <div>
           <Navbar
             searchItem={searchItem}
@@ -101,40 +83,30 @@ const ViewProduct = () => {
                               <hr />
                               <div>
                                 {" "}
-                                {sizes &&
-                                  sizes.map((size) => {
-                                    return (
-                                      <div>
-                                        <input
-                                          type="radio"
-                                          value="Male"
-                                          name={size.size}
-                                          defaultChecked
-                                        />{" "}
-                                        {size.size}
-                                      </div>
-                                    );
-                                  })}
+                                <div>
+                                  <input
+                                    type="radio"
+                                    value="Male"
+                                    name={product.size}
+                                    defaultChecked
+                                  />{" "}
+                                  {product.size}
+                                </div>
                               </div>
                             </Col>
                             <Col>
                               <Card.Text>Colors</Card.Text>
                               <hr />
                               <div>
-                                {colors &&
-                                  colors.map((colors) => {
-                                    return (
-                                      <div>
-                                        <input
-                                          type="radio"
-                                          value="Male"
-                                          name={colors.color}
-                                          defaultChecked
-                                        />{" "}
-                                        {colors.color}
-                                      </div>
-                                    );
-                                  })}
+                                <div>
+                                  <input
+                                    type="radio"
+                                    value="Male"
+                                    name={product.color}
+                                    defaultChecked
+                                  />{" "}
+                                  {product.color}
+                                </div>
                               </div>
                             </Col>
                           </Row>
