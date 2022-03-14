@@ -17,7 +17,7 @@ import { getJWT } from "../../utils/jwt";
 import { parseJwt } from "../../utils/jwt";
 import { Razorpay } from "razorpay-checkout";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
-import { nullMessage } from "../../utils/nullErrorMessage";
+import { clearMessageTimeout } from "../../utils/nullErrorMessage";
 
 const Address = () => {
   let [addresses, setAddress] = useState([]);
@@ -41,7 +41,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in razor pay");
-        nullMessage(setMessage);
+        clearMessageTimeout(setMessage);
       });
 
     axios
@@ -49,7 +49,7 @@ const Address = () => {
       .then((res) => {
         if (res.data.length == 0) {
           setMessage("No address found!! Please add new one");
-          nullMessage(setMessage);
+          clearMessageTimeout(setMessage);
         } else {
           setAddress(res.data);
           setAddress_id(res.data[0].id);
@@ -57,7 +57,7 @@ const Address = () => {
             getById(res.data[0].id);
           } catch (error) {
             setMessage("error in getting address");
-            nullMessage(setMessage);
+            clearMessageTimeout(setMessage);
           }
           document.getElementById(res.data[0].id).style.border =
             "solid 2px blue";
@@ -65,7 +65,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("Sorry! Something went wrong. Please Try again", err);
-        nullMessage(setMessage);
+        clearMessageTimeout(setMessage);
       });
   }, []);
 
@@ -93,19 +93,19 @@ const Address = () => {
   };
   function onPaymentFailure(response) {
     setMessage("error in openin razor pay");
-    nullMessage(setMessage);
+    clearMessageTimeout(setMessage);
 
     navigate("/order/error");
   }
   function onPaymentSuccess(response) {
     setMessage("opening razorpay");
-    nullMessage(setMessage);
+    clearMessageTimeout(setMessage);
 
     try {
       orderPlaced(response.razorpay_order_id, response.razorpay_payment_id);
     } catch (error) {
       setMessage("error in placing order");
-      nullMessage(setMessage);
+      clearMessageTimeout(setMessage);
       navigate("/order/error");
     }
   }
@@ -141,7 +141,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in getting cart details");
-        nullMessage(setMessage);
+        clearMessageTimeout(setMessage);
       });
   };
 
@@ -188,7 +188,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in getting address by id");
-        nullMessage(setMessage);
+        clearMessageTimeout(setMessage);
       });
   };
   // ****************************delete address********************//
@@ -201,11 +201,11 @@ const Address = () => {
           newAddress = newAddress.filter((address) => address.id !== id);
           setAddress(newAddress);
           setMessage("Delete successfull!!!!!!!");
-          nullMessage(setMessage);
+          clearMessageTimeout(setMessage);
         })
         .catch((err) => {
           setMessage("Sorry! You can't delete this address");
-          nullMessage(setMessage);
+          clearMessageTimeout(setMessage);
         });
     }
   };

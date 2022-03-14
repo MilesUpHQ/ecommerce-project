@@ -1,4 +1,4 @@
-export const nullMessage = (errorMessage) => {
+export const clearMessageTimeout = (errorMessage) => {
   setTimeout(() => {
     errorMessage(null);
   }, 6000);
