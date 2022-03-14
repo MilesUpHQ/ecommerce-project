@@ -22,6 +22,7 @@ export const EditForm = () => {
   const [categoryid, setCategory] = useState("");
   const [productId, setProductId] = useState("");
   const [variantId, setVariantId] = useState("");
+  const [isEnable, setIsEnable] = useState(true);
 
   const updateProduct = (e) =>{
     e.preventDefault();
@@ -53,6 +54,7 @@ export const EditForm = () => {
         imageData,
       )
       .then((res) => {
+        setIsEnable(false);
         toast.success("Product Updated Sucessfully!");
         setTimeout(() => {
           navigate("/admin/products");
@@ -210,8 +212,7 @@ export const EditForm = () => {
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </div>
-                  <button
-                    className="btn btn-primary mr-2"
+                  <button className={"btn btn-primary mr-2" + `${isEnable ? "" : "disabled"}`}
                     onClick={(e) => updateProduct(e, product.id)}
                   >
                     Update
