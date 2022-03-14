@@ -9,6 +9,7 @@ import countryList from "react-select-country-list";
 import AddressForm from "./AddressForm";
 import { useLocation } from "react-router-dom";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
+import { nullMessage } from "../../utils/nullErrorMessage";
 
 const CreateAddress = () => {
   let [street, setStreet] = useState(null);
@@ -39,51 +40,44 @@ const CreateAddress = () => {
       e.preventDefault();
       if (name == null) {
         setErrorMessage("Please enter name");
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 6000);
+        nullMessage(setErrorMessage);
+
         return;
       }
       if (email == null) {
         setErrorMessage("Please enter email");
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 6000);
+        nullMessage(setErrorMessage);
+
         return;
       }
       if (phone == null) {
         setErrorMessage("Please enter phone");
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 6000);
+        nullMessage(setErrorMessage);
+
         return;
       }
       if (street == null) {
         setErrorMessage("Please enter street");
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 6000);
+        nullMessage(setErrorMessage);
+
         return;
       }
       if (city == null) {
         setErrorMessage("Please enter city");
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 6000);
+        nullMessage(setErrorMessage);
+
         return;
       }
       if (pin_code == null) {
         setErrorMessage("Please enter picode_");
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 6000);
+        nullMessage(setErrorMessage);
+
         return;
       }
       if (state == null) {
         setErrorMessage("Please enter state");
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 6000);
+        nullMessage(setErrorMessage);
+
         return;
       }
 

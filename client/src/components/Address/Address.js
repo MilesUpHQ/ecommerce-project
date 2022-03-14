@@ -17,6 +17,7 @@ import { getJWT } from "../../utils/jwt";
 import { parseJwt } from "../../utils/jwt";
 import { Razorpay } from "razorpay-checkout";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
+import { nullMessage } from "../../utils/nullErrorMessage";
 
 const Address = () => {
   let [addresses, setAddress] = useState([]);
@@ -40,9 +41,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in razor pay");
-        setTimeout(() => {
-          setMessage(null);
-        }, 6000);
+        nullMessage(setMessage);
       });
 
     axios
@@ -50,9 +49,7 @@ const Address = () => {
       .then((res) => {
         if (res.data.length == 0) {
           setMessage("No address found!! Please add new one");
-          setTimeout(() => {
-            setMessage(null);
-          }, 6000);
+          nullMessage(setMessage);
         } else {
           setAddress(res.data);
           setAddress_id(res.data[0].id);
@@ -60,9 +57,7 @@ const Address = () => {
             getById(res.data[0].id);
           } catch (error) {
             setMessage("error in getting address");
-            setTimeout(() => {
-              setMessage(null);
-            }, 6000);
+            nullMessage(setMessage);
           }
           document.getElementById(res.data[0].id).style.border =
             "solid 2px blue";
@@ -70,9 +65,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("Sorry! Something went wrong. Please Try again", err);
-        setTimeout(() => {
-          setMessage(null);
-        }, 6000);
+        nullMessage(setMessage);
       });
   }, []);
 
@@ -100,23 +93,19 @@ const Address = () => {
   };
   function onPaymentFailure(response) {
     setMessage("error in openin razor pay");
-    setTimeout(() => {
-      setMessage(null);
-    }, 6000);
+    nullMessage(setMessage);
+
     navigate("/order/error");
   }
   function onPaymentSuccess(response) {
     setMessage("opening razorpay");
-    setTimeout(() => {
-      setMessage(null);
-    }, 6000);
+    nullMessage(setMessage);
+
     try {
       orderPlaced(response.razorpay_order_id, response.razorpay_payment_id);
     } catch (error) {
       setMessage("error in placing order");
-      setTimeout(() => {
-        setMessage(null);
-      }, 6000);
+      nullMessage(setMessage);
       navigate("/order/error");
     }
   }
@@ -152,9 +141,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in getting cart details");
-        setTimeout(() => {
-          setMessage(null);
-        }, 6000);
+        nullMessage(setMessage);
       });
   };
 
@@ -201,9 +188,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in getting address by id");
-        setTimeout(() => {
-          setMessage(null);
-        }, 6000);
+        nullMessage(setMessage);
       });
   };
   // ****************************delete address********************//
@@ -216,15 +201,11 @@ const Address = () => {
           newAddress = newAddress.filter((address) => address.id !== id);
           setAddress(newAddress);
           setMessage("Delete successfull!!!!!!!");
-          setTimeout(() => {
-            setMessage(null);
-          }, 6000);
+          nullMessage(setMessage);
         })
         .catch((err) => {
           setMessage("Sorry! You can't delete this address");
-          setTimeout(() => {
-            setMessage(null);
-          }, 6000);
+          nullMessage(setMessage);
         });
     }
   };
