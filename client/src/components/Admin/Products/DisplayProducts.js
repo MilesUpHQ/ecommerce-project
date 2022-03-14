@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
-import Pagination from "../Categories/Pagination";
+import Pagination from "../../Common/Pagination";
 import "../../Common/css/pagination.css";
 
 const DisplayProducts = ({}) => {

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import axios from "../../../utils/ajax-helper";
-import TypeAhead from "./TypeAhead";
+import TypeAhead from "../../Common/TypeAhead";
 
 const AddCategory = ({
   category,

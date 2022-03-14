@@ -8,8 +8,6 @@ const TypeAhead = ({
   searchItem,
   isLoading,
   placeholder,
-  // setSearchInput,
-  // searchInput,
   handleSearchFilter,
   onEnterSearchItems,
 }) => {

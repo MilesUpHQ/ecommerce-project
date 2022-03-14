@@ -6,9 +6,10 @@ import "./address.css";
 import { getJWT } from "../../utils/jwt";
 import { parseJwt } from "../../utils/jwt";
 import countryList from "react-select-country-list";
-import Select from "react-select";
 import AddressForm from "./AddressForm";
 import { useLocation } from "react-router-dom";
+import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
+import { clearMessageTimeout } from "../../utils/nullErrorMessage";
 
 const CreateAddress = () => {
   let [street, setStreet] = useState(null);
@@ -23,6 +24,8 @@ const CreateAddress = () => {
   let decoded = parseJwt(getJWT());
   let [user_id, setUser_id] = useState(decoded.id);
   const [message, setMessage] = useState(null);
+  const [newAddressUrl, setNewAddressUrl] = useState("/user/address/new");
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const options = useMemo(() => countryList().getData(), []);
@@ -32,9 +35,52 @@ const CreateAddress = () => {
   };
   let submitHandler;
   let id = location.pathname.slice(14);
-  if (location.pathname == "/user/address/null") {
+  if (location.pathname == newAddressUrl) {
     submitHandler = async (e) => {
       e.preventDefault();
+      if (name == null) {
+        setErrorMessage("Please enter name");
+        clearMessageTimeout(setErrorMessage);
+
+        return;
+      }
+      if (email == null) {
+        setErrorMessage("Please enter email");
+        clearMessageTimeout(setErrorMessage);
+
+        return;
+      }
+      if (phone == null) {
+        setErrorMessage("Please enter phone");
+        clearMessageTimeout(setErrorMessage);
+
+        return;
+      }
+      if (street == null) {
+        setErrorMessage("Please enter street");
+        clearMessageTimeout(setErrorMessage);
+
+        return;
+      }
+      if (city == null) {
+        setErrorMessage("Please enter city");
+        clearMessageTimeout(setErrorMessage);
+
+        return;
+      }
+      if (pin_code == null) {
+        setErrorMessage("Please enter picode_");
+        clearMessageTimeout(setErrorMessage);
+
+        return;
+      }
+      if (state == null) {
+        setErrorMessage("Please enter state");
+        clearMessageTimeout(setErrorMessage);
+
+        return;
+      }
+
       axios
         .post("/user/new/address/", {
           name: name,
@@ -54,11 +100,11 @@ const CreateAddress = () => {
           setMessage(
             "Oppsie! Something went wrong. Please try entering valid datas"
           );
-          navigate("/user/address/null");
+          navigate(newAddressUrl);
         });
     };
   }
-  if (!(location.pathname == "/user/address/null")) {
+  if (!(location.pathname == newAddressUrl)) {
     submitHandler = async (e) => {
       e.preventDefault();
       axios
@@ -87,7 +133,7 @@ const CreateAddress = () => {
   }
 
   useEffect(() => {
-    if (!(location.pathname == "/user/address/null")) {
+    if (!(location.pathname == newAddressUrl)) {
       axios
         .get(`/user/address/${id}/getById`)
         .then((response) => {
@@ -109,29 +155,34 @@ const CreateAddress = () => {
 
   return (
     <div>
+      <SimpleNavBar />
+      <br />
       {message && <h2>{message}</h2>}
       {options && (
-        <AddressForm
-          street={street}
-          setStreet={setStreet}
-          city={city}
-          setCity={setCity}
-          pin_code={pin_code}
-          setPin_code={setPin_code}
-          state={state}
-          setState={setState}
-          country={country}
-          options={options}
-          changeHandler={changeHandler}
-          submitHandler={submitHandler}
-          title={title}
-          name={name}
-          setName={setName}
-          email={email}
-          setEmail={setEmail}
-          phone={phone}
-          setPhone={setPhone}
-        />
+        <div style={{ marginLeft: "10%" }}>
+          <AddressForm
+            street={street}
+            setStreet={setStreet}
+            city={city}
+            setCity={setCity}
+            pin_code={pin_code}
+            setPin_code={setPin_code}
+            state={state}
+            setState={setState}
+            country={country}
+            options={options}
+            changeHandler={changeHandler}
+            submitHandler={submitHandler}
+            title={title}
+            name={name}
+            setName={setName}
+            email={email}
+            setEmail={setEmail}
+            phone={phone}
+            setPhone={setPhone}
+            errorMessage={errorMessage}
+          />
+        </div>
       )}
     </div>
   );

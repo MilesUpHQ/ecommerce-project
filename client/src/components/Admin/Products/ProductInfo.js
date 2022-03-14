@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import "../../Common/css/admin-style.css";
+import { useParams } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const ProductInfo = (props) => {
+const ProductInfo = () => {
+  let { id } = useParams("id");
   const [product, setProduct] = useState({});
   const [errormsg, setErrormsg] = useState(null);
   useEffect(() => {
     axios
-      .get(`/admin/product/${props.id}`)
+      .get(`/admin/product/${id}`)
       .then((res) => {
         setProduct(res.data);
       })

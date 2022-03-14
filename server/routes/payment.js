@@ -1,12 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const knex = require("../utils/dbConfig");
-const Razorpay = require("razorpay");
-
-var razorpay = new Razorpay({
-  key_id: process.env.RAZOR_PAY_KEY,
-  key_secret: process.env.RAZOR_PAY_KEY_SECREAT,
-});
+const payment = require("../utils/paymentGateway");
 
 let options;
 let payment_capture;
@@ -27,7 +22,7 @@ router.post("/:user_id", async (req, res, next) => {
         payment_capture,
       };
       try {
-        const razorResult = await razorpay.orders.create(options);
+        const razorResult = await payment.orders.create(options);
         res.json({
           id: razorResult.id,
           currency: razorResult.currency,
