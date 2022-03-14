@@ -35,5 +35,11 @@ exports.down = function (knex) {
       table.integer("cart_id").unsigned().notNullable();
       table.foreign("cart_id").references("cart.id");
       table.timestamps(true, true);
+    })
+    .alterTable("orders", (table) => {
+      table.dropColumn("total_price");
+    })
+    .alterTable("orders", (table) => {
+      table.integer("total_price").notNullable();
     });
 };
