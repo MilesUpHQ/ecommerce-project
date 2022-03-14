@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import { FaUser } from 'react-icons/fa';
+import { useParams } from "react-router-dom";
 import "../css/user.css";
+
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const UserInfo = (props) => {
+  let { id } = useParams("id");
   const [userInfo, setUserInfo] = useState({});
   const [errormsg, setErrormsg] = useState(null);
   useEffect(() => {
     axios
-      .get(`/admin/user/${props.id}`)
+      .get(`/admin/user/${id}`)
       .then((res) => {
         console.log("xd", res);
         setUserInfo(res.data);
