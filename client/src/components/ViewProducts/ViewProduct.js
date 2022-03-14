@@ -24,30 +24,12 @@ const ViewProduct = () => {
   const [updateNavbar, setUpdateNavbar] = React.useState(false);
 
   let id = window.location.pathname.substring(14);
-  const removeDuplicate = (array) => {
-    var dups = [];
-    var arr = array.filter(function (el) {
-      if (dups.indexOf(el.color || el.size) == -1) {
-        dups.push(el.color || el.size);
-        return true;
-      }
-      return false;
-    });
-    return arr;
-  };
 
   useEffect(async () => {
     axios
       .get(`/featured_products/${id}`)
       .then((response) => {
-        setCategory(response.data.categories[0].name);
-        setProduct(response.data.product[0]);
-        let color = removeDuplicate(response.data.colors);
-        setColors(color);
-        let size = removeDuplicate(response.data.sizes);
-        setSizes(size);
-        setImage_url(response.data.imgArray);
-        setReviews(response.data.reviews);
+        setProduct(response.data);
       })
       .catch((err) => {
         setErrorMsg("Sorry we couldnot get procuct with error " + err);
@@ -70,7 +52,7 @@ const ViewProduct = () => {
   return (
     <div className="mainContainer">
       {addToCart ? <Add id={addToCart} /> : null}
-      {product && imageUrls && (
+      {product && (
         <div>
           <Navbar
             searchItem={searchItem}
@@ -81,36 +63,11 @@ const ViewProduct = () => {
           />
           <br />
           <br />
-          <hr />
           {errorMsg && <ErrorAlert msg={errorMsg} />}
           {searchItem.length > 0 || searchInput !== null ? (
             <SearchProducts searchItem={searchItem} searchInput={searchInput} />
           ) : (
             <>
-              <Card className="viewCard">
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                  <div
-                    className="collapse navbar-collapse"
-                    id="navbarSupportedContent"
-                  >
-                    <ul className="navbar-nav mr-auto">
-                      <li className="nav-item active">
-                        <a className="nav-link" href="/">
-                          Home /
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        {category && (
-                          <a className="nav-link" href="#">
-                            {category} /
-                          </a>
-                        )}
-                      </li>
-                    </ul>
-                  </div>
-                </nav>
-              </Card>
-              <hr />
               <Card className="containerCard">
                 <Container>
                   <Row>
@@ -140,38 +97,30 @@ const ViewProduct = () => {
                               <hr />
                               <div>
                                 {" "}
-                                {sizes &&
-                                  sizes.map((size) => {
-                                    return (
-                                      <div>
-                                        <input
-                                          type="radio"
-                                          value="Male"
-                                          name={size.size}
-                                        />{" "}
-                                        {size.size}
-                                      </div>
-                                    );
-                                  })}
+                                <div>
+                                  <input
+                                    type="radio"
+                                    value="Male"
+                                    name={product.size}
+                                    defaultChecked
+                                  />{" "}
+                                  {product.size}
+                                </div>
                               </div>
                             </Col>
                             <Col>
                               <Card.Text>Colors</Card.Text>
                               <hr />
                               <div>
-                                {colors &&
-                                  colors.map((colors) => {
-                                    return (
-                                      <div>
-                                        <input
-                                          type="radio"
-                                          value="Male"
-                                          name={colors.color}
-                                        />{" "}
-                                        {colors.color}
-                                      </div>
-                                    );
-                                  })}
+                                <div>
+                                  <input
+                                    type="radio"
+                                    value="Male"
+                                    name={product.color}
+                                    defaultChecked
+                                  />{" "}
+                                  {product.color}
+                                </div>
                               </div>
                             </Col>
                           </Row>

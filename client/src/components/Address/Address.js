@@ -16,6 +16,8 @@ import "./address.css";
 import { getJWT } from "../../utils/jwt";
 import { parseJwt } from "../../utils/jwt";
 import { Razorpay } from "razorpay-checkout";
+import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
+import { clearMessageTimeout } from "../../utils/nullErrorMessage";
 
 const Address = () => {
   let [addresses, setAddress] = useState([]);
@@ -30,12 +32,6 @@ const Address = () => {
   let [phone, setPhone] = useState(null);
   let [cartItems, setCartItems] = useState(null);
 
-  const nullMessage = () => {
-    return setTimeout(() => {
-      setMessage(null);
-    }, 6000);
-  };
-
   useEffect(() => {
     cartDetails();
     axios
@@ -45,7 +41,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in razor pay");
-        nullMessage();
+        clearMessageTimeout(setMessage);
       });
 
     axios
@@ -53,7 +49,7 @@ const Address = () => {
       .then((res) => {
         if (res.data.length == 0) {
           setMessage("No address found!! Please add new one");
-          nullMessage();
+          clearMessageTimeout(setMessage);
         } else {
           setAddress(res.data);
           setAddress_id(res.data[0].id);
@@ -61,7 +57,7 @@ const Address = () => {
             getById(res.data[0].id);
           } catch (error) {
             setMessage("error in getting address");
-            nullMessage();
+            clearMessageTimeout(setMessage);
           }
           document.getElementById(res.data[0].id).style.border =
             "solid 2px blue";
@@ -69,7 +65,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("Sorry! Something went wrong. Please Try again", err);
-        nullMessage();
+        clearMessageTimeout(setMessage);
       });
   }, []);
 
@@ -97,17 +93,19 @@ const Address = () => {
   };
   function onPaymentFailure(response) {
     setMessage("error in openin razor pay");
-    nullMessage();
+    clearMessageTimeout(setMessage);
+
     navigate("/order/error");
   }
   function onPaymentSuccess(response) {
     setMessage("opening razorpay");
-    nullMessage();
+    clearMessageTimeout(setMessage);
+
     try {
       orderPlaced(response.razorpay_order_id, response.razorpay_payment_id);
     } catch (error) {
       setMessage("error in placing order");
-      nullMessage();
+      clearMessageTimeout(setMessage);
       navigate("/order/error");
     }
   }
@@ -143,7 +141,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in getting cart details");
-        nullMessage();
+        clearMessageTimeout(setMessage);
       });
   };
 
@@ -164,12 +162,8 @@ const Address = () => {
           .then((res) => {
             postOrderItems(ordersID)
               .then(async (res) => {
-                if (res.data.message == "Sucessfully added order items!!") {
-                  await deleteCart(cartItems.cart_id);
-                  navigate("/order/confirm");
-                } else {
-                  navigate("/order/error");
-                }
+                await deleteCart(cartItems.cart_id);
+                navigate("/order/confirm");
               })
               .catch((err) => {
                 navigate("/order/error");
@@ -194,7 +188,7 @@ const Address = () => {
       })
       .catch((err) => {
         setMessage("error in getting address by id");
-        nullMessage();
+        clearMessageTimeout(setMessage);
       });
   };
   // ****************************delete address********************//
@@ -207,11 +201,11 @@ const Address = () => {
           newAddress = newAddress.filter((address) => address.id !== id);
           setAddress(newAddress);
           setMessage("Delete successfull!!!!!!!");
-          nullMessage();
+          clearMessageTimeout(setMessage);
         })
         .catch((err) => {
           setMessage("Sorry! You can't delete this address");
-          nullMessage();
+          clearMessageTimeout(setMessage);
         });
     }
   };
@@ -242,11 +236,12 @@ const Address = () => {
 
   return (
     <React.Fragment>
+      <SimpleNavBar />
       <div className="main-div">
         <div className="content-wrapper">
           <div className="container">
             <a
-              href="/user/address/null"
+              href="/user/address/new"
               id="newAddress"
               className="btn btn-dark rounded-pill py-2 btn-block "
             >

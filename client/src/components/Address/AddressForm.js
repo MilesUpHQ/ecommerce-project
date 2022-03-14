@@ -2,6 +2,7 @@ import React from "react";
 import countryList from "react-select-country-list";
 import Select from "react-select";
 import { useEffect, useState, useMemo } from "react";
+import ErrorAlert from "../Common/ErrorAlert";
 
 const AddressForm = ({
   street,
@@ -23,7 +24,12 @@ const AddressForm = ({
   setPhone,
   email,
   setEmail,
+  errorMessage,
 }) => {
+  const handleNameChange = (e) => {
+    console.log(e.target.value);
+    setName(e.target.value);
+  };
   return (
     <>
       <React.Fragment>
@@ -34,92 +40,92 @@ const AddressForm = ({
                 <h2>{title}</h2>
                 <br />
                 <div className="form-group">
-                  <label htmlFor="exampleInputName1">Name</label>
+                  <label htmlFor="name">Name</label>
+                  <sup>*</sup>
                   <input
                     type="text"
                     className="form-control"
-                    id="exampleInputName1"
+                    id="name"
                     placeholder="Name"
                     value={name}
-                    required={true}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <br />
                 <div className="form-group">
-                  <label htmlFor="exampleInputName1">E-mail</label>
+                  <label htmlFor="email">E-mail</label>
+                  <sup>*</sup>
                   <input
                     type="email"
                     className="form-control"
-                    id="exampleInputName1"
+                    id="email"
                     placeholder="E-mail"
                     value={email}
-                    required={true}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <br />
                 <div className="form-group">
-                  <label htmlFor="exampleInputName1">Phone Number</label>
+                  <label htmlFor="phone">Phone Number</label>
+                  <sup>*</sup>
                   <input
                     type="number"
                     pattern="[0-9]{10}"
                     className="form-control"
-                    id="exampleInputName1"
+                    id="phone"
                     placeholder="Phone Number"
                     value={phone}
-                    required={true}
                     onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
                 <br />
                 <div className="form-group">
-                  <label htmlFor="exampleInputName1">Street</label>
+                  <label htmlFor="street">Street</label>
+                  <sup>*</sup>
                   <input
                     type="text"
                     className="form-control"
-                    id="exampleInputName1"
+                    id="street"
                     placeholder="Street"
                     value={street}
-                    required={true}
                     onChange={(e) => setStreet(e.target.value)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputName1">City</label>
+                  <label htmlFor="city">City</label>
+                  <sup>*</sup>
                   <input
                     type="text"
                     className="form-control"
-                    id="exampleInputName1"
+                    id="city"
                     placeholder="city"
                     value={city}
-                    required={true}
                     onChange={(e) => setCity(e.target.value)}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="exampleInputName1">Pincode</label>
+                  <label htmlFor="pincode">Pincode</label>
+                  <sup>*</sup>
                   <input
                     type="text"
                     className="form-control"
-                    id="exampleInputName1"
+                    id="pincode"
                     placeholder="pin_code"
                     value={pin_code}
-                    required={true}
                     onChange={(e) => setPin_code(e.target.value)}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="exampleInputName1">State</label>
+                  <label htmlFor="state">State</label>
+                  <sup>*</sup>
                   <input
                     type="text"
                     className="form-control"
-                    id="exampleInputName1"
+                    id="state"
                     placeholder="state"
                     value={state}
-                    required={true}
                     onChange={(e) => setState(e.target.value)}
                   />
                 </div>
@@ -132,6 +138,7 @@ const AddressForm = ({
                   />
                 </div>
                 <br />
+                {errorMessage && <ErrorAlert msg={errorMessage} />}
                 <button type="submit" className="btn btn-primary mr-2">
                   Submit
                 </button>

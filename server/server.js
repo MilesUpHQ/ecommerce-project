@@ -52,6 +52,8 @@ app.use(passport.initialize());
 app.use(express.static("public"));
 app.use("/images", express.static("images"));
 app.use("/images", express.static(path.join("backend/images")));
+app.use("/data", express.static("data"));
+app.use("/data", express.static(path.join("backend/data")));
 
 //routes
 
