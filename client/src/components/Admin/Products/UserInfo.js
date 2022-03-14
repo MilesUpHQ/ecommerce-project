@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
+import { FaUser } from 'react-icons/fa';
 import "../css/user.css";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const UserInfo = (props) => {
@@ -34,9 +35,7 @@ const UserInfo = (props) => {
           <div className="image-space">
             <h2 className="pdp-title ml-4">{userInfo.first_name}</h2>
             <h2 className="pdp-name ml-4">{userInfo.last_name}</h2>
-            <img className="rounded-circle z-depth-2 ml-4" 
-            alt="95x95" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-          data-holder-rendered="true" />
+            <h1 className="avatar ml-4"><FaUser /></h1>
           </div>
         </div>
 
