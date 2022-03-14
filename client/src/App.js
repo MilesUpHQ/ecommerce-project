@@ -15,15 +15,15 @@ import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import FeaturedProducts from "./components/Home/Home";
 import ViewProduct from "./components/ViewProducts/ViewProduct";
-import AddProducts from "./components/Admin/Products/AddProducts";
-import { ProductLayout } from "./components/Admin/Products/ProductLayout";
-import { ProductView } from "./components/Admin/Products/ProductView";
-import { User } from "./components/Admin/Products/User";
+// import AddProducts from "./components/Admin/Products/AddProducts";
+// import { ProductLayout } from "./components/Admin/Products/ProductLayout";
+// import { ProductView } from "./components/Admin/Products/ProductView";
+// import { User } from "./components/Admin/Products/User";
 import { UserView } from "./components/Admin/Products/UserView";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
 import FeaturedProductsList from "./components/Home/ProductList";
-import FeaturedProductLayout from "./components/Admin/FeatureProducts/FeaturedProductLayout";
-import { Edit } from "./components/Admin/Products/Edit";
+// import FeaturedProductLayout from "./components/Admin/FeatureProducts/FeaturedProductLayout";
+// import { Edit } from "./components/Admin/Products/Edit";
 import Cart from "./components/Cart/Cart";
 import Address from "./components/Address/Address";
 import CreateAddress from "./components/Address/CreateAddress";
@@ -32,6 +32,12 @@ import OrderConfirm from "./components/OrderConfirm/OrderConfirm";
 import OrderFailed from "./components/FailedError/FailedError";
 import Orders from "./components/Admin/Orders/Orders";
 import OrderDetails from "./components/Admin/Orders/OrderDetails";
+import DisplayProducts from "./components/Admin/Products/DisplayProducts";
+import AddForm from "./components/Admin/Products/AddForm";
+import UserList from "./components/Admin/Products/UserList";
+import { EditForm } from "./components/Admin/Products/EditForm";
+import ProductInfo from "./components/Admin/Products/ProductInfo";
+import FeaturedProduct from "./components/Admin/FeatureProducts/FeaturedProduct";
 
 const App = () => {
   return (
@@ -44,18 +50,8 @@ const App = () => {
         <Route path="signup" element={<Signup />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/product/view/:id" element={<ViewProduct />} />
-        <Route
-          path="/admin/product/featured"
-          element={<FeaturedProductLayout />}
-        />
-        <Route path="/admin/products/add" element={<AddProducts />} /> 
-        <Route path="/admin/products" element={<ProductLayout />} />
         <Route path="/" element={<FeaturedProducts />}></Route>
         <Route path="/products/:category" element={<ProductsByCategory />} />
-        <Route path="/admin/products/:id/view" element={<ProductView />} />
-        <Route path="/admin/user/:id/view" element={<UserView />} />
-        <Route path="/admin/product/:id/update" element={<Edit />} />
-        <Route path="/admin/user" element={<User />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/user/address" element={<Address />} />
         <Route path="/user/address/:id" element={<CreateAddress />} />
@@ -69,7 +65,7 @@ const App = () => {
           path="/admin"
           element={
             <PrivateRoute>
-              <AdminLayout />
+              <Navigate to='/admin/products' />
             </PrivateRoute>
           }
         ></Route>
@@ -87,7 +83,7 @@ const App = () => {
           path="/admin/product/featured"
           element={
             <PrivateRoute>
-              <FeaturedProductLayout />
+              <FeaturedProduct />
             </PrivateRoute>
           }
         ></Route>
@@ -96,7 +92,7 @@ const App = () => {
           path="/admin/products/add"
           element={
             <PrivateRoute>
-              <AddProducts />
+              <AddForm />
             </PrivateRoute>
           }
         ></Route>
@@ -105,7 +101,7 @@ const App = () => {
           path="/admin/products/"
           element={
             <PrivateRoute>
-              <ProductLayout />
+              <DisplayProducts />
             </PrivateRoute>
           }
         ></Route>
@@ -114,7 +110,7 @@ const App = () => {
           path="/admin/products/:id/view"
           element={
             <PrivateRoute>
-              <ProductView />
+              <ProductInfo />
             </PrivateRoute>
           }
         ></Route>
@@ -132,7 +128,7 @@ const App = () => {
           path="/admin/product/:id/update"
           element={
             <PrivateRoute>
-              <Edit />
+              <EditForm />
             </PrivateRoute>
           }
         ></Route>
@@ -141,7 +137,7 @@ const App = () => {
           path="/admin/user"
           element={
             <PrivateRoute>
-              <User />
+              <UserList />
             </PrivateRoute>
           }
         ></Route>

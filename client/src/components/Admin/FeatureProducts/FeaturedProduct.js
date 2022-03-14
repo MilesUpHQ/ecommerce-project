@@ -109,14 +109,7 @@ const FeaturedProduct = () => {
       <div className="main-panel">
         <div className="content-wrapper">
           <div className="container">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                margin: "1%",
-                alignItems: "center",
-              }}
-            >
+            <div className="mainHead">
               <h3>Featured Products</h3>
               <button
                 type="button"

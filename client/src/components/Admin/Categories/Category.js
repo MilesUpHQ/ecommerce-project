@@ -77,14 +77,7 @@ const Category = () => {
       <div className="main-panel">
         <div className="content-wrapper">
           <div className="container">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                margin: "1%",
-                alignItems: "center",
-              }}
-            >
+            <div className="mainHead">
               <h3>Categories</h3>
               <button
                 type="button"
