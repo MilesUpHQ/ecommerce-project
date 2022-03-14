@@ -3,9 +3,11 @@ import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
-export const EditForm = (props) => {
+export const EditForm = () => {
   const navigate = useNavigate();
+  let { id } = useParams("id");
   const [product, setProduct] = useState({});
   const [errormsg, setErrormsg] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -62,7 +64,7 @@ export const EditForm = (props) => {
   }
   useEffect(() => {
     axios
-      .get(`/admin/product/${props.id}`)
+      .get(`/admin/product/${id}`)
       .then((res) => {
         setName(res.data.name);
         setSize(res.data.size);
@@ -74,7 +76,7 @@ export const EditForm = (props) => {
         setDescription(res.data.description);
         setProduct(res.data);
         setVariantId(res.data.variant_id);
-        setProductId(props.id);
+        setProductId(id);
       })
       .catch((err) => {
         setErrormsg("Sorry! Something went wrong. Please Try again");
