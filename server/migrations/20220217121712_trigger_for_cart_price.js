@@ -40,7 +40,7 @@ exports.up = function (knex) {
  */
 exports.down = function (knex) {
   return knex.schema.raw(`
-    DROP TRIGGER update_cart_price_trigger ON cart_items;
+    DROP TRIGGER cart_price_update_trigger ON cart_items;
     DROP FUNCTION update_cart_price();
   `);
 };
