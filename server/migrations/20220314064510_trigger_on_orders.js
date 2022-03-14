@@ -4,27 +4,24 @@
  */
 exports.up = function (knex) {
   return knex.schema.raw(`
-    DROP TRIGGER update_cart_price_trigger ON cart_items;
-    DROP FUNCTION update_cart_price();
-  `).raw(`
   CREATE FUNCTION update_cart_price()
   RETURNS TRIGGER AS $$
     BEGIN
       IF (TG_OP = 'DELETE') THEN
-        UPDATE cart 
-          SET price = (SELECT SUM(order_items.quantity * variants.price) FROM order_items
+        UPDATE orders 
+          SET total_price = (SELECT SUM(order_items.quantity * variants.price) FROM order_items
             INNER JOIN variants ON variants.id = order_items.variant_id
-            INNER JOIN order ON order.id = order_items.order_id
-            WHERE order.id = OLD.order_id)
-        WHERE cart.id = OLD.cart_id;
+            INNER JOIN orders ON orders.id = order_items.order_id
+            WHERE orders.id = OLD.order_id)
+        WHERE orders.id = OLD.order_id;
         RETURN OLD;
       ELSE 
-        UPDATE cart 
-          SET price = (SELECT SUM(order_items.quantity * variants.price) FROM order_items
+        UPDATE orders 
+          SET total_price = (SELECT SUM(order_items.quantity * variants.price) FROM order_items
             INNER JOIN variants ON variants.id = order_items.variant_id
-            INNER JOIN order ON order.id = order_items.order_id
-            WHERE order.id = NEW.order_id)
-          WHERE order.id = NEW.order_id;
+            INNER JOIN orders ON orders.id = order_items.order_id
+            WHERE orders.id = NEW.order_id)
+          WHERE orders.id = NEW.order_id;
           RETURN NEW;
       END IF;
     END;
@@ -43,35 +40,7 @@ exports.up = function (knex) {
  */
 exports.down = function (knex) {
   return knex.schema.raw(`
-    DROP TRIGGER update_cart_price_trigger ON order_items;
+    DROP TRIGGER cart_price_update_trigger ON order_items;
     DROP FUNCTION update_cart_price();
-  `).raw(`
-  CREATE FUNCTION update_cart_price()
-  RETURNS TRIGGER AS $$
-    BEGIN
-      IF (TG_OP = 'DELETE') THEN
-        UPDATE cart 
-          SET price = (SELECT SUM(order_items.quantity * variants.price) FROM order_items
-            INNER JOIN variants ON variants.id = order_items.variant_id
-            INNER JOIN order ON order.id = order_items.order_id
-            WHERE order.id = OLD.order_id)
-        WHERE cart.id = OLD.cart_id;
-        RETURN OLD;
-      ELSE 
-        UPDATE cart 
-          SET price = (SELECT SUM(order_items.quantity * variants.price) FROM order_items
-            INNER JOIN variants ON variants.id = order_items.variant_id
-            INNER JOIN order ON order.id = order_items.order_id
-            WHERE order.id = NEW.order_id)
-          WHERE order.id = NEW.order_id;
-          RETURN NEW;
-      END IF;
-    END;
-  $$ LANGUAGE plpgsql;
-
-  CREATE TRIGGER cart_price_update_trigger
-  AFTER INSERT OR UPDATE OR DELETE ON order_items
-    FOR EACH ROW
-    EXECUTE PROCEDURE update_cart_price();
   `);
 };
