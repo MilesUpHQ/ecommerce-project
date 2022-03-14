@@ -41,7 +41,7 @@ const Navbar = ({
 
   const handleSearch = (value) => {
     axios
-      .get(`/typeahead-items?search_keyword=${value}`)
+      .get(`/search/typeahead?keyword=${value}`)
       .then((res) => {
         let array = res.data.map(({ id, name }) => ({
           label: name,

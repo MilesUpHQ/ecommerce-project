@@ -15,7 +15,7 @@ const path = require("path");
 
 // routes imports
 
-var adminRouter = require("./routes/admin/categories/category");
+const categories = require("./routes/admin/categories/category");
 const resetPassword = require("./routes/userAuth/resetPassword");
 const forgotPassword = require("./routes/userAuth/forgotPassword");
 const addProducts = require("./routes/admin/products/addProducts");
@@ -39,6 +39,7 @@ const payment = require("./routes/payment");
 const orders = require("./routes/orders");
 // const checkout = require("./routes/checkout");
 const OrderConfirm = require("./routes/order/confirm");
+const adminOrders = require("./routes/admin/orders/orders")
 
 // middlewares
 
@@ -72,10 +73,10 @@ app.use("/api/signup", signup);
 app.use("/api/getToken", getToken);
 app.use("/api/products", products);
 app.use("/api/admin/products/add", addProducts);
-app.use("/api", adminRouter);
+app.use("/api/categories", categories);
 app.use("/api/admin/products", displayProducts);
 app.use("/api/products/category", productsByCategory);
-app.use("/api", search);
+app.use("/api/search", search);
 app.use("/api/delete_product", displayProducts);
 app.use("/api/delete_user", userList);
 app.use("/api/admin/product", productinfo);
@@ -87,6 +88,7 @@ app.use("/api/cart/add", addToCart);
 app.use("/api/cart/remove", removeFromCart);
 app.use("/api/cart/update", updateQuantity);
 app.use("/api/order/confirm", OrderConfirm);
+app.use("/api/admin/orders", adminOrders);
 
 app.get(
   "/api/getUser",

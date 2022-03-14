@@ -1,5 +1,4 @@
-const db = require("../../utils/dbConfig");
-const bcrypt = require("bcrypt");
+const db = require("../utils/dbConfig");
 
 function addCategory(params) {
   return db

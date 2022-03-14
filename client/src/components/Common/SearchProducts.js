@@ -29,7 +29,7 @@ export default function SearchProducts({ searchItem, searchInput }) {
       getProductsBySearch(searchInput);
     }
   }, [searchItem, searchInput]);
-  
+
   const handleAddToCart = (id) => {
     setAddToCart(id);
     setUpdateNavbar(true);
@@ -70,11 +70,16 @@ export default function SearchProducts({ searchItem, searchInput }) {
     setSecondRange(secondRange.price);
   };
 
+  const searchFunction = async (value, keyword) => {
+    const products = await axios.get(
+      `/search/products?category_id=${value}&&keyword=${keyword}`
+    );
+    return products;
+  };
+
   const getProductsBySearch = (searchVal) => {
-    console.log(searchVal);
     setSearchValue(searchVal);
-    axios
-      .get(`/filter-products?search_keyword=${searchVal}`)
+    searchFunction("", searchVal)
       .then((res) => {
         if (res.data.row.length > 0) {
           setProducts(res.data.row);
@@ -138,10 +143,7 @@ export default function SearchProducts({ searchItem, searchInput }) {
 
   const handleCategoryFilter = (e) => {
     setSelectedCategory(e.target.value);
-    axios
-      .get(
-        `/filter-products?category_id=${e.target.value}&&search_keyword=${searchValue}`
-      )
+    searchFunction(e.target.value, searchValue)
       .then((res) => {
         setProducts(res.data.row);
         getPriceRanges(res.data.row);
@@ -196,7 +198,7 @@ export default function SearchProducts({ searchItem, searchInput }) {
                       </div>
                     </div>
                   </article>
-                  {filteredProducts.length > 1 && (
+                  {filteredProducts.length > 1 && minPrice !== secondRange && (
                     <article className="card-group-item">
                       <header className="card-header">
                         <h6 className="title">Price Filter</h6>
