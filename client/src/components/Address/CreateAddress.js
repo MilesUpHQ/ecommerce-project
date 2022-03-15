@@ -17,6 +17,7 @@ const CreateAddress = () => {
   let [pin_code, setPin_code] = useState(null);
   let [state, setState] = useState(null);
   let [country, setCountry] = useState(null);
+  let [isCountry, SetIsCountry] = useState(false);
   let [title, setTitle] = useState("Add An address");
   let [name, setName] = useState(null);
   let [email, setEmail] = useState(null);
@@ -146,6 +147,7 @@ const CreateAddress = () => {
           setName(response.data.name);
           setEmail(response.data.email);
           setTitle("Address Edit:");
+          SetIsCountry(true);
         })
         .catch((err) => {
           setMessage("Sorry we couldnot get address with error " + err);
@@ -181,6 +183,8 @@ const CreateAddress = () => {
             phone={phone}
             setPhone={setPhone}
             errorMessage={errorMessage}
+            isCountry={isCountry}
+            SetIsCountry={SetIsCountry}
           />
         </div>
       )}
