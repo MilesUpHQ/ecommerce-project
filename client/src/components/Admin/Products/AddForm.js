@@ -42,12 +42,14 @@ const AddForm = () => {
     {
       setErrormsg("Price cannot be empty");
       return;
+    }else if (fileData.length == 0){
+      setErrormsg("Please select an image");
+      return;
     }
 
     axios
       .post("/admin/products/add", imageData)
       .then((res) => {
-        console.log("vgd",imageData);
         setIsEnable(false);
         toast.success("Product Created Sucessfully!");
         setTimeout(() => {
@@ -55,7 +57,7 @@ const AddForm = () => {
         }, 1500);
       })
       .catch((err) => {
-        setErrormsg( "Please insert an image");
+        setErrormsg( "Oopise! Something went wrong please try again.");
       });
   };
 
