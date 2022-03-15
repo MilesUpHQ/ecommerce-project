@@ -10,11 +10,13 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [error, setError] = useState(null);
+  const [isDisabledButton, setIsDisabledButton] = useState(false);
   const navigate = useNavigate();
 
   const signup = (e) => {
     e.preventDefault();
     setError(null);
+    setIsDisabledButton(true);
     axios
       .post("/signup", {
         first_name: firstName,
@@ -30,6 +32,7 @@ export default function Signup() {
         }, 1500);
       })
       .catch((err) => {
+        setIsDisabledButton(false);
         if (err.response) {
           setError(err.response.data.message);
         }
@@ -116,9 +119,19 @@ export default function Signup() {
                     <label htmlFor="password">Password *</label>
                   </div>
                   <div className="form-group text-center">
-                    <button type="submit" className="btn btn-primary btn-lg">
-                      Sign Up
-                    </button>
+                    {isDisabledButton ? (
+                      <button
+                        type="submit"
+                        className="btn btn-primary btn-block"
+                        disabled
+                      >
+                        Signup
+                      </button>
+                    ) : (
+                      <button type="submit" className="btn btn-primary btn-lg">
+                        Sign Up
+                      </button>
+                    )}
                   </div>
                 </div>
               </form>
