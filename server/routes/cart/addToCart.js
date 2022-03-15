@@ -20,8 +20,6 @@ router.get(
     } else {
       quantity = parseInt(req.body.quantity);
     }
-    console.log("req.user", user_id);
-    console.log("quantity", quantity);
 
     getOrderCartBy("user_id", user_id).then((row) => {
       if (row.length === 0) {
