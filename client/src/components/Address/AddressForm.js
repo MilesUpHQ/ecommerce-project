@@ -130,18 +130,8 @@ const AddressForm = ({
                 {isCountry == true && (
                   <div>
                     <p>Country</p>
-                    <div
-                      style={{
-                        width: "500px",
-                        height: "50px",
-                        border: "solid 1px black",
-                        backgroundColor: "white",
-                        alignItems: "center",
-                      }}
-                    >
-                      <p style={{ marginLeft: "25%", marginTop: "5px" }}>
-                        {country}
-                      </p>
+                    <div className="countryDiv">
+                      <p className="countryP">{country}</p>
                     </div>
                     <button
                       type="button"
