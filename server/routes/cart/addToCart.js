@@ -4,9 +4,10 @@ const knex = require("../../utils/dbConfig");
 const passport = require("passport");
 const {
   insertOrderCart,
-
   getOrderCartBy,
   insertOrderItems,
+  updateQuantity,
+  getOrderItemsBy,
 } = require("../../queries/order");
 router.get(
   "/:variant_id",
@@ -38,26 +39,21 @@ router.get(
       } else {
         console.log("row1", row);
         const order_id = row[0].id;
-        knex("order_items")
-          .where({ order_id: row[0].id, variant_id: req.params.variant_id })
-          .then((row) => {
-            if (row.length === 0) {
-              console.log("row", row);
-              insertOrderItems(order_id, req.params.variant_id, quantity).then(
-                (row) => {
-                  res.json(row);
-                }
-              );
-            } else {
-              knex("order_items")
-                .where({ order_id: order_id })
-                .andWhere({ variant_id: req.params.variant_id })
-                .update({ quantity: row[0].quantity + quantity })
-                .then((row) => {
-                  res.json(row);
-                });
-            }
-          });
+        getOrderItemsBy(row[0].id, req.params.variant_id).then((row) => {
+          if (row.length === 0) {
+            insertOrderItems(order_id, req.params.variant_id, quantity).then(
+              (row) => {
+                res.json(row);
+              }
+            );
+          } else {
+            updateQuantity(order_id, req.params.variant_id, quantity).then(
+              (row) => {
+                res.json(row);
+              }
+            );
+          }
+        });
       }
     });
   }

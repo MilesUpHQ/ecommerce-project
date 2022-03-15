@@ -27,9 +27,24 @@ function insertOrderItems(order_id, variant_id, quantity) {
   });
 }
 
+function updateQuantity(order_id, variant_id, prev_quantity, quantity) {
+  return db("order_items")
+    .where({ order_id: order_id })
+    .andWhere({ variant_id: variant_id })
+    .update({ quantity: prev_quantity + quantity });
+}
+
+function getOrderItemsBy(order_id, variant_id) {
+  return db("order_items")
+    .where({ order_id: order_id })
+    .andWhere({ variant_id: variant_id });
+}
+
 module.exports = {
   insertOrderCart,
   updateOrderStatus,
   getOrderCartBy,
   insertOrderItems,
+  updateQuantity,
+  getOrderItemsBy,
 };
