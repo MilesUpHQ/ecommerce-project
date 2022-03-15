@@ -49,6 +49,10 @@ export const EditForm = () => {
       setErrormsg("Please select a category");
       return;
     }
+    else if (fileData.length == 0){
+      setErrormsg("Please select an image");
+      return;
+    }
     axios
       .put("/admin/product/edit", 
         imageData,
