@@ -59,8 +59,8 @@ const UserInfo = (props) => {
                     <th scope="col">Last_name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Username</th>
+                    <th scope="col">Phone</th>
                     <th scope="col">Address</th>
-                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -69,7 +69,9 @@ const UserInfo = (props) => {
                       <td>{userInfo.last_name}</td>
                       <td>{userInfo.email}</td>
                       <td>{userInfo.username}</td>
-                      <td>Las Vegas Nevada</td>
+                      <td>{userInfo.phone}</td>
+                      <td>{userInfo.street},{userInfo.city}<br/><br/>{userInfo.state},
+                      {userInfo.pin_code},{userInfo.country}</td>
                       <td>{userInfo.description}</td>
                     </tr>
                 </tbody>

@@ -4,6 +4,11 @@ const knex = require("../../../utils/dbConfig");
 
 router.get("/:id", (req, res) => {
   knex("users")
+    .leftJoin(
+      "address",
+      "address.user_id",
+      "users.id"
+    )
     .select(
       "users.id",
       "users.username",
@@ -11,7 +16,13 @@ router.get("/:id", (req, res) => {
       "users.first_name",
       "users.last_name",
       "users.is_admin",
-      "users.avatar_url"
+      "users.avatar_url",
+      "address.phone",
+      "address.street",
+      "address.city",
+      "address.state",
+      "address.pin_code",
+      "address.country",
     )
     .where("users.id", req.params.id)
     .then((row) => {
