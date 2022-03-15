@@ -8,7 +8,7 @@ router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    knex("cart_items")
+    knex("order_items")
       .where({ id: req.params.id })
       .del()
       .then((row) => {

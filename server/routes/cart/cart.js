@@ -7,54 +7,32 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    let cart;
     user_id = req.user.id;
-    knex("cart")
-      .join("cart_items", "cart.id", "cart_items.cart_id")
-      .join("variants", "cart_items.variant_id", "variants.id")
-      .join("variant_images", "variants.id", "variant_images.variant_id")
-      .join("products", "variants.product_id", "products.id")
+    knex("orders")
+      .join("order_items", "orders.id", "=", "order_items.order_id")
+      .join("variants", "order_items.variant_id", "=", "variants.id")
+      .join("products", "variants.product_id", "=", "products.id")
+      .join("variant_images", "variants.id", "=", "variant_images.variant_id")
+      .where({ "orders.user_id": user_id })
+      .andWhere({ "orders.status": "cart" })
       .select(
         "products.name",
         "products.id",
-        "cart_items.id as cart_id",
-        "cart_items.quantity",
+        "order_items.id as cart_id",
+        "order_items.quantity",
         "variants.price",
         "variant_images.image_url",
-        "cart.price as total"
+        "orders.total_price as total"
       )
-      .where({ "cart.user_id": user_id })
       .then((row) => {
-        cart = row;
-        res.json(cart);
+        res.json(row);
       })
       .catch((err) => {
         res
           .status(500)
-          .send("Sorry couldn't load cart. Please refresh and try again ");
+          .json("Unable to fetch cart items. Please try again later.");
       });
   }
 );
-
-// ******************delete cart items******************//
-router.delete("/:cart_id/delete", (req, res) => {
-  knex("cart_items")
-    .delete()
-    .where("cart_id", req.params.cart_id)
-    .then((rows) => {
-      knex("cart")
-        .delete()
-        .where("id", req.params.cart_id)
-        .then((result) => {
-          res.json({ message: "Sucessfully deleted cart" });
-        })
-        .catch((err) => {
-          res.json({ message: "Error in deleting cart" });
-        });
-    })
-    .catch((err) => {
-      res.json({ message: "Error in deleting cart" });
-    });
-});
 
 module.exports = router;
