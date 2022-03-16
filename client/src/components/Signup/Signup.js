@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "../../utils/ajax-helper";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { Button } from "react-bootstrap";
 
 export default function Signup() {
   const [firstName, setFirstName] = useState("");
@@ -10,11 +11,13 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [error, setError] = useState(null);
+  const [isDisabledButton, setIsDisabledButton] = useState(false);
   const navigate = useNavigate();
 
   const signup = (e) => {
     e.preventDefault();
     setError(null);
+    setIsDisabledButton(true);
     axios
       .post("/signup", {
         first_name: firstName,
@@ -30,6 +33,7 @@ export default function Signup() {
         }, 1500);
       })
       .catch((err) => {
+        setIsDisabledButton(false);
         if (err.response) {
           setError(err.response.data.message);
         }
@@ -116,9 +120,19 @@ export default function Signup() {
                     <label htmlFor="password">Password *</label>
                   </div>
                   <div className="form-group text-center">
-                    <button type="submit" className="btn btn-primary btn-lg">
-                      Sign Up
-                    </button>
+                    {isDisabledButton ? (
+                      <>
+                        <Button variant="primary" type="submit" disabled>
+                          Signup
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button variant="primary" type="submit">
+                          Signup
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </div>
               </form>

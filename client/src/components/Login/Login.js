@@ -2,6 +2,8 @@ import axios from "../../utils/ajax-helper";
 import React, { useEffect, Component } from "react";
 import { getJWT } from "../../utils/jwt";
 import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -9,6 +11,7 @@ class Login extends Component {
       email: "",
       password: "",
       error: "",
+      isDisabledButton: false,
     };
     this.change = this.change.bind(this);
     this.submit = this.submit.bind(this);
@@ -22,6 +25,7 @@ class Login extends Component {
     e.preventDefault();
     this.setState({
       error: "",
+      isDisabledButton: true,
     });
     e.preventDefault();
     axios
@@ -36,6 +40,7 @@ class Login extends Component {
       .catch((err) => {
         this.setState({
           error: "Invalid Credentials",
+          isDisabledButton: false,
         });
       });
   }
@@ -86,9 +91,19 @@ class Login extends Component {
                       <label htmlFor="password">Password</label>
                     </div>
                     <div className="form-group text-center">
-                      <button type="submit" className="btn btn-primary btn-lg">
-                        Login
-                      </button>
+                      {this.state.isDisabledButton ? (
+                        <>
+                          <Button variant="primary" type="submit" disabled>
+                            Login
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button variant="primary" type="submit">
+                            Login
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </div>
                 </form>

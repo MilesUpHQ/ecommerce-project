@@ -45,11 +45,14 @@ router.get(
               }
             );
           } else {
-            updateQuantity(order_id, req.params.variant_id, quantity).then(
-              (row) => {
-                res.json(row);
-              }
-            );
+            updateQuantity(
+              order_id,
+              req.params.variant_id,
+              row[0].quantity,
+              quantity
+            ).then((row) => {
+              res.json(row);
+            });
           }
         });
       }
