@@ -1,12 +1,8 @@
 import axios from "../../utils/ajax-helper";
 import React, { useEffect } from "react";
-import { FaHeart } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.css";
 import Add from "../Cart/Add";
-import { Card, Button, Col, Container } from "react-bootstrap";
 import ProductsCatalog from "../ProductsCatalog/ProductsCatalog";
-import ProductsList from "../ProductsCatalog/ProductsList";
-const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function SearchProducts({ searchItem, searchInput }) {
   const [products, setProducts] = React.useState([]);
@@ -160,138 +156,128 @@ export default function SearchProducts({ searchItem, searchInput }) {
   return (
     <>
       {addToCart ? <Add id={addToCart} /> : null}
-      <div>
-        <Container>
-          <section class="section-products">
-            <div className="row">
-              {errorMsg ? (
-                <div className="alert alert-danger">{errorMsg}</div>
-              ) : (
-                <></>
-              )}
+        <div className="row">
+          {errorMsg ? (
+            <div className="alert alert-danger">{errorMsg}</div>
+          ) : (
+            <></>
+          )}
 
-              <div className="col-4">
-                <aside className="ml-2">
-                  <div className="card" style={{ display: "contents" }}>
-                    <article className="card-group-item">
-                      <header className="card-header">
-                        <h6 className="title">Category Filters</h6>
-                      </header>
-                      <div className="filter-content">
-                        <div className="card-body">
-                          {filterCategories &&
-                            filterCategories.map((filterCategory) => (
-                              <label
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <input
-                                  type="radio"
-                                  value={filterCategory.id}
-                                  style={{
-                                    width: "1rem",
-                                    height: "1rem",
-                                    marginRight: "0.3rem",
-                                  }}
-                                  checked={
-                                    selectedCategory == filterCategory.id
-                                  }
-                                  onChange={(e) => handleCategoryFilter(e)}
-                                />
-                                {filterCategory.name}
-                              </label>
-                            ))}
-                        </div>
-                      </div>
-                    </article>
-                    {filteredProducts.length > 1 && minPrice !== secondRange && (
-                      <article className="card-group-item">
-                        <header className="card-header">
-                          <h6 className="title">Price Filter</h6>
-                        </header>
-                        <div class="filter-content">
-                          <div class="card-body">
-                            {minPrice !== range ? (
-                              <div class="custom-control custom-checkbox">
-                                <input
-                                  type="checkbox"
-                                  class="custom-control-input"
-                                  id="Check1"
-                                  onChange={(e) =>
-                                    handlePrice(e, minPrice, range)
-                                  }
-                                />
-                                <label
-                                  class="custom-control-label"
-                                  for="Check1"
-                                  style={{ paddingTop: "3px" }}
-                                >
-                                  {minPrice} - {range}
-                                </label>
-                              </div>
-                            ) : (
-                              ""
-                            )}
-
-                            {range !== secondRange ? (
-                              <div class="custom-control custom-checkbox">
-                                <input
-                                  type="checkbox"
-                                  class="custom-control-input"
-                                  id="Check2"
-                                  onChange={(e) =>
-                                    handlePrice(e, range, secondRange)
-                                  }
-                                />
-                                <label
-                                  class="custom-control-label"
-                                  for="Check2"
-                                  style={{ paddingTop: "3px" }}
-                                >
-                                  {range} - {secondRange}
-                                </label>
-                              </div>
-                            ) : (
-                              " "
-                            )}
-
-                            {maxPrice > 5000 && (
-                              <div class="custom-control custom-checkbox">
-                                <input
-                                  type="checkbox"
-                                  class="custom-control-input"
-                                  id="Check3"
-                                  onChange={(e) =>
-                                    handlePrice(e, 5000, maxPrice)
-                                  }
-                                />
-                                <label
-                                  class="custom-control-label"
-                                  for="Check3"
-                                  style={{ paddingTop: "3px" }}
-                                >
-                                  5000 & above
-                                </label>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </article>
-                    )}
+          <div className="col-3" style={{marginTop: '7%'}}>
+            <aside className="ml-2">
+              <div className="card" style={{ display: "contents" }}>
+                <article className="card-group-item">
+                  <header className="card-header">
+                    <h6 className="title">Category Filters</h6>
+                  </header>
+                  <div className="filter-content">
+                    <div className="card-body">
+                      {filterCategories &&
+                        filterCategories.map((filterCategory) => (
+                          <label
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            <input
+                              type="radio"
+                              value={filterCategory.id}
+                              style={{
+                                width: "1rem",
+                                height: "1rem",
+                                marginRight: "0.3rem",
+                              }}
+                              checked={selectedCategory == filterCategory.id}
+                              onChange={(e) => handleCategoryFilter(e)}
+                            />
+                            {filterCategory.name}
+                          </label>
+                        ))}
+                    </div>
                   </div>
-                </aside>
-              </div>
+                </article>
+                {filteredProducts.length > 1 && minPrice !== secondRange && (
+                  <article className="card-group-item">
+                    <header className="card-header">
+                      <h6 className="title">Price Filter</h6>
+                    </header>
+                    <div class="filter-content">
+                      <div class="card-body">
+                        {minPrice !== range ? (
+                          <div class="custom-control custom-checkbox">
+                            <input
+                              type="checkbox"
+                              class="custom-control-input"
+                              id="Check1"
+                              onChange={(e) => handlePrice(e, minPrice, range)}
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="Check1"
+                              style={{ paddingTop: "3px" }}
+                            >
+                              {minPrice} - {range}
+                            </label>
+                          </div>
+                        ) : (
+                          ""
+                        )}
 
-              <ProductsList
-                products={filteredProducts}
-                handleAddToCart={handleAddToCart}
-              />
-            </div>
-          </section>
-        </Container>
-      </div>
+                        {range !== secondRange ? (
+                          <div class="custom-control custom-checkbox">
+                            <input
+                              type="checkbox"
+                              class="custom-control-input"
+                              id="Check2"
+                              onChange={(e) =>
+                                handlePrice(e, range, secondRange)
+                              }
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="Check2"
+                              style={{ paddingTop: "3px" }}
+                            >
+                              {range} - {secondRange}
+                            </label>
+                          </div>
+                        ) : (
+                          " "
+                        )}
+
+                        {maxPrice > 5000 && (
+                          <div class="custom-control custom-checkbox">
+                            <input
+                              type="checkbox"
+                              class="custom-control-input"
+                              id="Check3"
+                              onChange={(e) => handlePrice(e, 5000, maxPrice)}
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="Check3"
+                              style={{ paddingTop: "3px" }}
+                            >
+                              5000 & above
+                            </label>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </article>
+                )}
+              </div>
+            </aside>
+          </div>
+
+          <div className="col-9">
+            <ProductsCatalog
+              products={filteredProducts}
+              handleAddToCart={handleAddToCart}
+            />
+          </div>
+        </div>
     </>
   );
 }
