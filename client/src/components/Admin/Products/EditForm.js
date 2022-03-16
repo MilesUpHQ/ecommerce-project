@@ -22,7 +22,7 @@ export const EditForm = () => {
   const [color, setColor] = useState("");
   const [type, setType] = useState("");
   const [categoryName , setCategoryName]=useState("");
-  const [categoryid, setCategory] = useState("");
+  const [categoryid, setCategoryId] = useState(null);
   const [productId, setProductId] = useState("");
   const [variantId, setVariantId] = useState("");
   const [isEnable, setIsEnable] = useState(true);
@@ -79,8 +79,8 @@ export const EditForm = () => {
         setName(res.data.name);
         setSize(res.data.size);
         setColor(res.data.color);
-        setCategory(res.data.category);
         setType(res.data.type);
+        setCategoryId(res.data.categoryid)
         setCategoryName(res.data.categoryname);
         setPrice(res.data.price);
         setDescription(res.data.description);
@@ -106,7 +106,7 @@ export const EditForm = () => {
   const fileChangeHandler = (e) => {
     setFileData(e.target.files[0]);
   };
-
+console.log("dhfik",image);
   return (
     <div className="main-panel">
        <Toaster />
@@ -143,8 +143,12 @@ export const EditForm = () => {
                   <div className="form-group">
                     <label htmlFor="imageupload">Upload image</label>
                     <br/>
-                    <input type="url" name="urlField" value={image} 
-                     onChange={fileChangeHandler}/>
+                    <input
+                      type="file"
+                      name="image"
+                      //value={BASE_URL + "/" + image}
+                      onChange={fileChangeHandler}
+                    />
                      <img
                                 class="rounded-circlee"
                                 src={BASE_URL + "/" + image}
@@ -184,10 +188,9 @@ export const EditForm = () => {
                     <select
                       className="form-control form-control-sm"
                       id="exampleFormControlSelect3"
-                      value={categoryName}
-                      onChange={(e) => setCategory(e.target.value)}
-                    >
-                     <option >{categoryName}</option> 
+                      onChange={(e) => setCategoryId(e.target.value)}
+                    > 
+                    <option selected value={categoryid}>{categoryName}</option>
                       {categories.map((category) => {
                         return (
                           <option value={category.id}>{category.name}</option>
@@ -195,7 +198,7 @@ export const EditForm = () => {
                       })}
                     </select>
                   </div>
-
+                    
                   <div className="form-group">
                     <label for="Type">Type</label>
                     <input
