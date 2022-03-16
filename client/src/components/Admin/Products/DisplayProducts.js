@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import Pagination from "../../Common/Pagination";
 import "../../Common/css/pagination.css";
 
 const DisplayProducts = ({}) => {
+  const navigate = useNavigate();
   const [display, setdisplay] = useState([]);
   const [Errormsg, setErrormsg] = useState(null);
   const [currPage, setCurrPage] = useState(null);
@@ -13,7 +14,7 @@ const DisplayProducts = ({}) => {
   const [totalPages, setTotalPages] = useState(null);
   useEffect(() => {
     axios
-      .get("/admin/products")
+      .get("/admin/productsList")
       .then((res) => {
         console.log(res.data.products);
         setdisplay(res.data.products);
@@ -25,6 +26,9 @@ const DisplayProducts = ({}) => {
         setErrormsg("Sorry! Something went wrong. Please Try again");
       });
   }, []);
+  function handleClick() {
+    navigate('/admin/products/add')
+  }
   const handlePagination = (page) => {
     axios
       .get(`/admin/products?page=${page}`)
@@ -37,7 +41,6 @@ const DisplayProducts = ({}) => {
       });
   };
   const deleteProduct = (id, variantid, name) => {
-    //delproduct
     if (window.confirm(`Are you sure! Delete ${name} Product?`)) {
       axios
         .delete("/delete_product", { params: { id } })
@@ -56,13 +59,15 @@ const DisplayProducts = ({}) => {
     <div className="main-panel">
       <div className="content-wrapper">
         <div className="contanier">
-          <div class="col-lg-12 grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title">Products </h4>
-                <p class="card-description">Listed Products</p>
-                <div class="table-responsive">
-                  <table class="table table-striped">
+          <div className="col-lg-12 grid-margin stretch-card">
+            <div className="card">
+              <div className="card-body">
+              <button  className="btn btn-primary float-right" onClick={handleClick}>
+                +Add Product</button>
+                <h4 className="card-title">Products </h4>
+                <p className="card-description">Listed Products</p>
+                <div className="table-responsive">
+                  <table className="table table-striped">
                     <thead>
                       <tr>
                         <th>Name</th>

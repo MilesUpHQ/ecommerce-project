@@ -4,7 +4,7 @@ import "../Common/css/admin-style.css";
 const Navbar = () => {
   return (
     <>
-      <nav className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <nav className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" style={{color:"#131921" }}>
         <div
           className="navbar-menu-wrapper d-flex align-items-center justify-content-end"
           style={{ width: "100%" }}

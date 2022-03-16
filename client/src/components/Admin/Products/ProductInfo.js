@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import "../../Common/css/admin-style.css";
+import "../css/product.css";
 import { useParams } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -34,8 +35,8 @@ const ProductInfo = () => {
         </nav>
         <div id="leftCol" className="a-column a-span4 dp_aib_left_column_t1">
           <div class="image-space">
-            <h1 class="pdp-title">{product.name}</h1>
-            <h1 class="pdp-name">{product.description}</h1>
+            <h2 class="pdp-title">{product.name}</h2>
+            <h3 class="pdp-name">{product.description}</h3>
             <img
               class="rounded-circle z-depth-2"
               alt="75x75"

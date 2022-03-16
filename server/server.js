@@ -40,7 +40,6 @@ const orders = require("./routes/orders");
 // const checkout = require("./routes/checkout");
 const OrderConfirm = require("./routes/order/confirm");
 const adminOrders = require("./routes/admin/orders/orders")
-
 // middlewares
 
 app.use(express.json());
@@ -74,7 +73,7 @@ app.use("/api/getToken", getToken);
 app.use("/api/products", products);
 app.use("/api/admin/products/add", addProducts);
 app.use("/api/categories", categories);
-app.use("/api/admin/products", displayProducts);
+app.use("/api/admin/productsList", displayProducts);
 app.use("/api/products/category", productsByCategory);
 app.use("/api/search", search);
 app.use("/api/delete_product", displayProducts);

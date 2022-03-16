@@ -13,6 +13,7 @@ const AddForm = () => {
   const [fileData, setFileData] = useState([]);
   const [errormsg, setErrormsg] = useState(null);
   const [categoryid, setCategory] = useState("");
+  const [isEnable, setIsEnable] = useState(true);
 
   //sending data after usestate dec part
   const submitHandler = async (e) => {
@@ -37,26 +38,26 @@ const AddForm = () => {
     } else if (categoryid === "") {
       setErrormsg("Category cannot be empty");
       return;
-    } else if (
-      !Object.keys(details).includes("price") ||
-      details.price === ""
-    ) {
+    } else if (!Object.keys(details).includes("price") || details.price === "") 
+    {
       setErrormsg("Price cannot be empty");
+      return;
+    }else if (fileData.length == 0){
+      setErrormsg("Please select an image");
       return;
     }
 
     axios
       .post("/admin/products/add", imageData)
       .then((res) => {
+        setIsEnable(false);
         toast.success("Product Created Sucessfully!");
         setTimeout(() => {
           navigate("/admin/products");
         }, 1500);
       })
       .catch((err) => {
-        setErrormsg(
-          "Oppsie! Something went wrong. Please try entering valid data's."
-        );
+        setErrormsg( "Oopise! Something went wrong please try again.");
       });
   };
 
@@ -103,15 +104,15 @@ const AddForm = () => {
                     />
                   </div>
                   <div className="form-group-img ">
-                    <label htmlFor="imageupload">Upload image</label>
+                    <label htmlFor="imageupload">Upload image*</label>
+                    <br/>
                     <input
                       type="file"
                       name="image"
                       onChange={fileChangeHandler}
                     />
                   </div>
-
-                  <div class="form-group ">
+                  <div className="form-group ">
                     <label for="exampleFormControlSelect3">Select Size</label>
                     <select
                       className="form-control form-control-sm"
@@ -129,7 +130,7 @@ const AddForm = () => {
                     </select>
                   </div>
 
-                  <div class="form-group">
+                  <div className="form-group">
                     <label for="Color">Color</label>
                     <input
                       type="text"
@@ -143,7 +144,7 @@ const AddForm = () => {
                     />
                   </div>
 
-                  <div class="form-group-cat">
+                  <div className="form-group-cat">
                     <label for="Category">Category*</label>
                     <select
                       value={categoryid}
@@ -199,7 +200,7 @@ const AddForm = () => {
                       }
                     ></textarea>
                   </div>
-                  <button type="submit" className="btn btn-primary mr-2">
+                  <button type="submit" className={"btn btn-primary mr-2 " + `${isEnable ? "" : "disabled"}`}>
                     Submit
                   </button>
                   <button className="btn btn-light">Cancel</button>
@@ -209,22 +210,6 @@ const AddForm = () => {
           </div>
         </div>
       </div>
-
-      <footer className="footer">
-        <div className="d-sm-flex justify-content-center justify-content-sm-between">
-          <span className="text-muted text-center text-sm-left d-block d-sm-inline-block">
-            Copyright © 2021. Premium{" "}
-            <a href="https://www.bootstrapdash.com/" target="_blank">
-              Bootstrap admin template
-            </a>{" "}
-            from BootstrapDash. All rights reserved.
-          </span>
-          <span className="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-            Hand-crafted & made with{" "}
-            <i className="ti-heart text-danger ml-1"></i>
-          </span>
-        </div>
-      </footer>
     </div>
   );
 };
