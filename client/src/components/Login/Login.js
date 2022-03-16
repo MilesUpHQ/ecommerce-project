@@ -2,6 +2,8 @@ import axios from "../../utils/ajax-helper";
 import React, { useEffect, Component } from "react";
 import { getJWT } from "../../utils/jwt";
 import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -90,19 +92,17 @@ class Login extends Component {
                     </div>
                     <div className="form-group text-center">
                       {this.state.isDisabledButton ? (
-                        <button
-                          type="submit"
-                          className="btn btn-primary btn-lg"
-                        >
-                          Login
-                        </button>
+                        <>
+                          <Button variant="primary" type="submit" disabled>
+                            Login
+                          </Button>
+                        </>
                       ) : (
-                        <button
-                          type="submit"
-                          className="btn btn-primary btn-lg"
-                        >
-                          Login
-                        </button>
+                        <>
+                          <Button variant="primary" type="submit">
+                            Login
+                          </Button>
+                        </>
                       )}
                     </div>
                   </div>

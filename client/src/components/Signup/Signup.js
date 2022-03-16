@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "../../utils/ajax-helper";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { Button } from "react-bootstrap";
 
 export default function Signup() {
   const [firstName, setFirstName] = useState("");
@@ -120,17 +121,17 @@ export default function Signup() {
                   </div>
                   <div className="form-group text-center">
                     {isDisabledButton ? (
-                      <button
-                        type="submit"
-                        className="btn btn-primary btn-block"
-                        disabled
-                      >
-                        Signup
-                      </button>
+                      <>
+                        <Button variant="primary" type="submit" disabled>
+                          Signup
+                        </Button>
+                      </>
                     ) : (
-                      <button type="submit" className="btn btn-primary btn-lg">
-                        Sign Up
-                      </button>
+                      <>
+                        <Button variant="primary" type="submit">
+                          Signup
+                        </Button>
+                      </>
                     )}
                   </div>
                 </div>
