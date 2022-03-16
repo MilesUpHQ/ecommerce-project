@@ -25,11 +25,9 @@ const AddressForm = ({
   email,
   setEmail,
   errorMessage,
+  isCountry,
+  SetIsCountry,
 }) => {
-  const handleNameChange = (e) => {
-    console.log(e.target.value);
-    setName(e.target.value);
-  };
   return (
     <>
       <React.Fragment>
@@ -129,14 +127,31 @@ const AddressForm = ({
                     onChange={(e) => setState(e.target.value)}
                   />
                 </div>
-                <div>
-                  <label htmlFor="exampleInputName1">Country</label>
-                  <Select
-                    options={options}
-                    value={country}
-                    onChange={changeHandler}
-                  />
-                </div>
+                {isCountry == true && (
+                  <div>
+                    <p>Country</p>
+                    <div className="countryDiv">
+                      <p className="countryP">{country}</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-icon-text mt-1 "
+                      onClick={() => SetIsCountry(false)}
+                    >
+                      Edit Country
+                    </button>
+                  </div>
+                )}
+                {isCountry == false && (
+                  <div>
+                    <label htmlFor="exampleInputName1">Country</label>
+                    <Select
+                      options={options}
+                      value={country}
+                      onChange={changeHandler}
+                    />
+                  </div>
+                )}
                 <br />
                 {errorMessage && <ErrorAlert msg={errorMessage} />}
                 <button type="submit" className="btn btn-primary mr-2">

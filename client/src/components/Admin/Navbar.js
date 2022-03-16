@@ -27,6 +27,9 @@ const Navbar = () => {
             <li className="nav-item nav-profile dropdown">
               <a href="/">Home</a>
             </li>
+            <li className="nav-item nav-profile dropdown">
+              <a href="/logout">Logout</a>
+            </li>
           </ul>
           <button
             className="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
