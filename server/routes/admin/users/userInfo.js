@@ -9,7 +9,7 @@ router.get("/:id", (req, res) => {
       "address.user_id",
       "users.id"
     )
-    .select ('*') .from ('users')
+    .select ('users.*','address.*') 
     .where("users.id", req.params.id)
     .then((row) => {
       console.log("hbh", row);

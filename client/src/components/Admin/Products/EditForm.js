@@ -3,8 +3,10 @@ import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import "../css/product.css";
 import { useParams } from "react-router-dom";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const EditForm = () => {
   const navigate = useNavigate();
   let { id } = useParams("id");
@@ -13,6 +15,7 @@ export const EditForm = () => {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [image, setImage] = useState("");
   const [fileData, setFileData] = useState([]);
   const [description, setDescription] = useState("");
   const [size, setSize] = useState("");
@@ -72,6 +75,7 @@ export const EditForm = () => {
     axios
       .get(`/admin/product/${id}`)
       .then((res) => {
+        console.log("wswsws",res.data);
         setName(res.data.name);
         setSize(res.data.size);
         setColor(res.data.color);
@@ -81,6 +85,7 @@ export const EditForm = () => {
         setPrice(res.data.price);
         setDescription(res.data.description);
         setProduct(res.data);
+        setImage(res.data.image_url)
         setVariantId(res.data.variant_id);
         setProductId(id);
       })
@@ -118,7 +123,6 @@ export const EditForm = () => {
         </nav>
         <div className="row">
           {errormsg && <ErrorMessages msg={errormsg} />}
-
           <div className="col-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body">
@@ -138,8 +142,14 @@ export const EditForm = () => {
                   </div>
                   <div className="form-group">
                     <label htmlFor="imageupload">Upload image</label>
-                    <input type="file" name="image" 
+                    <br/>
+                    <input type="url" name="urlField" value={image} 
                      onChange={fileChangeHandler}/>
+                     <img
+                                class="rounded-circlee"
+                                src={BASE_URL + "/" + image}
+                                alt=""
+                     />
                   </div>
 
                   <div className="form-group ">
@@ -173,10 +183,11 @@ export const EditForm = () => {
                     <label for="category">Category</label>
                     <select
                       className="form-control form-control-sm"
-                      name="category"
+                      id="exampleFormControlSelect3"
+                      value={categoryName}
                       onChange={(e) => setCategory(e.target.value)}
                     >
-                      <option value="0">{categoryName}</option>
+                     <option >{categoryName}</option> 
                       {categories.map((category) => {
                         return (
                           <option value={category.id}>{category.name}</option>
