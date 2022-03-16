@@ -42,7 +42,7 @@ const UserInfo = (props) => {
           </div>
         </div>
 
-        <div class="view-user p-5">
+        <div class="view-user p-2">
           <div class="row mb-5">
             <div class="col text-center">
               <h3>
@@ -50,7 +50,7 @@ const UserInfo = (props) => {
               </h3>
             </div>
           </div>
-          <div class="row ml-5">
+          <div class="row ml-4">
             <div class="col">
               <table class="table">
                 <thead>
@@ -61,6 +61,7 @@ const UserInfo = (props) => {
                     <th scope="col">Username</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Address</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
