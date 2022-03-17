@@ -24,38 +24,38 @@ const ProductInfo = () => {
     <div className="main-panel">
       <div className="content-wrapper">
         <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
+          <ol className="breadcrumb bg-white">
+            <li className="breadcrumb-item">
               <a href="/admin/products">Home</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">
-              Product_Info
+            <li className="breadcrumb-item active" aria-current="page">
+              Product Info
             </li>
           </ol>
         </nav>
         <div id="leftCol" className="a-column a-span4 dp_aib_left_column_t1">
-          <div class="image-space">
-            <h2 class="pdp-title">{product.name}</h2>
-            <h3 class="pdp-name">{product.description}</h3>
+          <div className="image-space">
+            <h2 className="pdp-title">{product.name}</h2>
+            <h3 className="pdp-name">{product.description}</h3>
             <img
-              class="rounded-circle z-depth-2"
+              className="rounded-circle z-depth-2"
               alt="75x75"
               src={BASE_URL + "/" + product.image_url}
               data-holder-rendered="true"
             />
           </div>
         </div>
-        <div class="view-user p-5">
-          <div class="row mb-5">
-            <div class="col text-center">
+        <div className="view-user p-5">
+          <div className="row mb-5">
+            <div className="col text-center">
               <h3>
                 <b>Product Information</b>
               </h3>
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <table class="table">
+          <div className="row">
+            <div className="col">
+              <table className="table">
                 <thead>
                   <tr>
                     <th scope="col">Name</th>
