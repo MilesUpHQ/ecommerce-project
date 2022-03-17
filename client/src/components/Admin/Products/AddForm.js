@@ -35,15 +35,19 @@ const AddForm = () => {
     if (!Object.keys(details).includes("name") || details.name === "") {
       setErrormsg("Name cannot be empty");
       return;
-    } else if (categoryid === "") {
+    }else if (fileData.length == 0){
+      setErrormsg("Please select an image");
+      return;
+    }
+     else if (categoryid === "") {
       setErrormsg("Category cannot be empty");
       return;
     } else if (!Object.keys(details).includes("price") || details.price === "") 
     {
       setErrormsg("Price cannot be empty");
       return;
-    }else if (fileData.length == 0){
-      setErrormsg("Please select an image");
+    } else if (!Object.keys(details).includes("description") || details.description === ""){
+      setErrormsg("Description cannot be empty");
       return;
     }
 
