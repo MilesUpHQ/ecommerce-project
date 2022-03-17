@@ -71,7 +71,7 @@ const Navbar = ({
   return (
     <>
       <nav
-        className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"
+        className="navbar navbar-expand-md col-lg-12 col-12 p-0 fixed-top d-flex flex-row"
         style={{ position: "sticky" }}
       >
         <div className="navbar-menu-wrapper d-flex justify-content-end">
