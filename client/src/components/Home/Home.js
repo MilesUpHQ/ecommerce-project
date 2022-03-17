@@ -65,9 +65,7 @@ const Home = () => {
         <div>
           <SimpleNavBar />
           <Card className="messageCard">
-            <h2 style={{ fontFamily: "serif", textShadow: "2px 2px #FF0000" }}>
-              {message}
-            </h2>
+            <h2 className="homePagemessage">{message}</h2>
           </Card>
         </div>
       )}

@@ -109,3 +109,8 @@
   height: 300px;
   width: 600px;
 }
+
+.homePagemessage {
+  font-family: serif;
+  text-shadow: 2px 2px #ff0000;
+}
