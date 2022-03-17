@@ -151,13 +151,13 @@ export const EditForm = () => {
                       <div>
                         <input type="url" name="urlField" value={fileData} />
                         <img
-                          class="rounded-circlee"
+                          class="rounded-circlee ml-3"
                           src={BASE_URL + "/" + fileData}
                           alt=""
                         />
                         <button
                           type="button"
-                          className="btn btn-primary btn-icon-text mt-1"
+                          className="btn btn-primary btn-icon-text mt-1 ml-3"
                           onClick={() => setImageCheck(false)}
                         >
                           Update Image
