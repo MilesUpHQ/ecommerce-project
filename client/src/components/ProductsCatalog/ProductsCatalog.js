@@ -1,12 +1,9 @@
 import React from "react";
-import "./ProductsCatalog.css";
 import { useNavigate } from "react-router";
-
+import './ProductsCatalog.css'
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 export default function ProductsCatalog(props) {
   const navigate = useNavigate();
-
   return (
     <>
       <section class="section-products">
@@ -37,7 +34,6 @@ export default function ProductsCatalog(props) {
                         transition: " all 0.3s",
                       }}
                     >
-                      {/* <span class="discount">15% off</span> */}
                       <span class="new">new</span>
                       <ul>
                         <li>
@@ -73,7 +69,7 @@ export default function ProductsCatalog(props) {
               <div className="noProducts">
                 <h1>No Products Found in the category</h1>
               </div>
-            )}
+            )} 
           </div>
         </div>
       </section>

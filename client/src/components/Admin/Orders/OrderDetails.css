@@ -1,0 +1,12 @@
+.orderStats {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.mainHead {
+  display: flex;
+  justify-content: space-between;
+  margin: 1%;
+  align-items: center;
+}

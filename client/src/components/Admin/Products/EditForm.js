@@ -3,23 +3,29 @@ import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import "../css/product.css";
+import { useParams } from "react-router-dom";
 
-export const EditForm = (props) => {
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+export const EditForm = () => {
   const navigate = useNavigate();
+  let { id } = useParams("id");
   const [product, setProduct] = useState({});
   const [errormsg, setErrormsg] = useState(null);
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [imageCheck, setImageCheck] = useState(false);
   const [fileData, setFileData] = useState([]);
   const [description, setDescription] = useState("");
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
   const [type, setType] = useState("");
   const [categoryName , setCategoryName]=useState("");
-  const [categoryid, setCategory] = useState("");
+  const [categoryid, setCategoryId] = useState(null);
   const [productId, setProductId] = useState("");
   const [variantId, setVariantId] = useState("");
+  const [isEnable, setIsEnable] = useState(true);
 
   const updateProduct = (e) =>{
     e.preventDefault();
@@ -46,11 +52,16 @@ export const EditForm = (props) => {
       setErrormsg("Please select a category");
       return;
     }
+    else if (fileData.length == 0){
+      setErrormsg("Please select an image");
+      return;
+    }
     axios
       .put("/admin/product/edit", 
         imageData,
       )
       .then((res) => {
+        setIsEnable(false);
         toast.success("Product Updated Sucessfully!");
         setTimeout(() => {
           navigate("/admin/products");
@@ -62,19 +73,22 @@ export const EditForm = (props) => {
   }
   useEffect(() => {
     axios
-      .get(`/admin/product/${props.id}`)
+      .get(`/admin/product/${id}`)
       .then((res) => {
+        console.log("wswsws",res.data);
         setName(res.data.name);
         setSize(res.data.size);
         setColor(res.data.color);
-        setCategory(res.data.category);
         setType(res.data.type);
+        setCategoryId(res.data.categoryid)
         setCategoryName(res.data.categoryname);
         setPrice(res.data.price);
         setDescription(res.data.description);
         setProduct(res.data);
+        setFileData(res.data.image_url)
         setVariantId(res.data.variant_id);
-        setProductId(props.id);
+        setProductId(id);
+        setImageCheck(true);
       })
       .catch((err) => {
         setErrormsg("Sorry! Something went wrong. Please Try again");
@@ -93,7 +107,7 @@ export const EditForm = (props) => {
   const fileChangeHandler = (e) => {
     setFileData(e.target.files[0]);
   };
-
+console.log("dhfik",fileData);
   return (
     <div className="main-panel">
        <Toaster />
@@ -110,7 +124,6 @@ export const EditForm = (props) => {
         </nav>
         <div className="row">
           {errormsg && <ErrorMessages msg={errormsg} />}
-
           <div className="col-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body">
@@ -130,8 +143,32 @@ export const EditForm = (props) => {
                   </div>
                   <div className="form-group">
                     <label htmlFor="imageupload">Upload image</label>
-                    <input type="file" name="image" 
-                     onChange={fileChangeHandler}/>
+                    <br/>
+                    {imageCheck == true && (
+                      <div>
+                      <input
+                      type="url"
+                      name="urlField"
+                      value={fileData}
+                     />
+                      <img
+                      class="rounded-circlee"
+                      src={BASE_URL + "/" + fileData}
+                      alt=""
+                      />
+                      <button
+                      type="button"
+                      className="btn btn-primary btn-icon-text mt-1"
+                      onClick={() => setImageCheck(false)}
+                      >Update Image</button></div>
+                    )}
+                    {imageCheck == false && (
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={fileChangeHandler}
+                    />
+                    )}
                   </div>
 
                   <div className="form-group ">
@@ -165,10 +202,10 @@ export const EditForm = (props) => {
                     <label for="category">Category</label>
                     <select
                       className="form-control form-control-sm"
-                      name="category"
-                      onChange={(e) => setCategory(e.target.value)}
-                    >
-                      <option value="0">{categoryName}</option>
+                      id="exampleFormControlSelect3"
+                      onChange={(e) => setCategoryId(e.target.value)}
+                    > 
+                    <option selected value={categoryid}>{categoryName}</option>
                       {categories.map((category) => {
                         return (
                           <option value={category.id}>{category.name}</option>
@@ -176,7 +213,7 @@ export const EditForm = (props) => {
                       })}
                     </select>
                   </div>
-
+                    
                   <div className="form-group">
                     <label for="Type">Type</label>
                     <input
@@ -208,8 +245,7 @@ export const EditForm = (props) => {
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </div>
-                  <button
-                    className="btn btn-primary mr-2"
+                  <button className={"btn btn-primary mr-2" + `${isEnable ? "" : "disabled"}`}
                     onClick={(e) => updateProduct(e, product.id)}
                   >
                     Update

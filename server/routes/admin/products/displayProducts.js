@@ -68,7 +68,6 @@ router.get("/", async (req, res) => {
         }
       }
       let products = response.data;
-      console.log("ededde", products);
       res.json({ products, currPage, lastPage, totalPages });
     })
     .catch((err) => {

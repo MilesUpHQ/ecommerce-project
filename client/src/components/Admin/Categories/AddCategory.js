@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import axios from "../../../utils/ajax-helper";
-import TypeAhead from "./TypeAhead";
+import TypeAhead from "../../Common/TypeAhead";
 
 const AddCategory = ({
   category,
@@ -27,7 +26,7 @@ const AddCategory = ({
   const handleSearch = (query) => {
     setIsLoading(true);
     axios
-      .get(`/search-categories?search=${query}`)
+      .get(`/categories/parent?search=${query}`)
       .then((res) => {
         let array = res.data.map(({ id, name }) => ({
           label: name,

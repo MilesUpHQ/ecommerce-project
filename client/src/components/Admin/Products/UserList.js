@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
-import Pagination from "../Categories/Pagination";
+import Pagination from "../../Common/Pagination";
 import "../../Common/css/admin-style.css";
 import "../../Common/css/pagination.css";
 
@@ -55,13 +55,13 @@ const UserList = ({}) => {
 
   return (
     <div className="main-panel">
-      <h1>Users</h1>
       <div className="content-wrapper">
         <div class="container mt-3 mb-4 ">
           <div class="col-lg-9 mt-4 mt-lg-0 w-100">
             <div class="row">
               <div class="col-md-12 ">
                 <div className="user-dashboard-info-box table-responsive mb-0 bg-white w-1000 p-4 shadow-smm">
+                <h1>Users</h1>
                   <table class="table manage-candidates-top mb-0">
                     <thead>
                       <tr>

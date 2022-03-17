@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 // import "./pagination-style.css";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import axios from "../../utils/ajax-helper";
-import TypeAhead from "../Admin/Categories/TypeAhead";
+import TypeAhead from "../Common/TypeAhead";
 import { getJWT } from "../../utils/jwt";
 const Navbar = ({
-  // handleSearch,
   setSearchItem,
   searchItem,
-  // options,
   placeholder,
   setSearchInput,
   searchInput,
@@ -41,7 +39,7 @@ const Navbar = ({
 
   const handleSearch = (value) => {
     axios
-      .get(`/typeahead-items?search_keyword=${value}`)
+      .get(`/search/typeahead?keyword=${value}`)
       .then((res) => {
         let array = res.data.map(({ id, name }) => ({
           label: name,

@@ -58,26 +58,26 @@ export default function ProductsByCategory() {
       {errorMsg ? <div className="alert alert-danger">{errorMsg}</div> : <></>}
 
       <div>
-        <Container>
-          {searchItem.length > 0 || searchInput !== null ? (
-            <SearchProducts searchItem={searchItem} searchInput={searchInput} />
-          ) : (
-            <>
-              <div className="row">
-                {errorMsg ? (
-                  <div className="alert alert-danger">{errorMsg}</div>
-                ) : (
-                  <></>
-                )}
-                <ProductsCatalog
-                  title={"Products By Category"}
-                  products={products}
-                  handleAddToCart={handleAddToCart}
-                />
-              </div>
-            </>
-          )}
-        </Container>
+        {searchItem.length > 0 || searchInput !== null ? (
+          <SearchProducts searchItem={searchItem} searchInput={searchInput} />
+        ) : (
+          <Container>
+            <div className="row">
+              {errorMsg ? (
+                <div className="alert alert-danger">{errorMsg}</div>
+              ) : (
+                <></>
+              )}
+              <ProductsCatalog
+                title={"Products By Category"}
+                products={products}
+                searchItem={searchItem}
+                searchInput={searchInput}
+                handleAddToCart={handleAddToCart}
+              />
+            </div>
+          </Container>
+        )}
       </div>
     </>
   );
