@@ -22,6 +22,7 @@ router.put("/", upload.single("file"), (req, res) => {
       updateProduct(req.body)
         .returning("products.id")
         .then((row) => {
+          if(req.file){
           knex("variant_images")
             .where("variant_id", req.body.variantId)
             .update({ image_url: req.file.path })
@@ -31,7 +32,9 @@ router.put("/", upload.single("file"), (req, res) => {
             .catch((err) => {
               res.status(400).send("Unable to post image");
             });
-        })
+          }else{
+          res.json(row);
+        }})
         .catch((err) => {
           res.status(400).send("Unable to Post data ");
         });

@@ -72,6 +72,7 @@ const DisplayProducts = ({}) => {
                       <tr>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Size</th>
                         <th>Amount</th>
                         <th>Actions</th>
                       </tr>
@@ -81,21 +82,22 @@ const DisplayProducts = ({}) => {
                         <tr>
                           <td className="py1">{display.name}</td>
                           <td>{display.description}</td>
+                          <td>{display.size}</td>
                           <td>{display.price}</td>
                           <td>
                             <a
                               href={`/admin/products/${display.id}/view`}
                               type="button"
-                              class="btn btn-info btn-small mr-2"
+                              className="btn btn-info btn-small mr-2"
                             >
-                              <i class="fas fa-eye"></i> View
+                              <i className="fas fa-eye"></i> View
                             </a>
                             <a
                               href={`/admin/product/${display.id}/update`}
                               type="button"
-                              class="btn btn-light btn-small mr-2"
+                              className="btn btn-light btn-small mr-2"
                             >
-                              <i class="fas fa-edit"></i> Edit
+                              <i className="fas fa-edit"></i> Edit
                             </a>
                             <a
                               type="button"
@@ -106,9 +108,9 @@ const DisplayProducts = ({}) => {
                                   display.name
                                 )
                               }
-                              class="btn btn-danger btn-small"
+                              className="btn btn-danger btn-small"
                             >
-                              <i class="fas fa-trash"></i> Delete
+                              <i className="fas fa-trash"></i> Delete
                             </a>
                           </td>
                         </tr>

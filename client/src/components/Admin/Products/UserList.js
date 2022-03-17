@@ -85,7 +85,7 @@ const UserList = ({}) => {
                               <div class="candidate-list-info">
                                 <div class="candidate-list-title">
                                   <h5 class="mb-0">
-                                    <a href="#">{display.first_name}</a>
+                                    <a href={`/admin/user/${display.id}/view`}>{display.first_name}</a>
                                   </h5>
                                 </div>
                                 <div class="candidate-list-option">

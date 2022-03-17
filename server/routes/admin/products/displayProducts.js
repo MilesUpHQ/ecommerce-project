@@ -50,6 +50,7 @@ router.get("/", async (req, res) => {
       "products.name",
       "products.description as description",
       "variants.id as variantid",
+      "variants.size",
       "variants.price"
     )
     .orderBy("products.name", "asc")
