@@ -15,7 +15,7 @@ export const EditForm = () => {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
+  const [imageCheck, setImageCheck] = useState(false);
   const [fileData, setFileData] = useState([]);
   const [description, setDescription] = useState("");
   const [size, setSize] = useState("");
@@ -85,9 +85,10 @@ export const EditForm = () => {
         setPrice(res.data.price);
         setDescription(res.data.description);
         setProduct(res.data);
-        setImage(res.data.image_url)
+        setFileData(res.data.image_url)
         setVariantId(res.data.variant_id);
         setProductId(id);
+        setImageCheck(true);
       })
       .catch((err) => {
         setErrormsg("Sorry! Something went wrong. Please Try again");
@@ -106,7 +107,7 @@ export const EditForm = () => {
   const fileChangeHandler = (e) => {
     setFileData(e.target.files[0]);
   };
-console.log("dhfik",image);
+console.log("dhfik",fileData);
   return (
     <div className="main-panel">
        <Toaster />
@@ -143,17 +144,31 @@ console.log("dhfik",image);
                   <div className="form-group">
                     <label htmlFor="imageupload">Upload image</label>
                     <br/>
+                    {imageCheck == true && (
+                      <div>
+                      <input
+                      type="url"
+                      name="urlField"
+                      value={fileData}
+                     />
+                      <img
+                      class="rounded-circlee"
+                      src={BASE_URL + "/" + fileData}
+                      alt=""
+                      />
+                      <button
+                      type="button"
+                      className="btn btn-primary btn-icon-text mt-1"
+                      onClick={() => setImageCheck(false)}
+                      >Update Image</button></div>
+                    )}
+                    {imageCheck == false && (
                     <input
                       type="file"
                       name="image"
-                      //value={BASE_URL + "/" + image}
                       onChange={fileChangeHandler}
                     />
-                     <img
-                                class="rounded-circlee"
-                                src={BASE_URL + "/" + image}
-                                alt=""
-                     />
+                    )}
                   </div>
 
                   <div className="form-group ">

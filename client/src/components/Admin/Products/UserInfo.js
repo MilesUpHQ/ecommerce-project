@@ -30,7 +30,7 @@ const UserInfo = (props) => {
               <a href="/admin/user">Home</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-              User_Info
+              User Info
             </li>
           </ol>
         </nav>
