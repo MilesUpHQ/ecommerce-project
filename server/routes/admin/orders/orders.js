@@ -7,11 +7,10 @@ router.get("/", async (req, res) => {
     db("orders as o")
       .leftJoin("users as u", "u.id", "o.user_id")
       .select(
-        "o.id",
+        "o.id as order_id",
         "o.total_price",
         "o.status",
-        "o.order_id",
-        "o.order_date",
+        "o.created_at as order_date",
         "u.username"
       )
       .orderBy("o.updated_at", "desc")
@@ -19,10 +18,10 @@ router.get("/", async (req, res) => {
         res.json(row);
       })
       .catch((err) => {
-        res.json('Something went wrong', err);
+        res.status(401).json(err);
       });
   } catch (err) {
-    console.log(err);
+    res.status(401).json(err);
   }
 });
 
@@ -34,8 +33,8 @@ router.get("/:orderId", async (req, res) => {
       .select("o.*", "a.*");
 
     const orderItems = await db("order_items as items")
-      .leftJoin("products as p", "items.product_id", "p.id")
-      .leftJoin("variants as v", "p.id", "v.product_id")
+      .leftJoin("variants as v", "items.variant_id", "v.id")
+      .leftJoin("products as p", "v.product_id", "p.id")
       .where("items.order_id", req.params.orderId)
       .select(
         "items.id",
@@ -54,8 +53,7 @@ router.get("/:orderId", async (req, res) => {
 
     res.json({ orderDetails, orderItems, paymentDetails });
   } catch (err) {
-    console.log(err);
-    res.json(err);
+    res.status(401).json(err);
   }
 });
 
