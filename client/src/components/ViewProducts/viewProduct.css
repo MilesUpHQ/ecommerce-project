@@ -1,6 +1,41 @@
+.container {
+  margin-top: 2%;
+}
 div.imageDiv {
   width: 75%;
+  margin-left: 20%;
   box-shadow: 0 4px 8px 0 rgba(26, 25, 25, 0.897),
     0 6px 20px 0 rgba(37, 33, 33, 0.932);
   text-align: center;
+}
+.image {
+  width: 100%;
+}
+.title {
+  text-shadow: 1px 1px 3px blue;
+}
+.text1 {
+  color: black;
+  text-shadow: 1px 1px 2px gray;
+}
+.text2 {
+  float: left;
+  margin-right: 10px;
+}
+.text3 {
+  text-decoration: underline;
+  float: left;
+  margin-right: 10px;
+}
+.label {
+  font-style: italic;
+  margin-right: 20px;
+}
+.cartInput {
+  border: none;
+}
+
+.cartButton {
+  background-color: white;
+  color: black;
 }

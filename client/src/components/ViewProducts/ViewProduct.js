@@ -62,139 +62,70 @@ const ViewProduct = () => {
           ) : (
             <>
               <React.Fragment>
-                <div className="main-div">
-                  <div>
-                    <Container>
-                      <Row>
-                        <Col>
-                          <div class="imageDiv">
-                            <img
-                              style={{ width: "100%" }}
-                              src={BASE_URL + "/" + product.image_url}
+                <Container className="container">
+                  <Row>
+                    <Col>
+                      <div className="imageDiv">
+                        <img
+                          className="image"
+                          src={BASE_URL + "/" + product.image_url}
+                        />
+                      </div>{" "}
+                    </Col>
+                    <Col>
+                      <Card>
+                        {" "}
+                        <Card.Body>
+                          <Card.Title>
+                            <h3 className="title"> {product.name} </h3>
+                          </Card.Title>
+                          <h4 className="text1">{product.description}</h4>
+                          <br />
+
+                          <h4 className="text1">Rs.{product.price}</h4>
+                          <br />
+
+                          <Card.Text className="text2">
+                            <h4 className="text3">Size</h4> :
+                          </Card.Text>
+                          <h4 className="text1">{product.size}</h4>
+                          <br />
+
+                          <Card.Text className="text2">
+                            <h4 className="text3">Color</h4> :
+                          </Card.Text>
+                          <h4 className="text1">{product.color}</h4>
+                          <br />
+
+                          <br />
+                          <form>
+                            <label className="label">Quantity</label>
+                            <input
+                              type="text"
+                              pattern="[0-9]*"
+                              min="1"
+                              value="1"
+                              step="1"
+                              onkeydown="return false"
+                              name="name"
+                              className="cartInput"
                             />
-                          </div>{" "}
-                        </Col>
-                        <Col>
-                          <Card>
-                            {" "}
-                            <Card.Body>
-                              <Card.Title>
-                                <h3
-                                  style={{
-                                    textShadow: " 1px 1px 3px blue",
-                                  }}
-                                >
-                                  {" "}
-                                  {product.name}{" "}
-                                </h3>
-                              </Card.Title>
-                              <h4
-                                style={{
-                                  color: "black",
-                                  textShadow: "1px 1px 2px gray",
-                                }}
-                              >
-                                {product.description}
-                              </h4>
-                              <br />
-
-                              <h4 style={{ textShadow: "1px 1px 2px gray" }}>
-                                Rs.{product.price}
-                              </h4>
-                              <br />
-
-                              <Card.Text
-                                style={{ float: "left", marginRight: "10px" }}
-                              >
-                                <h4
-                                  style={{
-                                    textDecoration: "underline",
-                                    float: "left",
-                                    marginRight: "10px",
-                                  }}
-                                >
-                                  Size
-                                </h4>{" "}
-                                :
-                              </Card.Text>
-                              <h4
-                                style={{
-                                  color: "black",
-                                  textShadow: "1px 1px 2px gray",
-                                }}
-                              >
-                                {product.size}
-                              </h4>
-                              <br />
-
-                              <Card.Text
-                                style={{ float: "left", marginRight: "10px" }}
-                              >
-                                <h4
-                                  style={{
-                                    textDecoration: "underline",
-                                    float: "left",
-                                    marginRight: "10px",
-                                  }}
-                                >
-                                  Color
-                                </h4>{" "}
-                                :
-                              </Card.Text>
-                              <h4
-                                style={{
-                                  color: "black",
-                                  textShadow: "1px 1px 2px gray",
-                                }}
-                              >
-                                {product.color}
-                              </h4>
-                              <br />
-
-                              <br />
-                              <form>
-                                <label
-                                  style={{
-                                    fontStyle: "italic",
-                                    marginRight: "20px",
-                                  }}
-                                >
-                                  Quantity
-                                </label>
-                                <input
-                                  type="text"
-                                  pattern="[0-9]*"
-                                  min="1"
-                                  value="1"
-                                  step="1"
-                                  onkeydown="return false"
-                                  name="name"
-                                  className="cartInput"
-                                  style={{
-                                    border: "none",
-                                  }}
-                                />
-                                <Button
-                                  type="submit"
-                                  style={{
-                                    backgroundColor: "white",
-                                    color: "black",
-                                  }}
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    handleAddToCart(id);
-                                  }}
-                                >
-                                  Add to cart
-                                </Button>
-                              </form>
-                            </Card.Body>
-                          </Card>
-                        </Col>
-                      </Row>
-                    </Container>
-                  </div>
-                </div>
+                            <Button
+                              type="submit"
+                              className="cartButton"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleAddToCart(id);
+                              }}
+                            >
+                              Add to cart
+                            </Button>
+                          </form>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  </Row>
+                </Container>
               </React.Fragment>
             </>
           )}
