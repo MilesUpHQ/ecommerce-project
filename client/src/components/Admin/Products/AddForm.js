@@ -193,7 +193,7 @@ const AddForm = () => {
                     />
                   </div>
                   <div className="form-group mt-3">
-                    <label for="exampleTextarea1">Description</label>
+                    <label for="exampleTextarea1">Description*</label>
                     <textarea
                       className="form-control"
                       id="exampleTextarea1"
