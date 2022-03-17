@@ -82,9 +82,9 @@ const Navbar = ({
             {categories.map((parent_category) => (
               <>
                 {parent_category.sub_categories.length > 0 ? (
-                  <div className="dropdown" key={parent_category.id}>
+                  <div className="dropdown nav-item" key={parent_category.id}>
                     <button
-                      className="btn dropdown-toggle"
+                      className="btn dropdown-toggle nav-link"
                       id={"dropdownMenu" + parent_category.id}
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
@@ -98,16 +98,16 @@ const Navbar = ({
                     >
                       <li>
                         <a
-                          className="dropdown-item"
+                          className="dropdown-item nav-link"
                           href={"/products/" + parent_category.id}
                         >
-                          {parent_category.name}
+                          {parent_category.name} <b class="caret"></b>
                         </a>
                       </li>
                       {parent_category.sub_categories.map((sub_category) => (
                         <li>
                           <a
-                            className="dropdown-item"
+                            className="dropdown-item nav-link"
                             href={"/products/" + sub_category.id}
                           >
                             {sub_category.name}
