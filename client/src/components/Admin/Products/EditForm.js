@@ -78,7 +78,6 @@ export const EditForm = () => {
     axios
       .get(`/admin/product/${id}`)
       .then((res) => {
-        console.log("wswsws", res.data);
         setName(res.data.name);
         setSize(res.data.size);
         setColor(res.data.color);
@@ -110,7 +109,6 @@ export const EditForm = () => {
   const fileChangeHandler = (e) => {
     setFileData(e.target.files[0]);
   };
-  console.log("dhfik", fileData);
   return (
     <div className="main-panel">
       <Toaster />
@@ -151,7 +149,7 @@ export const EditForm = () => {
                       <div>
                         <input type="url" name="urlField" value={fileData} />
                         <img
-                          class="rounded-circlee ml-3"
+                          className="rounded-circlee ml-3"
                           src={BASE_URL + "/" + fileData}
                           alt=""
                         />
