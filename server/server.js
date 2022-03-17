@@ -39,6 +39,7 @@ const payment = require("./routes/payment");
 const orders = require("./routes/orders");
 // const checkout = require("./routes/checkout");
 const OrderConfirm = require("./routes/order/confirm");
+const CategoriesList = require("./routes/products/categories");
 
 // middlewares
 
@@ -85,6 +86,7 @@ app.use("/api/cart/add", addToCart);
 app.use("/api/cart/remove", removeFromCart);
 app.use("/api/cart/update", updateQuantity);
 app.use("/api/order/confirm", OrderConfirm);
+app.use("/api/categories_list", CategoriesList);
 
 app.get(
   "/api/getUser",
