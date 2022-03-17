@@ -5,17 +5,12 @@ import Navbar from "../Navbar/Navbar";
 import { Card, Button, Container, Row, Col, Carousel } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
 import ErrorAlert from "../Common/ErrorAlert";
-import "../Home/home.css";
 import SearchProducts from "../Common/SearchProducts";
 import Add from "../Cart/Add";
+import "./viewProduct.css";
 
 const ViewProduct = () => {
   let [product, setProduct] = useState([]);
-  let [category, setCategory] = useState("");
-  let [colors, setColors] = useState([]);
-  let [sizes, setSizes] = useState([]);
-  let [reviews, setReviews] = useState([]);
-  let [imageUrls, setImage_url] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
   const [searchItem, setSearchItem] = React.useState([]);
   const [searchInput, setSearchInput] = React.useState(null);
@@ -50,7 +45,7 @@ const ViewProduct = () => {
   };
 
   return (
-    <div className="mainContainer">
+    <div>
       {addToCart ? <Add id={addToCart} /> : null}
       {product && (
         <div>
@@ -61,125 +56,146 @@ const ViewProduct = () => {
             handleSearchFilter={handleSearchFilter}
             updateNavbar={updateNavbar}
           />
-          <br />
-          <br />
           {errorMsg && <ErrorAlert msg={errorMsg} />}
           {searchItem.length > 0 || searchInput !== null ? (
             <SearchProducts searchItem={searchItem} searchInput={searchInput} />
           ) : (
             <>
-              <Card className="containerCard">
-                <Container>
-                  <Row>
-                    <Col>
-                      <Card.Img
-                        variant="top"
-                        src={BASE_URL + "/" + product.image_url}
-                        className="imgSlide"
-                      />
-                    </Col>
-                    <Col>
-                      <Card.Body>
-                        <Card.Title className="productName">
-                          {product.name}{" "}
-                        </Card.Title>
-                        <Card.Text className="iconText">
-                          <FaHeart className="icon" />
-                        </Card.Text>
-                        <br />
-
-                        <Card.Text>{product.description}</Card.Text>
-                        <Card.Text>Price : Rs.{product.price}</Card.Text>
-                        <Container>
-                          <Row>
-                            <Col>
-                              <Card.Text>Sizes</Card.Text>
-                              <hr />
-                              <div>
-                                {" "}
-                                <div>
-                                  <input
-                                    type="radio"
-                                    value="Male"
-                                    name={product.size}
-                                    defaultChecked
-                                  />{" "}
-                                  {product.size}
-                                </div>
-                              </div>
-                            </Col>
-                            <Col>
-                              <Card.Text>Colors</Card.Text>
-                              <hr />
-                              <div>
-                                <div>
-                                  <input
-                                    type="radio"
-                                    value="Male"
-                                    name={product.color}
-                                    defaultChecked
-                                  />{" "}
-                                  {product.color}
-                                </div>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Container>
-                        <br />
-                        <form>
-                          <input
-                            type="text"
-                            pattern="[0-9]*"
-                            min="1"
-                            value="1"
-                            step="1"
-                            onkeydown="return false"
-                            name="name"
-                            className="cartInput"
-                          />
-                          <Button
-                            type="submit"
-                            variant="primary"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              handleAddToCart(id);
-                            }}
-                          >
-                            {" "}
-                            Add to cart
-                          </Button>
-                        </form>
-                      </Card.Body>
-                    </Col>
-                  </Row>
-                  <hr />
-                  <Row className="reviewsRow">
-                    <Card.Text>Reviews</Card.Text>
+              <React.Fragment>
+                <div className="main-div">
+                  <div>
                     <Container>
-                      {reviews &&
-                        reviews.map((review) => {
-                          return (
-                            <div className="reviewsDiv">
-                              <Card.Text className="reviewComment">
-                                {review.comment}
+                      <Row>
+                        <Col>
+                          <div class="imageDiv">
+                            <img
+                              style={{ width: "100%" }}
+                              src={BASE_URL + "/" + product.image_url}
+                            />
+                          </div>{" "}
+                        </Col>
+                        <Col>
+                          <Card>
+                            {" "}
+                            <Card.Body>
+                              <Card.Title>
+                                <h3
+                                  style={{
+                                    textShadow: " 1px 1px 3px blue",
+                                  }}
+                                >
+                                  {" "}
+                                  {product.name}{" "}
+                                </h3>
+                              </Card.Title>
+                              <h4
+                                style={{
+                                  color: "black",
+                                  textShadow: "1px 1px 2px gray",
+                                }}
+                              >
+                                {product.description}
+                              </h4>
+                              <br />
+
+                              <h4 style={{ textShadow: "1px 1px 2px gray" }}>
+                                Rs.{product.price}
+                              </h4>
+                              <br />
+
+                              <Card.Text
+                                style={{ float: "left", marginRight: "10px" }}
+                              >
+                                <h4
+                                  style={{
+                                    textDecoration: "underline",
+                                    float: "left",
+                                    marginRight: "10px",
+                                  }}
+                                >
+                                  Size
+                                </h4>{" "}
+                                :
                               </Card.Text>
-                              <Card.Text className="text1">
-                                with the rating of
+                              <h4
+                                style={{
+                                  color: "black",
+                                  textShadow: "1px 1px 2px gray",
+                                }}
+                              >
+                                {product.size}
+                              </h4>
+                              <br />
+
+                              <Card.Text
+                                style={{ float: "left", marginRight: "10px" }}
+                              >
+                                <h4
+                                  style={{
+                                    textDecoration: "underline",
+                                    float: "left",
+                                    marginRight: "10px",
+                                  }}
+                                >
+                                  Color
+                                </h4>{" "}
+                                :
                               </Card.Text>
-                              <Card.Text className="rating">
-                                {review.rating}
-                              </Card.Text>
-                              <Card.Text className="text2">by</Card.Text>
-                              <Card.Text className="username">
-                                {review.username}
-                              </Card.Text>
-                            </div>
-                          );
-                        })}
+                              <h4
+                                style={{
+                                  color: "black",
+                                  textShadow: "1px 1px 2px gray",
+                                }}
+                              >
+                                {product.color}
+                              </h4>
+                              <br />
+
+                              <br />
+                              <form>
+                                <label
+                                  style={{
+                                    fontStyle: "italic",
+                                    marginRight: "20px",
+                                  }}
+                                >
+                                  Quantity
+                                </label>
+                                <input
+                                  type="text"
+                                  pattern="[0-9]*"
+                                  min="1"
+                                  value="1"
+                                  step="1"
+                                  onkeydown="return false"
+                                  name="name"
+                                  className="cartInput"
+                                  style={{
+                                    border: "none",
+                                  }}
+                                />
+                                <Button
+                                  type="submit"
+                                  style={{
+                                    backgroundColor: "white",
+                                    color: "black",
+                                  }}
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    handleAddToCart(id);
+                                  }}
+                                >
+                                  Add to cart
+                                </Button>
+                              </form>
+                            </Card.Body>
+                          </Card>
+                        </Col>
+                      </Row>
                     </Container>
-                  </Row>
-                </Container>
-              </Card>
+                  </div>
+                </div>
+              </React.Fragment>
             </>
           )}
         </div>
