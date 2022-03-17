@@ -15,7 +15,7 @@ import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import FeaturedProducts from "./components/Home/Home";
 import ViewProduct from "./components/ViewProducts/ViewProduct";
-import  UserInfo  from "./components/Admin/Products/UserInfo";
+import UserInfo from "./components/Admin/Products/UserInfo";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
 import FeaturedProductsList from "./components/Home/ProductList";
 import Cart from "./components/Cart/Cart";
@@ -59,7 +59,7 @@ const App = () => {
           path="/admin"
           element={
             <PrivateRoute>
-               <DisplayProducts />
+              <DisplayProducts />
             </PrivateRoute>
           }
         ></Route>
@@ -160,8 +160,22 @@ const App = () => {
         <Route path="/products/:category" element={<ProductsByCategory />} />
         <Route path="/product/view/:id" element={<ViewProduct />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/user/address" element={<Address />} />
-        <Route path="/user/address/:id" element={<CreateAddress />} />
+        <Route
+          path="/user/address"
+          element={
+            <PrivateRoute>
+              <Address />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/user/address/:id"
+          element={
+            <PrivateRoute>
+              <CreateAddress />
+            </PrivateRoute>
+          }
+        />
         <Route path="/order/confirm" element={<OrderConfirm />} />
         <Route path="/order/error" element={<OrderFailed />} />
       </Routes>
