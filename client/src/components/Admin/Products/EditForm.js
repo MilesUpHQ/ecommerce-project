@@ -43,6 +43,9 @@ export const EditForm = () => {
     if (name == "") {
       setErrormsg("Name cannot be empty");
       return;
+    } if (fileData.length == 0){
+      setErrormsg("Please select an image");
+      return;
     }
     if (price == "") {
       setErrormsg("Price cannot be empty");
@@ -52,10 +55,11 @@ export const EditForm = () => {
       setErrormsg("Please select a category");
       return;
     }
-    else if (fileData.length == 0){
-      setErrormsg("Please select an image");
+    if(description == ""){
+      setErrormsg("description cannot be empty");
       return;
     }
+    
     axios
       .put("/admin/product/edit", 
         imageData,
