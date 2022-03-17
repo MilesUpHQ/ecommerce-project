@@ -35,15 +35,23 @@ const AddForm = () => {
     if (!Object.keys(details).includes("name") || details.name === "") {
       setErrormsg("Name cannot be empty");
       return;
+    } else if (fileData.length == 0) {
+      setErrormsg("Please select an image");
+      return;
     } else if (categoryid === "") {
       setErrormsg("Category cannot be empty");
       return;
-    } else if (!Object.keys(details).includes("price") || details.price === "") 
-    {
+    } else if (
+      !Object.keys(details).includes("price") ||
+      details.price === ""
+    ) {
       setErrormsg("Price cannot be empty");
       return;
-    }else if (fileData.length == 0){
-      setErrormsg("Please select an image");
+    } else if (
+      !Object.keys(details).includes("description") ||
+      details.description === ""
+    ) {
+      setErrormsg("Description cannot be empty");
       return;
     }
 
@@ -57,7 +65,7 @@ const AddForm = () => {
         }, 1500);
       })
       .catch((err) => {
-        setErrormsg( "Oopise! Something went wrong please try again.");
+        setErrormsg("Oopise! Something went wrong please try again.");
       });
   };
 
@@ -105,7 +113,7 @@ const AddForm = () => {
                   </div>
                   <div className="form-group-img ">
                     <label htmlFor="imageupload">Upload image*</label>
-                    <br/>
+                    <br />
                     <input
                       type="file"
                       name="image"
@@ -189,7 +197,7 @@ const AddForm = () => {
                     />
                   </div>
                   <div className="form-group mt-3">
-                    <label for="exampleTextarea1">Description</label>
+                    <label for="exampleTextarea1">Description*</label>
                     <textarea
                       className="form-control"
                       id="exampleTextarea1"
@@ -200,7 +208,12 @@ const AddForm = () => {
                       }
                     ></textarea>
                   </div>
-                  <button type="submit" className={"btn btn-primary mr-2 " + `${isEnable ? "" : "disabled"}`}>
+                  <button
+                    type="submit"
+                    className={
+                      "btn btn-primary mr-2 " + `${isEnable ? "" : "disabled"}`
+                    }
+                  >
                     Submit
                   </button>
                   <button className="btn btn-light">Cancel</button>
