@@ -15,14 +15,14 @@ export const EditForm = () => {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
+  const [imageCheck, setImageCheck] = useState(false);
   const [fileData, setFileData] = useState([]);
   const [description, setDescription] = useState("");
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
   const [type, setType] = useState("");
   const [categoryName , setCategoryName]=useState("");
-  const [categoryid, setCategory] = useState("");
+  const [categoryid, setCategoryId] = useState(null);
   const [productId, setProductId] = useState("");
   const [variantId, setVariantId] = useState("");
   const [isEnable, setIsEnable] = useState(true);
@@ -79,15 +79,16 @@ export const EditForm = () => {
         setName(res.data.name);
         setSize(res.data.size);
         setColor(res.data.color);
-        setCategory(res.data.category);
         setType(res.data.type);
+        setCategoryId(res.data.categoryid)
         setCategoryName(res.data.categoryname);
         setPrice(res.data.price);
         setDescription(res.data.description);
         setProduct(res.data);
-        setImage(res.data.image_url)
+        setFileData(res.data.image_url)
         setVariantId(res.data.variant_id);
         setProductId(id);
+        setImageCheck(true);
       })
       .catch((err) => {
         setErrormsg("Sorry! Something went wrong. Please Try again");
@@ -106,7 +107,7 @@ export const EditForm = () => {
   const fileChangeHandler = (e) => {
     setFileData(e.target.files[0]);
   };
-
+console.log("dhfik",fileData);
   return (
     <div className="main-panel">
        <Toaster />
@@ -143,13 +144,31 @@ export const EditForm = () => {
                   <div className="form-group">
                     <label htmlFor="imageupload">Upload image</label>
                     <br/>
-                    <input type="url" name="urlField" value={image} 
-                     onChange={fileChangeHandler}/>
-                     <img
-                                class="rounded-circlee"
-                                src={BASE_URL + "/" + image}
-                                alt=""
+                    {imageCheck == true && (
+                      <div>
+                      <input
+                      type="url"
+                      name="urlField"
+                      value={fileData}
                      />
+                      <img
+                      class="rounded-circlee"
+                      src={BASE_URL + "/" + fileData}
+                      alt=""
+                      />
+                      <button
+                      type="button"
+                      className="btn btn-primary btn-icon-text mt-1"
+                      onClick={() => setImageCheck(false)}
+                      >Update Image</button></div>
+                    )}
+                    {imageCheck == false && (
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={fileChangeHandler}
+                    />
+                    )}
                   </div>
 
                   <div className="form-group ">
@@ -184,10 +203,9 @@ export const EditForm = () => {
                     <select
                       className="form-control form-control-sm"
                       id="exampleFormControlSelect3"
-                      value={categoryName}
-                      onChange={(e) => setCategory(e.target.value)}
-                    >
-                     <option >{categoryName}</option> 
+                      onChange={(e) => setCategoryId(e.target.value)}
+                    > 
+                    <option selected value={categoryid}>{categoryName}</option>
                       {categories.map((category) => {
                         return (
                           <option value={category.id}>{category.name}</option>
@@ -195,7 +213,7 @@ export const EditForm = () => {
                       })}
                     </select>
                   </div>
-
+                    
                   <div className="form-group">
                     <label for="Type">Type</label>
                     <input
