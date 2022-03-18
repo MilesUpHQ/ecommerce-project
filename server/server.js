@@ -40,6 +40,8 @@ const orders = require("./routes/orders");
 // const checkout = require("./routes/checkout");
 const OrderConfirm = require("./routes/order/confirm");
 const adminOrders = require("./routes/admin/orders/orders")
+const CategoriesList = require("./routes/products/categories");
+
 // middlewares
 
 app.use(express.json());
@@ -88,6 +90,7 @@ app.use("/api/cart/remove", removeFromCart);
 app.use("/api/cart/update", updateQuantity);
 app.use("/api/order/confirm", OrderConfirm);
 app.use("/api/admin/orders", adminOrders);
+app.use("/api/categories_list", CategoriesList);
 
 app.get(
   "/api/getUser",

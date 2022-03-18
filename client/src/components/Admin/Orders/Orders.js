@@ -52,7 +52,7 @@ const Orders = () => {
                           orders.map((order) => (
                             <tr>
                               <td>
-                                <a href={`/admin/order/${order.id}`}>
+                                <a href={`/admin/order/${order.order_id}`}>
                                   {order.order_id}
                                 </a>
                               </td>
