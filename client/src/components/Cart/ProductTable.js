@@ -1,4 +1,5 @@
 import React from "react";
+import RemoveButton from "./RemoveButton";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function ProductTable(props) {
@@ -67,21 +68,15 @@ export default function ProductTable(props) {
 
                   <td className="border-0 align-middle">
                     {props.isCart ? (
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => props.deleteItem(cart.cart_id)}
-                      >
-                        Remove
-                      </button>
+                      <RemoveButton
+                        id={cart.cart_id}
+                        deleteItem={props.deleteItem}
+                      />
                     ) : (
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => props.deleteItem(cart.wishlist_id)}
-                      >
-                        Remove
-                      </button>
+                      <RemoveButton
+                        id={cart.wishlist_id}
+                        deleteItem={props.deleteItem}
+                      />
                     )}
                   </td>
                 </tr>
