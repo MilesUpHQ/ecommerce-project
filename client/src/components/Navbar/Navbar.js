@@ -4,6 +4,7 @@ import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import axios from "../../utils/ajax-helper";
 import TypeAhead from "../Common/TypeAhead";
 import { getJWT } from "../../utils/jwt";
+import "./Navbar.css";
 const Navbar = ({
   setSearchItem,
   searchItem,
@@ -76,34 +77,26 @@ const Navbar = ({
           <ul className="navbar-nav ty">
             <li className="nav-item nav-search d-none d-lg-block">
               <a className="nav-link" href="/">
-                <h4>Products</h4>
+                <strong>Products</strong>{" "}
               </a>
             </li>
             {categories.map((parent_category) => (
               <>
                 {parent_category.sub_categories.length > 0 ? (
                   <div className="dropdown nav-item" key={parent_category.id}>
-                    <button
-                      className="btn dropdown-toggle nav-link"
+                    <a
+                      href={"/products/" + parent_category.id}
+                      className="dropdown-toggle nav-link"
                       id={"dropdownMenu" + parent_category.id}
-                      data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
                       {parent_category.name}
-                    </button>
+                    </a>
 
                     <div
                       className="dropdown-menu"
                       aria-labelledby={"dropdownMenu" + parent_category.id}
                     >
-                      <li>
-                        <a
-                          className="dropdown-item nav-link"
-                          href={"/products/" + parent_category.id}
-                        >
-                          {parent_category.name} <b class="caret"></b>
-                        </a>
-                      </li>
                       {parent_category.sub_categories.map((sub_category) => (
                         <li>
                           <a
