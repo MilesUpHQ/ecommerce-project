@@ -143,7 +143,7 @@ const Navbar = ({
             </li>
             <li className="nav-item nav-profile dropdown">
               <a href="/cart">
-                <FaShoppingCart className="navBarIcon" />({cartItems}) ${""}
+                <FaShoppingCart className="navBarIcon" />({cartItems}) ₹{""}
                 {cartPrice}
               </a>
             </li>
