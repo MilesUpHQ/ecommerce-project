@@ -255,7 +255,7 @@ const Address = () => {
                 <Row>
                   {addresses &&
                     addresses.map((address) => (
-                      <Col className="addressCol">
+                      <Col className="addressCol" key={address.id}>
                         <Card
                           id={address.id}
                           className="addressCard"

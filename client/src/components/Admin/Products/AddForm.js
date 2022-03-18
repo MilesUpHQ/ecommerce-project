@@ -8,7 +8,14 @@ import "../../Common/css/admin-style.css";
 
 const AddForm = () => {
   const navigate = useNavigate();
-  const [details, setDetails] = useState({});
+  const [details, setDetails] = useState({
+    name: "",
+    size: "",
+    color: "",
+    type: "",
+    price: "",
+    description: "",
+  });
   const [categories, setCategories] = useState([]);
   const [fileData, setFileData] = useState([]);
   const [errormsg, setErrormsg] = useState(null);
@@ -99,7 +106,7 @@ const AddForm = () => {
 
                 <form className="forms-sample" onSubmit={submitHandler}>
                   <div className="form-group-name">
-                    <label for="exampleInputName1">Name*</label>
+                    <label htmlFor="exampleInputName1">Name*</label>
                     <input
                       type="text"
                       className="form-control"
@@ -121,7 +128,9 @@ const AddForm = () => {
                     />
                   </div>
                   <div className="form-group ">
-                    <label for="exampleFormControlSelect3">Select Size</label>
+                    <label htmlFor="exampleFormControlSelect3">
+                      Select Size
+                    </label>
                     <select
                       className="form-control form-control-sm"
                       id="exampleFormControlSelect3"
@@ -139,10 +148,10 @@ const AddForm = () => {
                   </div>
 
                   <div className="form-group">
-                    <label for="Color">Color</label>
+                    <label htmlFor="Color">Color</label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       id="color"
                       placeholder="make it vibrant"
                       value={details.color}
@@ -153,7 +162,7 @@ const AddForm = () => {
                   </div>
 
                   <div className="form-group-cat">
-                    <label for="Category">Category*</label>
+                    <label htmlFor="Category">Category*</label>
                     <select
                       value={categoryid}
                       className="form-control form-control-sm"
@@ -163,17 +172,19 @@ const AddForm = () => {
                       <option value="0">Select From The Following</option>
                       {categories.map((Category) => {
                         return (
-                          <option value={Category.id}>{Category.name}</option>
+                          <option value={Category.id} key={Category.id}>
+                            {Category.name}
+                          </option>
                         );
                       })}
                     </select>
                   </div>
 
-                  <div class="form-group mt-3">
-                    <label for="Type">Type</label>
+                  <div className="form-group mt-3">
+                    <label htmlFor="Type">Type</label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       id="type"
                       placeholder="List the type of your product"
                       value={details.type}
@@ -184,7 +195,7 @@ const AddForm = () => {
                   </div>
 
                   <div className="form-group-pr">
-                    <label for="exampleInputPrice1">Price*</label>
+                    <label htmlFor="exampleInputPrice1">Price*</label>
                     <input
                       type="integer"
                       className="form-control"
@@ -197,7 +208,7 @@ const AddForm = () => {
                     />
                   </div>
                   <div className="form-group mt-3">
-                    <label for="exampleTextarea1">Description*</label>
+                    <label htmlFor="exampleTextarea1">Description*</label>
                     <textarea
                       className="form-control"
                       id="exampleTextarea1"
@@ -216,7 +227,7 @@ const AddForm = () => {
                   >
                     Submit
                   </button>
-                  <button className="btn btn-light">Cancel</button>
+                  <button className="btn btn-light"  onClick={() => navigate("/admin/products")}>Cancel</button>
                 </form>
               </div>
             </div>

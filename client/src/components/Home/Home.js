@@ -94,7 +94,7 @@ const Home = () => {
                     {imageData &&
                       imageData.map((imageUrl) => {
                         return (
-                          <Carousel.Item interval={1000}>
+                          <Carousel.Item interval={1000} key={imageUrl}>
                             <img
                               className="d-block w-100"
                               src={imageUrl}

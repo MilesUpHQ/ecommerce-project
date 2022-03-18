@@ -35,7 +35,7 @@ export default function OrderItems(props) {
       <table className="table table-borderless">
         <tbody>
           {isError ? (
-            <div class="alert alert-danger" role="alert">
+            <div className="alert alert-danger" role="alert">
               {errorMsg}
             </div>
           ) : null}

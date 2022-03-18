@@ -133,7 +133,7 @@ export const EditForm = () => {
 
                 <form className="forms-sample">
                   <div className="form-group">
-                    <label for="exampleInputName1">Name</label>
+                    <label htmlFor="exampleInputName1">Name</label>
                     <input
                       type="text"
                       className="form-control"
@@ -147,7 +147,7 @@ export const EditForm = () => {
                     <br />
                     {imageCheck == true && (
                       <div>
-                        <input type="url" name="urlField" value={fileData} />
+                        <input type="url" name="urlField" value={fileData} readOnly/>
                         <img
                           className="rounded-circlee ml-3"
                           src={BASE_URL + "/" + fileData}
@@ -172,7 +172,7 @@ export const EditForm = () => {
                   </div>
 
                   <div className="form-group ">
-                    <label for="exampleFormControlSelect3">Select Size</label>
+                    <label htmlFor="exampleFormControlSelect3">Select Size</label>
                     <select
                       className="form-control form-control-sm"
                       id="exampleFormControlSelect3"
@@ -188,7 +188,7 @@ export const EditForm = () => {
                   </div>
 
                   <div className="form-group">
-                    <label for="Color">Color</label>
+                    <label htmlFor="Color">Color</label>
                     <input
                       type="text"
                       className="form-control"
@@ -199,25 +199,26 @@ export const EditForm = () => {
                   </div>
 
                   <div className="form-group">
-                    <label for="category">Category</label>
+                    <label htmlFor="category">Category</label>
                     <select
                       className="form-control form-control-sm"
                       id="exampleFormControlSelect3"
                       onChange={(e) => setCategoryId(e.target.value)}
+                      defaultValue={categoryName}
                     >
-                      <option selected value={categoryid}>
+                      <option value={categoryid}>
                         {categoryName}
                       </option>
                       {categories.map((category) => {
                         return (
-                          <option value={category.id}>{category.name}</option>
+                          <option value={category.id} key={category.id}>{category.name}</option>
                         );
                       })}
                     </select>
                   </div>
 
                   <div className="form-group">
-                    <label for="Type">Type</label>
+                    <label htmlFor="Type">Type</label>
                     <input
                       type="text"
                       className="form-control"
@@ -228,7 +229,7 @@ export const EditForm = () => {
                   </div>
 
                   <div className="form-group">
-                    <label for="exampleInputPrice1">Price</label>
+                    <label htmlFor="exampleInputPrice1">Price</label>
                     <input
                       type="integer"
                       className="form-control"
@@ -238,7 +239,7 @@ export const EditForm = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label for="exampleTextarea1">Description</label>
+                    <label htmlFor="exampleTextarea1">Description</label>
                     <textarea
                       className="form-control"
                       id="exampleTextarea1"

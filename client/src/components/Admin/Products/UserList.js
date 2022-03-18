@@ -16,7 +16,6 @@ const UserList = ({}) => {
     axios
       .get("/admin/userData")
       .then((res) => {
-        console.log(res.data.products);
         setdisplay(res.data.products);
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
@@ -56,46 +55,46 @@ const UserList = ({}) => {
   return (
     <div className="main-panel">
       <div className="content-wrapper">
-        <div class="container mt-3 mb-4 ">
-          <div class="col-lg-9 mt-4 mt-lg-0 w-100">
-            <div class="row">
-              <div class="col-md-12 ">
+        <div className="container mt-3 mb-4 ">
+          <div className="col-lg-9 mt-4 mt-lg-0 w-100">
+            <div className="row">
+              <div className="col-md-12 ">
                 <div className="user-dashboard-info-box table-responsive mb-0 bg-white w-1000 p-4 shadow-smm">
                 <h1>Users</h1>
-                  <table class="table manage-candidates-top mb-0">
+                  <table className="table manage-candidates-top mb-0">
                     <thead>
                       <tr>
                         <th>Candidate Name</th>
-                        <th class="text-center">Status</th>
-                        <th class="action text-right">Action</th>
+                        <th className="text-center">Status</th>
+                        <th className="action text-right">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       {display.map((display) => (
-                        <tr class="candidates-list">
-                          <td class="title">
-                            <div class="thumb">
+                        <tr className="candidates-list" key={display.id}>
+                          <td className="title">
+                            <div className="thumb">
                               <img
-                                class="img-fluid"
+                                className="img-fluid"
                                 src="https://bootdey.com/img/Content/avatar/avatar7.png"
                                 alt=""
                               />
                             </div>
-                            <div class="candidate-list-details">
-                              <div class="candidate-list-info">
-                                <div class="candidate-list-title">
-                                  <h5 class="mb-0">
+                            <div className="candidate-list-details">
+                              <div className="candidate-list-info">
+                                <div className="candidate-list-title">
+                                  <h5 className="mb-0">
                                     <a href={`/admin/user/${display.id}/view`}>{display.first_name}</a>
                                   </h5>
                                 </div>
-                                <div class="candidate-list-option">
-                                  <ul class="list-unstyled">
+                                <div className="candidate-list-option">
+                                  <ul className="list-unstyled">
                                     <li>
-                                      <i class="fas fa-filter pr-1"></i>
+                                      <i className="fas fa-filter pr-1"></i>
                                       {display.username}
                                     </li>
                                     <li>
-                                      <i class="fas fa-map-marker-alt pr-1"></i>
+                                      <i className="fas fa-map-marker-alt pr-1"></i>
                                       {display.email}
                                     </li>
                                   </ul>
@@ -103,28 +102,28 @@ const UserList = ({}) => {
                               </div>
                             </div>
                           </td>
-                          <td class="candidate-list-favourite-time text-center">
+                          <td className="candidate-list-favourite-time text-center">
                             <a
-                              class="candidate-list-favourite order-2 text-danger"
+                              className="candidate-list-favourite order-2 text-danger"
                               href="#"
                             >
-                              <i class="fas fa-heart"></i>
+                              <i className="fas fa-heart"></i>
                             </a>
-                            <span class="candidate-list-time order-1">
+                            <span className="candidate-list-time order-1">
                               Admin
                             </span>
                           </td>
                           <td>
-                            <ul class="list-unstyled mb-0 d-flex justify-content-end">
+                            <ul className="list-unstyled mb-0 d-flex justify-content-end">
                               <li>
                                 <a
                                   href={`/admin/user/${display.id}/view`}
-                                  class="text-primary"
+                                  className="text-primary"
                                   data-toggle="tooltip"
                                   title=""
                                   data-original-title="view"
                                 >
-                                  <i class="far fa-eye mr-2"></i>
+                                  <i className="far fa-eye mr-2"></i>
                                 </a>
                               </li>
                               <li>
@@ -132,12 +131,12 @@ const UserList = ({}) => {
                                   onClick={() =>
                                     deleteUser(display.id, display.first_name)
                                   }
-                                  class="text-danger"
+                                  className="text-danger"
                                   data-toggle="tooltip"
                                   title=""
                                   data-original-title="Delete"
                                 >
-                                  <i class="far fa-trash-alt"></i>
+                                  <i className="far fa-trash-alt"></i>
                                 </a>
                               </li>
                             </ul>

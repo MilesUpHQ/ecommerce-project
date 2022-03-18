@@ -24,7 +24,7 @@ const ProductList = ({
         <Row>
           {featuredProducts.map((featuredProduct) => {
             return (
-              <Col>
+              <Col key={featuredProduct.id}>
                 <Card className="listCard" style={{ width: "300px" }}>
                   <a href={`/product/view/${featuredProduct.product_id}`}>
                     <Card.Img
