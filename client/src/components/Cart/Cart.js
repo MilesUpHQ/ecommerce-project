@@ -1,13 +1,10 @@
-//  create a react cart component
-//  create a react cart item component
-
 import React, { useEffect } from "react";
 import "./cart-style.css";
 import axios from "../../utils/ajax-helper";
 import { getJWT } from "../../utils/jwt";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
+import { Link } from "react-router-dom";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 export default function Cart() {
   // get items for the server and store in state and update in cart component
   const [cartItems, setCartItems] = React.useState([]);
@@ -35,9 +32,6 @@ export default function Cart() {
   }, []);
   // delete item from cart
   const deleteItem = (id) => {
-    //  show a confirmation dialog
-    //  if confirmed then delete the item
-    //  else do nothing
     if (window.confirm("Are you sure you want to delete this item?")) {
       axios
         .delete(`/cart/remove/${id}`, {
@@ -138,7 +132,7 @@ export default function Cart() {
                                 </div>
                               </th>
                               <td className="border-0 align-middle">
-                                <strong>${cart.price}</strong>
+                                <strong>₹{cart.price}</strong>
                               </td>
                               <td className="border-0 align-middle input-quantity">
                                 <input
@@ -151,8 +145,7 @@ export default function Cart() {
                                   }
                                 />
                               </td>
-                              {/* <strong>{cart.quantity}</strong>
-                              </td> */}
+
                               <td className="border-0 align-middle">
                                 <button
                                   type="button"
@@ -170,12 +163,28 @@ export default function Cart() {
                   </div>
                 </div>
               ) : (
-                // show no products in cart
-                <h1>No products in cart</h1>
+                <div class="text-center mt-5">
+                  <h3>
+                    No Products In Cart :( <br />
+                    <br />
+                    Please Add Some Products
+                    <br />
+                    <br />
+                    <Link to="/">
+                      <button class="btn btn-outline-dark">Go To Home</button>
+                    </Link>
+                  </h3>
+                </div>
               )
             ) : (
               // show loading
-              <h1>No products in cart</h1>
+              <div class=" text-center mt-5">
+                <h3>
+                  Loading... <br />
+                  <br />
+                  Please Wait
+                </h3>
+              </div>
             )}
 
             <div className="row py-5 p-4 bg-white rounded shadow-sm">
@@ -218,17 +227,17 @@ export default function Cart() {
                   <ul className="list-unstyled mb-4">
                     <li className="d-flex justify-content-between py-3 border-bottom">
                       <strong className="text-muted">Order Subtotal </strong>
-                      <strong>${cartItems[0]?.total || "0.00"}</strong>
+                      <strong>₹{cartItems[0]?.total || "0.00"}</strong>
                     </li>
 
                     <li className="d-flex justify-content-between py-3 border-bottom">
                       <strong className="text-muted">Tax</strong>
-                      <strong>$0.00</strong>
+                      <strong>₹0.00</strong>
                     </li>
                     <li className="d-flex justify-content-between py-3 border-bottom">
                       <strong className="text-muted">Total</strong>
                       <h5 className="font-weight-bold">
-                        ${cartItems[0]?.total || "0.00"}
+                        ₹{cartItems[0]?.total || "0.00"}
                       </h5>
                     </li>
                   </ul>
