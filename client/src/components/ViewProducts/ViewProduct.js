@@ -5,17 +5,12 @@ import Navbar from "../Navbar/Navbar";
 import { Card, Button, Container, Row, Col, Carousel } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
 import ErrorAlert from "../Common/ErrorAlert";
-import "../Home/home.css";
 import SearchProducts from "../Common/SearchProducts";
 import Add from "../Cart/Add";
+import "./viewProduct.css";
 
 const ViewProduct = () => {
   let [product, setProduct] = useState([]);
-  let [category, setCategory] = useState("");
-  let [colors, setColors] = useState([]);
-  let [sizes, setSizes] = useState([]);
-  let [reviews, setReviews] = useState([]);
-  let [imageUrls, setImage_url] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
   const [searchItem, setSearchItem] = React.useState([]);
   const [searchInput, setSearchInput] = React.useState(null);
@@ -50,7 +45,7 @@ const ViewProduct = () => {
   };
 
   return (
-    <div className="mainContainer">
+    <div>
       {addToCart ? <Add id={addToCart} /> : null}
       {product && (
         <div>
@@ -61,125 +56,77 @@ const ViewProduct = () => {
             handleSearchFilter={handleSearchFilter}
             updateNavbar={updateNavbar}
           />
-          <br />
-          <br />
           {errorMsg && <ErrorAlert msg={errorMsg} />}
           {searchItem.length > 0 || searchInput !== null ? (
             <SearchProducts searchItem={searchItem} searchInput={searchInput} />
           ) : (
             <>
-              <Card className="containerCard">
-                <Container>
+              <React.Fragment>
+                <Container className="container">
                   <Row>
                     <Col>
-                      <Card.Img
-                        variant="top"
-                        src={BASE_URL + "/" + product.image_url}
-                        className="imgSlide"
-                      />
+                      <div className="imageDiv">
+                        <img
+                          className="image"
+                          src={BASE_URL + "/" + product.image_url}
+                        />
+                      </div>{" "}
                     </Col>
                     <Col>
-                      <Card.Body>
-                        <Card.Title className="productName">
-                          {product.name}{" "}
-                        </Card.Title>
-                        <Card.Text className="iconText">
-                          <FaHeart className="icon" />
-                        </Card.Text>
-                        <br />
+                      <Card>
+                        {" "}
+                        <Card.Body>
+                          <Card.Title>
+                            <h3 className="title"> {product.name} </h3>
+                          </Card.Title>
+                          <h4 className="text1">{product.description}</h4>
+                          <br />
 
-                        <Card.Text>{product.description}</Card.Text>
-                        <Card.Text>Price : Rs.{product.price}</Card.Text>
-                        <Container>
-                          <Row>
-                            <Col>
-                              <Card.Text>Sizes</Card.Text>
-                              <hr />
-                              <div>
-                                {" "}
-                                <div>
-                                  <input
-                                    type="radio"
-                                    value="Male"
-                                    name={product.size}
-                                    defaultChecked
-                                  />{" "}
-                                  {product.size}
-                                </div>
-                              </div>
-                            </Col>
-                            <Col>
-                              <Card.Text>Colors</Card.Text>
-                              <hr />
-                              <div>
-                                <div>
-                                  <input
-                                    type="radio"
-                                    value="Male"
-                                    name={product.color}
-                                    defaultChecked
-                                  />{" "}
-                                  {product.color}
-                                </div>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Container>
-                        <br />
-                        <form>
-                          <input
-                            type="text"
-                            pattern="[0-9]*"
-                            min="1"
-                            value="1"
-                            step="1"
-                            onkeydown="return false"
-                            name="name"
-                            className="cartInput"
-                          />
-                          <Button
-                            type="submit"
-                            variant="primary"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              handleAddToCart(id);
-                            }}
-                          >
-                            {" "}
-                            Add to cart
-                          </Button>
-                        </form>
-                      </Card.Body>
+                          <h4 className="text1">Rs.{product.price}</h4>
+                          <br />
+
+                          <Card.Text className="text2">
+                            <h4 className="text3">Size</h4> :
+                          </Card.Text>
+                          <h4 className="text1">{product.size}</h4>
+                          <br />
+
+                          <Card.Text className="text2">
+                            <h4 className="text3">Color</h4> :
+                          </Card.Text>
+                          <h4 className="text1">{product.color}</h4>
+                          <br />
+
+                          <br />
+                          <form>
+                            <label className="label">Quantity</label>
+                            <input
+                              type="text"
+                              pattern="[0-9]*"
+                              min="1"
+                              value="1"
+                              step="1"
+                              onkeydown="return false"
+                              name="name"
+                              className="cartInput"
+                            />
+                            <Button
+                              type="submit"
+                              className="cartButton"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleAddToCart(id);
+                              }}
+                            >
+                              Add to cart
+                            </Button>
+                          </form>
+                        </Card.Body>
+                      </Card>
                     </Col>
                   </Row>
-                  <hr />
-                  <Row className="reviewsRow">
-                    <Card.Text>Reviews</Card.Text>
-                    <Container>
-                      {reviews &&
-                        reviews.map((review) => {
-                          return (
-                            <div className="reviewsDiv">
-                              <Card.Text className="reviewComment">
-                                {review.comment}
-                              </Card.Text>
-                              <Card.Text className="text1">
-                                with the rating of
-                              </Card.Text>
-                              <Card.Text className="rating">
-                                {review.rating}
-                              </Card.Text>
-                              <Card.Text className="text2">by</Card.Text>
-                              <Card.Text className="username">
-                                {review.username}
-                              </Card.Text>
-                            </div>
-                          );
-                        })}
-                    </Container>
-                  </Row>
                 </Container>
-              </Card>
+              </React.Fragment>
             </>
           )}
         </div>

@@ -4,5 +4,7 @@ server/.env
 client/.env
 server/.DS_Store
 server/images
+server/report
+client/report
 .DS_Store
 .vscode
