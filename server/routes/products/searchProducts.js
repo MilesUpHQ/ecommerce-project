@@ -6,28 +6,31 @@ router.get("/typeahead", async (req, res) => {
   try {
     const categories = await db("product_categories")
       .select("id", "name")
-      .where(
-        "name",
-        "ILIKE",
-        `%${req.query.keyword.toLocaleLowerCase()}%`
-      );
+      .where("name", "ILIKE", `%${req.query.keyword.toLocaleLowerCase()}%`);
     const products = await db("products")
       .select("id", "name")
-      .where(
-        "name",
-        "ILIKE",
-        `%${req.query.keyword.toLocaleLowerCase()}%`
-      );
+      .where("name", "ILIKE", `%${req.query.keyword.toLocaleLowerCase()}%`);
     let allItems = [...categories, ...products];
     res.json(allItems);
   } catch (err) {
-    console.log(err);
+    res.status(401).json(err);
   }
 });
 
-router.get("/products", (req, res) => {
+router.get("/products", async (req, res) => {
   try {
     const { category_id } = req.query;
+
+    const parentCategory = await db("product_categories")
+      .select("id", "name")
+      .where("name", "ILIKE", `%${req.query.keyword.toLowerCase()}%`)
+      .then((row) => {
+        return row;
+      })
+      .catch((err) => {
+        res.status(401).json(err);
+      });
+
     db("products")
       .leftJoin("variants", "products.id", "variants.product_id")
       .leftJoin("variant_images", "variants.id", "variant_images.variant_id")
@@ -55,36 +58,57 @@ router.get("/products", (req, res) => {
               `%${req.query.keyword.toLowerCase()}%`
             );
         } else {
-          builder
-            .where(
-              "products.name",
-              "ILIKE",
-              `%${req.query.keyword.toLowerCase()}%`
-            )
-            .orWhere(
-              "c.name",
-              "ILIKE",
-              `%${req.query.keyword.toLowerCase()}%`
-            );
+          if (parentCategory.length > 0) {
+            builder
+              .where(
+                "products.name",
+                "ILIKE",
+                `%${req.query.keyword.toLowerCase()}%`
+              )
+              .orWhere("c.parent_id", parentCategory[0].id)
+              .orWhere(
+                "c.name",
+                "ILIKE",
+                `%${req.query.keyword.toLowerCase()}%`
+              );
+          } else {
+            builder
+              .where(
+                "products.name",
+                "ILIKE",
+                `%${req.query.keyword.toLowerCase()}%`
+              )
+              .orWhere(
+                "c.name",
+                "ILIKE",
+                `%${req.query.keyword.toLowerCase()}%`
+              );
+          }
         }
       })
       .orWhere((builder) => {
         if (req.query.category_id) {
-          builder
-            .where("c.id", category_id)
-            .andWhere(
-              "c.name",
-              "ILIKE",
-              `%${req.query.keyword.toLowerCase()}%`
-            );
+          parentCategory.length > 0
+            ? builder
+                .where("c.id", category_id)
+                .andWhere("c.parent_id", parentCategory[0].id)
+            : builder
+                .where("c.id", category_id)
+                .andWhere(
+                  "c.name",
+                  "ILIKE",
+                  `%${req.query.keyword.toLowerCase()}%`
+                );
         }
       })
       .then((row) => {
         res.json({ row });
       })
-      .catch((err) => res.json(err));
+      .catch((err) => {
+        res.status(401).json(err);
+      });
   } catch (err) {
-    console.log(err);
+    res.status(401).json(err);
   }
 });
 
