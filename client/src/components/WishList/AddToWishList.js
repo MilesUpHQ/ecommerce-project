@@ -16,7 +16,7 @@ export default function AddToWishList(id) {
         if (res.data.message) {
           toast(res.data.message, { icon: "👻" });
         } else {
-          toast.success("Iteam added to wishlist");
+          toast.success("Item added to wishlist");
         }
       })
       .catch((err) => {
