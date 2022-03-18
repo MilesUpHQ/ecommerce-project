@@ -3,8 +3,6 @@ const _ = require("lodash");
 const { faker } = require("@faker-js/faker");
 const db = require("./utils/dbConfig");
 
-const p = faker.commerce.productName();
-
 let categories;
 
 const createUser = async () => {
@@ -23,6 +21,22 @@ const createUser = async () => {
     ])
     .returning("id");
 };
+
+const createAddress = (user) => {
+  return db("address").insert([
+    {
+      name: "Magesh",
+      email: "magesh@gmail.com",
+      phone: faker.phone.phoneNumber("991#######"),
+      street: faker.address.streetAddress(),
+      city: faker.address.city(),
+      state: faker.address.state(),
+      pin_code: faker.address.zipCode(),
+      country: faker.address.countryCode(),
+      user_id: user.id,
+    },
+  ]);
+};
 const downloadImage = (dest) => {
   const url = faker.image.fashion();
   const options = {};
@@ -30,7 +44,6 @@ const downloadImage = (dest) => {
     const request = url.trim().startsWith("https")
       ? require("https")
       : require("http");
-
     request
       .get(url, options, (res) => {
         if (res.statusCode !== 200) {
@@ -42,7 +55,6 @@ const downloadImage = (dest) => {
 
           return;
         }
-
         res
           .pipe(fs.createWriteStream(dest))
           .on("error", reject)
@@ -96,7 +108,20 @@ const createSlug = (str) => {
     .replace(/-+/g, "-"); // collapse dashes
 };
 
-async function getCategories() {
+async function createFeaturedProducts() {
+  const product_ids = await db("products").pluck("id");
+  product_ids.map(async (id) => {
+    try {
+      await db("featured_products").insert([{ product_id: id }]);
+    } catch {
+      if (err) {
+        console.log(err);
+      }
+    }
+  });
+}
+
+async function createData() {
   categories = await db("product_categories")
     .pluck("id")
     .whereNot("parent_id", null);
@@ -108,39 +133,20 @@ async function getCategories() {
       console.log(product[0]);
       createVariantImage(variant[0], createSlug(product[0].name)).then(
         async (res) => {
-          const product_ids = await db("products").pluck("id");
-          product_ids.map((id) => {
-            return db("featured_products")
-              .insert([{ product_id: id }])
-              .then((featured) => {
-                // console.log("Featured products", featured);
-              });
-          });
+          createFeaturedProducts();
         }
       );
     });
   }
-  console.log(p);
 }
-createUser().then((user) => {
-  console.log("User magesh created");
-  db("address")
-    .insert([
-      {
-        name: "Magesh",
-        email: "magesh@gmail.com",
-        phone: faker.phone.phoneNumber("991#######"),
-        street: faker.address.streetAddress(),
-        city: faker.address.city(),
-        state: faker.address.state(),
-        pin_code: faker.address.zipCode(),
-        country: faker.address.countryCode(),
-        user_id: user[0].id,
-      },
-    ])
-    .then(() => console.log("first"));
-});
-getCategories();
-// downloadImage("images/magesh.png")
-//   .then((res) => console.log(res))
-//   .catch((err) => console.log(err));
+
+createUser()
+  .then((user) => {
+    console.log("User magesh created");
+    createAddress(user[0])
+      .then(() => console.log("first"))
+      .catch((err) => console.log(err));
+  })
+  .catch((err) => console.log(err));
+
+createData();
