@@ -9,6 +9,7 @@ import { Carousel, Card } from "react-bootstrap";
 import SearchProducts from "../Common/SearchProducts";
 import imageData from "../../utils/imageData";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
+import "../Home/home.css";
 
 const Home = () => {
   let [featuredProducts, setfeaturedProducts] = useState([]);
@@ -90,33 +91,26 @@ const Home = () => {
               {errorMsg && <ErrorAlert msg={errorMsg} />}
               {featuredProducts && (
                 <div>
-                  <Carousel className="carouselItem">
+                  <Carousel>
                     {imageData &&
                       imageData.map((imageUrl) => {
                         return (
-                          <Carousel.Item interval={1000} key={imageUrl}>
-                            <img
-                              className="d-block w-100"
-                              src={imageUrl}
-                              className="imageSlide"
-                            />
+                          <Carousel.Item interval={1000}>
+                            <img className="slideImage" src={imageUrl} />
                           </Carousel.Item>
                         );
                       })}
                   </Carousel>
-
-                  <div className="mainContainer">
-                    <ProductList
-                      featuredProducts={featuredProducts}
-                      currPage={currPage}
-                      lastPage={lastPage}
-                      totalPages={totalPages}
-                      handlePagination={handlePagination}
-                      setfeaturedProducts={setfeaturedProducts}
-                      setCurrPage={setCurrPage}
-                      imgArray={imgArray}
-                    />
-                  </div>
+                  <ProductList
+                    featuredProducts={featuredProducts}
+                    currPage={currPage}
+                    lastPage={lastPage}
+                    totalPages={totalPages}
+                    handlePagination={handlePagination}
+                    setfeaturedProducts={setfeaturedProducts}
+                    setCurrPage={setCurrPage}
+                    imgArray={imgArray}
+                  />
                 </div>
               )}
             </>
