@@ -4,7 +4,7 @@ import axios from "../../utils/ajax-helper";
 import { getJWT } from "../../utils/jwt";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
 import { Link } from "react-router-dom";
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+import ProductTable from "./ProductTable";
 export default function Cart() {
   // get items for the server and store in state and update in cart component
   const [cartItems, setCartItems] = React.useState([]);
@@ -84,84 +84,12 @@ export default function Cart() {
           <div className="container">
             {cartItems ? (
               cartItems.length > 0 ? (
-                <div className="row">
-                  <div className="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
-                    <div className="table-responsive">
-                      <table className="table">
-                        <thead>
-                          <tr>
-                            <th scope="col" className="border-0 bg-light">
-                              <div className="p-2 px-3 text-uppercase">
-                                Product
-                              </div>
-                            </th>
-                            <th scope="col" className="border-0 bg-light">
-                              <div className="py-2 text-uppercase">Price</div>
-                            </th>
-                            <th scope="col" className="border-0 bg-light">
-                              <div className="py-2 text-uppercase">
-                                Quantity
-                              </div>
-                            </th>
-                            <th scope="col" className="border-0 bg-light">
-                              <div className="py-2 text-uppercase">Remove</div>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {cartItems.map((cart) => (
-                            <tr key={cart.cart_id}>
-                              <th scope="row" className="border-0">
-                                <div className="p-2">
-                                  <img
-                                    src={BASE_URL + "/" + cart.image_url}
-                                    alt="product"
-                                    width="70"
-                                    className="img-fluid rounded shadow-sm"
-                                  />
-                                  <div className="ml-3 d-inline-block align-middle">
-                                    <h5 className="mb-0">
-                                      <a
-                                        href={`/product/view/${cart.id}`}
-                                        className="text-dark d-inline-block align-middle"
-                                      >
-                                        {cart.name}
-                                      </a>
-                                    </h5>
-                                  </div>
-                                </div>
-                              </th>
-                              <td className="border-0 align-middle">
-                                <strong>₹{cart.price}</strong>
-                              </td>
-                              <td className="border-0 align-middle input-quantity">
-                                <input
-                                  type="number"
-                                  className="form-control"
-                                  value={cart.quantity}
-                                  required
-                                  onChange={(e) =>
-                                    updateItem(cart.cart_id, e.target.value)
-                                  }
-                                />
-                              </td>
-
-                              <td className="border-0 align-middle">
-                                <button
-                                  type="button"
-                                  className="btn btn-sm btn-outline-danger"
-                                  onClick={() => deleteItem(cart.cart_id)}
-                                >
-                                  Remove
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+                <ProductTable
+                  cartItems={cartItems}
+                  deleteItem={deleteItem}
+                  updateItem={updateItem}
+                  isCart={true}
+                />
               ) : (
                 <div class="text-center mt-5">
                   <h3>
