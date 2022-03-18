@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Card, Button, Col, Container, Row, Carousel } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
 import Pagination from "../Common/Pagination";
+import "../Home/home.css";
 
 const ProductList = ({
   featuredProducts,

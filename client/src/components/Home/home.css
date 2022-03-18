@@ -1,97 +1,13 @@
-.mainContainer {
-  background-color: "#fcf0e2";
-}
-
-.viewCard {
-  width: 100%;
-  height: 60px;
-}
-
 .containerCard {
   width: 58rem;
   left: 30px;
-}
-
-.imgItem {
-  height: 300px;
-}
-
-.productName {
-  float: left;
-  margin-left: 60px;
-}
-
-.iconText {
-  margin-left: 100px;
-}
-
-.icon {
-  font-size: 20px;
-  color: red;
-}
-.cartInput {
-  border: solid 1px blue;
-  border-radius: 10px;
-  height: 40px;
-}
-.reviewsRow {
-  width: fit-content;
-}
-.reviewsDiv {
-  width: 100%;
-}
-.reviewComment {
-  float: left;
-  font-weight: bold;
-}
-.text1 {
-  float: left;
-  margin-left: 5px;
-  margin-right: 10px;
-}
-.rating {
-  float: left;
-  margin-left: 5px;
-  margin-right: 10px;
-  font-weight: bold;
-}
-.text2 {
-  float: left;
-  margin-left: 5px;
-  margin-right: 10px;
-}
-.userName {
-  margin-left: 5px;
-  font-weight: bold;
 }
 
 .listDiv {
   margin-top: 50px;
   margin-left: 5%;
 }
-.imageSlide {
-  width: 100%;
-  height: 500px;
-}
 
-.featuredProductName {
-  float: left;
-  margin-left: 40px;
-}
-
-.featuredProductDescription {
-  color: black;
-  margin-left: 20%;
-}
-
-.cartButton {
-  float: left;
-  margin-left: 5%;
-}
-.viewProduct {
-  float: left;
-  margin-left: 5%;
-}
 .navBarIcon {
   color: black;
   font-size: 30px;
@@ -113,4 +29,9 @@
 .homePagemessage {
   font-family: serif;
   text-shadow: 2px 2px #ff0000;
+}
+
+.slideImage {
+  height: 500px;
+  width: 100%;
 }
