@@ -9,11 +9,11 @@ let currency;
 ////Razor pay***********************//
 router.post("/:user_id", async (req, res, next) => {
   let amount;
-  knex("cart")
-    .select("cart.id", "cart.price")
-    .where("cart.user_id", req.params.user_id)
+  knex("orders")
+    .select("orders.id", "orders.total_price")
+    .where("orders.user_id", req.params.user_id)
     .then(async (response) => {
-      amount = response[0].price * 100;
+      amount = response[0].total_price * 100;
       payment_capture = 1;
       currency = "INR";
       options = {

@@ -16,7 +16,7 @@ const OrderDetails = () => {
     axios
       .get(`/admin/orders/${id}`)
       .then((res) => {
-        let date = new Date(res.data.orderDetails[0].order_date).toDateString(
+        let date = new Date(res.data.orderDetails[0].created_at).toDateString(
           "en-US",
           {
             timeZone: "Asia/Calcutta",
@@ -36,7 +36,7 @@ const OrderDetails = () => {
         <div className="content-wrapper">
           <div className="container">
             <div>
-              <h3>#{orderDetails[0] && orderDetails[0].order_id}</h3>
+              <h3>#Order_{id}</h3>
               <div className="orderStats">
                 <h4>{orderDate}</h4>
                 <h4 className="badge badge-success">

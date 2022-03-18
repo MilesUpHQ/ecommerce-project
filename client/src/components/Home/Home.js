@@ -8,6 +8,7 @@ import ErrorAlert from "../Common/ErrorAlert";
 import { Carousel, Card } from "react-bootstrap";
 import SearchProducts from "../Common/SearchProducts";
 import imageData from "../../utils/imageData";
+import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
 
 const Home = () => {
   let [featuredProducts, setfeaturedProducts] = useState([]);
@@ -61,9 +62,12 @@ const Home = () => {
   return (
     <div>
       {message && (
-        <Card className="messageCard">
-          <h1>{message}</h1>
-        </Card>
+        <div>
+          <SimpleNavBar />
+          <Card className="messageCard">
+            <h2 className="homePagemessage">{message}</h2>
+          </Card>
+        </div>
       )}
       {featuredProducts.length > 0 && (
         <div>
