@@ -31,7 +31,7 @@ const DisplayProducts = ({}) => {
   }
   const handlePagination = (page) => {
     axios
-      .get(`/admin/products?page=${page}`)
+      .get(`/admin/productsList?page=${page}`)
       .then((res) => {
         setdisplay(res.data.products);
         setCurrPage(res.data.currPage);
