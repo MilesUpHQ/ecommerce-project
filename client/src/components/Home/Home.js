@@ -21,6 +21,8 @@ const Home = () => {
   const [imgArray, setimgArray] = useState([]);
   const [searchItem, setSearchItem] = React.useState([]);
   const [searchInput, setSearchInput] = React.useState(null);
+  const [addToCart, setAddToCart] = React.useState(false);
+  const [updateNavbar, setUpdateNavbar] = React.useState(false);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const handlePagination = (page) => {
@@ -59,6 +61,14 @@ const Home = () => {
         setErrorMsg("Sorry! Something went wrong. Please Try again", err);
       });
   }, []);
+  const handleAddToCart = (id) => {
+    setAddToCart(id);
+    setUpdateNavbar(true);
+    setTimeout(() => {
+      setAddToCart(false);
+      setUpdateNavbar(false);
+    }, 2000);
+  };
 
   return (
     <div>
@@ -109,7 +119,7 @@ const Home = () => {
                     handlePagination={handlePagination}
                     setfeaturedProducts={setfeaturedProducts}
                     setCurrPage={setCurrPage}
-                    imgArray={imgArray}
+                    handleAddToCart={handleAddToCart}
                   />
                 </div>
               )}

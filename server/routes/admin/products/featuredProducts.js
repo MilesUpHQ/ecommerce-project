@@ -2,34 +2,8 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../../../utils/dbConfig");
 
-const removeDuplicate = (array) => {
-  var dups = [];
-  var arr = array.filter(function (el) {
-    if (dups.indexOf(el) == -1) {
-      dups.push(el);
-      return true;
-    }
-    return false;
-  });
-  return arr;
-};
-
 router.get("", async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;
-  let imgArray = [];
-  knex("variant_images")
-    .select("variant_images.image_url")
-    .then((res) => {
-      for (let i = 0; i < res.length; i++) {
-        let url = res[i].image_url.toString();
-        imgArray.push(url);
-      }
-      imgArray = removeDuplicate(imgArray);
-    })
-    .catch((err) => {
-      res.send("error in getting images");
-      imgArray = null;
-    });
 
   knex("featured_products")
     .leftJoin("products", "featured_products.product_id", "products.id")
@@ -64,11 +38,26 @@ router.get("", async (req, res, next) => {
           totalPages.push(i);
         }
       }
-      res.json({ featuredProducts, currPage, lastPage, totalPages, imgArray });
+      res.json({ featuredProducts, currPage, lastPage, totalPages });
     })
     .catch((err) => {
       res.send("error in getting products");
     });
+});
+//
+router.get("/products", async (req, res) => {
+  console.log("getting products ::::::::::::::::::::::::::::::::::");
+  try {
+    const products = await knex("products")
+      .select("id", "name")
+      .where("name", "ILIKE", `%${req.query.search.toLocaleLowerCase()}%`)
+      .limit(5);
+    console.log("products :", products);
+    res.json(products);
+  } catch (err) {
+    console.log("errr :", err);
+    res.status(401).json({ error: err });
+  }
 });
 
 // *********************************************** view Product ****************************************

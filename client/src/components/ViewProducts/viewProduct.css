@@ -11,12 +11,9 @@ div.imageDiv {
 .image {
   width: 100%;
 }
-.title {
-  text-shadow: 1px 1px 3px blue;
-}
+
 .text1 {
   color: black;
-  text-shadow: 1px 1px 2px gray;
 }
 .text2 {
   float: left;
@@ -38,8 +35,4 @@ div.imageDiv {
 .cartButton {
   background-color: white;
   color: black;
-}
-
-.custFlex {
-  display: flex; 
 }
