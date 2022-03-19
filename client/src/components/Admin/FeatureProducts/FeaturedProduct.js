@@ -66,7 +66,6 @@ const FeaturedProduct = () => {
         for (let i = 0; i < res.data.products.length; i++) {
           inputArray.push(res.data.products[i].name);
         }
-        console.log("inputArray : ", inputArray);
         setinputArray(inputArray);
         setProducts(res.data.products);
       })
@@ -130,8 +129,8 @@ const FeaturedProduct = () => {
                     <tbody>
                       <tr>
                         <td style={{ border: 0 }}>
-                          <div class="form-group">
-                            <label for="products">Products</label>
+                          <div className="form-group">
+                            <label htmlFor="products">Products</label>
                             <Typeahead
                               id="basic-typeahead-multiple"
                               labelKey="name"

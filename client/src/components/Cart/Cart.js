@@ -19,7 +19,6 @@ export default function Cart() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setCartItems(res.data);
       })
       .catch((err) => {
@@ -40,7 +39,6 @@ export default function Cart() {
           },
         })
         .then((res) => {
-          console.log(res);
           getCartItems();
         })
         .catch((err) => {
@@ -69,7 +67,6 @@ export default function Cart() {
         quantity: quantity,
       })
       .then((res) => {
-        console.log(res);
         getCartItems();
       })
       .catch((err) => {
@@ -91,7 +88,7 @@ export default function Cart() {
                   isCart={true}
                 />
               ) : (
-                <div class="text-center mt-5">
+                <div className="text-center mt-5">
                   <h3>
                     No Products In Cart :( <br />
                     <br />
@@ -99,14 +96,14 @@ export default function Cart() {
                     <br />
                     <br />
                     <Link to="/">
-                      <button class="btn btn-outline-dark">Go To Home</button>
+                      <button className="btn btn-outline-dark">Go To Home</button>
                     </Link>
                   </h3>
                 </div>
               )
             ) : (
               // show loading
-              <div class=" text-center mt-5">
+              <div className=" text-center mt-5">
                 <h3>
                   Loading... <br />
                   <br />

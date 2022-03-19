@@ -62,7 +62,7 @@ const OrderDetails = () => {
                       <tbody>
                         {orderItems &&
                           orderItems.map((item) => (
-                            <tr>
+                            <tr key={item.id}>
                               <td>{item.name}</td>
                               <td>{item.quantity}</td>
                               <td>{item.size}</td>

@@ -16,7 +16,6 @@ const DisplayProducts = ({}) => {
     axios
       .get("/admin/productsList")
       .then((res) => {
-        console.log(res.data.products);
         setdisplay(res.data.products);
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
@@ -31,7 +30,7 @@ const DisplayProducts = ({}) => {
   }
   const handlePagination = (page) => {
     axios
-      .get(`/admin/products?page=${page}`)
+      .get(`/admin/productsList?page=${page}`)
       .then((res) => {
         setdisplay(res.data.products);
         setCurrPage(res.data.currPage);
@@ -79,7 +78,7 @@ const DisplayProducts = ({}) => {
                     </thead>
                     <tbody>
                       {display.map((display) => (
-                        <tr>
+                        <tr key={display.id}>
                           <td className="py1">{display.name}</td>
                           <td>{display.description}</td>
                           <td>{display.size}</td>

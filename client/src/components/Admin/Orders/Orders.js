@@ -26,7 +26,7 @@ const Orders = () => {
               <h3>Orders</h3>
               <button
                 type="button"
-                className="btn btn-primary btn-icon-text"
+                className="btn btn-primary btn-icon-text disabled"
                 style={{ height: "fit-content" }}
               >
                 Create Order
@@ -50,7 +50,7 @@ const Orders = () => {
                       <tbody>
                         {orders &&
                           orders.map((order) => (
-                            <tr>
+                            <tr key={order.order_id}>
                               <td>
                                 <a href={`/admin/order/${order.order_id}`}>
                                   {order.order_id}

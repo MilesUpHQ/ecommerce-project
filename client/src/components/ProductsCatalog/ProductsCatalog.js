@@ -6,24 +6,24 @@ export default function ProductsCatalog(props) {
   const navigate = useNavigate();
   return (
     <>
-      <section class="section-products">
-        <div class="container">
+      <section className="section-products">
+        <div className="container">
           {props.products.length > 0 ? (
             <>
-              <div class="row justify-content-center text-center">
-                <div class="col-md-8 col-lg-6">
-                  <div class="header">
+              <div className="row justify-content-center text-center">
+                <div className="col-md-8 col-lg-6">
+                  <div className="header">
                     <h3>{props.title}</h3>
                     <h2>Popular Products</h2>
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div className="row">
                 {props.products.map((product) => (
-                  <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="single-product">
+                  <div className="col-md-6 col-lg-4 col-xl-3" key={product.id}>
+                    <div className="single-product">
                       <div
-                        class="part-1"
+                        className="part-1"
                         style={{
                           background:
                             "url(" +
@@ -35,13 +35,13 @@ export default function ProductsCatalog(props) {
                           transition: " all 0.3s",
                         }}
                       >
-                        <span class="new">new</span>
+                        <span className="new">new</span>
                         <ul>
                           <li>
                             <a
                               onClick={() => props.handleAddToCart(product.id)}
                             >
-                              <i class="fas fa-shopping-cart"></i>
+                              <i className="fas fa-shopping-cart"></i>
                             </a>
                           </li>
                           <li>
@@ -59,20 +59,20 @@ export default function ProductsCatalog(props) {
                                 navigate(`/product/view/${product.id}`)
                               }
                             >
-                              <i class="fas fa-expand"></i>
+                              <i className="fas fa-expand"></i>
                             </a>
                           </li>
                         </ul>
                       </div>
                       <div
-                        class="part-2"
+                        className="part-2"
                         onClick={() => navigate(`/product/view/${product.id}`)}
                       >
-                        <h3 class="product-title">{product.name}</h3>
-                        <h4 class="product-old-price">
+                        <h3 className="product-title">{product.name}</h3>
+                        <h4 className="product-old-price">
                           ₹{product.price + 100}
                         </h4>
-                        <h4 class="product-price">₹{product.price}</h4>
+                        <h4 className="product-price">₹{product.price}</h4>
                       </div>
                     </div>
                   </div>
@@ -80,7 +80,7 @@ export default function ProductsCatalog(props) {
               </div>
             </>
           ) : (
-            <div class="header  text-center">
+            <div className="header  text-center">
               <h3>
                 No Products Found :( <br />
                 <br />
