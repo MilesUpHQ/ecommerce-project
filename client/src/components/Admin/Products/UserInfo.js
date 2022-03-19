@@ -14,7 +14,6 @@ const UserInfo = (props) => {
     axios
       .get(`/admin/user/${id}`)
       .then((res) => {
-        console.log("xd", res);
         setUserInfo(res.data);
       })
       .catch((err) => {
@@ -25,34 +24,33 @@ const UserInfo = (props) => {
   return (
     <div className="main-panel bg-light">
       <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
               <a href="/admin/user">Home</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">
+            <li className="breadcrumb-item active" aria-current="page">
               User Info
             </li>
           </ol>
         </nav>
         <div id="leftCol" className="a-column a-span4 dp_aib_left_column_t1">
           <div className="image-space">
-            <h2 className="pdp-title ml-4">{userInfo.first_name}</h2>
-            <h2 className="pdp-name ml-4">{userInfo.last_name}</h2>
+            <h2 className="pdp-title ml-4">{userInfo.first_name} {userInfo.last_name}</h2>
             <h1 className="avatar ml-4"><FaUser /></h1>
           </div>
         </div>
 
-        <div class="view-user p-2">
-          <div class="row mb-5">
-            <div class="col text-center">
+        <div className="view-user p-2">
+          <div className="row mb-5">
+            <div className="col text-center">
               <h3>
                 <b>User Information</b>
               </h3>
             </div>
           </div>
-          <div class="row ml-4">
-            <div class="col">
-              <table class="table">
+          <div className="row ml-4">
+            <div className="col">
+              <table className="table">
                 <thead>
                   <tr>
                     <th scope="col">First_name</th>

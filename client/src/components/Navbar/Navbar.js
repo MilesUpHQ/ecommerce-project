@@ -80,7 +80,7 @@ const Navbar = ({
               </a>
             </li>
             {categories.map((parent_category) => (
-              <>
+              <div key={parent_category.id}>
                 {parent_category.sub_categories.length > 0 ? (
                   <div className="dropdown nav-item" key={parent_category.id}>
                     <a
@@ -97,7 +97,7 @@ const Navbar = ({
                       aria-labelledby={"dropdownMenu" + parent_category.id}
                     >
                       {parent_category.sub_categories.map((sub_category) => (
-                        <li>
+                        <li key={sub_category.id}>
                           <a
                             className="dropdown-item nav-link"
                             href={"/products/" + sub_category.id}
@@ -118,7 +118,7 @@ const Navbar = ({
                     </a>
                   </li>
                 )}
-              </>
+              </div>
             ))}
 
             <li className="nav-item nav-search d-none d-lg-block">

@@ -2,14 +2,14 @@ import React from "react";
 import "./FailedError.css";
 export default function FailedError() {
   return (
-    <div class="main-error-page">
+    <div className="main-error-page">
       <img src="/images/error.svg" alt="Error " />
-      <h1 class="error-title">
+      <h1 className="error-title">
         Woops! <br />
         Something went wrong :(
       </h1>
-      <h2 class="error-subtitle">Please try again later or contact us.</h2>
-      <a href="/cart" class="error-link">
+      <h2 className="error-subtitle">Please try again later or contact us.</h2>
+      <a href="/cart" className="error-link">
         Go back to cart
       </a>
     </div>

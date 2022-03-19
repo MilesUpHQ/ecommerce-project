@@ -9,8 +9,6 @@ export default function Add({ id, quantity }) {
     quantity = 1;
   }
   useEffect(() => {
-    console.log("id", id);
-    console.log("JWt", getJWT());
     axios
       .get(`/cart/add/${id}`, {
         headers: {

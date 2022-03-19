@@ -6,7 +6,7 @@ router.get("/:id", (req, res) => {
   knex("products")
     .leftJoin(
       "product_categories",
-      "product_categories.parent_id",
+      "product_categories.id",
       "products.category_id"
     )
     .leftJoin("variants", "variants.product_id", "products.id")

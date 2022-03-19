@@ -156,16 +156,17 @@ export default function SearchProducts({ searchItem, searchInput }) {
   return (
     <>
       {addToCart ? <Add id={addToCart} /> : null}
-        <div className="row">
-          {errorMsg ? (
-            <div className="alert alert-danger">{errorMsg}</div>
-          ) : (
-            <></>
-          )}
+      <div className="row">
+        {errorMsg ? (
+          <div className="alert alert-danger">{errorMsg}</div>
+        ) : (
+          <></>
+        )}
 
-          <div className="col-3" style={{marginTop: '7%'}}>
-            <aside className="ml-2">
-              <div className="card" style={{ display: "contents" }}>
+        <div className="col-3" style={{ marginTop: "7%" }}>
+          <aside className="ml-2">
+            <div className="card" style={{ display: "contents" }}>
+              {filteredProducts.length > 1 ? (
                 <article className="card-group-item">
                   <header className="card-header">
                     <h6 className="title">Category Filters</h6>
@@ -179,6 +180,7 @@ export default function SearchProducts({ searchItem, searchInput }) {
                               display: "flex",
                               alignItems: "center",
                             }}
+                            key={filterCategory.id}
                           >
                             <input
                               type="radio"
@@ -197,87 +199,88 @@ export default function SearchProducts({ searchItem, searchInput }) {
                     </div>
                   </div>
                 </article>
-                {filteredProducts.length > 1 && minPrice !== secondRange && (
-                  <article className="card-group-item">
-                    <header className="card-header">
-                      <h6 className="title">Price Filter</h6>
-                    </header>
-                    <div class="filter-content">
-                      <div class="card-body">
-                        {minPrice !== range ? (
-                          <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              class="custom-control-input"
-                              id="Check1"
-                              onChange={(e) => handlePrice(e, minPrice, range)}
-                            />
-                            <label
-                              class="custom-control-label"
-                              for="Check1"
-                              style={{ paddingTop: "3px" }}
-                            >
-                              {minPrice} - {range}
-                            </label>
-                          </div>
-                        ) : (
-                          ""
-                        )}
+              ) : (
+                ""
+              )}
+              {filteredProducts.length > 1 && minPrice !== secondRange && (
+                <article className="card-group-item">
+                  <header className="card-header">
+                    <h6 className="title">Price Filter</h6>
+                  </header>
+                  <div className="filter-content">
+                    <div className="card-body">
+                      {minPrice !== range ? (
+                        <div className="custom-control custom-checkbox">
+                          <input
+                            type="checkbox"
+                            className="custom-control-input"
+                            id="Check1"
+                            onChange={(e) => handlePrice(e, minPrice, range)}
+                          />
+                          <label
+                            className="custom-control-label"
+                            htmlFor="Check1"
+                            style={{ paddingTop: "3px" }}
+                          >
+                            {minPrice} - {range}
+                          </label>
+                        </div>
+                      ) : (
+                        ""
+                      )}
 
-                        {range !== secondRange ? (
-                          <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              class="custom-control-input"
-                              id="Check2"
-                              onChange={(e) =>
-                                handlePrice(e, range, secondRange)
-                              }
-                            />
-                            <label
-                              class="custom-control-label"
-                              for="Check2"
-                              style={{ paddingTop: "3px" }}
-                            >
-                              {range} - {secondRange}
-                            </label>
-                          </div>
-                        ) : (
-                          " "
-                        )}
+                      {range !== secondRange ? (
+                        <div className="custom-control custom-checkbox">
+                          <input
+                            type="checkbox"
+                            className="custom-control-input"
+                            id="Check2"
+                            onChange={(e) => handlePrice(e, range, secondRange)}
+                          />
+                          <label
+                            className="custom-control-label"
+                            htmlFor="Check2"
+                            style={{ paddingTop: "3px" }}
+                          >
+                            {range} - {secondRange}
+                          </label>
+                        </div>
+                      ) : (
+                        " "
+                      )}
 
-                        {maxPrice > 5000 && (
-                          <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              class="custom-control-input"
-                              id="Check3"
-                              onChange={(e) => handlePrice(e, 5000, maxPrice)}
-                            />
-                            <label
-                              class="custom-control-label"
-                              for="Check3"
-                              style={{ paddingTop: "3px" }}
-                            >
-                              5000 & above
-                            </label>
-                          </div>
-                        )}
-                      </div>
+                      {maxPrice > 5000 && (
+                        <div className="custom-control custom-checkbox">
+                          <input
+                            type="checkbox"
+                            className="custom-control-input"
+                            id="Check3"
+                            onChange={(e) => handlePrice(e, 5000, maxPrice)}
+                          />
+                          <label
+                            className="custom-control-label"
+                            htmlFor="Check3"
+                            style={{ paddingTop: "3px" }}
+                          >
+                            5000 & above
+                          </label>
+                        </div>
+                      )}
                     </div>
-                  </article>
-                )}
-              </div>
-            </aside>
-          </div>
-
-          <div className="col-9">
-            <ProductsCatalog
-              products={filteredProducts}
-              handleAddToCart={handleAddToCart}
-            />
-          </div>
+                  </div>
+                </article>
+              )}
+            </div>
+          </aside>
         </div>
+
+        <div className={filteredProducts.length > 0 ? 'col-9': ''}>
+          <ProductsCatalog
+            products={filteredProducts}
+            handleAddToCart={handleAddToCart}
+          />
+        </div>
+      </div>
     </>
   );
 }

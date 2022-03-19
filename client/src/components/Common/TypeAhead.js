@@ -1,5 +1,5 @@
 import React from "react";
-import { AsyncTypeahead } from "react-bootstrap-typeahead";
+import { Typeahead } from "react-bootstrap-typeahead";
 
 const TypeAhead = ({
   options,
@@ -34,7 +34,7 @@ const TypeAhead = ({
 
   const [value, setValue] = React.useState(null);
   return (
-    <AsyncTypeahead
+    <Typeahead
       filterBy={() => true}
       id="async-example"
       isLoading={isLoading}
@@ -56,7 +56,7 @@ const TypeAhead = ({
       {onEnterSearchItems && (
         <SearchButton onClick={() => handleSearchFilter(value)} />
       )}
-    </AsyncTypeahead>
+    </Typeahead>
   );
 };
 

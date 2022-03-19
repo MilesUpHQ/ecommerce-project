@@ -37,7 +37,7 @@ function OrderConfirm() {
           <div className="col-md-8">
             <div className="card shadow-sm">
               {isError ? (
-                <div class="alert alert-danger" role="alert">
+                <div className="alert alert-danger" role="alert">
                   {errorMsg}
                 </div>
               ) : (
