@@ -35,23 +35,18 @@ router.get("", async (req, res, next) => {
 //*********************************************products********************** */
 router.post("", (req, res) => {
   let name = req.body.name;
-  console.log("value :", name);
   knex("featured_products")
     .where({
       product_id: name,
     })
     .then((result) => {
-      console.log("result of where:", result);
-      console.log("result of where length:", result.length);
       if (result.length == 0) {
         knex("featured_products")
           .insert({ product_id: name })
           .then((rows) => {
-            console.log("rows :", rows);
             res.json({ message: "sucessfully added !!" });
           })
           .catch((err) => {
-            console.log("err :".err);
             res.json({
               message: "Ooops some error in adding product!!!!!!!",
             });
@@ -62,8 +57,6 @@ router.post("", (req, res) => {
         });
       }
     })
-    .catch((err) => {
-      console.log("err in finding :", err);
-    });
+    .catch((err) => {});
 });
 module.exports = router;

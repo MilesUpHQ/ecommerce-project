@@ -24,7 +24,7 @@ router.get("", async (req, res, next) => {
     .whereNotNull("variants.price")
     .orderBy("products.updated_at", "desc")
     .paginate({
-      perPage: 15,
+      perPage: 10,
       currentPage: page,
       isLengthAware: true,
     })
@@ -46,17 +46,14 @@ router.get("", async (req, res, next) => {
 });
 //
 router.get("/products", async (req, res) => {
-  console.log("getting products ::::::::::::::::::::::::::::::::::");
   try {
     const products = await knex("products")
       .select("id", "name")
       .where("name", "ILIKE", `%${req.query.search.toLocaleLowerCase()}%`)
       .limit(5);
-    console.log("products :", products);
     res.json(products);
   } catch (err) {
-    console.log("errr :", err);
-    res.status(401).json({ error: err });
+    res.json({ error: err });
   }
 });
 

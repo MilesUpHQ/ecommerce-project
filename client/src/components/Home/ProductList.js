@@ -25,7 +25,6 @@ const ProductList = ({
             <div className="row">
               {featuredProducts.map((featuredProduct) => (
                 <>
-                  {/* <a href={`/product/view/${featuredProduct.product_id}`}> */}
                   <div className="col-md-6 col-lg-4 col-xl-3">
                     <div className="single-product">
                       <div
@@ -70,27 +69,37 @@ const ProductList = ({
                           </li>
                         </ul>
                       </div>
-                      <div
-                        className="part-2"
-                        onClick={() =>
-                          navigate(
-                            `/product/view/${featuredProduct.product_id}`
-                          )
-                        }
-                      >
-                        <h3 className="product-title">
-                          {featuredProduct.name}
-                        </h3>
-                        <h4 className="product-old-price">
-                          ₹{featuredProduct.price + 100}
-                        </h4>
-                        <h4 className="product-price">
-                          ₹{featuredProduct.price}
-                        </h4>
-                      </div>
+                      <a href={`/product/view/${featuredProduct.product_id}`}>
+                        <div
+                          className="part-2"
+                          onClick={() =>
+                            navigate(
+                              `/product/view/${featuredProduct.product_id}`
+                            )
+                          }
+                        >
+                          <h3
+                            className="product-title"
+                            style={{ color: "black" }}
+                          >
+                            {featuredProduct.name}
+                          </h3>
+                          <h4
+                            className="product-old-price"
+                            style={{ color: "black" }}
+                          >
+                            ₹{featuredProduct.price + 100}
+                          </h4>
+                          <h4
+                            className="product-price"
+                            style={{ color: "black" }}
+                          >
+                            ₹{featuredProduct.price}
+                          </h4>
+                        </div>
+                      </a>
                     </div>
                   </div>
-                  {/* </a> */}
                 </>
               ))}
             </div>
