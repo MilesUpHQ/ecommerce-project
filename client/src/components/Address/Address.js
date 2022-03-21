@@ -26,21 +26,21 @@ const Address = () => {
   let decoded = parseJwt(getJWT());
   let [user_id, setUser_id] = useState(decoded.id);
   const navigate = useNavigate();
-  let [razor, setRazor] = useState(null);
+  let [payMode, setPayMode] = useState(null);
   let [name, setName] = useState(null);
   let [email, setEmail] = useState(null);
   let [phone, setPhone] = useState(null);
-  let [cartItems, setCartItems] = useState(null);
+  let [order_id, setOrder_id] = useState(null);
 
   useEffect(() => {
-    cartDetails();
     axios
       .post(`/user/checkout/payment/${user_id}`)
       .then((res) => {
-        setRazor(res.data);
+        setPayMode(res.data);
+        setOrder_id(res.data.order_id);
       })
       .catch((err) => {
-        setMessage("error in razor pay");
+        setMessage("error in payMode pay");
         clearMessageTimeout(setMessage);
       });
 
@@ -72,11 +72,11 @@ const Address = () => {
   const displayRazorPay = async () => {
     var options = {
       key: process.env.RAZOR_PAY_KEY,
-      amount: razor.amount.toString(),
-      currency: razor.currency,
+      amount: payMode.amount.toString(),
+      currency: payMode.currency,
       name: "E-commerence",
       description: "Transaction for placing an order",
-      order_id: razor.id,
+      order_id: payMode.razor_order_id,
       handler: (response) => onPaymentSuccess(response),
       prefill: {
         name: name,
@@ -92,86 +92,27 @@ const Address = () => {
     );
   };
   function onPaymentFailure(response) {
-    setMessage("error in openin razor pay");
+    setMessage("error in openin payMode pay");
     clearMessageTimeout(setMessage);
-
     navigate("/order/error");
   }
   function onPaymentSuccess(response) {
     setMessage("opening razorpay");
     clearMessageTimeout(setMessage);
-
-    try {
-      orderPlaced(response.razorpay_order_id, response.razorpay_payment_id);
-    } catch (error) {
-      setMessage("error in placing order");
-      clearMessageTimeout(setMessage);
-      navigate("/order/error");
-    }
+    orderPlaced(response.razorpay_order_id, response.razorpay_payment_id);
   }
-  const postOrder = (orderid) => {
-    return axios.post("/user/order/confirm/", {
-      order_id: orderid,
-      order_date: new Date(),
-      total_price: razor.amount / 100,
-      status: "confirmed",
-      address_id: address_id,
-      user_id: user_id,
-    });
-  };
-  const postPaymentDetails = (orderid, paymentid) => {
-    return axios.post("/user/order/payment/", {
-      order_id: orderid,
-      type: "card",
-      status: "confirmed",
-      payment_id: paymentid,
-    });
-  };
 
-  const cartDetails = () => {
+  const orderPlaced = async (payment_gateway_id, payment_id) => {
     axios
-      .get(`/user/cart/${user_id}/details`)
-      .then((res) => {
-        let cartitems = {
-          cart_id: res.data.id,
-          quantity: res.data.quantity,
-          variant_id: res.data.variant_id,
-        };
-        setCartItems(cartitems);
+      .put(`/user/order/confirm/${order_id}`, {
+        id: order_id,
+        order_id: payment_gateway_id,
+        payment_id: payment_id,
+        user_id: user_id,
+        address_id: address_id,
       })
-      .catch((err) => {
-        setMessage("error in getting cart details");
-        clearMessageTimeout(setMessage);
-      });
-  };
-
-  const postOrderItems = (orderid) => {
-    return axios.post("/user/order/items/", {
-      quantity: cartItems.quantity,
-      variant_id: cartItems.variant_id,
-      order_id: orderid,
-    });
-  };
-
-  const orderPlaced = async (order_id, payment_id) => {
-    let ordersID;
-    postOrder(order_id)
       .then((res) => {
-        ordersID = res.data.id;
-        postPaymentDetails(ordersID, payment_id)
-          .then((res) => {
-            postOrderItems(ordersID)
-              .then(async (res) => {
-                await deleteCart(cartItems.cart_id);
-                navigate("/order/confirm");
-              })
-              .catch((err) => {
-                navigate("/order/error");
-              });
-          })
-          .catch((err) => {
-            navigate("/order/error");
-          });
+        navigate(`/order/confirm/${order_id}`);
       })
       .catch((err) => {
         navigate("/order/error");
@@ -208,17 +149,6 @@ const Address = () => {
           clearMessageTimeout(setMessage);
         });
     }
-  };
-  // **********************delete cart************************//
-  const deleteCart = (cart_id) => {
-    axios
-      .delete(`/cart/${cart_id}/delete`)
-      .then((res) => {
-        setMessage("Empty cart");
-      })
-      .catch((err) => {
-        setMessage("could not empty cart");
-      });
   };
   // ***********on select *****************//
   const clicked = (id) => {
@@ -297,12 +227,12 @@ const Address = () => {
                         </Card>
                       </Col>
                     ))}
-                  {razor && addresses.length > 0 && (
+                  {payMode && addresses.length > 0 && (
                     <button
                       onClick={displayRazorPay}
                       className="btn btn-primary mr-2"
                     >
-                      Pay {razor.amount / 100}
+                      Pay {payMode.amount / 100}
                     </button>
                   )}
                 </Row>

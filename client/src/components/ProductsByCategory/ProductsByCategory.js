@@ -9,6 +9,7 @@ import Add from "../Cart/Add";
 import ProductsCatalog from "../ProductsCatalog/ProductsCatalog";
 import { Container } from "react-bootstrap";
 import SearchProducts from "../Common/SearchProducts";
+import AddToWishList from "../WishList/AddToWishList";
 export default function ProductsByCategory() {
   const [products, setProducts] = React.useState([]);
   const [errorMsg, setErrorMsg] = React.useState(null);
@@ -17,6 +18,7 @@ export default function ProductsByCategory() {
   const categoryId = useParams().category;
   const [addToCart, setAddToCart] = React.useState(false);
   const [updateNavbar, setUpdateNavbar] = React.useState(false);
+  const [addToWishList, setAddToWishList] = React.useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +40,12 @@ export default function ProductsByCategory() {
       setUpdateNavbar(false);
     }, 2000);
   };
+  const handleAddToWishList = (id) => {
+    setAddToWishList(id);
+    setTimeout(() => {
+      setAddToWishList(false);
+    }, 2000);
+  };
 
   const handleSearchFilter = (value) => {
     setSearchInput(value);
@@ -46,6 +54,7 @@ export default function ProductsByCategory() {
   return (
     <>
       {addToCart ? <Add id={addToCart} /> : null}
+      {addToWishList ? <AddToWishList id={addToWishList} /> : null}
       <Navbar
         handleSearchFilter={handleSearchFilter}
         searchItem={searchItem}
@@ -74,6 +83,7 @@ export default function ProductsByCategory() {
                 searchItem={searchItem}
                 searchInput={searchInput}
                 handleAddToCart={handleAddToCart}
+                handleAddToWishList={handleAddToWishList}
               />
             </div>
           </Container>

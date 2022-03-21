@@ -212,7 +212,9 @@ const AddForm = () => {
                     <textarea
                       className="form-control"
                       id="exampleTextarea1"
+                      placeholder="Describe your product within 100 words"
                       rows="4"
+                      maxLength="100"
                       value={details.description}
                       onChange={(e) =>
                         setDetails({ ...details, description: e.target.value })

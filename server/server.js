@@ -39,9 +39,9 @@ const payment = require("./routes/payment");
 const orders = require("./routes/orders");
 // const checkout = require("./routes/checkout");
 const OrderConfirm = require("./routes/order/confirm");
-const adminOrders = require("./routes/admin/orders/orders")
+const adminOrders = require("./routes/admin/orders/orders");
 const CategoriesList = require("./routes/products/categories");
-
+const WishList = require("./routes/wishlist/wishlist");
 // middlewares
 
 app.use(express.json());
@@ -91,6 +91,7 @@ app.use("/api/cart/update", updateQuantity);
 app.use("/api/order/confirm", OrderConfirm);
 app.use("/api/admin/orders", adminOrders);
 app.use("/api/categories_list", CategoriesList);
+app.use("/api/wishlist", WishList);
 
 app.get(
   "/api/getUser",

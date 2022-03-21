@@ -1,77 +1,51 @@
 const express = require("express");
 const router = express.Router();
 const knex = require("../utils/dbConfig");
-
-// ********* payment ******************//
-router.post("/payment", async (req, res, next) => {
-  knex("payment")
-    .insert({
-      payment_id: req.body.payment_id,
-      status: "payment",
-      type: "card",
-      order_id: req.body.order_id,
-    })
-    .then((rows) => {
-      res.json({ message: "Sucessfully added !!" });
-    })
-    .catch((err) => {
-      res.json({
-        message: "Ooops some error in payment!!!!!!!",
-      });
-    });
-});
-
-//**********************order items*******************************/
-router.post("/confirm", async (req, res, next) => {
+const addPayment = (status, payment_gateway_paymentId, order_id) => {
+  return knex("payment").insert({
+    payment_id: payment_gateway_paymentId,
+    status: status,
+    type: "card",
+    order_id: order_id,
+  });
+};
+const addOrder = (status, payment_gateway_id, address_id) => {
+  return knex("orders").update({
+    status: status,
+    payment_gateway_id: payment_gateway_id,
+    address_id: address_id,
+  });
+};
+router.put("/confirm/:id", (req, res, next) => {
   knex("orders")
-    .insert({
-      order_id: req.body.order_id,
-      status: "confirmed",
-      order_date: req.body.order_date,
-      address_id: req.body.address_id,
-      user_id: req.body.user_id,
-      total_price: req.body.total_price,
-    })
-    .returning("orders.id")
-    .then((rows) => {
-      res.json({ message: "Sucessfully added order!!", id: rows[0].id });
-    })
-    .catch((err) => {
-      res.json({
-        message: "Ooops some error in placing order!!!!!!!",
-      });
-    });
-});
-
-//******************************************cart details****************************/
-router.get("/:user_id/details", async (req, res, next) => {
-  knex("cart")
-    .leftJoin("cart_items", "cart_items.cart_id", "cart.id")
-    .select("cart.id", "cart_items.variant_id", "cart_items.quantity")
-    .where("cart.user_id", req.params.user_id)
-    .then((response) => {
-      res.json(response[0]);
-    })
-    .catch((err) => {
-      res.send("error in getting cart details");
-    });
-});
-
-// ********************************order items********************//
-router.post("/items", async (req, res, next) => {
-  knex("order_items")
-    .insert({
-      order_id: req.body.order_id,
-      quantity: req.body.quantity,
-      product_id: req.body.variant_id,
-    })
-    .then((rows) => {
-      res.json({ message: "Sucessfully added order items!!" });
-    })
-    .catch((err) => {
-      res.json({
-        message: "Ooops some error in adding  order items!!!!!!!",
-      });
+    .where("orders.id", req.params.id)
+    .then(async (result) => {
+      if (result.length == 0) {
+        res.send("order does not exists");
+      } else {
+        let paymentStatus = "completed";
+        addPayment(paymentStatus, req.body.payment_id, req.params.id)
+          .then((result) => {
+            let orderStatus = "placed";
+            addOrder(
+              orderStatus,
+              req.body.payment_gateway_id,
+              req.body.address_id
+            )
+              .then((row) => {
+                res.json({ message: "order successfull" });
+              })
+              .catch((err) => {
+                paymentStatus = "completed";
+                orderStatus = "paid";
+                res.json({ message: "could not update" });
+              });
+          })
+          .catch((err) => {
+            paymentStatus = "canceled";
+            console.log("err in adiing payment", err);
+          });
+      }
     });
 });
 

@@ -32,7 +32,7 @@ import UserList from "./components/Admin/Products/UserList";
 import { EditForm } from "./components/Admin/Products/EditForm";
 import ProductInfo from "./components/Admin/Products/ProductInfo";
 import FeaturedProduct from "./components/Admin/FeatureProducts/FeaturedProduct";
-
+import WishList from "./components/WishList/WishList";
 const App = () => {
   return (
     <Router>
@@ -51,6 +51,7 @@ const App = () => {
         <Route path="/user/address/:id" element={<CreateAddress />} />
         <Route path="/order/confirm" element={<OrderConfirm />} />
         <Route path="/order/error" element={<OrderFailed />} />
+        <Route path="/wishlist" element={<WishList />} />
 
         {/* Admin Routes */}
 
@@ -176,7 +177,7 @@ const App = () => {
             </PrivateRoute>
           }
         />
-        <Route path="/order/confirm" element={<OrderConfirm />} />
+        <Route path="/order/confirm/:id" element={<OrderConfirm />} />
         <Route path="/order/error" element={<OrderFailed />} />
       </Routes>
     </Router>
