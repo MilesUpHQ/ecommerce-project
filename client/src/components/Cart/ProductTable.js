@@ -3,6 +3,20 @@ import RemoveButton from "./RemoveButton";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function ProductTable(props) {
+  function showQuantityForCart(props, cart) {
+    return props.isCart ? (
+      <td className="border-0 align-middle input-quantity">
+        <input
+          type="number"
+          className="form-control"
+          value={cart.quantity}
+          required
+          onChange={(e) => props.updateItem(cart.cart_id, e.target.value)}
+        />
+      </td>
+    ) : null;
+  }
+
   return (
     <div className="row">
       <div className="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
@@ -52,19 +66,7 @@ export default function ProductTable(props) {
                   <td className="border-0 align-middle">
                     <strong>₹{cart.price}</strong>
                   </td>
-                  {props.isCart ? (
-                    <td className="border-0 align-middle input-quantity">
-                      <input
-                        type="number"
-                        className="form-control"
-                        value={cart.quantity}
-                        required
-                        onChange={(e) =>
-                          props.updateItem(cart.cart_id, e.target.value)
-                        }
-                      />
-                    </td>
-                  ) : null}
+                  {showQuantityForCart(props, cart)}
 
                   <td className="border-0 align-middle">
                     {props.isCart ? (
