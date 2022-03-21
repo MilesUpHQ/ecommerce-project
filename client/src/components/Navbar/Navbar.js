@@ -137,13 +137,13 @@ const Navbar = ({
           </ul>
           <ul className="navbar-nav navbar-nav-right">
             <li className="nav-item nav-profile dropdown">
-              <a href="#">
+              <a href="/wishlist">
                 <FaHeart className="navBarIcon" />
               </a>
             </li>
             <li className="nav-item nav-profile dropdown">
               <a href="/cart">
-                <FaShoppingCart className="navBarIcon" />({cartItems}) ${""}
+                <FaShoppingCart className="navBarIcon" />({cartItems}) ₹{""}
                 {cartPrice}
               </a>
             </li>
