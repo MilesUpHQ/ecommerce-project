@@ -135,7 +135,7 @@ const FeaturedProduct = () => {
                               setSearchItem={setInput}
                               searchItem={input}
                               isLoading={isLoading}
-                              placeholder={"Choose a Parent Category..."}
+                              placeholder={"Choose a product.."}
                             />
                           </div>
                         </td>
