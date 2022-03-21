@@ -31,6 +31,13 @@ router.get("/products", async (req, res) => {
         res.status(401).json(err);
       });
 
+    let searchByProductName = db("products")
+      .select("name")
+      .whereILike("name", `%${keyword?.toLowerCase()}%`);
+    let searchByCategoryName = db("product_categories")
+      .select("name")
+      .whereILike("name", `%${keyword?.toLowerCase()}%`);
+
     db("products")
       .leftJoin("variants", "products.id", "variants.product_id")
       .leftJoin("variant_images", "variants.id", "variant_images.variant_id")
@@ -52,38 +59,16 @@ router.get("/products", async (req, res) => {
         if (category_id) {
           builder
             .where("c.id", category_id)
-            .andWhere(
-              "products.name",
-              "ILIKE",
-              `%${keyword?.toLowerCase()}%`
-            );
+            .whereIn("products.name", searchByProductName);
         } else {
-          if (parentCategory.length > 0) {
-            builder
-              .where(
-                "products.name",
-                "ILIKE",
-                `%${keyword?.toLowerCase()}%`
-              )
-              .orWhere("c.parent_id", parentCategory[0].id)
-              .orWhere(
-                "c.name",
-                "ILIKE",
-                `%${keyword?.toLowerCase()}%`
-              );
-          } else {
-            builder
-              .where(
-                "products.name",
-                "ILIKE",
-                `%${keyword?.toLowerCase()}%`
-              )
-              .orWhere(
-                "c.name",
-                "ILIKE",
-                `%${keyword?.toLowerCase()}%`
-              );
-          }
+          parentCategory.length > 0
+            ? builder
+                .whereIn("products.name", searchByProductName)
+                .orWhere("c.parent_id", parentCategory[0].id)
+                .orWhereIn("c.name", searchByCategoryName)
+            : builder
+                .whereIn("products.name", searchByProductName)
+                .orWhereIn("c.name", searchByCategoryName);
         }
       })
       .orWhere((builder) => {
@@ -94,17 +79,14 @@ router.get("/products", async (req, res) => {
                 .andWhere("c.parent_id", parentCategory[0].id)
             : builder
                 .where("c.id", category_id)
-                .andWhere(
-                  "c.name",
-                  "ILIKE",
-                  `%${keyword?.toLowerCase()}%`
-                );
+                .whereIn("c.name", searchByCategoryName);
         }
       })
       .then((row) => {
         res.json({ row });
       })
       .catch((err) => {
+        console.log(err);
         res.status(401).json(err);
       });
   } catch (err) {
