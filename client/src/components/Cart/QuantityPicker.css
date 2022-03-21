@@ -1,0 +1,41 @@
+.quantity-picker {
+  display: inline-block;
+  border: 1px solid #dfdfdf;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.quantity-modifier,
+.quantity-display {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  outline: none;
+}
+
+.quantity-modifier {
+  width: 2rem;
+  font-size: 1.5rem;
+  color: #888;
+  border: 0 solid #dbdbdb;
+  text-align: center;
+  height: 2.5rem;
+  cursor: pointer;
+}
+
+.left-modifier {
+  border-radius: 3px 0 0 3px;
+}
+
+.right-modifier {
+  border-radius: 0 2px 2px 0;
+}
+
+.quantity-display {
+  width: 2rem;
+  padding: 0.5rem;
+  border: 0;
+  border-top: 0 solid #dbdbdb;
+  text-align: center;
+}

@@ -73,6 +73,12 @@ export default function Cart() {
         setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
       });
   };
+  const increment = (id) => {
+    updateItem(id, cartItems.find((item) => item.cart_id === id).quantity + 1);
+  };
+  const decrement = (id) => {
+    updateItem(id, cartItems.find((item) => item.cart_id === id).quantity - 1);
+  };
   return (
     <>
       <SimpleNavBar />
@@ -85,6 +91,8 @@ export default function Cart() {
                   cartItems={cartItems}
                   deleteItem={deleteItem}
                   updateItem={updateItem}
+                  increment={increment}
+                  decrement={decrement}
                   isCart={true}
                 />
               ) : (
@@ -96,7 +104,9 @@ export default function Cart() {
                     <br />
                     <br />
                     <Link to="/">
-                      <button className="btn btn-outline-dark">Go To Home</button>
+                      <button className="btn btn-outline-dark">
+                        Go To Home
+                      </button>
                     </Link>
                   </h3>
                 </div>
