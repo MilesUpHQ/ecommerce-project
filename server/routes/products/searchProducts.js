@@ -6,10 +6,10 @@ router.get("/typeahead", async (req, res) => {
   try {
     const categories = await db("product_categories")
       .select("id", "name")
-      .where("name", "ILIKE", `%${req.query.keyword.toLocaleLowerCase()}%`);
+      .where("name", "ILIKE", `%${req.query.keyword?.toLocaleLowerCase()}%`);
     const products = await db("products")
       .select("id", "name")
-      .where("name", "ILIKE", `%${req.query.keyword.toLocaleLowerCase()}%`);
+      .where("name", "ILIKE", `%${req.query.keyword?.toLocaleLowerCase()}%`);
     let allItems = [...categories, ...products];
     res.json(allItems);
   } catch (err) {
@@ -19,11 +19,11 @@ router.get("/typeahead", async (req, res) => {
 
 router.get("/products", async (req, res) => {
   try {
-    const { category_id } = req.query;
+    const { category_id, keyword } = req.query;
 
     const parentCategory = await db("product_categories")
       .select("id", "name")
-      .where("name", "ILIKE", `%${req.query.keyword.toLowerCase()}%`)
+      .where("name", "ILIKE", `%${keyword?.toLowerCase()}%`)
       .then((row) => {
         return row;
       })
@@ -49,13 +49,13 @@ router.get("/products", async (req, res) => {
         "variant_images.image_url"
       )
       .where((builder) => {
-        if (req.query.category_id) {
+        if (category_id) {
           builder
             .where("c.id", category_id)
             .andWhere(
               "products.name",
               "ILIKE",
-              `%${req.query.keyword.toLowerCase()}%`
+              `%${keyword?.toLowerCase()}%`
             );
         } else {
           if (parentCategory.length > 0) {
@@ -63,31 +63,31 @@ router.get("/products", async (req, res) => {
               .where(
                 "products.name",
                 "ILIKE",
-                `%${req.query.keyword.toLowerCase()}%`
+                `%${keyword?.toLowerCase()}%`
               )
               .orWhere("c.parent_id", parentCategory[0].id)
               .orWhere(
                 "c.name",
                 "ILIKE",
-                `%${req.query.keyword.toLowerCase()}%`
+                `%${keyword?.toLowerCase()}%`
               );
           } else {
             builder
               .where(
                 "products.name",
                 "ILIKE",
-                `%${req.query.keyword.toLowerCase()}%`
+                `%${keyword?.toLowerCase()}%`
               )
               .orWhere(
                 "c.name",
                 "ILIKE",
-                `%${req.query.keyword.toLowerCase()}%`
+                `%${keyword?.toLowerCase()}%`
               );
           }
         }
       })
       .orWhere((builder) => {
-        if (req.query.category_id) {
+        if (category_id) {
           parentCategory.length > 0
             ? builder
                 .where("c.id", category_id)
@@ -97,7 +97,7 @@ router.get("/products", async (req, res) => {
                 .andWhere(
                   "c.name",
                   "ILIKE",
-                  `%${req.query.keyword.toLowerCase()}%`
+                  `%${keyword?.toLowerCase()}%`
                 );
         }
       })
