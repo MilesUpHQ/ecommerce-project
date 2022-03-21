@@ -11,8 +11,9 @@ function OrderConfirm() {
   const [orderInfo, setOrderInfo] = React.useState({});
   const [errorMsg, setErrorMsg] = React.useState(null);
   const [isError, setIsError] = React.useState(false);
-
-  const { orderId } = useParams();
+  const [orderId, setOrderId] = React.useState(
+    window.location.pathname.substring(15)
+  );
   React.useEffect(() => {
     const fetchData = async () => {
       setIsError(false);

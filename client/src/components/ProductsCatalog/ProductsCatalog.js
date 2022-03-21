@@ -47,8 +47,12 @@ export default function ProductsCatalog(props) {
                             </a>
                           </li>
                           <li>
-                            <a>
-                              <i className="fas fa-heart"></i>
+                            <a
+                              onClick={() =>
+                                props.handleAddToWishList(product.id)
+                              }
+                            >
+                              <i class="fas fa-heart"></i>
                             </a>
                           </li>
                           <li>
