@@ -13,8 +13,10 @@ export default function ProductsCatalog(props) {
               <div className="row justify-content-center text-center">
                 <div className="col-md-8 col-lg-6">
                   <div className="header">
-                    <h3>{props.title}</h3>
-                    <h2>Popular Products</h2>
+                    <p>
+                      <h4>{props.title}</h4>
+                    </p>
+                    <h2>Popular Products </h2>
                   </div>
                 </div>
               </div>

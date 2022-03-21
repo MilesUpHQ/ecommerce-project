@@ -85,15 +85,18 @@ const ViewProduct = () => {
                           <h4 className="text1">Rs.{product.price}</h4>
                           <br />
 
-                          <div className="custFlex">
-                            <h4 className="text3">Size</h4>
-                            <h4 className="text1">: {product.size}</h4>
-                          </div>
+                          <Card.Text className="text2">
+                            <h4 className="text3">Size</h4> :
+                          </Card.Text>
+                          <h4 className="text1">{product.size}</h4>
                           <br />
-                          <div className="custFlex">
-                            <h4 className="text3">Color</h4>
-                            <h4 className="text1">: {product.color}</h4>
-                          </div>
+
+                          <Card.Text className="text2">
+                            <h4 className="text3">Color</h4> :
+                          </Card.Text>
+                          <h4 className="text1">{product.color}</h4>
+                          <br />
+
                           <br />
                           <form>
                             <label className="label">Quantity</label>
@@ -101,11 +104,11 @@ const ViewProduct = () => {
                               type="text"
                               pattern="[0-9]*"
                               min="1"
-                              step="1"
                               value="1"
+                              step="1"
+                              onkeydown="return false"
                               name="name"
                               className="cartInput"
-                              readOnly
                             />
                             <Button
                               type="submit"

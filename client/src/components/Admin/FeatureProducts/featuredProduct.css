@@ -1,6 +1,7 @@
 .messageHead {
   width: fit-content;
-  height: 200px;
+  height: fit-content;
+  border: solid 1px black;
   font-weight: bolder;
   align-items: center;
 }

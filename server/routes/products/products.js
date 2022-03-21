@@ -35,30 +35,28 @@ router.get("", async (req, res, next) => {
 //*********************************************products********************** */
 router.post("", (req, res) => {
   let name = req.body.name;
-  knex("products")
-    .whereIn("name", name)
+  knex("featured_products")
+    .where({
+      product_id: name,
+    })
     .then((result) => {
-      if (result.length > 0) {
-        for (i = 0; i < result.length; i++) {
-          let product_id = result[i].id;
-          knex("featured_products")
-            .insert({ product_id: product_id })
-            .then((rows) => {
-              res.json({ message: "sucessfully added !!" });
-            })
-            .catch((err) => {
-              res.json({
-                message: "Ooops some error in adding product!!!!!!!",
-              });
+      if (result.length == 0) {
+        knex("featured_products")
+          .insert({ product_id: name })
+          .then((rows) => {
+            res.json({ message: "sucessfully added !!" });
+          })
+          .catch((err) => {
+            res.json({
+              message: "Ooops some error in adding product!!!!!!!",
             });
-        }
+          });
       } else {
-        res.json({ message: "Product does not exists!!!!!!" });
+        res.json({
+          message: "product already exists",
+        });
       }
     })
-    .catch((err) => {
-      res.json({ message: "Ooops some error in adding product!!!!!!!" });
-    });
+    .catch((err) => {});
 });
-
 module.exports = router;

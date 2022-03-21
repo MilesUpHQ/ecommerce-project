@@ -23,7 +23,9 @@ export default function SimpleNavBar() {
               </a>
             </li>
             <li className="nav-item ">
-              <a href="/logout">Logout</a>
+              <a href="/logout" style={{ color: "black" }}>
+                Logout
+              </a>
             </li>
           </ul>
         </div>
