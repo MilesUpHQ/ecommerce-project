@@ -177,7 +177,7 @@ const App = () => {
             </PrivateRoute>
           }
         />
-        <Route path="/order/confirm" element={<OrderConfirm />} />
+        <Route path="/order/confirm/:id" element={<OrderConfirm />} />
         <Route path="/order/error" element={<OrderFailed />} />
       </Routes>
     </Router>
