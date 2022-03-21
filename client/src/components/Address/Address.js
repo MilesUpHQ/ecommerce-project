@@ -103,18 +103,6 @@ const Address = () => {
   }
 
   const orderPlaced = async (payment_gateway_id, payment_id) => {
-    console.log(
-      "payment_gateway_id :",
-      payment_gateway_id,
-      "order_id : ",
-      order_id,
-      " payment_id :",
-      payment_id,
-      " user_id :",
-      user_id,
-      " addres id :",
-      address_id
-    );
     axios
       .put(`/user/order/confirm/${order_id}`, {
         id: order_id,
@@ -125,11 +113,9 @@ const Address = () => {
       })
       .then((res) => {
         navigate(`/order/confirm/${order_id}`);
-        console.log("res in placing order :", res);
       })
       .catch((err) => {
         navigate("/order/error");
-        console.log("err ", err);
       });
   };
 
