@@ -166,7 +166,7 @@ export default function SearchProducts({ searchItem, searchInput }) {
         <div className="col-3" style={{ marginTop: "7%" }}>
           <aside className="ml-2">
             <div className="card" style={{ display: "contents" }}>
-              {filteredProducts.length > 1 ? (
+              {filteredProducts.length >= 1 ? (
                 <article className="card-group-item">
                   <header className="card-header">
                     <h6 className="title">Category Filters</h6>
