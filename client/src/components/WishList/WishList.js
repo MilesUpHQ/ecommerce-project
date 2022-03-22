@@ -68,7 +68,7 @@ export default function Cart() {
                       errorMsg
                     ) : (
                       <>
-                        No Products In Cart :( <br />
+                        No Products In WishList :( <br />
                         <br />
                         Please Add Some Products
                       </>
