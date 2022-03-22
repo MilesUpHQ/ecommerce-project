@@ -8,17 +8,8 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use(
-  (res) => {
-    console.log("Valid response", res);
-    // Add configurations here
-    if (res.status === 401) {
-      localStorage.removeItem("ecom_token");
-      window.location.href = "/login";
-    }
-    return res;
-  },
+  (res) => res,
   (err) => {
-    console.log("Invalid response", err);
     if (err.response.status === 401) {
       localStorage.removeItem("ecom_token");
       window.location.href = "/login";
