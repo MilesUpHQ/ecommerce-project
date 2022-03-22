@@ -23,6 +23,7 @@ const FeaturedProduct = () => {
         input: input,
       })
       .then((res) => {
+        setIsLoading(false);
         setInput([]);
         getFeaturedProducts();
         setIsOpen(false);

@@ -1,4 +1,5 @@
 import React from "react";
+import Pagination from "../Common/Pagination";
 import { useNavigate } from "react-router";
 import "./ProductsCatalog.css";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -36,13 +37,11 @@ export default function ProductsCatalog(props) {
                           backgroundSize: "cover",
                           transition: " all 0.3s",
                         }}
-                        onClick={() =>
-                          navigate(`/product/view/${product.id}`)
-                        }
                       >
                         <span className="new">new</span>
                         <ul>
                           <li>
+                            {" "}
                             <a
                               onClick={() => props.handleAddToCart(product.id)}
                             >
@@ -83,6 +82,13 @@ export default function ProductsCatalog(props) {
                   </div>
                 ))}
               </div>
+              <br />
+              <Pagination
+                currPage={props.currPage}
+                lastPage={props.lastPage}
+                totalPages={props.totalPages}
+                handlePagination={props.handlePagination}
+              />
             </>
           ) : (
             <div className="header  text-center">
