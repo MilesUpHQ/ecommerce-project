@@ -5,6 +5,7 @@ import "./ProductsCatalog.css";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function ProductsCatalog(props) {
   const navigate = useNavigate();
+
   return (
     <>
       <section className="section-products">
@@ -25,20 +26,13 @@ export default function ProductsCatalog(props) {
                 {props.products.map((product) => (
                   <div className="col-md-6 col-lg-4 col-xl-3" key={product.id}>
                     <div className="single-product">
-                      <div
-                        className="part-1"
-                        style={{
-                          background:
-                            "url(" +
-                            BASE_URL +
+                        <div className="part-1">
+                          <img height={"290px"} className="productImg" src={BASE_URL +
                             "/" +
-                            product.image_url +
-                            ") center no-repeat",
-                          backgroundSize: "cover",
-                          transition: " all 0.3s",
-                        }}
-                      >
-                        <span className="new">new</span>
+                            product.image_url }  onClick={() =>
+                              navigate(`/product/view/${product.id}`)
+                            } />
+                        <span className="new">new</span>  
                         <ul>
                           <li>
                             {" "}
@@ -57,7 +51,7 @@ export default function ProductsCatalog(props) {
                               <i class="fas fa-heart"></i>
                             </a>
                           </li>
-                          <li>
+                          {/* <li>
                             <a
                               onClick={() =>
                                 navigate(`/product/view/${product.id}`)
@@ -65,7 +59,7 @@ export default function ProductsCatalog(props) {
                             >
                               <i className="fas fa-expand"></i>
                             </a>
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
                       <div
