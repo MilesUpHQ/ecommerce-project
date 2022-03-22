@@ -50,7 +50,7 @@ export default function Cart() {
 
   return (
     <>
-      <SimpleNavBar />
+      <SimpleNavBar isCart={false} />
       <div className="px-4 px-lg-0">
         <div className="pb-5">
           <div className="container">
@@ -68,7 +68,7 @@ export default function Cart() {
                       errorMsg
                     ) : (
                       <>
-                        No Products In Cart :( <br />
+                        No Products In WishList :( <br />
                         <br />
                         Please Add Some Products
                       </>

@@ -17,7 +17,6 @@ import FeaturedProducts from "./components/Home/Home";
 import ViewProduct from "./components/ViewProducts/ViewProduct";
 import UserInfo from "./components/Admin/Products/UserInfo";
 import ProductsByCategory from "./components/ProductsByCategory/ProductsByCategory";
-import FeaturedProductsList from "./components/Home/ProductList";
 import Cart from "./components/Cart/Cart";
 import Address from "./components/Address/Address";
 import CreateAddress from "./components/Address/CreateAddress";

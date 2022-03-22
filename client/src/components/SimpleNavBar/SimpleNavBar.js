@@ -1,7 +1,21 @@
 import React from "react";
-import { FaHeart } from "react-icons/fa";
+import { FaShoppingCart, FaHeart } from "react-icons/fa";
 
-export default function SimpleNavBar() {
+export default function SimpleNavBar(props) {
+  const navItem = props?.isCart ? (
+    <li className="nav-item nav-profile dropdown">
+      <a href="/wishlist">
+        <FaHeart className="navBarIcon" />
+      </a>
+    </li>
+  ) : (
+    <li className="nav-item nav-profile dropdown">
+      <a href="/cart">
+        <FaShoppingCart className="navBarIcon" />
+      </a>
+    </li>
+  );
+
   return (
     <>
       <nav
@@ -17,11 +31,7 @@ export default function SimpleNavBar() {
             </li>
           </ul>
           <ul className="navbar-nav navbar-nav-right">
-            <li className="nav-item nav-profile dropdown">
-              <a href="#">
-                <FaHeart className="navBarIcon" />
-              </a>
-            </li>
+            {navItem}
             <li className="nav-item ">
               <a href="/logout" style={{ color: "black" }}>
                 Logout
