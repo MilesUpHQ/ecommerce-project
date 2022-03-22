@@ -2,6 +2,20 @@ import React from "react";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 
 export default function SimpleNavBar(props) {
+  const navItem = props?.isCart ? (
+    <li className="nav-item nav-profile dropdown">
+      <a href="/wishlist">
+        <FaHeart className="navBarIcon" />
+      </a>
+    </li>
+  ) : (
+    <li className="nav-item nav-profile dropdown">
+      <a href="/cart">
+        <FaShoppingCart className="navBarIcon" />
+      </a>
+    </li>
+  );
+
   return (
     <>
       <nav
@@ -17,20 +31,7 @@ export default function SimpleNavBar(props) {
             </li>
           </ul>
           <ul className="navbar-nav navbar-nav-right">
-            {props?.isCart ? (
-              <li className="nav-item nav-profile dropdown">
-                <a href="/wishlist">
-                  <FaHeart className="navBarIcon" />
-                </a>
-              </li>
-            ) : (
-              <li className="nav-item nav-profile dropdown">
-                <a href="/cart">
-                  <FaShoppingCart className="navBarIcon" />
-                </a>
-              </li>
-            )}
-
+            {navItem}
             <li className="nav-item ">
               <a href="/logout" style={{ color: "black" }}>
                 Logout
