@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
+import { Typeahead, TypeaheadInputMulti } from 'react-bootstrap-typeahead';
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import toast, { Toaster } from "react-hot-toast";
@@ -10,7 +11,7 @@ const AddForm = () => {
   const navigate = useNavigate();
   const [details, setDetails] = useState({
     name: "",
-    size: "",
+    size: [],
     color: "",
     type: "",
     price: "",
@@ -129,7 +130,7 @@ const AddForm = () => {
                   </div>
                   <div className="form-group ">
                     <label htmlFor="exampleFormControlSelect3">
-                      Select Size
+                      Select Size's Available
                     </label>
                     <select
                       className="form-control form-control-sm"
