@@ -24,7 +24,7 @@ const ProductList = ({
           <>
             <div className="row">
               {featuredProducts.map((featuredProduct) => (
-                <>
+                <React.Fragment key={featuredProduct.id}>
                   <div className="col-md-6 col-lg-4 col-xl-3">
                     <div className="single-product">
                       <div
@@ -36,7 +36,7 @@ const ProductList = ({
                             "/" +
                             featuredProduct.image_url +
                             ") center no-repeat",
-                          backgroundSize: "cover",
+                          // backgrou   ndSize: "cover",
                           transition: " all 0.3s",
                         }}
                         onClick={() =>
@@ -105,7 +105,7 @@ const ProductList = ({
                       </a>
                     </div>
                   </div>
-                </>
+                </React.Fragment>
               ))}
             </div>
           </>

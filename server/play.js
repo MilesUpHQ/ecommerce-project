@@ -110,15 +110,14 @@ const createSlug = (str) => {
 
 async function createFeaturedProducts() {
   const product_ids = await db("products").pluck("id");
-  product_ids.map(async (id) => {
-    try {
-      await db("featured_products").insert([{ product_id: id }]);
-    } catch {
-      if (err) {
-        console.log(err);
-      }
-    }
+  const featuredItemsArray = product_ids.map((id) => {
+    return { product_id: id };
   });
+  try {
+    await db("featured_products").insert(featuredItemsArray);
+  } catch {
+    if (err) console.log(err);
+  }
 }
 
 async function createData() {
@@ -132,12 +131,13 @@ async function createData() {
       let variant = await createVariant(product[0]);
       console.log(product[0]);
       createVariantImage(variant[0], createSlug(product[0].name)).then(
-        async (res) => {
-          createFeaturedProducts();
+        (res) => {
+          console.log("Created product: ", product[0].name);
         }
       );
     });
   }
+  createFeaturedProducts();
 }
 
 createUser()

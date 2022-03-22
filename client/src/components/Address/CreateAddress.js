@@ -9,19 +9,19 @@ import countryList from "react-select-country-list";
 import AddressForm from "./AddressForm";
 import { useLocation } from "react-router-dom";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
-import { clearMessageTimeout } from "../../utils/nullErrorMessage";
+import { clearMessageTimeout } from "../../utils/clearMessageTimeout";
 
 const CreateAddress = () => {
-  let [street, setStreet] = useState('');
-  let [city, setCity] = useState('');
-  let [pin_code, setPin_code] = useState('');
-  let [state, setState] = useState('');
-  let [country, setCountry] = useState('');
+  let [street, setStreet] = useState("");
+  let [city, setCity] = useState("");
+  let [pin_code, setPin_code] = useState("");
+  let [state, setState] = useState("");
+  let [country, setCountry] = useState("");
   let [isCountry, SetIsCountry] = useState(false);
   let [title, setTitle] = useState("Add An address");
-  let [name, setName] = useState('');
-  let [email, setEmail] = useState('');
-  let [phone, setPhone] = useState('');
+  let [name, setName] = useState("");
+  let [email, setEmail] = useState("");
+  let [phone, setPhone] = useState("");
   let decoded = parseJwt(getJWT());
   let [user_id, setUser_id] = useState(decoded.id);
   const [message, setMessage] = useState(null);

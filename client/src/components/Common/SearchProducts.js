@@ -20,11 +20,11 @@ export default function SearchProducts({ searchItem, searchInput }) {
   const [updateNavbar, setUpdateNavbar] = React.useState(false);
 
   useEffect(() => {
-    if (searchItem.length > 0) {
-      getProductsBySearch(searchItem[0].label);
-    }
     if (searchInput !== null) {
       getProductsBySearch(searchInput);
+    }
+    if (searchItem.length > 0) {
+      getProductsBySearch(searchItem[0].label);
     }
   }, [searchItem, searchInput]);
 
