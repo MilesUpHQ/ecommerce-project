@@ -8,10 +8,13 @@ import ErrorAlert from "../Common/ErrorAlert";
 import SearchProducts from "../Common/SearchProducts";
 import Add from "../Cart/Add";
 import "./viewProduct.css";
+import QuantityForCart from "../Cart/QuantityForCart";
 
 const ViewProduct = () => {
   let [product, setProduct] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [value, setValue] = useState(1);
+  const [quantity, setQuantity] = useState(null);
   const [searchItem, setSearchItem] = React.useState([]);
   const [searchInput, setSearchInput] = React.useState(null);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -19,7 +22,7 @@ const ViewProduct = () => {
   const [updateNavbar, setUpdateNavbar] = React.useState(false);
 
   let id = window.location.pathname.substring(14);
-
+  console.log("id :", id);
   useEffect(async () => {
     axios
       .get(`/featured_products/${id}`)
@@ -35,8 +38,13 @@ const ViewProduct = () => {
     setSearchInput(value);
   };
 
-  const handleAddToCart = (id) => {
+  const handleAddToCart = (id, value) => {
+    console.log("value", value);
+    setQuantity(value);
+    console.log("quantity", quantity);
+    console.log("id in add ", id);
     setAddToCart(id);
+    console.log("addToCart :", addToCart);
     setUpdateNavbar(true);
     setTimeout(() => {
       setAddToCart(false);
@@ -46,7 +54,9 @@ const ViewProduct = () => {
 
   return (
     <div>
-      {addToCart ? <Add id={addToCart} /> : null}
+      {addToCart && quantity ? (
+        <Add id={addToCart} quantity={quantity} />
+      ) : null}
       {product && (
         <div>
           <Navbar
@@ -101,21 +111,20 @@ const ViewProduct = () => {
                           <form>
                             <label className="label">Quantity</label>
                             <input
-                              type="text"
+                              type="number"
                               pattern="[0-9]*"
-                              min="1"
-                              value="1"
-                              step="1"
-                              onkeydown="return false"
+                              value={value}
+                              onChange={(e) => setValue(e.target.value)}
                               name="name"
                               className="cartInput"
                             />
+                            {/* {QuantityForCart("props", "cart")} */}
                             <Button
                               type="submit"
                               className="cartButton"
                               onClick={(e) => {
                                 e.preventDefault();
-                                handleAddToCart(id);
+                                handleAddToCart(id, value);
                               }}
                             >
                               Add to cart

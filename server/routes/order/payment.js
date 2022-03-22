@@ -1,19 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../utils/dbConfig");
-const payment = require("../utils/paymentGateway");
+const knex = require("../../utils/dbConfig");
+const payment = require("../../utils/paymentGateway");
 
 let options;
 let payment_capture;
 let currency;
-////Razor pay***********************//
+
+////payment gateway***********************//
 router.post("/:user_id", async (req, res, next) => {
   let amount;
   let order_id;
   knex("orders")
     .select("orders.id", "orders.total_price")
-    .where("orders.user_id", req.params.user_id)
+    .where({
+      "orders.user_id": req.params.user_id,
+      "orders.status": "cart",
+    })
     .then(async (response) => {
+      console.log("response", response);
       order_id = response[0].id;
       amount = response[0].total_price * 100;
       payment_capture = 1;
