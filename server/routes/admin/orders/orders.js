@@ -18,10 +18,10 @@ router.get("/", async (req, res) => {
         res.json(row);
       })
       .catch((err) => {
-        res.status(401).json(err);
+        res.status(500).json(err);
       });
   } catch (err) {
-    res.status(401).json(err);
+    res.status(500).json(err);
   }
 });
 
@@ -53,7 +53,7 @@ router.get("/:orderId", async (req, res) => {
 
     res.json({ orderDetails, orderItems, paymentDetails });
   } catch (err) {
-    res.status(401).json(err);
+    res.status(500).json(err);
   }
 });
 

@@ -72,3 +72,11 @@ npm start
 The app will be running on http://localhost:3000
 
 To access the admin interface, go to: http://localhost:3000/admin
+
+### To load data like, categories, products, featured_products, user, variants and variant_images
+
+```bash
+# After migration files are executed
+knex seed:run
+node play.js
+```

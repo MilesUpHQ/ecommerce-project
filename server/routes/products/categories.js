@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
 
     res.json(parent_categories);
   } catch (err) {
-    res.status(401).json({ error: err });
+    res.status(500).json({ error: err });
   }
 });
 
