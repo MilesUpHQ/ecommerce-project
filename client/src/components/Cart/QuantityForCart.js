@@ -10,9 +10,10 @@ export default function QuantityForCart(props, cart) {
           &ndash;
         </button>
         <input
-          type="number"
+          type="text"
           className=" quantity-display"
           value={cart.quantity}
+          readOnly
           required
           onChange={(e) => props.updateItem(cart.cart_id, e.target.value)}
         />

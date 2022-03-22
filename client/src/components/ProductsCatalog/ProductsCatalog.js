@@ -93,9 +93,7 @@ export default function ProductsCatalog(props) {
           ) : (
             <div className="header  text-center">
               <h3>
-                No Products Found :( <br />
-                <br />
-                Please Add Some Products
+                No Products Found :(
               </h3>
             </div>
           )}

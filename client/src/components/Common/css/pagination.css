@@ -15,7 +15,8 @@
 }
 
 .page-item:hover .page-link:hover {
-    color: '#6c757d';
+    background-color: #0969da !important;
+    color: #6c757d;
     border-radius: 6px;
 }
 
