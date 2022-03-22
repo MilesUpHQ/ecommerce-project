@@ -24,16 +24,21 @@ router.get(
     getOrderCartBy("user_id", user_id).then((row) => {
       if (row.length === 0) {
         console.log("row", row);
-        insertOrderCart(user_id, "cart").then((row) => {
-          insertOrderItems(row[0].id, req.params.variant_id, quantity)
-            .then((row) => {
-              res.json(row);
-            })
-            .catch((err) => {
-              console.log("err", err);
-              res.status(500).json(err);
-            });
-        });
+        insertOrderCart(user_id, "cart")
+          .then((row) => {
+            insertOrderItems(row[0]?.id, req.params.variant_id, quantity)
+              .then((row) => {
+                res.json(row);
+              })
+              .catch((err) => {
+                console.log("err", err);
+                res.status(500).json(err);
+              });
+          })
+          .catch((err) => {
+            console.log("err", err);
+            res.status(500).json(err);
+          });
       } else {
         console.log("row1", row);
         const order_id = row[0].id;
