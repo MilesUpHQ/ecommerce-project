@@ -39,6 +39,11 @@ const ProductList = ({
                           backgroundSize: "cover",
                           transition: " all 0.3s",
                         }}
+                        onClick={() =>
+                          navigate(
+                            `/product/view/${featuredProduct.product_id}`
+                          )
+                        }
                       >
                         <span className="new">new</span>
                         <ul>
