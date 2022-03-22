@@ -16,7 +16,7 @@ export default function OrderTotal(props) {
               <td>
                 <div className="text-right">
                   {" "}
-                  <span>${props.Subtotal}</span>{" "}
+                  <span>₹{props.Subtotal}</span>{" "}
                 </div>
               </td>
             </tr>
@@ -30,7 +30,7 @@ export default function OrderTotal(props) {
               <td>
                 <div className="text-right">
                   {" "}
-                  <span>${props.ShippingFee}</span>{" "}
+                  <span>₹{props.ShippingFee}</span>{" "}
                 </div>
               </td>
             </tr>
@@ -44,7 +44,7 @@ export default function OrderTotal(props) {
               <td>
                 <div className="text-right">
                   {" "}
-                  <span>${props.TaxFee}</span>{" "}
+                  <span>₹{props.TaxFee}</span>{" "}
                 </div>
               </td>
             </tr>
@@ -58,7 +58,7 @@ export default function OrderTotal(props) {
               <td>
                 <div className="text-right">
                   {" "}
-                  <span className="text-success">${props.Discount}</span>{" "}
+                  <span className="text-success">₹{props.Discount}</span>{" "}
                 </div>
               </td>
             </tr>
@@ -72,7 +72,7 @@ export default function OrderTotal(props) {
               <td>
                 <div className="text-right">
                   {" "}
-                  <span className="font-weight-bold">${props.Total}</span>{" "}
+                  <span className="font-weight-bold">₹{props.Total}</span>{" "}
                 </div>
               </td>
             </tr>

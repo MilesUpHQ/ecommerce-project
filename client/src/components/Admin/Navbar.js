@@ -10,15 +10,13 @@ const Navbar = () => {
           style={{ width: "100%" }}
         >
           <ul className="navbar-nav mr-lg-2">
-            <li className="nav-item nav-search d-none d-lg-block">
+            <li className="nav-item nav-profile dropdown ">
+            <a href="/admin">AdminHome</a>
               <div className="input-group">
                 <div
                   className="input-group-prepend hover-cursor"
                   id="navbar-search-icon"
                 >
-                  <span className="input-group-text" id="search">
-                    <i className="icon-search"></i>
-                  </span>
                 </div>
               </div>
             </li>
