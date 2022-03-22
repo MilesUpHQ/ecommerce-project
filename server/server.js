@@ -56,6 +56,11 @@ app.use("/images", express.static(path.join("backend/images")));
 app.use("/data", express.static("data"));
 app.use("/data", express.static(path.join("backend/data")));
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+
 //routes
 
 app.use("/api/reset_password", resetPassword);

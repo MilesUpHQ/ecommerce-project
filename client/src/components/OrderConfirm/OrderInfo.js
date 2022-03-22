@@ -38,7 +38,11 @@ export default function OrderInfo(props) {
               <div className="py-2">
                 {" "}
                 <span className="d-block text-muted">Shiping Address</span>{" "}
-                <span>{props.Address}</span>{" "}
+                {props.Address?.map((item, index) => (
+                  <p style={{ marginBottom: "0.05rem" }} key={index}>
+                    {item}
+                  </p>
+                ))}
               </div>
             </td>
           </tr>

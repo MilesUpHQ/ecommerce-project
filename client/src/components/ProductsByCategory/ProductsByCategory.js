@@ -2,7 +2,6 @@
 import axios from "../../utils/ajax-helper";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "./ProductsByCategory.css";
 import Navbar from "../Navbar/Navbar";
 import "bootstrap/dist/css/bootstrap.css";
 import Add from "../Cart/Add";
