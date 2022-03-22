@@ -41,7 +41,7 @@ const orders = require("./routes/orders");
 const OrderConfirm = require("./routes/order/confirm");
 const adminOrders = require("./routes/admin/orders/orders");
 const CategoriesList = require("./routes/products/categories");
-const WishList = require("./routes/wishlist/wishlist");
+const WishList = require("./routes/wishList/wishList");
 // middlewares
 
 app.use(express.json());
