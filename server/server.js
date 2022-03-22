@@ -41,7 +41,7 @@ const orders = require("./routes/orders");
 const OrderConfirm = require("./routes/order/confirm");
 const adminOrders = require("./routes/admin/orders/orders");
 const CategoriesList = require("./routes/products/categories");
-const WishList = require("./routes/wishlist/wishlist");
+const WishList = require("./routes/wishList/wishList");
 // middlewares
 
 app.use(express.json());
@@ -55,6 +55,11 @@ app.use("/images", express.static("images"));
 app.use("/images", express.static(path.join("backend/images")));
 app.use("/data", express.static("data"));
 app.use("/data", express.static(path.join("backend/data")));
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
 
 //routes
 
