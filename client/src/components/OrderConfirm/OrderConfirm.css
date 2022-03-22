@@ -28,4 +28,5 @@ body {
 .product-qty span {
   font-size: 12px;
   color: #dedbdb;
+  line-height: 15px;
 }

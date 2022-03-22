@@ -1,9 +1,11 @@
 import axios from "../../utils/ajax-helper";
 import React, { useEffect } from "react";
 import "./OrderConfirm.css";
+import { AuthHeader } from "../../utils/auth-header";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function OrderItems(props) {
-  const { orderId } = props.orderId;
+  const orderId = props.orderId;
   const [orderItems, setOrderItems] = React.useState([]);
   const [errorMsg, setErrorMsg] = React.useState(null);
   const [isError, setIsError] = React.useState(false);
@@ -13,13 +15,8 @@ export default function OrderItems(props) {
       setIsError(false);
       try {
         axios
-          .get(`/order/confirm/${orderId}`, {
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-          })
+          .get(`/order/confirm/${orderId}/items`, AuthHeader())
           .then((response) => {
-            console.log(response.data);
             setOrderItems(response.data);
           });
       } catch (error) {
@@ -43,30 +40,37 @@ export default function OrderItems(props) {
             <>
               {orderItems.map((item, index) => (
                 <tr key={index}>
-                  <td width="20%">
+                  <td width="20%" className="items-image">
                     {" "}
-                    <img
-                      src={item.image_url}
-                      alt="item_image"
-                      width="90"
-                    />{" "}
+                    <div className="p-2">
+                      <img
+                        src={BASE_URL + "/" + item.image_url}
+                        alt="item_image"
+                        className="img-fluid  rounded shadow-sm items-image "
+                      />{" "}
+                    </div>
                   </td>
                   <td width="60%">
                     {" "}
                     <span className="font-weight-bold">{item.name}</span>
                     <div className="product-qty">
                       {" "}
-                      <span className="d-block">
+                      <span className="text-muted">
+                        Color:{item.color}
+                      </span>{" "}
+                      <span className="d-block text-muted">
                         Quantity:{item.quantity}
                       </span>{" "}
-                      <span>Color:{item.color}</span>{" "}
+                      <span className="d-block text-muted">
+                        Price: ₹{item.price}
+                      </span>{" "}
                     </div>
                   </td>
                   <td width="20%">
                     <div className="text-right">
                       {" "}
                       <span className="font-weight-bold">
-                        {item.price}
+                        ₹{item.quantity * item.price}
                       </span>{" "}
                     </div>
                   </td>
