@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "../../../utils/ajax-helper";
 import "./featuredProduct.css";
-import { Typeahead } from "react-bootstrap-typeahead";
+import TypeAhead from "../../Common/TypeAhead";
 import GetFeaturedProducts from "./GetFeaturedProduct";
 
 const FeaturedProduct = () => {
@@ -16,14 +16,20 @@ const FeaturedProduct = () => {
   const [inputArray, setinputArray] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchItem, setSearchItem] = useState([]);
 
   const handleFunction = () => {
-    console.log("inputs :::::", input);
     axios
       .post("/admin/products", {
-        name: input,
+        name: input[0].value,
       })
       .then((res) => {
+        if (res.data.message == "product already exists") {
+          setMessage(res.data.message);
+        }
+        setInput([]);
         getFeaturedProducts();
         setIsOpen(false);
         setMessage(res.data.message);
@@ -54,28 +60,22 @@ const FeaturedProduct = () => {
       });
   };
 
-  useEffect(async () => {
-    // *******************products***********//
+  const handleSearch = (query) => {
+    setIsLoading(true);
     axios
-      .get("/admin/products")
+      .get(`/admin/featured_products/products?search=${query}`)
       .then((res) => {
-        setCurrPage(res.data.currPage);
-        setLastPage(res.data.lastPage);
-        setTotalPages(res.data.totalPages);
-        let inputArray = [];
-        for (let i = 0; i < res.data.products.length; i++) {
-          inputArray.push(res.data.products[i].name);
-        }
-        setinputArray(inputArray);
-        setProducts(res.data.products);
+        let array = res.data.map(({ id, name }) => ({
+          label: name,
+          value: id,
+        }));
+        setOptions(array);
+        setIsLoading(false);
       })
-      .catch((err) => {
-        setMessage("Sorry! Something went wrong. Please Try again", err);
-        setTimeout(() => {
-          setMessage(null);
-        }, 4000);
-      });
-    // ****************************featured Products**************//
+      .catch((err) => {});
+  };
+
+  useEffect(async () => {
     getFeaturedProducts();
   }, []);
 
@@ -108,8 +108,8 @@ const FeaturedProduct = () => {
       <div className="main-panel">
         <div className="content-wrapper">
           <div className="container">
+            {message && <h2 className="messageHead">{message}</h2>}
             <div className="mainHead">
-              <h3>Featured Products</h3>
               <button
                 type="button"
                 className="btn btn-primary btn-icon-text"
@@ -123,37 +123,35 @@ const FeaturedProduct = () => {
               <form className="forms-sample">
                 <div className="form-group">
                   <table className="table table-hover">
-                    {message && (
-                      <thead className="messageHead">{message}</thead>
-                    )}
                     <tbody>
                       <tr>
                         <td style={{ border: 0 }}>
-                          <div className="form-group">
-                            <label htmlFor="products">Products</label>
-                            <Typeahead
-                              id="basic-typeahead-multiple"
-                              labelKey="name"
+                          <div class="form-group">
+                            <label for="products">Products</label>
+                            <TypeAhead
                               multiple
-                              onChange={setInput}
-                              options={inputArray}
-                              placeholder="Choose several Products..."
-                              selected={input}
+                              options={options}
+                              handleSearch={handleSearch}
+                              setSearchItem={setInput}
+                              searchItem={input}
+                              isLoading={isLoading}
+                              placeholder={"Choose a product.."}
                             />
                           </div>
                         </td>
                         <td style={{ border: 0 }}>
                           <button
                             type="button"
-                            className="btn btn-primary btn-icon-text mt-1 "
+                            className="btn btn-primary"
                             onClick={handleFunction}
+                            style={{ marginRight: "20px" }}
                           >
                             Submit
                           </button>
 
                           <button
                             type="button"
-                            className="btn btn-primary btn-icon-text mt-1 "
+                            className="btn btn-primary"
                             onClick={() => setIsOpen(null)}
                           >
                             Cancel
@@ -165,17 +163,23 @@ const FeaturedProduct = () => {
                 </div>
               </form>
             )}
+            <br />
+            <br />
             {featuredProducts.length > 0 && (
-              <GetFeaturedProducts
-                featuredProducts={featuredProducts}
-                currPage={currPage}
-                lastPage={lastPage}
-                totalPages={totalPages}
-                handlePagination={handlePagination}
-                setfeaturedProducts={setfeaturedProducts}
-                setCurrPage={setCurrPage}
-                setErrorMsg={setErrorMsg}
-              />
+              <>
+                <h3>Featured Products</h3>
+                <br />
+                <GetFeaturedProducts
+                  featuredProducts={featuredProducts}
+                  currPage={currPage}
+                  lastPage={lastPage}
+                  totalPages={totalPages}
+                  handlePagination={handlePagination}
+                  setfeaturedProducts={setfeaturedProducts}
+                  setCurrPage={setCurrPage}
+                  setErrorMsg={setErrorMsg}
+                />
+              </>
             )}
           </div>
         </div>

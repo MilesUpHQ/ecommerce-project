@@ -142,13 +142,15 @@ const Navbar = ({
               </a>
             </li>
             <li className="nav-item nav-profile dropdown">
-              <a href="/cart">
+              <a href="/cart" style={{ color: "black" }}>
                 <FaShoppingCart className="navBarIcon" />({cartItems}) ₹{""}
                 {cartPrice}
               </a>
             </li>
             <li className="nav-item ">
-              <a href="/logout">Logout</a>
+              <a href="/logout" style={{ color: "black" }}>
+                Logout
+              </a>
             </li>
           </ul>
           <button
