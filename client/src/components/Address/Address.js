@@ -17,7 +17,7 @@ import { getJWT } from "../../utils/jwt";
 import { parseJwt } from "../../utils/jwt";
 import { Razorpay } from "razorpay-checkout";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
-import { clearMessageTimeout } from "../../utils/nullErrorMessage";
+import { clearMessageTimeout } from "../../utils/clearMessageTimeout";
 
 const Address = () => {
   let [addresses, setAddress] = useState([]);
@@ -106,7 +106,7 @@ const Address = () => {
     axios
       .put(`/user/order/confirm/${order_id}`, {
         id: order_id,
-        order_id: payment_gateway_id,
+        payment_gateway_id: payment_gateway_id,
         payment_id: payment_id,
         user_id: user_id,
         address_id: address_id,

@@ -44,14 +44,25 @@ router.get("", async (req, res, next) => {
       res.send("error in getting products");
     });
 });
-//
+
 router.get("/products", async (req, res) => {
   try {
     const products = await knex("products")
       .select("id", "name")
       .where("name", "ILIKE", `%${req.query.search.toLocaleLowerCase()}%`)
       .limit(5);
-    res.json(products);
+    knex("featured_products")
+      .where({
+        product_id: products[0].id,
+      })
+      .then((result) => {
+        if (result.length == 0) {
+          res.json(products);
+        } else {
+          res.json({ message: "product exists" });
+        }
+      })
+      .catch((err) => {});
   } catch (err) {
     res.json({ error: err });
   }

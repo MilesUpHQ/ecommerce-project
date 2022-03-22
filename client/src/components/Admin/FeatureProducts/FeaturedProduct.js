@@ -23,9 +23,6 @@ const FeaturedProduct = () => {
         input: input,
       })
       .then((res) => {
-        if (res.data.message == "product already exists") {
-          setMessage(res.data.message);
-        }
         setInput([]);
         getFeaturedProducts();
         setIsOpen(false);
@@ -62,6 +59,9 @@ const FeaturedProduct = () => {
     axios
       .get(`/admin/featured_products/products?search=${query}`)
       .then((res) => {
+        if (res.data.message == "product exists") {
+          setIsLoading(false);
+        }
         let array = res.data.map(({ id, name }) => ({
           label: name,
           value: id,
@@ -105,7 +105,7 @@ const FeaturedProduct = () => {
       <div className="main-panel">
         <div className="content-wrapper">
           <div className="container">
-            {message && <h2 className="messageHead">{message}</h2>}
+            {message && <h3 style={{ marginLeft: "40%" }}>{message}</h3>}
             <div className="mainHead">
               <button
                 type="button"

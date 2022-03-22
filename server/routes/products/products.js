@@ -43,12 +43,6 @@ router.post("", (req, res) => {
     insertArray.push(insertObj);
   }
 
-  // knex("featured_products")
-  //   // .where({
-  //   //   product_id: name,
-  //   // })
-  //   // .then((result) => {
-  // if (result.length == 0) {
   knex("featured_products")
     .insert(insertArray)
     .then((rows) => {
@@ -59,12 +53,5 @@ router.post("", (req, res) => {
         message: "Ooops some error in adding product!!!!!!!",
       });
     });
-  //   } else {
-  //     res.json({
-  //       message: "product already exists",
-  //     });
-  //   }
-  // })
-  // .catch((err) => {});
 });
 module.exports = router;
