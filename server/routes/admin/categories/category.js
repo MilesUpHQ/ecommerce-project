@@ -41,9 +41,9 @@ router.get("/", async (req, res) => {
 
         res.json({ categories, currPage, lastPage, totalPages });
       })
-      .catch((err) => res.status(401).json({ error: err }));
+      .catch((err) => res.status(500).json({ error: err }));
   } catch (err) {
-    res.status(401).json({ error: err });
+    res.status(500).json({ error: err });
   }
 });
 
@@ -55,7 +55,7 @@ router.get("/parent", async (req, res) => {
       .limit(5);
     res.json(parent_categories);
   } catch (err) {
-    res.status(401).json({ error: err });
+    res.status(500).json({ error: err });
   }
 });
 
@@ -73,7 +73,7 @@ router.post("/add", async (req, res) => {
     }
     res.send(newCategory);
   } catch (err) {
-    res.status(401).json({ error: err });
+    res.status(500).json({ error: err });
   }
 });
 
@@ -92,7 +92,7 @@ router.put("/update", async (req, res) => {
     }
     res.json(newCategory);
   } catch (err) {
-    res.status(401).json({ error: err });
+    res.status(500).json({ error: err });
   }
 });
 
@@ -101,7 +101,7 @@ router.delete("/delete", async (req, res) => {
     await deleteCategory({ id: req.query.id });
     res.json({ message: "deleted succesfully" });
   } catch (err) {
-    res.status(401).json({ error: err });
+    res.status(500).json({ error: err });
   }
 });
 

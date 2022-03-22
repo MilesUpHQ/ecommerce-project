@@ -72,7 +72,7 @@ router.get("/", async (req, res) => {
       res.json({ products, currPage, lastPage, totalPages });
     })
     .catch((err) => {
-      res.status(400).send("Unable to display products");
+      res.status(500).send("Unable to display products");
     });
 });
 
@@ -83,7 +83,7 @@ router.delete("/", async (req, res) => {
     res.json({ message: "deleted succesfully" });
   } catch (err) {
     console.log(err);
-    res.status(401).json({ error: err });
+    res.status(500).json({ error: err });
   }
 });
 
