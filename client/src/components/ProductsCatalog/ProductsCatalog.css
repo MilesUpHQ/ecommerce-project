@@ -119,15 +119,18 @@ a:hover {
 }
 
 .section-products .single-product .part-2 .product-title {
+  cursor: pointer;
   font-size: 1rem;
 }
 
 .section-products .single-product .part-2 h4 {
+  cursor: pointer;
   display: inline-block;
   font-size: 1rem;
 }
 
 .section-products .single-product .part-2 .product-old-price {
+  cursor: pointer;
   position: relative;
   padding: 0 7px;
   margin-right: 2px;
