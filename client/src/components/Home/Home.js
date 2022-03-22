@@ -105,7 +105,7 @@ const Home = () => {
                     {imageData &&
                       imageData.map((imageUrl) => {
                         return (
-                          <Carousel.Item interval={1000} key={imageUrl}>
+                          <Carousel.Item interval={4000} key={imageUrl}>
                             <img className="slideImage" src={imageUrl} />
                           </Carousel.Item>
                         );
