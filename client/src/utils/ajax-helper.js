@@ -12,7 +12,6 @@ instance.interceptors.response.use(
     console.log("Valid response", res);
     // Add configurations here
     if (res.status === 401) {
-      console.log("401");
       localStorage.removeItem("ecom_token");
       window.location.href = "/login";
     }
