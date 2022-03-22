@@ -36,6 +36,9 @@ export default function ProductsCatalog(props) {
                           backgroundSize: "cover",
                           transition: " all 0.3s",
                         }}
+                        onClick={() =>
+                          navigate(`/product/view/${product.id}`)
+                        }
                       >
                         <span className="new">new</span>
                         <ul>
