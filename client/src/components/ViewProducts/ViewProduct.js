@@ -16,11 +16,8 @@ import ErrorAlert from "../Common/ErrorAlert";
 import SearchProducts from "../Common/SearchProducts";
 import Add from "../Cart/Add";
 import "./viewProduct.css";
-<<<<<<< HEAD
 import QuantityForCart from "../Cart/QuantityForCart";
-=======
 import AddToWishList from "../WishList/AddToWishList";
->>>>>>> df5649684580021a19234179c55e70b4501089cb
 
 const ViewProduct = () => {
   let [product, setProduct] = useState([]);
@@ -78,14 +75,8 @@ const ViewProduct = () => {
 
   return (
     <div>
-<<<<<<< HEAD
-      {addToCart && quantity ? (
-        <Add id={addToCart} quantity={quantity} />
-      ) : null}
-=======
       {addToCart ? <Add id={addToCart} /> : null}
       {addToWishList ? <AddToWishList id={addToWishList} /> : null}
->>>>>>> df5649684580021a19234179c55e70b4501089cb
       {product && (
         <div>
           <Navbar
@@ -139,35 +130,6 @@ const ViewProduct = () => {
                             <h4 className="text1">{product.color}</h4>
                             <br />
 
-<<<<<<< HEAD
-                          <br />
-                          <form>
-                            <label className="label">Quantity</label>
-                            <input
-                              type="number"
-                              pattern="[0-9]*"
-                              value={value}
-                              onChange={(e) => setValue(e.target.value)}
-                              name="name"
-                              className="cartInput"
-                            />
-                            {/* {QuantityForCart("props", "cart")} */}
-                            <Button
-                              type="submit"
-                              className="cartButton"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                handleAddToCart(id, value);
-                              }}
-                            >
-                              Add to cart
-                            </Button>
-                          </form>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  </Row>
-=======
                             <br />
                             <form>
                               <label className="label">Quantity</label>
@@ -208,7 +170,6 @@ const ViewProduct = () => {
                       </Col>
                     </Row>
                   )}
->>>>>>> df5649684580021a19234179c55e70b4501089cb
                 </Container>
               </React.Fragment>
             </>
