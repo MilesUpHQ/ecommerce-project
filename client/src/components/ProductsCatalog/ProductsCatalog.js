@@ -1,6 +1,7 @@
 import React from "react";
 import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router";
+import Pagination from "../Common/Pagination";
 import "./ProductsCatalog.css";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function ProductsCatalog(props) {
@@ -41,6 +42,7 @@ export default function ProductsCatalog(props) {
                         <span className="new">new</span>
                         <ul>
                           <li>
+                            {" "}
                             <a
                               onClick={() => props.handleAddToCart(product.id)}
                             >
@@ -81,6 +83,13 @@ export default function ProductsCatalog(props) {
                   </div>
                 ))}
               </div>
+              <br />
+              <Pagination
+                currPage={props.currPage}
+                lastPage={props.lastPage}
+                totalPages={props.totalPages}
+                handlePagination={props.handlePagination}
+              />
             </>
           ) : (
             <div className="header  text-center">

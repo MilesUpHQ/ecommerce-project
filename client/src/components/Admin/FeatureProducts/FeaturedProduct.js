@@ -2,19 +2,17 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "../../../utils/ajax-helper";
 import "./featuredProduct.css";
-import TypeAhead from "../../Common/TypeAhead";
+import TypeAhead from "./TypeAhead";
 import GetFeaturedProducts from "./GetFeaturedProduct";
 import { Spinner } from "react-bootstrap";
 
 const FeaturedProduct = () => {
-  let [products, setProducts] = useState([]);
   let [featuredProducts, setfeaturedProducts] = useState([]);
   const [currPage, setCurrPage] = useState(null);
   const [lastPage, setLastPage] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
   const [message, setMessage] = useState(null);
   const [input, setInput] = useState([]);
-  const [inputArray, setinputArray] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -25,12 +23,10 @@ const FeaturedProduct = () => {
   const handleFunction = () => {
     axios
       .post("/admin/products", {
-        name: input[0].value,
+        input: input,
       })
       .then((res) => {
-        if (res.data.message == "product already exists") {
-          setMessage(res.data.message);
-        }
+        setIsLoading(false);
         setInput([]);
         getFeaturedProducts();
         setIsOpen(false);
@@ -67,6 +63,9 @@ const FeaturedProduct = () => {
     axios
       .get(`/admin/featured_products/products?search=${query}`)
       .then((res) => {
+        if (res.data.message == "product exists") {
+          setIsLoading(false);
+        }
         let array = res.data.map(({ id, name }) => ({
           label: name,
           value: id,
@@ -113,7 +112,7 @@ const FeaturedProduct = () => {
       <div className="main-panel">
         <div className="content-wrapper">
           <div className="container">
-            {message && <h2 className="messageHead">{message}</h2>}
+            {message && <h3 style={{ marginLeft: "40%" }}>{message}</h3>}
             <div className="mainHead">
               <button
                 type="button"

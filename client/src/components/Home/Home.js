@@ -3,13 +3,15 @@ import "../ResetPassword/resetPassword.css";
 import { useEffect, useState } from "react";
 import axios from "../../utils/ajax-helper";
 import Navbar from "../Navbar/Navbar";
-import ProductList from "./ProductList";
 import ErrorAlert from "../Common/ErrorAlert";
 import { Carousel, Card, Spinner } from "react-bootstrap";
 import SearchProducts from "../Common/SearchProducts";
 import imageData from "../../utils/imageData";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
 import "../Home/home.css";
+import ProductsCatalog from "../ProductsCatalog/ProductsCatalog";
+import Add from "../Cart/Add";
+import AddToWishList from "../WishList/AddToWishList";
 
 const Home = () => {
   let [featuredProducts, setfeaturedProducts] = useState([]);
@@ -25,6 +27,7 @@ const Home = () => {
   const [updateNavbar, setUpdateNavbar] = React.useState(false);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [isLoading, setIsLoading] = React.useState(false)
+  const [addToWishList, setAddToWishList] = React.useState(false);
 
   const handlePagination = (page) => {
     axios
@@ -65,6 +68,7 @@ const Home = () => {
         setErrorMsg("Sorry! Something went wrong. Please Try again", err);
       });
   }, []);
+
   const handleAddToCart = (id) => {
     setAddToCart(id);
     setUpdateNavbar(true);
@@ -73,9 +77,17 @@ const Home = () => {
       setUpdateNavbar(false);
     }, 2000);
   };
+  const handleAddToWishList = (id) => {
+    setAddToWishList(id);
+    setTimeout(() => {
+      setAddToWishList(false);
+    }, 2000);
+  };
 
   return (
     <div>
+      {addToCart ? <Add id={addToCart} /> : null}
+      {addToWishList ? <AddToWishList id={addToWishList} /> : null}
       {message && (
         <div>
           <SimpleNavBar />
@@ -110,22 +122,23 @@ const Home = () => {
                     {imageData &&
                       imageData.map((imageUrl) => {
                         return (
-                          <Carousel.Item interval={1000} key={imageUrl}>
+                          <Carousel.Item interval={4000} key={imageUrl}>
                             <img className="slideImage" src={imageUrl} />
                           </Carousel.Item>
                         );
                       })}
                   </Carousel>
-                  <ProductList
-                    featuredProducts={featuredProducts}
+
+                  <ProductsCatalog
                     currPage={currPage}
                     lastPage={lastPage}
                     totalPages={totalPages}
-                    handlePagination={handlePagination}
-                    setfeaturedProducts={setfeaturedProducts}
                     setCurrPage={setCurrPage}
+                    products={featuredProducts}
+                    handlePagination={handlePagination}
                     handleAddToCart={handleAddToCart}
                     isLoading={isLoading}
+                    handleAddToWishList={handleAddToWishList}
                   />
                 </div>
               )}

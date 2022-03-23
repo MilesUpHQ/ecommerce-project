@@ -11,6 +11,7 @@ const addPayment = (status, payment_gateway_paymentId, order_id) => {
 };
 const addOrder = (status, payment_gateway_id, address_id) => {
   return knex("orders").update({
+    order_date: new Date(),
     status: status,
     payment_gateway_id: payment_gateway_id,
     address_id: address_id,
@@ -43,7 +44,6 @@ router.put("/confirm/:id", (req, res, next) => {
           })
           .catch((err) => {
             paymentStatus = "canceled";
-            console.log("err in adiing payment", err);
           });
       }
     });

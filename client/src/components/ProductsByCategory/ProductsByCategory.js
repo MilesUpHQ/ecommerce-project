@@ -9,6 +9,7 @@ import ProductsCatalog from "../ProductsCatalog/ProductsCatalog";
 import { Container } from "react-bootstrap";
 import SearchProducts from "../Common/SearchProducts";
 import AddToWishList from "../WishList/AddToWishList";
+
 export default function ProductsByCategory() {
   const [products, setProducts] = React.useState([]);
   const [errorMsg, setErrorMsg] = React.useState(null);

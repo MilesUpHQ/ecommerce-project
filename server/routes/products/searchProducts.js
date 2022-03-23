@@ -13,7 +13,7 @@ router.get("/typeahead", async (req, res) => {
     let allItems = [...categories, ...products];
     res.json(allItems);
   } catch (err) {
-    res.status(401).json(err);
+    res.status(500).json(err);
   }
 });
 
@@ -28,7 +28,7 @@ router.get("/products", async (req, res) => {
         return row;
       })
       .catch((err) => {
-        res.status(401).json(err);
+        res.status(500).json(err);
       });
 
     let searchByProductName = db("products")
@@ -87,10 +87,10 @@ router.get("/products", async (req, res) => {
       })
       .catch((err) => {
         console.log(err);
-        res.status(401).json(err);
+        res.status(500).json(err);
       });
   } catch (err) {
-    res.status(401).json(err);
+    res.status(500).json(err);
   }
 });
 
