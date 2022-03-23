@@ -1,6 +1,7 @@
 import React from "react";
-import Pagination from "../Common/Pagination";
+import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router";
+import Pagination from "../Common/Pagination";
 import "./ProductsCatalog.css";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function ProductsCatalog(props) {
@@ -54,7 +55,7 @@ export default function ProductsCatalog(props) {
                                 props.handleAddToWishList(product.id)
                               }
                             >
-                              <i class="fas fa-heart"></i>
+                              <i className="fas fa-heart"></i>
                             </a>
                           </li>
                           <li>
@@ -92,7 +93,16 @@ export default function ProductsCatalog(props) {
             </>
           ) : (
             <div className="header  text-center">
+<<<<<<< HEAD
               <h3>No Products Found :(</h3>
+=======
+              {!props.isLoading && props.products.length === 0 ? 
+              <h3>
+                No Products Found :(
+              </h3>: 
+                <Spinner animation="grow"/>
+              }
+>>>>>>> df5649684580021a19234179c55e70b4501089cb
             </div>
           )}
         </div>

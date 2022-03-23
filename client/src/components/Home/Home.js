@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "../../utils/ajax-helper";
 import Navbar from "../Navbar/Navbar";
 import ErrorAlert from "../Common/ErrorAlert";
-import { Carousel, Card } from "react-bootstrap";
+import { Carousel, Card, Spinner } from "react-bootstrap";
 import SearchProducts from "../Common/SearchProducts";
 import imageData from "../../utils/imageData";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
@@ -26,6 +26,7 @@ const Home = () => {
   const [addToCart, setAddToCart] = React.useState(false);
   const [updateNavbar, setUpdateNavbar] = React.useState(false);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const [isLoading, setIsLoading] = React.useState(false)
   const [addToWishList, setAddToWishList] = React.useState(false);
 
   const handlePagination = (page) => {
@@ -46,9 +47,11 @@ const Home = () => {
   };
 
   useEffect(async () => {
+    setIsLoading(true)
     axios
       .get("/featured_products")
       .then((res) => {
+        setIsLoading(false)
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
         setTotalPages(res.data.totalPages);
@@ -61,6 +64,7 @@ const Home = () => {
         setimgArray(res.data.imgArray);
       })
       .catch((err) => {
+        setIsLoading(false)
         setErrorMsg("Sorry! Something went wrong. Please Try again", err);
       });
   }, []);
@@ -92,6 +96,7 @@ const Home = () => {
           </Card>
         </div>
       )}
+      {isLoading && <Spinner animation="grow" style={{marginLeft: '45%'}}/>}
       {featuredProducts.length > 0 && (
         <div>
           <Navbar
@@ -132,6 +137,7 @@ const Home = () => {
                     products={featuredProducts}
                     handlePagination={handlePagination}
                     handleAddToCart={handleAddToCart}
+                    isLoading={isLoading}
                     handleAddToWishList={handleAddToWishList}
                   />
                 </div>

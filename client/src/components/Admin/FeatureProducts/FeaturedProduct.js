@@ -4,6 +4,7 @@ import axios from "../../../utils/ajax-helper";
 import "./featuredProduct.css";
 import TypeAhead from "./TypeAhead";
 import GetFeaturedProducts from "./GetFeaturedProduct";
+import { Spinner } from "react-bootstrap";
 
 const FeaturedProduct = () => {
   let [featuredProducts, setfeaturedProducts] = useState([]);
@@ -16,6 +17,8 @@ const FeaturedProduct = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchItem, setSearchItem] = useState([]);
+  const [isFetching, setIsFetching] = useState(false)
 
   const handleFunction = () => {
     axios
@@ -78,6 +81,7 @@ const FeaturedProduct = () => {
   }, []);
 
   function getFeaturedProducts() {
+    setIsFetching(true)
     axios
       .get("/featured_products")
       .then((res) => {
@@ -92,12 +96,14 @@ const FeaturedProduct = () => {
         } else {
           setfeaturedProducts(res.data.featuredProducts);
         }
+        setIsFetching(false)
       })
       .catch((err) => {
         setErrorMsg("Sorry! Something went wrong. Please Try again", err);
         setTimeout(() => {
           setErrorMsg(null);
         }, 6000);
+        setIsFetching(false)
       });
   }
 
@@ -163,6 +169,7 @@ const FeaturedProduct = () => {
             )}
             <br />
             <br />
+            {isFetching && <Spinner className="spinner" animation="grow" />}
             {featuredProducts.length > 0 && (
               <>
                 <h3>Featured Products</h3>
