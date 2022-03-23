@@ -18,18 +18,23 @@ export default function ProductsByCategory() {
   const [addToCart, setAddToCart] = React.useState(false);
   const [updateNavbar, setUpdateNavbar] = React.useState(false);
   const [addToWishList, setAddToWishList] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false)
 
   useEffect(() => {
+    setIsLoading(true)
     const fetchData = async () => {
       try {
         const { data } = await axios.get(`/products/category/${categoryId}`);
         setProducts(data);
+        setIsLoading(false)
       } catch (error) {
-        setErrorMsg("Sorry! Something went wrong. Please Try again", error);
+        // setErrorMsg("Sorry! Something went wrong. Please Try again", error);
+        setIsLoading(false)
       }
     };
     fetchData();
   }, [categoryId]);
+  
 
   const handleAddToCart = (id) => {
     setAddToCart(id);
@@ -83,6 +88,7 @@ export default function ProductsByCategory() {
                 searchInput={searchInput}
                 handleAddToCart={handleAddToCart}
                 handleAddToWishList={handleAddToWishList}
+                isLoading={isLoading}
               />
             </div>
           </Container>

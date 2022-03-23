@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 
 import "bootstrap/dist/css/bootstrap.css";
-import { Card, Button, Col, Container, Row, Carousel } from "react-bootstrap";
+import { Card, Button, Col, Container, Row, Carousel, Spinner } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
 import Pagination from "../Common/Pagination";
 import "../Home/home.css";
@@ -14,6 +14,7 @@ const ProductList = ({
   totalPages,
   handlePagination,
   handleAddToCart,
+  isLoading
 }) => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const ProductList = ({
         <div className="container">
           <>
             <div className="row">
+              {isLoading && <Spinner animation="grow"/>}
               {featuredProducts.map((featuredProduct) => (
                 <React.Fragment key={featuredProduct.id}>
                   <div className="col-md-6 col-lg-4 col-xl-3">

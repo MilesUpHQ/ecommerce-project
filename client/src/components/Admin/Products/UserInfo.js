@@ -4,19 +4,24 @@ import ErrorMessages from "./ErrorMessages";
 import { FaUser } from 'react-icons/fa';
 import { useParams } from "react-router-dom";
 import "../css/user.css";
+import { Spinner } from "react-bootstrap";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const UserInfo = (props) => {
   let { id } = useParams("id");
   const [userInfo, setUserInfo] = useState({});
   const [errormsg, setErrormsg] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
+    setIsLoading(true)
     axios
       .get(`/admin/user/${id}`)
       .then((res) => {
         setUserInfo(res.data);
+        setIsLoading(false)
       })
       .catch((err) => {
+        setIsLoading(false)
         setErrormsg("Sorry! Something went wrong. Please Try again");
       });
   }, []);
@@ -75,6 +80,7 @@ const UserInfo = (props) => {
                     </tr>
                 </tbody>
               </table>
+              {isLoading && <Spinner className="spinner" animation="grow" />}
             </div>
           </div>
     </div>

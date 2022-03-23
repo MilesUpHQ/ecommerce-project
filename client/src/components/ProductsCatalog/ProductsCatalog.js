@@ -1,4 +1,5 @@
 import React from "react";
+import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import "./ProductsCatalog.css";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -36,9 +37,6 @@ export default function ProductsCatalog(props) {
                           backgroundSize: "cover",
                           transition: " all 0.3s",
                         }}
-                        onClick={() =>
-                          navigate(`/product/view/${product.id}`)
-                        }
                       >
                         <span className="new">new</span>
                         <ul>
@@ -55,7 +53,7 @@ export default function ProductsCatalog(props) {
                                 props.handleAddToWishList(product.id)
                               }
                             >
-                              <i class="fas fa-heart"></i>
+                              <i className="fas fa-heart"></i>
                             </a>
                           </li>
                           <li>
@@ -86,9 +84,12 @@ export default function ProductsCatalog(props) {
             </>
           ) : (
             <div className="header  text-center">
+              {!props.isLoading && props.products.length === 0 ? 
               <h3>
                 No Products Found :(
-              </h3>
+              </h3>: 
+                <Spinner animation="grow"/>
+              }
             </div>
           )}
         </div>
