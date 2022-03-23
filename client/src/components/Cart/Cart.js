@@ -5,13 +5,16 @@ import { getJWT } from "../../utils/jwt";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
 import { Link } from "react-router-dom";
 import ProductTable from "./ProductTable";
+import { Spinner } from "react-bootstrap";
 export default function Cart() {
   // get items for the server and store in state and update in cart component
   const [cartItems, setCartItems] = React.useState([]);
   const [errorMsg, setErrorMsg] = React.useState(null);
   const [total, setTotal] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const getCartItems = () => {
+    setIsLoading(true)
     axios
       .get("/cart", {
         headers: {
@@ -20,9 +23,11 @@ export default function Cart() {
       })
       .then((res) => {
         setCartItems(res.data);
+        setIsLoading(false)
       })
       .catch((err) => {
         setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
+        setIsLoading(false)
       });
   };
 
@@ -97,7 +102,8 @@ export default function Cart() {
                 />
               ) : (
                 <div className="text-center mt-5">
-                  <h3>
+                  {isLoading && <Spinner animation="grow"/>}
+                  {!isLoading && <h3>
                     No Products In Cart :( <br />
                     <br />
                     Please Add Some Products
@@ -108,7 +114,7 @@ export default function Cart() {
                         Go To Home
                       </button>
                     </Link>
-                  </h3>
+                  </h3>}
                 </div>
               )
             ) : (

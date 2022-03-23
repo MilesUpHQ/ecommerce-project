@@ -5,6 +5,7 @@ import ErrorMessages from "./ErrorMessages";
 import Pagination from "../../Common/Pagination";
 import "../../Common/css/admin-style.css";
 import "../../Common/css/pagination.css";
+import { Spinner } from "react-bootstrap";
 
 const UserList = ({}) => {
   const [display, setdisplay] = useState([]);
@@ -12,16 +13,20 @@ const UserList = ({}) => {
   const [currPage, setCurrPage] = useState(null);
   const [lastPage, setLastPage] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
+    setIsLoading(true)
     axios
       .get("/admin/userData")
       .then((res) => {
+        setIsLoading(false)
         setdisplay(res.data.products);
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
         setTotalPages(res.data.totalPages);
       })
       .catch((err) => {
+        setIsLoading(false)
         setErrormsg("Sorry! Something went wrong. Please Try again");
       });
   }, []);
@@ -145,6 +150,7 @@ const UserList = ({}) => {
                       ))}
                     </tbody>
                   </table>
+                  {isLoading && <Spinner className="spinner" animation="grow" />}
                 </div>
               </div>
             </div>
