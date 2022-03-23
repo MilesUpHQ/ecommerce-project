@@ -16,11 +16,14 @@ import ErrorAlert from "../Common/ErrorAlert";
 import SearchProducts from "../Common/SearchProducts";
 import Add from "../Cart/Add";
 import "./viewProduct.css";
+import QuantityForCart from "../Cart/QuantityForCart";
 import AddToWishList from "../WishList/AddToWishList";
 
 const ViewProduct = () => {
   let [product, setProduct] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [value, setValue] = useState(1);
+  const [quantity, setQuantity] = useState(null);
   const [searchItem, setSearchItem] = React.useState([]);
   const [searchInput, setSearchInput] = React.useState(null);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -30,7 +33,7 @@ const ViewProduct = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   let id = window.location.pathname.substring(14);
-
+  console.log("id :", id);
   useEffect(async () => {
     setIsLoading(true);
     axios
@@ -49,8 +52,13 @@ const ViewProduct = () => {
     setSearchInput(value);
   };
 
-  const handleAddToCart = (id) => {
+  const handleAddToCart = (id, value) => {
+    console.log("value", value);
+    setQuantity(value);
+    console.log("quantity", quantity);
+    console.log("id in add ", id);
     setAddToCart(id);
+    console.log("addToCart :", addToCart);
     setUpdateNavbar(true);
     setTimeout(() => {
       setAddToCart(false);

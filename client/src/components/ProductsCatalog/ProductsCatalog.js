@@ -93,12 +93,11 @@ export default function ProductsCatalog(props) {
             </>
           ) : (
             <div className="header  text-center">
-              {!props.isLoading && props.products.length === 0 ? 
-              <h3>
-                No Products Found :(
-              </h3>: 
-                <Spinner animation="grow"/>
-              }
+              {!props.isLoading && props.products.length === 0 ? (
+                <h3>No Products Found :(</h3>
+              ) : (
+                <Spinner animation="grow" />
+              )}
             </div>
           )}
         </div>
