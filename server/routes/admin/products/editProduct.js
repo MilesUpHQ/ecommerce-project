@@ -16,6 +16,8 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({ storage: fileStorageEngine });
 
 router.put("/", upload.single("file"), (req, res) => {
+  console.log("ss",req.body);
+  //if(req.size){
   updateVariant(req.body)
     .returning("variants.id")
     .then((row) => {
@@ -42,6 +44,10 @@ router.put("/", upload.single("file"), (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+  //}
+  // else{
+  //   res.json(row);
+  // }
 });
 
 router.post("/single", upload.single("variant_images"), (req, res) => {

@@ -17,13 +17,24 @@ function deleteProduct(db, product) {
             .delete()
             .where("id", store_variant_id)
             .then((rows) => {
-              db("products")
+              db("featured_products")
                 .delete()
                 .where("id", product.id)
                 .then((rows) => {
-                  rows[0];
+                  db("products")
+                    .delete()
+                    .where("id",product.id)
+                    .then((rows)=>{
+                      rows[0];
+                    })
+                    return rows[0];
+                })
+                .catch((err) => {
+                  console.log(err);
+                })
+                .catch((err) => {
+                  console.log(err);
                 });
-
               return rows[0];
             })
             .catch((err) => {

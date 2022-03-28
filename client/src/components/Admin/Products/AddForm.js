@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState,useCallback } from "react";
-import { Typeahead, TypeaheadInputMulti } from 'react-bootstrap-typeahead';
+import { useEffect, useState } from "react";
 import axios from "../../../utils/ajax-helper";
+import { Typeahead } from "react-bootstrap-typeahead";
 import ErrorMessages from "./ErrorMessages";
 import toast, { Toaster } from "react-hot-toast";
 import "../../Common/css/admin-style.css";
@@ -11,7 +11,6 @@ const AddForm = () => {
   const navigate = useNavigate();
   const [details, setDetails] = useState({
     name: "",
-    size: [],
     color: "",
     type: "",
     price: "",
@@ -21,17 +20,20 @@ const AddForm = () => {
   const [fileData, setFileData] = useState([]);
   const [errormsg, setErrormsg] = useState(null);
   const [categoryid, setCategory] = useState("");
+  const [sizeInput, setSizeInput] = useState(null);
+  const [sizeArray, setSizeArray] = useState(['XS','S','M','L','XL','XXL']);
   const [isEnable, setIsEnable] = useState(true);
 
   //sending data after usestate dec part
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log("sxs",sizeInput );
     const imageData = new FormData();
     imageData.append("file", fileData);
     imageData.append("name", details.name);
     imageData.append("price", details.price);
     imageData.append("description", details.description);
-    imageData.append("size", details.size);
+    imageData.append("size", sizeInput);
     imageData.append("color", details.color);
     imageData.append("type", details.type);
     imageData.append("category", categoryid);
@@ -128,24 +130,18 @@ const AddForm = () => {
                       onChange={fileChangeHandler}
                     />
                   </div>
-                  <div className="form-group ">
-                    <label htmlFor="exampleFormControlSelect3">
+                  <div className="form-group">
+                    <label htmlFor="size">
                       Select Size's Available
                     </label>
-                    <select
-                      className="form-control form-control-sm"
-                      id="exampleFormControlSelect3"
-                      onChange={(e) =>
-                        setDetails({ ...details, size: e.target.value })
-                      }
-                    >
-                      <option value="0">Select product size</option>
-                      <option value="XS">XS</option>
-                      <option value="S">S</option>
-                      <option value="M">M</option>
-                      <option value="L">L</option>
-                      <option value="XL">XL</option>
-                    </select>
+                    <Typeahead
+                              id="basic-typeahead-multiple"
+                              labelKey="size"
+                              multiple
+                              onChange= {setSizeInput}
+                              options={sizeArray}
+                              placeholder="Choose several Size's available for your product..."
+                              selected={sizeInput}/>
                   </div>
 
                   <div className="form-group">
@@ -230,7 +226,12 @@ const AddForm = () => {
                   >
                     Submit
                   </button>
-                  <button className="btn btn-light"  onClick={() => navigate("/admin/products")}>Cancel</button>
+                  <button
+                    className="btn btn-light"
+                    onClick={() => navigate("/admin/products")}
+                  >
+                    Cancel
+                  </button>
                 </form>
               </div>
             </div>

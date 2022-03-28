@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "../../../utils/ajax-helper";
 import "./featuredProduct.css";
-import TypeAhead from "./TypeAhead";
+import MultipleTypeAhead from "../../Common/MultipleTypeAhead";
 import GetFeaturedProducts from "./GetFeaturedProduct";
 
 const FeaturedProduct = () => {
@@ -126,7 +126,7 @@ const FeaturedProduct = () => {
                         <td style={{ border: 0 }}>
                           <div class="form-group">
                             <label for="products">Products</label>
-                            <TypeAhead
+                            <MultipleTypeAhead
                               multiple
                               options={options}
                               handleSearch={handleSearch}
