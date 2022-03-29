@@ -53,9 +53,6 @@ const DisplayProducts = ({}) => {
         });
     }
   };
-  const toggleBtn = ()=>{
-    setReadMore(prevState => !prevState)
-  }
 
   return (
     <div className="main-panel">
