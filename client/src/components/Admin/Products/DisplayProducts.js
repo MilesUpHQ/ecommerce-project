@@ -4,6 +4,7 @@ import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import Pagination from "../../Common/Pagination";
 import "../../Common/css/pagination.css";
+import { Spinner } from "react-bootstrap";
 
 const DisplayProducts = ({}) => {
   const navigate = useNavigate();
@@ -12,7 +13,9 @@ const DisplayProducts = ({}) => {
   const [currPage, setCurrPage] = useState(null);
   const [lastPage, setLastPage] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
+    setIsLoading(true)
     axios
       .get("/admin/productsList")
       .then((res) => {
@@ -21,8 +24,10 @@ const DisplayProducts = ({}) => {
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
         setTotalPages(res.data.totalPages);
+        setIsLoading(false)
       })
       .catch((err) => {
+        setIsLoading(false)
         setErrormsg("Sorry! Something went wrong. Please Try again");
       });
   }, []);
@@ -78,7 +83,7 @@ const DisplayProducts = ({}) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {display.map((display) => (
+                      {!isLoading && display.map((display) => (
                         <tr key={display.id}>
                           <td className="py1">{display.name}</td>
                           <td>{display.description}</td>
@@ -124,6 +129,7 @@ const DisplayProducts = ({}) => {
                       ))}
                     </tbody>
                   </table>
+                  {isLoading && <Spinner className="spinner" animation="grow" />}
                 </div>
               </div>
             </div>

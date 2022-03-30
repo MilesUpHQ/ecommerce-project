@@ -3,6 +3,7 @@ import CategoryList from "./CategoryList";
 import AddCategory from "./AddCategory";
 import axios from "../../../utils/ajax-helper";
 import ErrorAlert from "../../Common/ErrorAlert";
+import { Spinner } from "react-bootstrap";
 
 const Category = () => {
   const [input, setInput] = useState("");
@@ -13,6 +14,7 @@ const Category = () => {
   const [lastPage, setLastPage] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleAddCategory = () => {
     if (input.length < 3) {
@@ -59,6 +61,7 @@ const Category = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true)
     axios
       .get("/categories")
       .then((res) => {
@@ -66,6 +69,7 @@ const Category = () => {
         setLastPage(res.data.lastPage);
         setTotalPages(res.data.totalPages);
         setCategories(res.data.categories);
+        setIsLoading(false)
       })
       .catch((err) => {
         setErrorMsg("Sorry! Something went wrong. Please Try again");
@@ -107,6 +111,7 @@ const Category = () => {
               </form>
             )}
             {errorMsg && <ErrorAlert msg={errorMsg} />}
+            {isLoading && <Spinner animation="grow" className="spinner"/>}
             <CategoryList
               categories={categories}
               currPage={currPage}

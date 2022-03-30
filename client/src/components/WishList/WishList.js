@@ -5,12 +5,15 @@ import { getJWT } from "../../utils/jwt";
 import SimpleNavBar from "../SimpleNavBar/SimpleNavBar";
 import { Link } from "react-router-dom";
 import ProductTable from "../Cart/ProductTable";
+import { Spinner } from "react-bootstrap";
 export default function Cart() {
   // get items for the server and store in state and update in cart component
   const [wishListItems, setWishListItems] = React.useState([]);
   const [errorMsg, setErrorMsg] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const getWishlistItems = () => {
+    setIsLoading(true);
     axios
       .get("/wishlist", {
         headers: {
@@ -20,9 +23,11 @@ export default function Cart() {
       .then((res) => {
         console.log(res.data);
         setWishListItems(res.data);
+        setIsLoading(false);
       })
       .catch((err) => {
         setErrorMsg("Sorry! Something went wrong. Please Try again " + err);
+        setIsLoading(false);
       });
   };
 
@@ -63,22 +68,25 @@ export default function Cart() {
                 />
               ) : (
                 <div class="text-center mt-5">
-                  <h3>
-                    {errorMsg ? (
-                      errorMsg
-                    ) : (
-                      <>
-                        No Products In WishList :( <br />
-                        <br />
-                        Please Add Some Products
-                      </>
-                    )}
-                    <br />
-                    <br />
-                    <Link to="/">
-                      <button class="btn btn-outline-dark">Go To Home</button>
-                    </Link>
-                  </h3>
+                  {isLoading && <Spinner animation="grow" />}
+                  {!isLoading && (
+                    <h3>
+                      {errorMsg ? (
+                        errorMsg
+                      ) : (
+                        <>
+                          No Products In Cart :( <br />
+                          <br />
+                          Please Add Some Products
+                        </>
+                      )}
+                      <br />
+                      <br />
+                      <Link to="/">
+                        <button class="btn btn-outline-dark">Go To Home</button>
+                      </Link>
+                    </h3>
+                  )}
                 </div>
               )
             ) : (

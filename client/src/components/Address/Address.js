@@ -97,12 +97,13 @@ const Address = () => {
     navigate("/order/error");
   }
   function onPaymentSuccess(response) {
-    setMessage("opening razorpay");
+    setMessage("opening razorpay", response.razorpay_order_id);
     clearMessageTimeout(setMessage);
     orderPlaced(response.razorpay_order_id, response.razorpay_payment_id);
   }
 
   const orderPlaced = async (payment_gateway_id, payment_id) => {
+    console.log("payment_gateway_id :", payment_gateway_id);
     axios
       .put(`/user/order/confirm/${order_id}`, {
         id: order_id,
@@ -112,9 +113,11 @@ const Address = () => {
         address_id: address_id,
       })
       .then((res) => {
+        console.log("res :", res);
         navigate(`/order/confirm/${order_id}`);
       })
       .catch((err) => {
+        console.log("err :", err);
         navigate("/order/error");
       });
   };

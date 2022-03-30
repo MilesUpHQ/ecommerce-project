@@ -10,16 +10,16 @@ router.get("", async (req, res, next) => {
     .leftJoin("variants", "variants.product_id", "products.id")
     .leftJoin("variant_images", "variants.id", "variant_images.variant_id")
     .select(
-      "featured_products.id",
+      "featured_products.id as featureProduct_id",
       "products.name",
-      "products.id as product_id",
+      "products.id as id",
       "products.description",
       "variants.color",
       "variants.size",
       "variants.type",
       "variants.price",
       "variants.id as variant_id",
-      "variant_images.image_url"
+      "variant_images.image_url as image_url"
     )
     .whereNotNull("variants.price")
     .orderBy("products.updated_at", "desc")

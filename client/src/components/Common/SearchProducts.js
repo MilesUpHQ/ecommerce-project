@@ -18,6 +18,7 @@ export default function SearchProducts({ searchItem, searchInput }) {
   const [searchValue, setSearchValue] = React.useState(null);
   const [addToCart, setAddToCart] = React.useState(false);
   const [updateNavbar, setUpdateNavbar] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false)
 
   useEffect(() => {
     if (searchInput !== null) {
@@ -76,6 +77,7 @@ export default function SearchProducts({ searchItem, searchInput }) {
   };
 
   const getProductsBySearch = (searchVal) => {
+    setIsLoading(true)
     setSearchValue(searchVal);
     searchFunction("", searchVal)
       .then((res) => {
@@ -102,9 +104,11 @@ export default function SearchProducts({ searchItem, searchInput }) {
           }, []);
           getPriceRanges(res.data.row);
           setFilterCategories(result);
+          setIsLoading(false)
         } else {
           setProducts(res.data.row);
           setFilteredProducts(res.data.row);
+          setIsLoading(false)
         }
       })
       .catch((err) => {
@@ -278,6 +282,7 @@ export default function SearchProducts({ searchItem, searchInput }) {
           <ProductsCatalog
             products={filteredProducts}
             handleAddToCart={handleAddToCart}
+            isLoading={isLoading}
           />
         </div>
       </div>
