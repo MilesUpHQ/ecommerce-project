@@ -1,12 +1,12 @@
  const db = require("../utils/dbConfig");
 
-function insertVariant(params,id) {
+function insertVariant(body) {
   return db("variants").insert({
-          size: params.size,
-          color: params.color,
-          type: params.type,
-          price: params.price,
-          product_id: id,
+          size: body.size,
+          color: body.color,
+          type: body.type,
+          price: body.price,
+          product_id: body.id,
   })
 }
 

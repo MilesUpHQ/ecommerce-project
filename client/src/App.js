@@ -27,6 +27,7 @@ import Orders from "./components/Admin/Orders/Orders";
 import OrderDetails from "./components/Admin/Orders/OrderDetails";
 import DisplayProducts from "./components/Admin/Products/DisplayProducts";
 import AddForm from "./components/Admin/Products/AddForm";
+import AddVariants from "./components/Admin/Products/AddVariants";
 import UserList from "./components/Admin/Products/UserList";
 import { EditForm } from "./components/Admin/Products/EditForm";
 import ProductInfo from "./components/Admin/Products/ProductInfo";
@@ -87,6 +88,16 @@ const App = () => {
           element={
             <PrivateRoute>
               <AddForm />
+            </PrivateRoute>
+          }
+        ></Route>
+
+       
+        <Route
+          path="/admin/product/:id/add/variant"
+          element={
+            <PrivateRoute>
+               <AddVariants/>
             </PrivateRoute>
           }
         ></Route>

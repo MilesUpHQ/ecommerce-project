@@ -16,6 +16,7 @@ const DisplayProducts = ({}) => {
     axios
       .get("/admin/productsList")
       .then((res) => {
+        console.log("dwsde",res.data.products);
         setdisplay(res.data.products);
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
@@ -85,14 +86,21 @@ const DisplayProducts = ({}) => {
                           <td>{display.price}</td>
                           <td>
                             <a
-                              href={`/admin/products/${display.id}/view`}
+                              href={`/admin/product/${display.id}/add/variant`}
+                              type="button"
+                              className="btn btn-info btn-small mr-2"
+                            >
+                              Add Variant
+                            </a>
+                            <a
+                              href={`/admin/products/${display.variantid}/view`}
                               type="button"
                               className="btn btn-info btn-small mr-2"
                             >
                               <i className="fas fa-eye"></i> View
                             </a>
                             <a
-                              href={`/admin/product/${display.id}/update`}
+                              href={`/admin/product/${display.variantid}/update`}
                               type="button"
                               className="btn btn-light btn-small mr-2"
                             >

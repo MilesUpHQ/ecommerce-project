@@ -24,7 +24,7 @@ router.get("/:id", (req, res) => {
       "products.description",
       "variant_images.image_url"
     )
-    .where("products.id", req.params.id)
+    .where({"variants.id":req.params.id})
     .then((row) => {
       console.log("hbh", row);
       res.json(row[0]);

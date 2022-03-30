@@ -18,51 +18,54 @@ router.get("/", (req, res) => {
     });
 });
 
-const fileStorageEngine = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./images"); //"/images" is  folder storage
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "--" + file.originalname); //file.originalname has accesss to the file type
-  },
-});
-const upload = multer({ storage: fileStorageEngine });
+// const fileStorageEngine = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "./images"); //"/images" is  folder storage
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + "--" + file.originalname); //file.originalname has accesss to the file type
+//   },
+// });
+// const upload = multer({ storage: fileStorageEngine });
 
-router.post("/", upload.single("file"), (req, res) => {
+router.post("/", (req, res) => {
   insertProduct(req.body)
     .returning("products.id")
     .then((row) => {
-      insertVariant(req.body,row[0].id)
-        .returning("variants.id")
-        .then((row) => {
-          knex("variant_images")
-            .insert({ image_url: req.file.path, variant_id: row[0].id })
-            .then((row) => {
-              res.json(row);
-              console.log("congratulations u made it");
-            })
-            .catch((err) => {
-              res.status(400).send("Unable to post image");
-            });
-        })
-        .catch((err) => {
-          res.status(400).send("Unable to Post data ");
-        });
-    })
+      console.log("ff",row[0].id);
+      res.json({id:row[0].id});
+      // insertVariant(req.body,row[0].id)
+      //   .returning("variants.id")
+      //   .then((row) => {
+      //     knex("variant_images")
+      //       .insert({ image_url: req.file.path, variant_id: row[0].id })
+      //       .then((row) => {
+      //         res.json(row);
+      //         console.log("congratulations u made it");
+      //       })
+      //       .catch((err) => {
+      //         res.status(400).send("Unable to post image");
+      //       });
+    //     })
+    //     .catch((err) => {
+    //       res.status(400).send("Unable to Post data ");
+    //     });
+     })
     .catch((err) => {
+      res.status(400).send("Unable to Post data ");
       console.log(err);
     });
 });
 
-router.post("/single", upload.single("variant_images"), (req, res) => {
-  console.log("Request.file", req.file); //display info on image file
-  res.send("Single File Upload Sucesss");
-});
+// router.post("/single", upload.single("variant_images"), (req, res) => {
+//   console.log("Request.file", req.file); //display info on image file
+//   res.send("Single File Upload Sucesss");
+// });
 
-router.post("/multiple", upload.array("variant_images", 3), (req, res) => {
-  console.log(req.files);
-  res.send("Multiple image upload sucess");
-});
+// router.post("/multiple", upload.array("variant_images", 3), (req, res) => {
+//   console.log(req.files);
+//   res.send("Multiple image upload sucess");
+// });
 
 router.get("/", (req, res) => {
   knex("products")

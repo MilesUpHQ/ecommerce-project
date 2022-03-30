@@ -17,14 +17,11 @@ export const EditForm = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [imageCheck, setImageCheck] = useState(false);
-  const [sizeCheck, setSizeCheck] = useState(false);
   const [fileData, setFileData] = useState([]);
   const [description, setDescription] = useState("");
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
   const [type, setType] = useState("");
-  const [sizeInput, setSizeInput] = useState(null);
-  const [sizeArray, setSizeArray] = useState(["XS", "S", "M", "L", "XL"]);
   const [categoryName, setCategoryName] = useState("");
   const [categoryid, setCategoryId] = useState(null);
   const [productId, setProductId] = useState("");
@@ -34,12 +31,11 @@ export const EditForm = () => {
   const updateProduct = (e) => {
     e.preventDefault();
     const imageData = new FormData();
-    console.log("sxs", sizeInput);
     imageData.append("file", fileData);
     imageData.append("name", name);
     imageData.append("price", price);
     imageData.append("description", description);
-    imageData.append("size", sizeInput);
+    imageData.append("size", size);
     imageData.append("color", color);
     imageData.append("type", type);
     imageData.append("category", categoryid);
@@ -97,7 +93,6 @@ export const EditForm = () => {
         setVariantId(res.data.variant_id);
         setProductId(id);
         setImageCheck(true);
-        setSizeCheck(true);
       })
       .catch((err) => {
         setErrormsg("Sorry! Something went wrong. Please Try again");
@@ -183,44 +178,20 @@ export const EditForm = () => {
                     )}
                   </div>
 
-                  <div className="form-group">
-                    {sizeCheck == true && (
-                      <div>
-                        <label htmlFor="size">
-                          Size's available for your product
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="exampleInputName1"
-                          value={size}
-                          readOnly
-                        />
-                        <button
-                          type="button"
-                          className="btn btn-primary btn-icon-text mt-3 ml-1"
-                          onClick={() => setSizeCheck(false)}
-                        >
-                          Update Size
-                        </button>
-                      </div>
-                    )}
-                    {sizeCheck == false && (
-                      <div>
-                        <label htmlFor="size">
-                          Update your product size from the following options
-                        </label>
-                        <Typeahead
-                          id="basic-typeahead-multiple"
-                          labelKey="size"
-                          multiple
-                          onChange={setSizeInput}
-                          options={sizeArray}
-                          placeholder="Choose several Size's available for your product..."
-                          selected={sizeInput}
-                        />{" "}
-                      </div>
-                    )}
+                  <div className="form-group ">
+                    <label htmlFor="exampleFormControlSelect3">Select Size</label>
+                    <select
+                      className="form-control form-control-sm"
+                      id="exampleFormControlSelect3"
+                      value={size}
+                      onChange={(e) => setSize(e.target.value)}
+                    >
+                      <option value="XS">XS</option>
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                    </select>
                   </div>
 
                   <div className="form-group">

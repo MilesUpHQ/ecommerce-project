@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "../../../utils/ajax-helper";
-import { Typeahead } from "react-bootstrap-typeahead";
 import ErrorMessages from "./ErrorMessages";
 import toast, { Toaster } from "react-hot-toast";
 import "../../Common/css/admin-style.css";
@@ -11,9 +10,7 @@ const AddForm = () => {
   const navigate = useNavigate();
   const [details, setDetails] = useState({
     name: "",
-    color: "",
     type: "",
-    price: "",
     description: "",
   });
   const [categories, setCategories] = useState([]);
@@ -21,49 +18,51 @@ const AddForm = () => {
   const [errormsg, setErrormsg] = useState(null);
   const [categoryid, setCategory] = useState("");
   const [sizeInput, setSizeInput] = useState(null);
-  const [sizeArray, setSizeArray] = useState(['XS','S','M','L','XL','XXL']);
+  const [sizeArray, setSizeArray] = useState([
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "XXL",
+  ]);
   const [isEnable, setIsEnable] = useState(true);
 
   //sending data after usestate dec part
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("sxs",sizeInput );
-    const imageData = new FormData();
-    imageData.append("file", fileData);
-    imageData.append("name", details.name);
-    imageData.append("price", details.price);
-    imageData.append("description", details.description);
-    imageData.append("size", sizeInput);
-    imageData.append("color", details.color);
-    imageData.append("type", details.type);
-    imageData.append("category", categoryid);
+    const imageData = {
+      name: details.name,
+      description: details.description,
+      category: categoryid,
+    };
 
-    if (Object.keys(details).length == 0) {
-      setErrormsg("Please Fill The Form First");
-      return;
-    }
-    if (!Object.keys(details).includes("name") || details.name === "") {
-      setErrormsg("Name cannot be empty");
-      return;
-    } else if (fileData.length == 0) {
-      setErrormsg("Please select an image");
-      return;
-    } else if (categoryid === "") {
-      setErrormsg("Category cannot be empty");
-      return;
-    } else if (
-      !Object.keys(details).includes("price") ||
-      details.price === ""
-    ) {
-      setErrormsg("Price cannot be empty");
-      return;
-    } else if (
-      !Object.keys(details).includes("description") ||
-      details.description === ""
-    ) {
-      setErrormsg("Description cannot be empty");
-      return;
-    }
+    // if (Object.keys(details).length == 0) {
+    //   setErrormsg("Please Fill The Form First");
+    //   return;
+    // }
+    // if (!Object.keys(details).includes("name") || details.name === "") {
+    //   setErrormsg("Name cannot be empty");
+    //   return;
+    // } else if (fileData.length == 0) {
+    //   setErrormsg("Please select an image");
+    //   return;
+    // } else if (categoryid === "") {
+    //   setErrormsg("Category cannot be empty");
+    //   return;
+    // } else if (
+    //   !Object.keys(details).includes("price") ||
+    //   details.price === ""
+    // ) {
+    //   setErrormsg("Price cannot be empty");
+    //   return;
+    // } else if (
+    //   !Object.keys(details).includes("description") ||
+    //   details.description === ""
+    // ) {
+    //   setErrormsg("Description cannot be empty");
+    //   return;
+    // }
 
     axios
       .post("/admin/products/add", imageData)
@@ -71,7 +70,7 @@ const AddForm = () => {
         setIsEnable(false);
         toast.success("Product Created Sucessfully!");
         setTimeout(() => {
-          navigate("/admin/products");
+          navigate(`/admin/product/${res.data.id}/add/variant`);
         }, 1500);
       })
       .catch((err) => {
@@ -121,42 +120,6 @@ const AddForm = () => {
                       }
                     />
                   </div>
-                  <div className="form-group-img ">
-                    <label htmlFor="imageupload">Upload image*</label>
-                    <br />
-                    <input
-                      type="file"
-                      name="image"
-                      onChange={fileChangeHandler}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="size">
-                      Select Size's Available
-                    </label>
-                    <Typeahead
-                              id="basic-typeahead-multiple"
-                              labelKey="size"
-                              multiple
-                              onChange= {setSizeInput}
-                              options={sizeArray}
-                              placeholder="Choose several Size's available for your product..."
-                              selected={sizeInput}/>
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="Color">Color</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="color"
-                      placeholder="make it vibrant"
-                      value={details.color}
-                      onChange={(e) =>
-                        setDetails({ ...details, color: e.target.value })
-                      }
-                    />
-                  </div>
 
                   <div className="form-group-cat">
                     <label htmlFor="Category">Category*</label>
@@ -178,33 +141,6 @@ const AddForm = () => {
                   </div>
 
                   <div className="form-group mt-3">
-                    <label htmlFor="Type">Type</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="type"
-                      placeholder="List the type of your product"
-                      value={details.type}
-                      onChange={(e) =>
-                        setDetails({ ...details, type: e.target.value })
-                      }
-                    />
-                  </div>
-
-                  <div className="form-group-pr">
-                    <label htmlFor="exampleInputPrice1">Price*</label>
-                    <input
-                      type="integer"
-                      className="form-control"
-                      id="exampleInputPrice1"
-                      placeholder="0"
-                      value={details.price}
-                      onChange={(e) =>
-                        setDetails({ ...details, price: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div className="form-group mt-3">
                     <label htmlFor="exampleTextarea1">Description*</label>
                     <textarea
                       className="form-control"
@@ -218,13 +154,8 @@ const AddForm = () => {
                       }
                     ></textarea>
                   </div>
-                  <button
-                    type="submit"
-                    className={
-                      "btn btn-primary mr-2 " + `${isEnable ? "" : "disabled"}`
-                    }
-                  >
-                    Submit
+                  <button className="btn btn-primary ml-3" type="submit">
+                    Add Variant
                   </button>
                   <button
                     className="btn btn-light"
