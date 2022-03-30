@@ -8,4 +8,4 @@ function insertProduct(params) {
   });
 }
 
-module.exports = { insertProduct ,updateProduct};
+module.exports = { insertProduct};

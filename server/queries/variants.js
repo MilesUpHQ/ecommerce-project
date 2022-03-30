@@ -10,4 +10,4 @@ function insertVariant(body) {
   })
 }
 
- module.exports = { updateVariant , insertVariant};
+ module.exports = {insertVariant};
