@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../../../utils/dbConfig");
 const multer = require("multer");
-const { updateVariant } = require("../../../queries/variants");
-const { updateProduct } = require("../../../queries/product");
+const db = require("../../../utils/dbConfig");
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -16,27 +15,43 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({ storage: fileStorageEngine });
 
 router.put("/", upload.single("file"), (req, res) => {
-  console.log("ss",req.body);
-  //if(req.size){
-  updateVariant(req.body)
-    .returning("variants.id")
+  const pid = req.body.id;
+  const vid = req.body.variantId;
+  knex("products")
+    .where("id", pid)
+    .update({
+      name: req.body.name,
+      description: req.body.description,
+      category_id: req.body.category,
+    })
+    .returning("products.id")
     .then((row) => {
-      updateProduct(req.body)
-        .returning("products.id")
+      knex("variants")
+        .where("variants.id", vid)
+        .update({
+          size: req.body.size,
+          color: req.body.color,
+          type: req.body.type,
+          price: req.body.price,
+        })
+        .returning("variants.id")
         .then((row) => {
-          if(req.file){
-          knex("variant_images")
-            .where("variant_id", req.body.variantId)
-            .update({ image_url: req.file.path })
-            .then((row) => {
-              res.json(row);
-            })
-            .catch((err) => {
-              res.status(400).send("Unable to post image");
-            });
-          }else{
-          res.json(row);
-        }})
+          if (req.file) {
+            knex("variant_images")
+              .where("variant_images.id", vid)
+              .update({
+                image_url: req.file.path,
+              })
+              .then((row) => {
+                res.json(row);
+              })
+              .catch((err) => {
+                res.status(400).send("Unable to post image");
+              });
+          } else {
+            res.json(row);
+          }
+        })
         .catch((err) => {
           res.status(400).send("Unable to Post data ");
         });
@@ -44,10 +59,6 @@ router.put("/", upload.single("file"), (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-  //}
-  // else{
-  //   res.json(row);
-  // }
 });
 
 router.post("/single", upload.single("variant_images"), (req, res) => {

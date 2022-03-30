@@ -80,6 +80,7 @@ export const EditForm = () => {
       .get(`/admin/product/${id}`)
       .then((res) => {
         console.log("sss", res.data.size);
+        console.log("idd",res.data.id);
         setName(res.data.name);
         setSize(res.data.size);
         setColor(res.data.color);
@@ -91,7 +92,7 @@ export const EditForm = () => {
         setProduct(res.data);
         setFileData(res.data.image_url);
         setVariantId(res.data.variant_id);
-        setProductId(id);
+        setProductId(res.data.id);
         setImageCheck(true);
       })
       .catch((err) => {
