@@ -11,14 +11,7 @@ const Navbar = () => {
         >
           <ul className="navbar-nav mr-lg-2">
             <li className="nav-item nav-profile dropdown ">
-            <a href="/admin">AdminHome</a>
-              <div className="input-group">
-                <div
-                  className="input-group-prepend hover-cursor"
-                  id="navbar-search-icon"
-                >
-                </div>
-              </div>
+            <a href="/admin">Admin Home</a>
             </li>
           </ul>
           <ul className="navbar-nav navbar-nav-right">

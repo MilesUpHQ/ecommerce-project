@@ -24,6 +24,8 @@ exports.seed = function (knex) {
         { id: 4, name: "Saree", parent_id: 2 },
         { id: 5, name: "Pants", parent_id: 1 },
         { id: 6, name: "Kurtas", parent_id: 2 },
-      ]);
+      ]).then(res => {
+        return knex.raw('SELECT setval(\'product_categories_id_seq\', max(id)) from product_categories')
+      })
     });
 };
