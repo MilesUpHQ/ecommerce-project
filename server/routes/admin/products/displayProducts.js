@@ -55,14 +55,10 @@ function deleteProduct(db, product) {
 router.get("/", async (req, res) => {
   let page = parseInt(req.query.page) || 1;
   await knex("products")
-    .leftJoin("variants", "variants.product_id", "products.id")
     .select(
       "products.id",
       "products.name",
       "products.description as description",
-      "variants.id as variantid",
-      "variants.size",
-      "variants.price"
     )
     .orderBy("products.name", "asc")
     .paginate({

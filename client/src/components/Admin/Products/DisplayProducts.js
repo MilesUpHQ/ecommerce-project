@@ -45,7 +45,7 @@ const DisplayProducts = ({}) => {
         setErrormsg("Sorry! Something went wrong. Please Try again");
       });
   };
-  const deleteProduct = (id, variantid, name) => {
+  const deleteProduct = (id, name) => {
     if (window.confirm(`Are you sure! Delete ${name} Product?`)) {
       axios
         .delete("/delete_product", { params: { id } })
@@ -77,8 +77,6 @@ const DisplayProducts = ({}) => {
                       <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>Size</th>
-                        <th>Amount</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -87,8 +85,6 @@ const DisplayProducts = ({}) => {
                         <tr key={display.id}>
                           <td className="py1">{display.name}</td>
                           <td>{display.description}</td>
-                          <td>{display.size}</td>
-                          <td>{display.price}</td>
                           <td>
                             <a
                               href={`/admin/product/${display.id}/add/variant`}
@@ -98,31 +94,31 @@ const DisplayProducts = ({}) => {
                               Add Variant
                             </a>
                             <a
-                              href={`/admin/products/${display.variantid}/view`}
+                              href={`/admin/products/${display.id}/view`}
                               type="button"
                               className="btn btn-info btn-small mr-2"
                             >
                               <i className="fas fa-eye"></i> View
                             </a>
                             <a
-                              href={`/admin/product/${display.variantid}/update`}
+                              href={`/admin/product/${display.id}/update`}
                               type="button"
                               className="btn btn-light btn-small mr-2"
                             >
                               <i className="fas fa-edit"></i> Edit
                             </a>
+
                             <a
                               type="button"
                               onClick={() =>
                                 deleteProduct(
                                   display.id,
-                                  display.variantid,
                                   display.name
                                 )
                               }
                               className="btn btn-danger btn-small"
                             >
-                              <i className="fas fa-trash"></i> Delete
+                              <i className="fas fa-trash"></i> Product
                             </a>
                           </td>
                         </tr>

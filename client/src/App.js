@@ -30,6 +30,7 @@ import AddForm from "./components/Admin/Products/AddForm";
 import AddVariants from "./components/Admin/Products/AddVariants";
 import UserList from "./components/Admin/Products/UserList";
 import { EditForm } from "./components/Admin/Products/EditForm";
+import { EditVariant } from "./components/Admin/Products/EditVariant";
 import ProductInfo from "./components/Admin/Products/ProductInfo";
 import FeaturedProduct from "./components/Admin/FeatureProducts/FeaturedProduct";
 import WishList from "./components/WishList/WishList";
@@ -92,7 +93,6 @@ const App = () => {
           }
         ></Route>
 
-       
         <Route
           path="/admin/product/:id/add/variant"
           element={
@@ -134,6 +134,15 @@ const App = () => {
           element={
             <PrivateRoute>
               <EditForm />
+            </PrivateRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/admin/product/variant/:id/update"
+          element={
+            <PrivateRoute>
+              <EditVariant />
             </PrivateRoute>
           }
         ></Route>

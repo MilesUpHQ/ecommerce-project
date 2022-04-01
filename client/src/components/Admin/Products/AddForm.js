@@ -17,18 +17,8 @@ const AddForm = () => {
   const [fileData, setFileData] = useState([]);
   const [errormsg, setErrormsg] = useState(null);
   const [categoryid, setCategory] = useState("");
-  const [sizeInput, setSizeInput] = useState(null);
-  const [sizeArray, setSizeArray] = useState([
-    "XS",
-    "S",
-    "M",
-    "L",
-    "XL",
-    "XXL",
-  ]);
   const [isEnable, setIsEnable] = useState(true);
 
-  //sending data after usestate dec part
   const submitHandler = async (e) => {
     e.preventDefault();
     const imageData = {
@@ -36,33 +26,6 @@ const AddForm = () => {
       description: details.description,
       category: categoryid,
     };
-
-    // if (Object.keys(details).length == 0) {
-    //   setErrormsg("Please Fill The Form First");
-    //   return;
-    // }
-    // if (!Object.keys(details).includes("name") || details.name === "") {
-    //   setErrormsg("Name cannot be empty");
-    //   return;
-    // } else if (fileData.length == 0) {
-    //   setErrormsg("Please select an image");
-    //   return;
-    // } else if (categoryid === "") {
-    //   setErrormsg("Category cannot be empty");
-    //   return;
-    // } else if (
-    //   !Object.keys(details).includes("price") ||
-    //   details.price === ""
-    // ) {
-    //   setErrormsg("Price cannot be empty");
-    //   return;
-    // } else if (
-    //   !Object.keys(details).includes("description") ||
-    //   details.description === ""
-    // ) {
-    //   setErrormsg("Description cannot be empty");
-    //   return;
-    // }
 
     axios
       .post("/admin/products/add", imageData)
