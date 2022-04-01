@@ -1,7 +1,7 @@
 const router = require("../../routes/userAuth/signup");
 const request = require("supertest");
 
-describe("signup route", () => {
+describe("signup route validations", () => {
   test("user Validation should return 400 for empty body", async () => {
     request(router).post("/").send({}).expect(400);
   });
