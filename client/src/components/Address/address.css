@@ -36,3 +36,7 @@
   background-color: white;
   align-items: center;
 }
+.inputClass {
+  width: 90%;
+  height: 40px;
+}

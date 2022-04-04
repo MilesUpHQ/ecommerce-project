@@ -1,132 +1,229 @@
 import React from "react";
-import countryList from "react-select-country-list";
+import axios from "../../utils/ajax-helper";
+import { useNavigate } from "react-router-dom";
+import "./address.css";
+import { getJWT } from "../../utils/jwt";
+import { parseJwt } from "../../utils/jwt";
 import Select from "react-select";
 import { useEffect, useState, useMemo } from "react";
-import ErrorAlert from "../Common/ErrorAlert";
+import { Form, Button } from "semantic-ui-react";
+import { useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
+import countryList from "react-select-country-list";
 
-const AddressForm = ({
-  street,
-  setStreet,
-  city,
-  setCity,
-  state,
-  setState,
-  pin_code,
-  setPin_code,
-  submitHandler,
-  country,
-  options,
-  changeHandler,
-  title,
-  name,
-  setName,
-  phone,
-  setPhone,
-  email,
-  setEmail,
-  errorMessage,
-  isCountry,
-  SetIsCountry,
-}) => {
+const AddressForm = ({ title, register, handleSubmit, errorMessage }) => {
+  const {
+    formState: { errors },
+  } = useForm();
+  const options = useMemo(() => countryList().getData(), []);
+  let [country, setCountry] = useState(null);
+  let changeHandler;
+  changeHandler = (value) => {
+    setCountry(value);
+  };
+  let [isCountry, SetIsCountry] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  let decoded = parseJwt(getJWT());
+  let [user_id, setUser_id] = useState(decoded.id);
+  const [message, setMessage] = useState(null);
+  const [newAddressUrl, setNewAddressUrl] = useState("/user/address/new");
+  let id = location.pathname.slice(14);
+
+  useEffect(() => {
+    // if (!(location.pathname == newAddressUrl)) {
+    //   axios
+    //     .get(`/user/address/${id}/getById`)
+    //     .then((response) => {
+    //       setStreet(response.data.street);
+    //       setCity(response.data.city);
+    //       setPin_code(response.data.pin_code);
+    //       setState(response.data.state);
+    //       setCountry(response.data.country);
+    //       setPhone(response.data.phone);
+    //       setName(response.data.name);
+    //       setEmail(response.data.email);
+    //       setTitle("Address Edit:");
+    //       SetIsCountry(true);
+    //     })
+    //     .catch((err) => {
+    //       setMessage("Sorry we couldnot get address with error " + err);
+    //     });
+    // }
+  }, []);
+
+  const onSubmit = (data) => {
+    console.log(data);
+    axios
+      .post("/user/new/address/", {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        street: data.street,
+        city: data.city,
+        pin_code: data.pin_code,
+        state: data.state,
+        country: country.label,
+        user_id: user_id,
+      })
+      .then((res) => {
+        navigate("/user/address");
+      })
+      .catch((err) => {
+        setMessage(
+          "Oppsie! Something went wrong. Please try entering valid datas"
+        );
+        navigate(newAddressUrl);
+      });
+  };
+
+  if (!(location.pathname == newAddressUrl)) {
+    onSubmit = async (e, data) => {
+      e.preventDefault();
+      axios
+        .put(`/user/address/${id}/edit`, {
+          id: id,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          street: data.street,
+          city: data.city,
+          pin_code: data.pin_code,
+          state: data.state,
+          country: country.label,
+          user_id: user_id,
+        })
+        .then((res) => {
+          navigate("/user/address");
+        })
+        .catch((err) => {
+          navigate(`/user/address/${id}`);
+          setMessage(
+            "Oppsie! Something went wrong. Please try entering valid datas"
+          );
+        });
+    };
+  }
   return (
     <>
       <React.Fragment>
         <div className="main-panel">
           <div className="content-wrapper">
             <div className="container">
-              <form className="forms-sample" onSubmit={submitHandler}>
-                <h2>{title}</h2>
-                <br />
-                <div className="form-group">
-                  <label htmlFor="name">Name</label>
-                  <sup>*</sup>
+              <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form.Field>
+                  <label>First Name : </label>
+                  <br />
                   <input
-                    type="text"
-                    className="form-control"
-                    id="name"
+                    className="inputClass"
                     placeholder="Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    {...register("name", {
+                      required: true,
+                      maxLength: 10,
+                      minLength: 3,
+                    })}
                   />
-                </div>
+                </Form.Field>
                 <br />
-                <div className="form-group">
-                  <label htmlFor="email">E-mail</label>
-                  <sup>*</sup>
+                {errors.name && <p>Please check the Name</p>}
+                <Form.Field>
+                  <label>Email : </label>
+                  <br />
                   <input
+                    className="inputClass"
+                    placeholder="Email"
                     type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="E-mail"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    {...register("email", {
+                      required: true,
+                      pattern:
+                        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    })}
                   />
-                </div>
+                </Form.Field>
                 <br />
-                <div className="form-group">
-                  <label htmlFor="phone">Phone Number</label>
-                  <sup>*</sup>
+                {errors.email && <p>Please check the email</p>}
+                <Form.Field>
+                  <label>Phone Number : </label>
+                  <br />
                   <input
-                    type="number"
-                    pattern="[0-9]{10}"
-                    className="form-control"
-                    id="phone"
+                    className="inputClass"
                     placeholder="Phone Number"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    type="text"
+                    {...register("phone", {
+                      required: true,
+                      maxLength: 10,
+                      minLength: 10,
+                      valueAsNumber: true,
+                      pattern: {
+                        value: /^[0-9]+$/,
+                      },
+                    })}
                   />
-                </div>
+                </Form.Field>
                 <br />
-                <div className="form-group">
-                  <label htmlFor="street">Street</label>
-                  <sup>*</sup>
+                {errors.phone && <p>Please check the phone number</p>}
+                <Form.Field>
+                  <label>Street : </label>
+                  <br />
                   <input
+                    className="inputClass"
+                    placeholder="street"
                     type="text"
-                    className="form-control"
-                    id="street"
-                    placeholder="Street"
-                    value={street}
-                    onChange={(e) => setStreet(e.target.value)}
+                    {...register("street", {
+                      required: true,
+                    })}
                   />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="city">City</label>
-                  <sup>*</sup>
+                </Form.Field>
+                <br />
+                {errors.street && <p>Please check the street</p>}
+                <Form.Field>
+                  <label>city : </label>
+                  <br />
                   <input
-                    type="text"
-                    className="form-control"
-                    id="city"
+                    className="inputClass"
                     placeholder="city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="pincode">Pincode</label>
-                  <sup>*</sup>
-                  <input
                     type="text"
-                    className="form-control"
-                    id="pincode"
-                    placeholder="pin_code"
-                    value={pin_code}
-                    onChange={(e) => setPin_code(e.target.value)}
+                    {...register("city", {
+                      required: true,
+                    })}
                   />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="state">State</label>
-                  <sup>*</sup>
+                </Form.Field>
+                <br />
+                {errors.city && <p>Please check the city</p>}
+                <Form.Field>
+                  <label>Pic code : </label>
+                  <br />
                   <input
+                    className="inputClass"
+                    placeholder="pin code"
                     type="text"
-                    className="form-control"
-                    id="state"
+                    {...register("pin_code", {
+                      required: true,
+                      valueAsNumber: true,
+                      pattern: {
+                        value: /^[0-9]+$/,
+                      },
+                    })}
+                  />
+                </Form.Field>
+                <br />
+                {errors.phone && <p>Please check the phone number</p>}
+                <Form.Field>
+                  <label>State : </label>
+                  <br />
+                  <input
+                    className="inputClass"
                     placeholder="state"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
+                    type="text"
+                    {...register("state", {
+                      required: true,
+                    })}
                   />
-                </div>
+                </Form.Field>
+                <br />
+                {errors.city && <p>Please check the state</p>}
+
                 {isCountry == true && (
                   <div>
                     <p>Country</p>
@@ -144,7 +241,8 @@ const AddressForm = ({
                 )}
                 {isCountry == false && (
                   <div>
-                    <label htmlFor="exampleInputName1">Country</label>
+                    <label htmlFor="exampleInputName1">Country: </label>
+                    <br />
                     <Select
                       options={options}
                       value={country}
@@ -153,14 +251,10 @@ const AddressForm = ({
                   </div>
                 )}
                 <br />
-                {errorMessage && <ErrorAlert msg={errorMessage} />}
-                <button type="submit" className="btn btn-primary mr-2">
+                <Button type="submit" className="btn btn-primary mr-2">
                   Submit
-                </button>
-                <a href="/user/address" className="btn btn-light">
-                  Cancel
-                </a>
-              </form>
+                </Button>
+              </Form>
             </div>
           </div>
         </div>
