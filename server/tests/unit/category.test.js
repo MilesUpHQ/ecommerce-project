@@ -17,7 +17,7 @@ describe("test category route", () => {
         searchItemId: 0,
       })
       .expect(200);
-  });
+  })
 
   test('should return 200 status code on deleting category', async() => {
       request(router)
