@@ -24,7 +24,7 @@ router.get("", async (req, res, next) => {
     .whereNotNull("variants.price")
     .orderBy("products.updated_at", "desc")
     .paginate({
-      perPage: 10,
+      perPage: 12,
       currentPage: page,
       isLengthAware: true,
     })
