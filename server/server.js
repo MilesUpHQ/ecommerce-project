@@ -46,7 +46,6 @@ const WishList = require("./routes/wishList/wishList");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 app.use(bodyParser.json());
 passport.use(strategy);
 app.use(passport.initialize());
