@@ -2,56 +2,6 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../../../utils/dbConfig");
 
-function deleteProduct(db, product) {
-  let store_variant_id;
-  db("variants")
-    .select("variants.id")
-    .where("product_id", parseInt(product.id))
-    .then((rows) => {
-      store_variant_id = rows[0].id;
-      db("variant_images")
-        .delete()
-        .where("variant_id", store_variant_id)
-        .then((rows) => {
-          db("variants")
-            .delete()
-            .where("id", store_variant_id)
-            .then((rows) => {
-              db("featured_products")
-                .delete()
-                .where("id", product.id)
-                .then((rows) => {
-                  db("products")
-                    .delete()
-                    .where("id",product.id)
-                    .then((rows)=>{
-                      rows[0];
-                    })
-                    return rows[0];
-                })
-                .catch((err) => {
-                  console.log(err);
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-              return rows[0];
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-          return rows[0];
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  console.log("ddd");
-}
-
 router.get("/", async (req, res) => {
   let page = parseInt(req.query.page) || 1;
   await knex("products")
@@ -83,15 +33,16 @@ router.get("/", async (req, res) => {
     });
 });
 
-router.delete("/", async (req, res) => {
-  try {
-    console.log("d", req.query);
-    await deleteProduct(knex, { id: req.query.id });
-    res.json({ message: "deleted succesfully" });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: err });
-  }
-});
+router.delete("/",(req,res)=>{
+   knex("products")
+   .where({id: req.query.id})
+   .del()
+     .then((rows) => {
+          res.json(rows);
+     })
+     .catch((err)=>{
+       console.log(err);
+     })
+})
 
 module.exports = router;
