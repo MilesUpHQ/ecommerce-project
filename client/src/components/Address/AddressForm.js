@@ -31,38 +31,24 @@ const AddressForm = ({ title, register, handleSubmit, errorMessage }) => {
   let id = location.pathname.slice(14);
 
   useEffect(() => {
-    // if (!(location.pathname == newAddressUrl)) {
-    //   axios
-    //     .get(`/user/address/${id}/getById`)
-    //     .then((response) => {
-    //       setStreet(response.data.street);
-    //       setCity(response.data.city);
-    //       setPin_code(response.data.pin_code);
-    //       setState(response.data.state);
-    //       setCountry(response.data.country);
-    //       setPhone(response.data.phone);
-    //       setName(response.data.name);
-    //       setEmail(response.data.email);
-    //       setTitle("Address Edit:");
-    //       SetIsCountry(true);
-    //     })
-    //     .catch((err) => {
-    //       setMessage("Sorry we couldnot get address with error " + err);
-    //     });
-    // }
+    if (!(location.pathname == newAddressUrl)) {
+      axios
+        .get(`/user/address/${id}/getById`)
+        .then((response) => {
+          setCountry(response.data.country);
+          SetIsCountry(true);
+        })
+        .catch((err) => {
+          setMessage("Sorry we couldnot get address with error " + err);
+        });
+    }
   }, []);
 
   const onSubmit = (data) => {
     console.log(data);
     axios
       .post("/user/new/address/", {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        street: data.street,
-        city: data.city,
-        pin_code: data.pin_code,
-        state: data.state,
+        data: data,
         country: country.label,
         user_id: user_id,
       })
@@ -83,13 +69,7 @@ const AddressForm = ({ title, register, handleSubmit, errorMessage }) => {
       axios
         .put(`/user/address/${id}/edit`, {
           id: id,
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          street: data.street,
-          city: data.city,
-          pin_code: data.pin_code,
-          state: data.state,
+          data: data,
           country: country.label,
           user_id: user_id,
         })

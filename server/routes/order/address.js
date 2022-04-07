@@ -31,13 +31,13 @@ router.get("/:id", async (req, res, next) => {
 router.post("", async (req, res, next) => {
   knex("address")
     .insert({
-      name: req.body.name,
-      email: req.body.email,
-      phone: req.body.phone,
-      street: req.body.street,
-      city: req.body.city,
-      pin_code: req.body.pin_code,
-      state: req.body.state,
+      name: req.body.data.name,
+      email: req.body.data.email,
+      phone: req.body.data.phone,
+      street: req.body.data.street,
+      city: req.body.data.city,
+      pin_code: req.body.data.pin_code,
+      state: req.body.data.state,
       country: req.body.country,
       user_id: req.body.user_id,
     })
@@ -99,13 +99,13 @@ router.put("/:id/edit", (req, res, next) => {
         knex("address")
           .where("id", req.body.id)
           .update({
-            name: req.body.name,
-            email: req.body.email,
-            phone: req.body.phone,
-            street: req.body.street,
-            city: req.body.city,
-            pin_code: req.body.pin_code,
-            state: req.body.state,
+            name: req.body.data.name,
+            email: req.body.data.email,
+            phone: req.body.data.phone,
+            street: req.body.data.street,
+            city: req.body.data.city,
+            pin_code: req.body.data.pin_code,
+            state: req.body.data.state,
             country: req.body.country,
             user_id: req.body.user_id,
           })
