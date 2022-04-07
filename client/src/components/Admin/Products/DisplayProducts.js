@@ -19,7 +19,6 @@ const DisplayProducts = ({}) => {
     axios
       .get("/admin/productsList")
       .then((res) => {
-        console.log("dwsde",res.data.products);
         setdisplay(res.data.products);
         setCurrPage(res.data.currPage);
         setLastPage(res.data.lastPage);
