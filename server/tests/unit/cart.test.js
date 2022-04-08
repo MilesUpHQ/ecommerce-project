@@ -7,6 +7,19 @@ const {
   getOrderItemsBy,
 } = require("../../queries/order");
 
+const {
+  getCart,
+  addToCart,
+  updateCartQuantity,
+  deleteCart,
+} = require("../../controllers/cart");
+
+const express = require("express");
+const router = require("../../routes/cart/cart.routes");
+
+const app = new express();
+app.use("/", router);
+
 const user_id = 1;
 const status = "cart";
 const quantity = 1;
@@ -17,6 +30,49 @@ const prev_quantity = 1;
 beforeEach(() => {
   req = httpMocks.createRequest();
   res = httpMocks.createResponse();
+});
+
+describe("getCart", () => {
+  it("should be a function", () => {
+    expect(getCart).toBeInstanceOf(Function);
+  });
+
+  it("should return a 200 status code", async () => {
+    req.user = { id: user_id };
+    await getCart(req, res);
+    expect(res.statusCode).toBe(200);
+  });
+});
+
+describe("addToCart", () => {
+  it("should be a function", () => {
+    expect(addToCart).toBeInstanceOf(Function);
+  });
+});
+
+describe("updateCartQuantity", () => {
+  it("should be a function", () => {
+    expect(updateCartQuantity).toBeInstanceOf(Function);
+  });
+
+  it("should return a 200 status code", async () => {
+    req.params = { id: order_id };
+    req.body = { quantity: quantity };
+    await updateCartQuantity(req, res);
+    expect(res.statusCode).toBe(200);
+  });
+});
+
+describe("deleteCart", () => {
+  it("should be a function", () => {
+    expect(deleteCart).toBeInstanceOf(Function);
+  });
+
+  it("should return a 200 status code", async () => {
+    req.params = { id: order_id };
+    await deleteCart(req, res);
+    expect(res.statusCode).toBe(200);
+  });
 });
 
 describe("insertOrderCart", () => {
