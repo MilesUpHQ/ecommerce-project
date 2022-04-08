@@ -3,35 +3,27 @@ import React, { useEffect, Component } from "react";
 import { getJWT } from "../../utils/jwt";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-
+import * as Yup from "yup";
+import { Formik, ErrorMessage } from "formik";
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
       error: "",
       isDisabledButton: false,
     };
-    this.change = this.change.bind(this);
     this.submit = this.submit.bind(this);
   }
-  change(e) {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  }
-  submit(e) {
-    e.preventDefault();
+
+  submit(values) {
     this.setState({
       error: "",
       isDisabledButton: true,
     });
-    e.preventDefault();
     axios
       .post("/getToken", {
-        email: this.state.email,
-        password: this.state.password,
+        email: values.email,
+        password: values.password,
       })
       .then((res) => {
         localStorage.setItem("ecom_token", res.data.token);
@@ -44,8 +36,20 @@ class Login extends Component {
         });
       });
   }
-
   render() {
+    const validationSchema = Yup.object({
+      email: Yup.string()
+        .email("Email is invalid")
+        .required("Email is required"),
+      password: Yup.string()
+        .min(4, "Password must be at least 4 characters")
+        .required("Password is required"),
+    });
+    const initialValues = {
+      email: "",
+      password: "",
+    };
+
     return (
       <div className="container">
         <div className="row">
@@ -58,55 +62,78 @@ class Login extends Component {
                 <h1 className="card-title text-center mb-5 fw-light fs-5">
                   <span>Login</span>
                 </h1>
-                <form
-                  onSubmit={(e) => this.submit(e)}
-                  id="form"
-                  className="form"
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
+                  onSubmit={this.submit}
                 >
-                  <div className="form-group">
-                    <div className="form-floating mb-3">
-                      <input
-                        type="email"
-                        onChange={(e) => this.change(e)}
-                        value={this.state.email}
-                        required={true}
-                        className="form-control"
-                        name="email"
-                        id="email"
-                        placeholder="Email"
-                      />
-                      <label htmlFor="email">Email address</label>
-                    </div>
-                    <div className="form-floating mb-3">
-                      <input
-                        name="password"
-                        type="password"
-                        onChange={(e) => this.change(e)}
-                        value={this.state.password}
-                        required={true}
-                        className="form-control"
-                        id="password"
-                        placeholder="Password"
-                      />
-                      <label htmlFor="password">Password</label>
-                    </div>
-                    <div className="form-group text-center">
-                      {this.state.isDisabledButton ? (
-                        <>
-                          <Button variant="primary" type="submit" disabled>
-                            Login
-                          </Button>
-                        </>
-                      ) : (
-                        <>
-                          <Button variant="primary" type="submit">
-                            Login
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </form>
+                  {({
+                    values,
+                    handleChange,
+                    handleSubmit,
+                    errors,
+                    handleBlur,
+                    isValid,
+                  }) => (
+                    <form onSubmit={handleSubmit} id="form" className="form">
+                      <div className="form-group">
+                        <div className="form-floating mb-3">
+                          <input
+                            type="email"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.email}
+                            required={true}
+                            className="form-control"
+                            name="email"
+                            id="email"
+                            placeholder="Email"
+                          />
+                          <label htmlFor="email">Email address</label>
+                          <ErrorMessage
+                            name="email"
+                            component="span"
+                            className="text-danger small"
+                          />
+                        </div>
+                        <div className="form-floating mb-3">
+                          <input
+                            name="password"
+                            type="password"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.password}
+                            required={true}
+                            className="form-control"
+                            id="password"
+                            placeholder="Password"
+                          />
+                          <label htmlFor="password">Password</label>
+                          <ErrorMessage
+                            name="password"
+                            component="span"
+                            className="text-danger small"
+                          />
+                        </div>
+                        <div className="form-group text-center">
+                          {this.state.isDisabledButton ? (
+                            <>
+                              <Button variant="primary" type="submit" disabled>
+                                Login
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              <Button variant="primary" type="submit">
+                                Login
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </form>
+                  )}
+                </Formik>
                 <div className="text-center">
                   <p>
                     <a href="/forgot_password">Forgot Password?</a>
