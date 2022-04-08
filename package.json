@@ -1,0 +1,28 @@
+{
+  "name": "ecommerce-project",
+  "version": "1.0.0",
+  "description": "This repository contains a complete ecommerce project built with React, Node, Express, Knex, and PostgreSQL. It is a great starting point for anyone looking to build a ecommerce application.",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "start": "concurrently \"npm start --workspace server\" \"npm start --workspace client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MilesUpHQ/ecommerce-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MilesUpHQ/ecommerce-project/issues"
+  },
+  "homepage": "https://github.com/MilesUpHQ/ecommerce-project#readme",
+  "devDependencies": {
+    "concurrently": "^7.1.0"
+  }
+}
