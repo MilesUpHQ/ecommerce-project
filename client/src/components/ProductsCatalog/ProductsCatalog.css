@@ -148,3 +148,7 @@ a:hover {
   background-color: #444444;
   transform: translateY(-50%);
 }
+
+.productImage{
+  max-height: 290px;
+}

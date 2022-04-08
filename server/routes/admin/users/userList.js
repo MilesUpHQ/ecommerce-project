@@ -51,7 +51,6 @@ router.get("/", async (req, res) => {
 
 router.delete("/", async (req, res) => {
   try {
-    console.log("d", req.query);
     await deleteUser(knex, { id: req.query.id });
     res.json({ message: "user deleted succesfully" });
   } catch (err) {
