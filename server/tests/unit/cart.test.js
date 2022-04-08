@@ -15,7 +15,7 @@ const {
 } = require("../../controllers/cart");
 
 const express = require("express");
-const router = require("../../routes/cart/cart.routes");
+const router = require("../../routes/cart");
 
 const app = new express();
 app.use("/", router);
