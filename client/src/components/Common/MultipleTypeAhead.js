@@ -1,7 +1,7 @@
 import React from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
 
-const TypeAhead = ({
+const MultipleTypeAhead = ({
   options,
   handleSearch,
   setSearchItem,
@@ -59,4 +59,4 @@ const TypeAhead = ({
   );
 };
 
-export default TypeAhead;
+export default MultipleTypeAhead;
