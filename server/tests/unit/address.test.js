@@ -1,5 +1,7 @@
 const router = require("../../routes/order/address");
 const request = require("supertest");
+const { faker } = require("@faker-js/faker");
+
 
 const id;
 
@@ -12,14 +14,14 @@ describe("address form validation", () => {
     request(router)
       .post("/")
       .send({
-        name: "gangotri",
+        name:  faker.name.findName(),
         email: "notanemail",
-        phone: 9845521479,
-        street: "kote road",
-        city: "Rattihalli",
-        pin_code: 581116,
-        state: "karnataka",
-        country: "India",
+        phone: faker.phone.phoneNumber("991#######"),
+        street: faker.address.streetAddress(),
+        city: faker.address.city(),
+        state: faker.address.state(),
+        pin_code: faker.address.zipCode(),
+        country: faker.address.countryCode(),
       })
       .expect(400);
   });
@@ -28,13 +30,13 @@ describe("address form validation", () => {
       .post("/")
       .send({
         name: "",
-        email: "nadigergangotri@gmail.com",
-        phone: 9845521479,
-        street: "kote road",
-        city: "Rattihalli",
-        pin_code: 581116,
-        state: "karnataka",
-        country: "India",
+        email: faker.internet.email(),
+        phone: faker.phone.phoneNumber("991#######"),
+        street: faker.address.streetAddress(),
+        city: faker.address.city(),
+        state: faker.address.state(),
+        pin_code: faker.address.zipCode(),
+        country: faker.address.countryCode(),
       })
       .expect(400);
   });
@@ -42,14 +44,14 @@ describe("address form validation", () => {
     request(router)
       .post("/")
       .send({
-        name: "gangotri",
-        email: "nadigergangotri@gmail.com",
+        name:  faker.name.findName(),
+        email: faker.internet.email(),
         phone: "",
-        street: "kote road",
-        city: "Rattihalli",
-        pin_code: 581116,
-        state: "karnataka",
-        country: "India",
+        street: faker.address.streetAddress(),
+        city: faker.address.city(),
+        state: faker.address.state(),
+        pin_code: faker.address.zipCode(),
+        country: faker.address.countryCode(),
       })
       .expect(400);
   });
@@ -57,14 +59,14 @@ describe("address form validation", () => {
     request(router)
       .post("/")
       .send({
-        name: "gangotri",
-        email: "nadigergangotri@gmail.com",
-        phone: 9845521479,
-        street: "kote road",
-        city: "",
-        pin_code: 581116,
-        state: "karnataka",
-        country: "India",
+        name:  faker.name.findName(),
+        email: faker.internet.email(),
+        phone: faker.phone.phoneNumber("991#######"),
+        street: "",
+        city: faker.address.city(),
+        state: faker.address.state(),
+        pin_code: faker.address.zipCode(),
+        country: faker.address.countryCode(),
       })
       .expect(400);
   });
@@ -72,14 +74,14 @@ describe("address form validation", () => {
     request(router)
       .post("/")
       .send({
-        name: "gangotri",
-        email: "nadigergangotri@gmail.com",
-        phone: 9845521479,
-        street: "",
-        city: "Rattihalli",
-        pin_code: 581116,
-        state: "karnataka",
-        country: "India",
+        name:  faker.name.findName(),
+        email: faker.internet.email(),
+        phone: faker.phone.phoneNumber("991#######"),
+        street: faker.address.streetAddress(),
+        city: "",
+        state: faker.address.state(),
+        pin_code: faker.address.zipCode(),
+        country: faker.address.countryCode(),
       })
       .expect(400);
   });
@@ -88,14 +90,15 @@ describe("address form validation", () => {
     request(router)
       .post("/")
       .send({
-        name: "gangotri",
-        email: "nadigergangotri@gmail.com",
-        phone: 9845521479,
-        street: "kote road",
-        city: "Rattihalli",
-        pin_code: "",
-        state: "karnataka",
-        country: "India",
+        name:  faker.name.findName(),
+        email: faker.internet.email(),
+        phone: faker.phone.phoneNumber("991#######"),
+        street: faker.address.streetAddress(),
+        city: faker.address.city(),
+        state: faker.address.state(),
+        pin_code:"",
+        country: faker.address.countryCode(),
+
       })
       .expect(400);
   });
@@ -104,14 +107,15 @@ describe("address form validation", () => {
     request(router)
       .post("/")
       .send({
-        name: "gangotri",
-        email: "nadigergangotri@gmail.com",
-        phone: 9845521479,
-        street: "kote road",
-        city: "Rattihalli",
-        pin_code: 581116,
+        name:  faker.name.findName(),
+        email: faker.internet.email(),
+        phone: faker.phone.phoneNumber("991#######"),
+        street: faker.address.streetAddress(),
+        city: faker.address.city(),
         state: "",
-        country: "India",
+        pin_code: faker.address.zipCode(),
+        country: faker.address.countryCode(),
+
       })
       .expect(400);
   });
@@ -120,13 +124,13 @@ describe("address form validation", () => {
     request(router)
       .post("/")
       .send({
-        name: "gangotri",
-        email: "nadigergangotri@gmail.com",
-        phone: 9845521479,
-        street: "kote road",
-        city: "Rattihalli",
-        pin_code: 581116,
-        state: "karnataka",
+        name:  faker.name.findName(),
+        email: faker.internet.email(),
+        phone: faker.phone.phoneNumber("991#######"),
+        street: faker.address.streetAddress(),
+        city: faker.address.city(),
+        state: faker.address.state(),
+        pin_code: faker.address.zipCode(),
         country: "",
       })
       .expect(400);
