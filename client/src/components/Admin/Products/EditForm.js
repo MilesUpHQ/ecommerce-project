@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Field, Form, Formik, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import { useNavigate } from "react-router-dom";
@@ -13,56 +15,30 @@ export const EditForm = () => {
   const [product, setProduct] = useState({});
   const [errormsg, setErrormsg] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [imageCheck, setImageCheck] = useState(false);
-  const [fileData, setFileData] = useState([]);
-  const [description, setDescription] = useState("");
-  const [size, setSize] = useState("");
-  const [color, setColor] = useState("");
-  const [type, setType] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const [categoryid, setCategoryId] = useState(null);
   const [productId, setProductId] = useState("");
   const [variantId, setVariantId] = useState("");
   const [isEnable, setIsEnable] = useState(true);
+  const [initialValues, setInitialValues] = useState(null);
 
-  const updateProduct = (e) => {
-    e.preventDefault();
-    const imageData = new FormData();
-    imageData.append("file", fileData);
-    imageData.append("name", name);
-    imageData.append("price", price);
-    imageData.append("description", description);
-    imageData.append("size", size);
-    imageData.append("color", color);
-    imageData.append("type", type);
-    imageData.append("category", categoryid);
-    imageData.append("id", productId);
-    imageData.append("variantId", variantId);
-    if (name == "") {
-      setErrormsg("Name cannot be empty");
-      return;
-    }
-    if (fileData.length == 0) {
-      setErrormsg("Please select an image");
-      return;
-    }
-    if (price == "") {
-      setErrormsg("Price cannot be empty");
-      return;
-    }
-    if (categoryid == "") {
-      setErrormsg("Please select a category");
-      return;
-    }
-    if (description == "") {
-      setErrormsg("description cannot be empty");
-      return;
-    }
+  const ValidationSchema = Yup.object({
+    name: Yup.string().required("Name is Required"),
+    category: Yup.string().required("Category is Required"),
+    description: Yup.string().required("Description is Required"),
+  });
+
+  const updateProduct = (values) => {
+    const productData = {
+      name: values.name,
+      description: values.description,
+      category: values.category,
+      id: productId,
+      variantId: variantId,
+    };
 
     axios
-      .put("/admin/product/edit", imageData)
+      .put("/admin/product/edit", productData)
       .then((res) => {
         setIsEnable(false);
         toast.success("Product Updated Sucessfully!");
@@ -76,26 +52,23 @@ export const EditForm = () => {
   };
   useEffect(() => {
     axios
-      .get(`/admin/product/${id}`)
+      .get(`/admin/product/edit/${id}`)
       .then((res) => {
-        setName(res.data.name);
-        setSize(res.data.size);
-        setColor(res.data.color);
-        setType(res.data.type);
-        setCategoryId(res.data.categoryid);
+        setInitialValues({
+          name: res.data.name,
+          category: res.data.categoryid,
+          description: res.data.description,
+        });
         setCategoryName(res.data.categoryname);
-        setPrice(res.data.price);
-        setDescription(res.data.description);
         setProduct(res.data);
-        setFileData(res.data.image_url);
         setVariantId(res.data.variant_id);
-        setProductId(id);
-        setImageCheck(true);
+        setProductId(res.data.id);    
       })
       .catch((err) => {
         setErrormsg("Sorry! Something went wrong. Please Try again");
       });
   }, []);
+
   useEffect(() => {
     axios
       .get("/admin/products/add")
@@ -106,9 +79,7 @@ export const EditForm = () => {
         setErrormsg("Oopps! Something went wrong. Please Try again", err);
       });
   }, []);
-  const fileChangeHandler = (e) => {
-    setFileData(e.target.files[0]);
-  };
+
   return (
     <div className="main-panel">
       <Toaster />
@@ -128,141 +99,87 @@ export const EditForm = () => {
           <div className="col-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Add Products</h4>
-                <p className="card-description">Enter product details</p>
+                <h4 className="card-title">Product Updation</h4>
+                <p className="card-description">Update product details</p>
+                {initialValues && (
+                  <Formik
+                    initialValues={initialValues}
+                    validationSchema={ValidationSchema}
+                    onSubmit={updateProduct}
+                  >
+                    {({ values, handleChange, handleSubmit, errors }) => (
+                      <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                          <label htmlFor="exampleInputName1">Name</label>
+                          <input
+                            id="name"
+                            value={values.name}
+                            className="form-control"
+                            onChange={handleChange}
+                          />
+                          {errors.name ? (
+                            <div className="text-danger Small">
+                              {errors.name}
+                            </div>
+                          ) : null}
+                        </div>
 
-                <form className="forms-sample">
-                  <div className="form-group">
-                    <label htmlFor="exampleInputName1">Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="exampleInputName1"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="imageupload">Upload image</label>
-                    <br />
-                    {imageCheck == true && (
-                      <div>
-                        <input type="url" name="urlField" value={fileData} readOnly/>
-                        <img
-                          className="rounded-circlee ml-3"
-                          src={BASE_URL + "/" + fileData}
-                          alt=""
+                        <div className="form-group">
+                          <label htmlFor="category">Category</label>
+                          <select
+                            id="category"
+                            as="select"
+                            className="form-control"
+                            onChange={handleChange}
+                          >
+                            <option value={categoryid}>{categoryName}</option>
+                            {categories.map((category) => {
+                              return (
+                                <option value={category.id} key={category.id}>
+                                  {category.name}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          {errors.category ? (
+                            <div className="text-danger Small">
+                              {errors.category}
+                            </div>
+                          ) : null}
+                        </div>
+
+                        <div className="form-group">
+                          <label htmlFor="exampleTextarea1">Description</label>
+                          <input
+                            id="description"
+                            value={values.description}
+                            className="form-control"
+                            onChange={handleChange}
+                          />
+                          {errors.description ? (
+                            <div className="text-danger Small">
+                              {errors.description}
+                            </div>
+                          ) : null}
+                        </div>
+                        <input
+                          className={
+                            "btn btn-primary mr-2" +
+                            `${isEnable ? "" : "disabled"}`
+                          }
+                          type="submit"
+                          value="Update"
                         />
                         <button
-                          type="button"
-                          className="btn btn-primary btn-icon-text mt-1 ml-3"
-                          onClick={() => setImageCheck(false)}
+                          className="btn btn-light"
+                          onClick={(e) => navigate("/admin/products")}
                         >
-                          Update Image
+                          Cancel
                         </button>
-                      </div>
+                      </form>
                     )}
-                    {imageCheck == false && (
-                      <input
-                        type="file"
-                        name="image"
-                        onChange={fileChangeHandler}
-                      />
-                    )}
-                  </div>
-
-                  <div className="form-group ">
-                    <label htmlFor="exampleFormControlSelect3">Select Size</label>
-                    <select
-                      className="form-control form-control-sm"
-                      id="exampleFormControlSelect3"
-                      value={size}
-                      onChange={(e) => setSize(e.target.value)}
-                    >
-                      <option value="XS">XS</option>
-                      <option value="S">S</option>
-                      <option value="M">M</option>
-                      <option value="L">L</option>
-                      <option value="XL">XL</option>
-                    </select>
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="Color">Color</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="color"
-                      value={color}
-                      onChange={(e) => setColor(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="category">Category</label>
-                    <select
-                      className="form-control form-control-sm"
-                      id="exampleFormControlSelect3"
-                      onChange={(e) => setCategoryId(e.target.value)}
-                      defaultValue={categoryName}
-                    >
-                      <option value={categoryid}>
-                        {categoryName}
-                      </option>
-                      {categories.map((category) => {
-                        return (
-                          <option value={category.id} key={category.id}>{category.name}</option>
-                        );
-                      })}
-                    </select>
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="Type">Type</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="type"
-                      value={type}
-                      onChange={(e) => setType(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="exampleInputPrice1">Price</label>
-                    <input
-                      type="integer"
-                      className="form-control"
-                      id="exampleInputPrice1"
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleTextarea1">Description</label>
-                    <textarea
-                      className="form-control"
-                      id="exampleTextarea1"
-                      rows="4"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                  </div>
-                  <button
-                    className={
-                      "btn btn-primary mr-2" + `${isEnable ? "" : "disabled"}`
-                    }
-                    onClick={(e) => updateProduct(e, product.id)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="btn btn-light"
-                    onClick={(e) => navigate("/admin/products")}
-                  >
-                    Cancel
-                  </button>
-                </form>
+                  </Formik>
+                )}
               </div>
             </div>
           </div>
