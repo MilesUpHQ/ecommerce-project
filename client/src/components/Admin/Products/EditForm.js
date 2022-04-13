@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Field, Form, Formik, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import { useNavigate } from "react-router-dom";
@@ -13,23 +15,27 @@ export const EditForm = () => {
   const [product, setProduct] = useState({});
   const [errormsg, setErrormsg] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const [categoryid, setCategoryId] = useState(null);
   const [productId, setProductId] = useState("");
   const [variantId, setVariantId] = useState("");
   const [isEnable, setIsEnable] = useState(true);
+  const [initialValues, setInitialValues] = useState(null);
 
-  const updateProduct = (e) => {
-    e.preventDefault();
+  const ValidationSchema = Yup.object({
+    name: Yup.string().required("Name is Required"),
+    category: Yup.string().required("Category is Required"),
+    description: Yup.string().required("Description is Required"),
+  });
+
+  const updateProduct = (values) => {
     const productData = {
-      name:name,
-      description:description,
-      category:categoryid,
-      id:productId,
-      variantId:variantId
-    }
+      name: values.name,
+      description: values.description,
+      category: values.category,
+      id: productId,
+      variantId: variantId,
+    };
 
     axios
       .put("/admin/product/edit", productData)
@@ -48,18 +54,21 @@ export const EditForm = () => {
     axios
       .get(`/admin/product/edit/${id}`)
       .then((res) => {
-        setName(res.data.name);
-        setCategoryId(res.data.categoryid);
+        setInitialValues({
+          name: res.data.name,
+          category: res.data.categoryid,
+          description: res.data.description,
+        });
         setCategoryName(res.data.categoryname);
-        setDescription(res.data.description);
         setProduct(res.data);
         setVariantId(res.data.variant_id);
-        setProductId(res.data.id);
+        setProductId(res.data.id);    
       })
       .catch((err) => {
         setErrormsg("Sorry! Something went wrong. Please Try again");
       });
   }, []);
+
   useEffect(() => {
     axios
       .get("/admin/products/add")
@@ -70,7 +79,7 @@ export const EditForm = () => {
         setErrormsg("Oopps! Something went wrong. Please Try again", err);
       });
   }, []);
-  
+
   return (
     <div className="main-panel">
       <Toaster />
@@ -92,62 +101,85 @@ export const EditForm = () => {
               <div className="card-body">
                 <h4 className="card-title">Product Updation</h4>
                 <p className="card-description">Update product details</p>
-                <form className="forms-sample">
-                  <div className="form-group">
-                    <label htmlFor="exampleInputName1">Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="exampleInputName1"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="category">Category</label>
-                    <select
-                      className="form-control form-control-sm"
-                      id="exampleFormControlSelect3"
-                      onChange={(e) => setCategoryId(e.target.value)}
-                      defaultValue={categoryName}
-                    >
-                      <option value={categoryid}>{categoryName}</option>
-                      {categories.map((category) => {
-                        return (
-                          <option value={category.id} key={category.id}>
-                            {category.name}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="exampleTextarea1">Description</label>
-                    <textarea
-                      className="form-control"
-                      id="exampleTextarea1"
-                      rows="4"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                  </div>
-                  <button
-                    className={
-                      "btn btn-primary mr-2" + `${isEnable ? "" : "disabled"}`
-                    }
-                    onClick={(e) => updateProduct(e, product.id)}
+                {initialValues && (
+                  <Formik
+                    initialValues={initialValues}
+                    validationSchema={ValidationSchema}
+                    onSubmit={updateProduct}
                   >
-                    Update
-                  </button>
-                  <button
-                    className="btn btn-light"
-                    onClick={(e) => navigate("/admin/products")}
-                  >
-                    Cancel
-                  </button>
-                </form>
+                    {({ values, handleChange, handleSubmit, errors }) => (
+                      <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                          <label htmlFor="exampleInputName1">Name</label>
+                          <input
+                            id="name"
+                            value={values.name}
+                            className="form-control"
+                            onChange={handleChange}
+                          />
+                          {errors.name ? (
+                            <div className="text-danger Small">
+                              {errors.name}
+                            </div>
+                          ) : null}
+                        </div>
+
+                        <div className="form-group">
+                          <label htmlFor="category">Category</label>
+                          <select
+                            id="category"
+                            as="select"
+                            className="form-control"
+                            onChange={handleChange}
+                          >
+                            <option value={categoryid}>{categoryName}</option>
+                            {categories.map((category) => {
+                              return (
+                                <option value={category.id} key={category.id}>
+                                  {category.name}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          {errors.category ? (
+                            <div className="text-danger Small">
+                              {errors.category}
+                            </div>
+                          ) : null}
+                        </div>
+
+                        <div className="form-group">
+                          <label htmlFor="exampleTextarea1">Description</label>
+                          <input
+                            id="description"
+                            value={values.description}
+                            className="form-control"
+                            onChange={handleChange}
+                          />
+                          {errors.description ? (
+                            <div className="text-danger Small">
+                              {errors.description}
+                            </div>
+                          ) : null}
+                        </div>
+                        <input
+                          className={
+                            "btn btn-primary mr-2" +
+                            `${isEnable ? "" : "disabled"}`
+                          }
+                          type="submit"
+                          value="Update"
+                        />
+                        <button
+                          className="btn btn-light"
+                          onClick={(e) => navigate("/admin/products")}
+                        >
+                          Cancel
+                        </button>
+                      </form>
+                    )}
+                  </Formik>
+                )}
               </div>
             </div>
           </div>
