@@ -5,6 +5,7 @@ import axios from "../../../utils/ajax-helper";
 import ErrorMessages from "./ErrorMessages";
 import toast, { Toaster } from "react-hot-toast";
 import "../../Common/css/admin-style.css";
+import FormikForm from "./FormikForm";
 
 const AddForm = () => {
   const navigate = useNavigate();
@@ -52,9 +53,6 @@ const AddForm = () => {
       });
   }, []);
 
-  const fileChangeHandler = (e) => {
-    setFileData(e.target.files[0]);
-  };
 
   return (
     <div className="main-panel">
