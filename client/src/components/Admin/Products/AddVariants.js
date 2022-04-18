@@ -5,28 +5,22 @@ import axios from "../../../utils/ajax-helper";
 import { useParams } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import "../../Common/css/pagination.css";
+import FormikForm from "./FormikForm";
+import * as Yup from "yup";
 
 const AddVariants = () => {
   const navigate = useNavigate();
   const [isEnable, setIsEnable] = useState(true);
   const [errormsg, setErrormsg] = useState(null);
-  const [fileData, setFileData] = useState([]);
   const productId = useParams().id;
-  const [details, setDetails] = useState({
-    size: "",
-    price: "",
-    color: "",
-    type: "",
-    id: 0,
-  });
-  const submitHandler = async (e) => {
-    e.preventDefault();
+  
+  const submitHandler = async (values) => {
     const imageData = new FormData();
-    imageData.append("file", fileData);
-    imageData.append("price", details.price);
-    imageData.append("size", details.size);
-    imageData.append("color", details.color);
-    imageData.append("type", details.type);
+    imageData.append("file", values.image);
+    imageData.append("price", values.price);
+    imageData.append("size", values.size);
+    imageData.append("color", values.color);
+    imageData.append("type", values.type);
     imageData.append("id", productId);
 
     axios
@@ -42,9 +36,32 @@ const AddVariants = () => {
         setErrormsg("Oopise! Something went wrong please try again.");
       });
   };
-  const fileChangeHandler = (e) => {
-    setFileData(e.target.files[0]);
-  };
+
+  const fields = [
+    {
+      fieldName: "size",
+      fieldAs: "select",
+      options: [
+        { id: "XS", name: "XS" },
+        { id: "S", name: "S" },
+        { id: "M", name: "M" },
+        { id: "L", name: "L" },
+        { id: "XL", name: "XL" },
+      ],
+    },
+    { fieldName: "price", fieldType: "number" },
+    { fieldName: "color", fieldType: "text" },
+    { fieldName: "type", fieldType: "text" },
+  ];
+
+  const ErrorSchema = Yup.object({
+    color: Yup.string().required("Color is Required"),
+    price: Yup.string().required("Price is Required"),
+    size: Yup.string().required("Size is Required"),
+    image: Yup.string().required("Image is Required"),
+    type: Yup.string().required("Type is Required"),
+  });
+
   return (
     <div className="main-panel">
       <Toaster />
@@ -55,93 +72,13 @@ const AddVariants = () => {
               <div className="card-body">
                 <h4 className="card-title">Add Variants</h4>
                 <p className="card-description">Enter varaints details</p>
-
-                <form className="forms-sample" onSubmit={submitHandler}>
-                  <div className="form-group-name">
-                    <label htmlFor="exampleInputName1">Select Size</label>
-                    <select
-                      className="form-control form-control-sm"
-                      id="exampleFormControlSelect3"
-                      onChange={(e) =>
-                        setDetails({ ...details, size: e.target.value })
-                      }
-                    >
-                      <option value="0">Select product size</option>
-                      <option value="XS">XS</option>
-                      <option value="S">S</option>
-                      <option value="M">M</option>
-                      <option value="L">L</option>
-                      <option value="XL">XL</option>
-                    </select>
-                  </div>
-
-                  <div className="form-group-pr mt-3">
-                    <label htmlFor="exampleInputPrice1">Price*</label>
-                    <input
-                      type="integer"
-                      className="form-control"
-                      id="exampleInputPrice1"
-                      placeholder="0"
-                      value={details.price}
-                      onChange={(e) =>
-                        setDetails({ ...details, price: e.target.value })
-                      }
-                    />
-                  </div>
-
-                  <div className="form-group mt-3">
-                    <label htmlFor="Color">Color</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="color"
-                      placeholder="make it vibrant"
-                      value={details.color}
-                      onChange={(e) =>
-                        setDetails({ ...details, color: e.target.value })
-                      }
-                    />
-                  </div>
-
-                  <div className="form-group mt-3">
-                    <label htmlFor="Type">Type</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="type"
-                      placeholder="List the type of your product"
-                      value={details.type}
-                      onChange={(e) =>
-                        setDetails({ ...details, type: e.target.value })
-                      }
-                    />
-                  </div>
-
-                  <div className="form-group-img ">
-                    <label htmlFor="imageupload">Upload image*</label>
-                    <br />
-                    <input
-                      type="file"
-                      name="image"
-                      onChange={fileChangeHandler}
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className={
-                      "btn btn-primary mr-2 " + `${isEnable ? "" : "disabled"}`
-                    }
-                  >
-                    Submit
-                  </button>
-                  <button
-                    className="btn btn-light"
-                    onClick={() => navigate("/admin/products/add")}
-                  >
-                    Cancel
-                  </button>
-                </form>
+                <FormikForm
+                  fields={fields}
+                  ErrorSchema={ErrorSchema}
+                  submitHandler={submitHandler}
+                  uploadImage={true}
+                  isEnable={isEnable}
+                />
               </div>
             </div>
           </div>
