@@ -23,9 +23,20 @@ export const EditForm = () => {
   const [initialValues, setInitialValues] = useState(null);
 
   const ValidationSchema = Yup.object({
-    name: Yup.string().required("Name is Required"),
-    category: Yup.string().required("Category is Required"),
-    description: Yup.string().required("Description is Required"),
+    name: Yup
+    .string()
+    .required("*Name is Required")
+    .matches(/^[a-zA-Z ]+$/, "*Name must contain only letters")
+    .min(2, "*Too Short!")
+    .max(20, "*Too Long!"),
+    category: Yup
+    .string()
+    .required("*Category is Required"),
+    description: Yup
+    .string()
+    .required("*Description is Required")
+    .min(10, "*Too Short!")
+    .max(200, "*Too Long!"),
   });
 
   const updateProduct = (values) => {
@@ -34,7 +45,7 @@ export const EditForm = () => {
       description: values.description,
       category: values.category,
       id: productId,
-      variantId: variantId,
+    //  variantId: variantId,
     };
 
     axios
