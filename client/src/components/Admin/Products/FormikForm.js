@@ -63,16 +63,19 @@ const FormikForm = ({
 
             {uploadImage && (
               <div>
-                <label className="mt-3">Upload Image*</label>
+                <label className="mt-3">Upload Main Image*</label>
                 <br />
                 <input
                   name="image"
                   type="file"
+                  multiple
                   onChange={(event) => {
-                    setFieldValue("image", event.currentTarget.files[0]);
+                    console.log("tf",event.currentTarget.files);
+                    setFieldValue("image", event.currentTarget.files);
                   }}
                 />
                 <br />
+                
                 <ErrorMessage
                   name="image"
                   component="span"
