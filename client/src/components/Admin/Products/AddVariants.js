@@ -15,13 +15,21 @@ const AddVariants = () => {
   const productId = useParams().id;
   
   const submitHandler = async (values) => {
+    console.log("values",values);
+
     const imageData = new FormData();
-    imageData.append("file", values.image);
+   Object.values(values.image).forEach(value=>{
+     imageData.append("file", value);
+    console.log("2222",value);
+    });
+
+//    imageData.append("file", values.image);
     imageData.append("price", values.price);
     imageData.append("size", values.size);
     imageData.append("color", values.color);
     imageData.append("type", values.type);
     imageData.append("id", productId);
+    console.log("vi",values.image)
 
     axios
       .post("/admin/products/variants/add", imageData)
