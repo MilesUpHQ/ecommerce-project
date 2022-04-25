@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { body, validationResult } = require("express-validator");
-const db = require("../../utils/dbConfig");
-const { insertUser, getUserBy } = require("../../queries/user");
-
+const { body } = require("express-validator");
+const { signUpUser } = require("../../controllers/signup");
 const userValidation = [
   body("email", "Email is not valid").isEmail(),
   body("password", "Password must be at least 4 characters long").isLength({
@@ -14,43 +12,5 @@ const userValidation = [
   body("last_name", "Last name cannot be blank").notEmpty(),
 ];
 
-router.post("/", ...userValidation, (req, res) => {
-  const errors = validationResult(req);
-  if (errors.errors.length > 0) {
-    res.status(400).json(errors.errors);
-    return;
-  }
-  getUserBy("email", req.body.email)
-    .then((user) => {
-      if (user.length > 0) {
-        res.status(400).json({
-          message: "Email already exists",
-        });
-        return;
-      } else {
-        getUserBy("username", req.body.username).then((user) => {
-          if (user.length > 0) {
-            res.status(400).json({
-              message: "Username already exists",
-            });
-            return;
-          } else {
-            insertUser(req.body)
-              .then((user) => {
-                res.status(201).json(user);
-              })
-              .catch((err) => {
-                res.status(500).json(err);
-              });
-          }
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({
-        message: "Error creating user",
-        error: err,
-      });
-    });
-});
+router.post("/", ...userValidation, signUpUser);
 module.exports = router;
