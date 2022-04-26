@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../../../utils/dbConfig");
 const multer = require("multer");
+const sharp = require('sharp');
+const fs = require('fs');
 const { insertVariant } = require("../../../queries/variants");
 
 const fileStorageEngine = multer.diskStorage({
@@ -29,13 +31,22 @@ const upload = multer({ storage: fileStorageEngine,
   },
  });
 
-router.post("/", upload.array("file",3), (req, res) => {
+router.post("/", upload.array("file",3),async (req, res) => {
   console.log("bodyyyyyyyyyyyyyyyyy",req.body)
   const reqFiles = [];
 for (var i = 0; i < req.files.length; i++) {
        console.log("seeeeeeee",req.files[i].filename, req.files[i].path)
+       await sharp(req.files[i].path)
+       //.resize({width:200,height:200})
+       .jpeg({quality : 30})
+       .toFile('./thumbnail/thumbnail'+req.files[i].originalname);
+       console.log("succ",__dirname);
+
+       await sharp(req.files[i].path)
+       .jpeg({quality : 50})
+       .toFile('./preview/preview'+req.files[i].originalname);
     }
-  //console.log("FML",req.files)
+  
   insertVariant(req.body)
     .returning("variants.id")
     .then((row) => {
