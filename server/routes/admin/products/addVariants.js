@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../../../utils/dbConfig");
 const multer = require("multer");
+const sharp = require('sharp');
+const fs = require('fs');
 const { insertVariant } = require("../../../queries/variants");
 
 const fileStorageEngine = multer.diskStorage({
@@ -12,14 +14,47 @@ const fileStorageEngine = multer.diskStorage({
     cb(null, Date.now() + "--" + file.originalname); //file.originalname has accesss to the file type
   },
 });
-const upload = multer({ storage: fileStorageEngine });
+const upload = multer({ storage: fileStorageEngine,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype == 'image/png' ||
+      file.mimetype == 'image/jpeg' ||
+      file.mimetype == 'image/jpg'
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      const err = new Error('Only .jpg .jpeg .png images are supported!');
+      err.name = 'ExtensionError';
+      return cb(err);
+    }
+  },
+ });
 
-router.post("/", upload.single("file"), (req, res) => {
+router.post("/", upload.array("file",3),async (req, res) => {
+  console.log("bodyyyyyyyyyyyyyyyyy",req.body)
+  const reqFiles = [];
+for (var i = 0; i < req.files.length; i++) {
+       console.log("seeeeeeee",req.files[i].filename, req.files[i].path)
+       await sharp(req.files[i].path)
+       //.resize({width:200,height:200})
+       .jpeg({quality : 30})
+       .toFile('./thumbnail/thumbnail'+req.files[i].originalname);
+       console.log("succ",__dirname);
+
+       await sharp(req.files[i].path)
+       .jpeg({quality : 50})
+       .toFile('./preview/preview'+req.files[i].originalname);
+    }
+  
   insertVariant(req.body)
     .returning("variants.id")
     .then((row) => {
+      console.log("333",row)
+      const multipleFiles = req.files.map(file => 
+      ({ image_url: file.path, variant_id: row[0].id })); 
       knex("variant_images")
-        .insert({ image_url: req.file.path, variant_id: row[0].id })
+        .insert(multipleFiles)
         .then((row) => {
           res.json(row);
         })
@@ -37,8 +72,8 @@ router.post("/single", upload.single("variant_images"), (req, res) => {
   res.send("Single File Upload Sucesss");
 });
 
-router.post("/multiple", upload.array("variant_images", 3), (req, res) => {
-  console.log(req.files);
+router.post("/multiple", upload.array("file", 3), (req, res) => {
+  console.log("check",req.files);
   res.send("Multiple image upload sucess");
 });
 
