@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-const { attachPaginate } = require("knex-paginate");
 const {
   getParentCategories,
   postCategory,
@@ -8,7 +7,6 @@ const {
   delCategory,
   getCategories,
 } = require("../../../controllers/category");
-attachPaginate();
 
 router.get("/", getCategories);
 router.get("/parent", getParentCategories);

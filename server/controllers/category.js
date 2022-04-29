@@ -4,6 +4,8 @@ const {
   updateCategory,
   deleteCategory,
 } = require("../queries/category");
+const { attachPaginate } = require("knex-paginate");
+attachPaginate();
 
 async function getCategories(req, res) {
   try {
