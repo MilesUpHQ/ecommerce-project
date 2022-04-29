@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../../../utils/dbConfig");
 const multer = require("multer");
-const { insertVariant } = require("../../../queries/variants");
+const { addVariant } = require("../../../controllers/products");
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -14,23 +13,7 @@ const fileStorageEngine = multer.diskStorage({
 });
 const upload = multer({ storage: fileStorageEngine });
 
-router.post("/", upload.single("file"), (req, res) => {
-  insertVariant(req.body)
-    .returning("variants.id")
-    .then((row) => {
-      knex("variant_images")
-        .insert({ image_url: req.file.path, variant_id: row[0].id })
-        .then((row) => {
-          res.json(row);
-        })
-        .catch((err) => {
-          res.status(400).send("Unable to post image");
-        });
-    })
-    .catch((err) => {
-      res.status(400).send("Unable to Post data ");
-    });
-});
+router.post("/", upload.single("file"), addVariant);
 
 router.post("/single", upload.single("variant_images"), (req, res) => {
   console.log("Request.file", req.file); //display info on image file

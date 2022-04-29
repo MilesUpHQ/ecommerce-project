@@ -1,5 +1,3 @@
-const request = require("supertest");
-const router = require("../../routes/admin/categories/category");
 const httpMocks = require("node-mocks-http");
 const { addCategory, updateCategory } = require("../../queries/category");
 const {
